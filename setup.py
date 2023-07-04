@@ -78,4 +78,4 @@ else:
     ext_modules = []
     cmdclass = {}
 
-setup(cmdclass=cmdclass, ext_modules=ext_modules)
+setup(name="ilikesql", cmdclass=cmdclass, ext_modules=ext_modules)
