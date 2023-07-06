@@ -1,9 +1,9 @@
-from sqlalchemy import select
-from sqlalchemy import table
-from sqlalchemy.dialects.mysql import base as mysql
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import expect_deprecated
-from sqlalchemy.testing import fixtures
+from ilikesql import select
+from ilikesql import table
+from ilikesql.dialects.mysql import base as mysql
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import expect_deprecated
+from ilikesql.testing import fixtures
 
 
 class CompileTest(AssertsCompiledSQL, fixtures.TestBase):

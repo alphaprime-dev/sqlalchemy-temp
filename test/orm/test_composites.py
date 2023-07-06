@@ -2,33 +2,33 @@ import dataclasses
 import operator
 import random
 
-import sqlalchemy as sa
-from sqlalchemy import event
-from sqlalchemy import ForeignKey
-from sqlalchemy import insert
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import update
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import Composite
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.attributes import LoaderCallableStatus
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import event
+from ilikesql import ForeignKey
+from ilikesql import insert
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import update
+from ilikesql.orm import aliased
+from ilikesql.orm import Composite
+from ilikesql.orm import composite
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm.attributes import LoaderCallableStatus
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class PointTest(fixtures.MappedTest, testing.AssertsCompiledSQL):
@@ -518,7 +518,7 @@ class PointTest(fixtures.MappedTest, testing.AssertsCompiledSQL):
     def test_get_history(self):
         Edge = self.classes.Edge
         Point = self.classes.Point
-        from sqlalchemy.orm.attributes import get_history
+        from ilikesql.orm.attributes import get_history
 
         e1 = Edge()
         e1.start = Point(1, 2)
@@ -606,7 +606,7 @@ class PointTest(fixtures.MappedTest, testing.AssertsCompiledSQL):
         """test saving a null composite value
 
         See google groups thread for more context:
-        https://groups.google.com/group/sqlalchemy/browse_thread/thread/0c6580a1761b2c29
+        https://groups.google.com/group/ilikesql/browse_thread/thread/0c6580a1761b2c29
 
         """
 
@@ -1810,7 +1810,7 @@ class ComparatorTest(fixtures.MappedTest, testing.AssertsCompiledSQL):
     def test_clause_expansion(self):
         self._fixture(False)
         Edge = self.classes.Edge
-        from sqlalchemy.orm import configure_mappers
+        from ilikesql.orm import configure_mappers
 
         configure_mappers()
 

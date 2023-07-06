@@ -1,15 +1,15 @@
 from typing import Optional
 
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import synonym
-from sqlalchemy.sql.functions import func
-from sqlalchemy.sql.sqltypes import Text
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import column_property
+from ilikesql.orm import deferred
+from ilikesql.orm import registry
+from ilikesql.orm import Session
+from ilikesql.orm import synonym
+from ilikesql.sql.functions import func
+from ilikesql.sql.sqltypes import Text
 
 reg: registry = registry()
 

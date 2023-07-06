@@ -1,27 +1,27 @@
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import func
-from sqlalchemy import INT
-from sqlalchemy import MetaData
-from sqlalchemy import pool as _pool
-from sqlalchemy import select
-from sqlalchemy import testing
-from sqlalchemy import util
-from sqlalchemy import VARCHAR
-from sqlalchemy.engine import base
-from sqlalchemy.engine import characteristics
-from sqlalchemy.engine import default
-from sqlalchemy.engine import url
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.engines import testing_engine
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import func
+from ilikesql import INT
+from ilikesql import MetaData
+from ilikesql import pool as _pool
+from ilikesql import select
+from ilikesql import testing
+from ilikesql import util
+from ilikesql import VARCHAR
+from ilikesql.engine import base
+from ilikesql.engine import characteristics
+from ilikesql.engine import default
+from ilikesql.engine import url
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import mock
+from ilikesql.testing import ne_
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.engines import testing_engine
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class TransactionTest(fixtures.TablesTest):
@@ -1132,7 +1132,7 @@ class AutoRollbackTest(fixtures.TestBase):
 
 
 class IsolationLevelTest(fixtures.TestBase):
-    """see also sqlalchemy/testing/suite/test_dialect.py::IsolationLevelTest"""
+    """see also ilikesql/testing/suite/test_dialect.py::IsolationLevelTest"""
 
     __requires__ = (
         "isolation_level",
@@ -1347,7 +1347,7 @@ class IsolationLevelTest(fixtures.TestBase):
             eq_(c2.get_isolation_level(), self._default_isolation_level())
 
     def test_per_connection(self):
-        from sqlalchemy.pool import QueuePool
+        from ilikesql.pool import QueuePool
 
         eng = testing_engine(
             options=dict(poolclass=QueuePool, pool_size=2, max_overflow=0)

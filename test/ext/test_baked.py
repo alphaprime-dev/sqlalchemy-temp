@@ -1,23 +1,23 @@
 import contextlib
 import itertools
 
-from sqlalchemy import bindparam
-from sqlalchemy import event
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import func
-from sqlalchemy import testing
-from sqlalchemy.ext import baked
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm.query import Query
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.fixtures import fixture_session
+from ilikesql import bindparam
+from ilikesql import event
+from ilikesql import exc as sa_exc
+from ilikesql import func
+from ilikesql import testing
+from ilikesql.ext import baked
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import subqueryload
+from ilikesql.orm.query import Query
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import is_
+from ilikesql.testing import is_not
+from ilikesql.testing import mock
+from ilikesql.testing.fixtures import fixture_session
 from test.orm import _fixtures
 
 
@@ -338,7 +338,7 @@ class LikeQueryTest(BakedTest):
 
         # simulate race where mapper._get_clause
         # may be generated more than once
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         del inspect(User).__dict__["_get_clause"]
 
@@ -383,7 +383,7 @@ class ResultPostCriteriaTest(BakedTest):
 
     @contextlib.contextmanager
     def _fixture(self):
-        from sqlalchemy import event
+        from ilikesql import event
 
         User = self.classes.User
 
@@ -1000,7 +1000,7 @@ class CustomIntegrationTest(testing.AssertsCompiledSQL, BakedTest):
         return User, Address
 
     def _query_fixture(self):
-        from sqlalchemy.orm.query import Query
+        from ilikesql.orm.query import Query
 
         class CachingQuery(Query):
             cache = {}
@@ -1041,7 +1041,7 @@ class CustomIntegrationTest(testing.AssertsCompiledSQL, BakedTest):
         return s1
 
     def _option_fixture(self):
-        from sqlalchemy.orm.interfaces import UserDefinedOption
+        from ilikesql.orm.interfaces import UserDefinedOption
 
         class RelationshipCache(UserDefinedOption):
             inherit_cache = True

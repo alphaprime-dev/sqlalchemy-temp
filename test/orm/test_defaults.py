@@ -1,20 +1,20 @@
-import sqlalchemy as sa
-from sqlalchemy import Computed
-from sqlalchemy import event
-from sqlalchemy import Identity
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertsql import assert_engine
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.assertsql import Conditional
-from sqlalchemy.testing.assertsql import RegexSQL
-from sqlalchemy.testing.entities import BasicEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import Computed
+from ilikesql import event
+from ilikesql import Identity
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertsql import assert_engine
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.assertsql import Conditional
+from ilikesql.testing.assertsql import RegexSQL
+from ilikesql.testing.entities import BasicEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class TriggerDefaultsTest(fixtures.MappedTest):

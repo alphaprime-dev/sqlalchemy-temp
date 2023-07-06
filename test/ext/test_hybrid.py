@@ -1,39 +1,39 @@
 from decimal import Decimal
 
-from sqlalchemy import column
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import insert
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy import literal_column
-from sqlalchemy import Numeric
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.ext import hybrid
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import synonym
-from sqlalchemy.sql import coercions
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import roles
-from sqlalchemy.sql import update
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
+from ilikesql import column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import insert
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql import literal_column
+from ilikesql import Numeric
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.ext import hybrid
+from ilikesql.orm import aliased
+from ilikesql.orm import column_property
+from ilikesql.orm import declarative_base
+from ilikesql.orm import declared_attr
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import synonym
+from ilikesql.sql import coercions
+from ilikesql.sql import operators
+from ilikesql.sql import roles
+from ilikesql.sql import update
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_not
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
 
 
 class PropertyComparatorTest(fixtures.TestBase, AssertsCompiledSQL):
@@ -1494,7 +1494,7 @@ class SpecialObjectTest(fixtures.TestBase, AssertsCompiledSQL):
 
     @classmethod
     def setup_test_class(cls):
-        from sqlalchemy import literal
+        from ilikesql import literal
 
         symbols = ("usd", "gbp", "cad", "eur", "aud")
         currency_lookup = {

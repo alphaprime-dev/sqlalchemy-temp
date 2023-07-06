@@ -5,18 +5,18 @@ from typing import List
 from typing import Mapping
 from typing import Optional
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.attributes import Mapped
-from sqlalchemy.orm.decl_api import DeclarativeMeta
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm.attributes import Mapped
+from ilikesql.orm.decl_api import DeclarativeMeta
 
 
 class Base(metaclass=DeclarativeMeta):

@@ -1,12 +1,12 @@
-import sqlalchemy as sa
-from sqlalchemy import func
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import async_scoped_session
-from sqlalchemy.ext.asyncio import AsyncSession as _AsyncSession
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.testing import async_test
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import is_
+import ilikesql as sa
+from ilikesql import func
+from ilikesql import select
+from ilikesql.ext.asyncio import async_scoped_session
+from ilikesql.ext.asyncio import AsyncSession as _AsyncSession
+from ilikesql.orm import sessionmaker
+from ilikesql.testing import async_test
+from ilikesql.testing import eq_
+from ilikesql.testing import is_
 from .test_session_py3k import AsyncFixture
 
 

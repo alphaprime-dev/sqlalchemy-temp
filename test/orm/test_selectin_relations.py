@@ -1,38 +1,38 @@
-import sqlalchemy as sa
-from sqlalchemy import bindparam
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import defaultload
-from sqlalchemy.orm import defer
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm import undefer
-from sqlalchemy.orm import with_polymorphic
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertsql import AllOf
-from sqlalchemy.testing.assertsql import assert_engine
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import bindparam
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import aliased
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import defaultload
+from ilikesql.orm import defer
+from ilikesql.orm import deferred
+from ilikesql.orm import joinedload
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import subqueryload
+from ilikesql.orm import undefer
+from ilikesql.orm import with_polymorphic
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing.assertsql import AllOf
+from ilikesql.testing.assertsql import assert_engine
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 from test.orm import _fixtures
 from .inheritance._poly_fixtures import _Polymorphic
 from .inheritance._poly_fixtures import Company
@@ -2386,7 +2386,7 @@ class ChunkingTest(fixtures.DeclarativeMappedTest):
 
         def go():
             with mock.patch(
-                "sqlalchemy.orm.strategies.SelectInLoader._chunksize", 47
+                "ilikesql.orm.strategies.SelectInLoader._chunksize", 47
             ):
                 q = session.query(A).options(selectinload(A.bs)).order_by(A.id)
 
@@ -2458,7 +2458,7 @@ class ChunkingTest(fixtures.DeclarativeMappedTest):
 
         def go():
             with mock.patch(
-                "sqlalchemy.orm.strategies.SelectInLoader._chunksize", 47
+                "ilikesql.orm.strategies.SelectInLoader._chunksize", 47
             ):
                 q = session.query(B).options(selectinload(B.a)).order_by(B.id)
 
@@ -2993,7 +2993,7 @@ class SelfRefInheritanceAliasedTest(
 
             s = fixture_session()
 
-            from sqlalchemy.orm import Load
+            from ilikesql.orm import Load
 
             opt1 = selectinload(attr1).selectinload(attr2)  # noqa
             opt2 = Load(Foo).selectinload(attr1).selectinload(attr2)  # noqa
@@ -3648,8 +3648,8 @@ class TestCompositePlusNonComposite(fixtures.DeclarativeMappedTest):
     def setup_classes(cls):
         Base = cls.DeclarativeBasic
 
-        from sqlalchemy.sql import lambdas
-        from sqlalchemy.orm import configure_mappers
+        from ilikesql.sql import lambdas
+        from ilikesql.orm import configure_mappers
 
         lambdas._closure_per_cache_key.clear()
         lambdas.AnalyzedCode._fns.clear()

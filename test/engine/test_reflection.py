@@ -1,46 +1,46 @@
 import unicodedata
 
-import sqlalchemy as sa
-from sqlalchemy import Computed
-from sqlalchemy import Connection
-from sqlalchemy import DefaultClause
-from sqlalchemy import event
-from sqlalchemy import FetchedValue
-from sqlalchemy import ForeignKey
-from sqlalchemy import Identity
-from sqlalchemy import Index
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import UniqueConstraint
-from sqlalchemy.engine import Inspector
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import ComparesTables
-from sqlalchemy.testing import config
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_regex
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_instance_of
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import not_in
-from sqlalchemy.testing import skip
-from sqlalchemy.testing.provision import normalize_sequence
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import Computed
+from ilikesql import Connection
+from ilikesql import DefaultClause
+from ilikesql import event
+from ilikesql import FetchedValue
+from ilikesql import ForeignKey
+from ilikesql import Identity
+from ilikesql import Index
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import UniqueConstraint
+from ilikesql.engine import Inspector
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import ComparesTables
+from ilikesql.testing import config
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_regex
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_instance_of
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import not_in
+from ilikesql.testing import skip
+from ilikesql.testing.provision import normalize_sequence
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class ReflectionTest(fixtures.TestBase, ComparesTables):
@@ -2120,7 +2120,7 @@ class ColumnEventsTest(fixtures.RemovesEvents, fixtures.TablesTest):
     ):
         # load the actual Table class, not the test
         # wrapper
-        from sqlalchemy.schema import Table
+        from ilikesql.schema import Table
 
         m = MetaData()
 

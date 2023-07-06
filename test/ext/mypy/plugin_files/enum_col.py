@@ -1,9 +1,9 @@
 import enum
 from typing import Optional
 
-from sqlalchemy import Column
-from sqlalchemy import Enum
-from sqlalchemy.orm import declarative_base
+from ilikesql import Column
+from ilikesql import Enum
+from ilikesql.orm import declarative_base
 
 
 class MyEnum(enum.Enum):

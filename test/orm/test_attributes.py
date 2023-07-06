@@ -2,29 +2,29 @@ import pickle
 from unittest.mock import call
 from unittest.mock import Mock
 
-from sqlalchemy import event
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import testing
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import instrumentation
-from sqlalchemy.orm import NO_KEY
-from sqlalchemy.orm.collections import attribute_keyed_dict
-from sqlalchemy.orm.collections import collection
-from sqlalchemy.orm.state import InstanceState
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import not_in
-from sqlalchemy.testing.assertions import assert_warns
-from sqlalchemy.testing.entities import BasicEntity
-from sqlalchemy.testing.util import all_partial_orderings
-from sqlalchemy.testing.util import gc_collect
+from ilikesql import event
+from ilikesql import exc as sa_exc
+from ilikesql import testing
+from ilikesql.orm import attributes
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import instrumentation
+from ilikesql.orm import NO_KEY
+from ilikesql.orm.collections import attribute_keyed_dict
+from ilikesql.orm.collections import collection
+from ilikesql.orm.state import InstanceState
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing import not_in
+from ilikesql.testing.assertions import assert_warns
+from ilikesql.testing.entities import BasicEntity
+from ilikesql.testing.util import all_partial_orderings
+from ilikesql.testing.util import gc_collect
 
 # global for pickling tests
 MyTest = None

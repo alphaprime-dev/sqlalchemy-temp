@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from typing import List
 
-from sqlalchemy import ForeignKey
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.associationproxy import AssociationProxy
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
+from ilikesql import ForeignKey
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.ext.associationproxy import AssociationProxy
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import declared_attr
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
 
 
 class Base(DeclarativeBase):

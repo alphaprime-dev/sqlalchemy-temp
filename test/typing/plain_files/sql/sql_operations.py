@@ -1,18 +1,18 @@
 import typing
 
-from sqlalchemy import and_
-from sqlalchemy import Boolean
-from sqlalchemy import cast
-from sqlalchemy import column
-from sqlalchemy import DateTime
-from sqlalchemy import false
-from sqlalchemy import Float
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import or_
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import true
+from ilikesql import and_
+from ilikesql import Boolean
+from ilikesql import cast
+from ilikesql import column
+from ilikesql import DateTime
+from ilikesql import false
+from ilikesql import Float
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import or_
+from ilikesql import select
+from ilikesql import String
+from ilikesql import true
 
 
 # builtin.pyi stubs define object.__eq__() as returning bool,  which
@@ -121,34 +121,34 @@ if typing.TYPE_CHECKING:
     # as far as if this is ColumnElement, BinaryElement, SQLCoreOperations,
     # that might change.  main thing is it's SomeSQLColThing[bool] and
     # not 'bool' or 'Any'.
-    # EXPECTED_RE_TYPE: sqlalchemy..*ColumnElement\[builtins.bool\]
+    # EXPECTED_RE_TYPE: ilikesql..*ColumnElement\[builtins.bool\]
     reveal_type(expr1)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ColumnClause\[builtins.str.?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ColumnClause\[builtins.str.?\]
     reveal_type(c1)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ColumnClause\[builtins.int.?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ColumnClause\[builtins.int.?\]
     reveal_type(c2)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*BinaryExpression\[builtins.bool\]
+    # EXPECTED_RE_TYPE: ilikesql..*BinaryExpression\[builtins.bool\]
     reveal_type(expr2)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ColumnElement\[Union\[builtins.float, .*\.Decimal\]\]
+    # EXPECTED_RE_TYPE: ilikesql..*ColumnElement\[Union\[builtins.float, .*\.Decimal\]\]
     reveal_type(expr3)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*UnaryExpression\[builtins.int.?\]
+    # EXPECTED_RE_TYPE: ilikesql..*UnaryExpression\[builtins.int.?\]
     reveal_type(expr4)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ColumnElement\[builtins.bool.?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ColumnElement\[builtins.bool.?\]
     reveal_type(expr5)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ColumnElement\[builtins.bool.?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ColumnElement\[builtins.bool.?\]
     reveal_type(expr6)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ColumnElement\[builtins.str\]
+    # EXPECTED_RE_TYPE: ilikesql..*ColumnElement\[builtins.str\]
     reveal_type(expr7)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ColumnElement\[builtins.int.?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ColumnElement\[builtins.int.?\]
     reveal_type(expr8)
 
     # EXPECTED_TYPE: BinaryExpression[bool]

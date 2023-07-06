@@ -1,13 +1,13 @@
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import util
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import util
+from ilikesql.orm import backref
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import relationship
+from ilikesql.testing import fixtures
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 __all__ = ()

@@ -1,8 +1,8 @@
-from sqlalchemy import exc as sa_exc
-from sqlalchemy.orm import state_changes
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
+from ilikesql import exc as sa_exc
+from ilikesql.orm import state_changes
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
 
 
 class StateTestChange(state_changes._StateChangeState):

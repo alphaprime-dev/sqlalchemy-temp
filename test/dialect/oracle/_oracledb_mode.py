@@ -1,6 +1,6 @@
-# do not import sqlalchemy testing feature in this file, since it's
+# do not import ilikesql testing feature in this file, since it's
 # run directly, not passing through pytest
-from sqlalchemy import create_engine
+from ilikesql import create_engine
 
 
 def _get_version(conn):

@@ -12,17 +12,17 @@ of "items", with a particular price paid associated with each "item".
 
 from datetime import datetime
 
-from sqlalchemy import and_
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import DateTime
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
+from ilikesql import and_
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import DateTime
+from ilikesql import Float
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
 
 
 Base = declarative_base()

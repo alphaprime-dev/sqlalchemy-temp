@@ -2,41 +2,41 @@
 
 import datetime
 
-import sqlalchemy as sa
-from sqlalchemy import and_
-from sqlalchemy import bindparam
-from sqlalchemy import Boolean
-from sqlalchemy import Date
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import orm
-from sqlalchemy import select
-from sqlalchemy import SmallInteger
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import util
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import with_parent
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_warns
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.types import TypeDecorator
+import ilikesql as sa
+from ilikesql import and_
+from ilikesql import bindparam
+from ilikesql import Boolean
+from ilikesql import Date
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import orm
+from ilikesql import select
+from ilikesql import SmallInteger
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import util
+from ilikesql.orm import aliased
+from ilikesql.orm import attributes
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import with_parent
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_warns
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.types import TypeDecorator
 from test.orm import _fixtures
 
 

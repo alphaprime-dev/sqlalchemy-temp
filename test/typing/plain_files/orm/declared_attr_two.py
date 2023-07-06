@@ -1,11 +1,11 @@
 import typing
 
-from sqlalchemy import Integer
-from sqlalchemy import Text
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from ilikesql import Integer
+from ilikesql import Text
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import declared_attr
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
 
 
 class Base(DeclarativeBase):

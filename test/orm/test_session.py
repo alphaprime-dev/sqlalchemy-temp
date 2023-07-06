@@ -4,56 +4,56 @@ import inspect as _py_inspect
 import pickle
 from typing import TYPE_CHECKING
 
-import sqlalchemy as sa
-from sqlalchemy import delete
-from sqlalchemy import event
-from sqlalchemy import ForeignKey
-from sqlalchemy import insert
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import update
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import close_all_sessions
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import make_transient
-from sqlalchemy.orm import make_transient_to_detached
-from sqlalchemy.orm import object_session
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import was_deleted
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import assertions
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import pickleable
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.provision import normalize_sequence
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
-from sqlalchemy.util.compat import inspect_getfullargspec
+import ilikesql as sa
+from ilikesql import delete
+from ilikesql import event
+from ilikesql import ForeignKey
+from ilikesql import insert
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import update
+from ilikesql.orm import attributes
+from ilikesql.orm import backref
+from ilikesql.orm import close_all_sessions
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import make_transient
+from ilikesql.orm import make_transient_to_detached
+from ilikesql.orm import object_session
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.orm import was_deleted
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import assertions
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import pickleable
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.provision import normalize_sequence
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
+from ilikesql.util.compat import inspect_getfullargspec
 from test.orm import _fixtures
 
 if TYPE_CHECKING:
-    from sqlalchemy.orm import ORMExecuteState
+    from ilikesql.orm import ORMExecuteState
 
 
 class ExecutionTest(_fixtures.FixtureTest):
@@ -1842,7 +1842,7 @@ class DisposedStates(fixtures.MappedTest):
         cls.mapper_registry.map_imperatively(T, cls.tables.t1)
 
     def teardown_test(self):
-        from sqlalchemy.orm.session import _sessions
+        from ilikesql.orm.session import _sessions
 
         _sessions.clear()
 
@@ -2121,14 +2121,14 @@ class SessionInterface(fixtures.MappedTest):
             )
 
             with mock.patch(
-                "sqlalchemy.orm.session.loading.load_on_ident"
+                "ilikesql.orm.session.loading.load_on_ident"
             ) as load_on_ident:
                 s.refresh(m1, with_for_update={"read": True})
                 s.refresh(m1, with_for_update=True)
                 s.refresh(m1, with_for_update=False)
                 s.refresh(m1)
 
-            from sqlalchemy.orm.query import ForUpdateArg
+            from ilikesql.orm.query import ForUpdateArg
 
             eq_(
                 [

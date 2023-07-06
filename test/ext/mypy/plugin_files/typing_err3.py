@@ -4,14 +4,14 @@ type checked.
 """
 from typing import List
 
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm.decl_api import declared_attr
+from ilikesql import Column
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import declarative_base
+from ilikesql.orm import Mapped
+from ilikesql.orm import relationship
+from ilikesql.orm.decl_api import declared_attr
 
 
 Base = declarative_base()

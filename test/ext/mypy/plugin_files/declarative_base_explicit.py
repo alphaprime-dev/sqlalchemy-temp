@@ -1,8 +1,8 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import registry
-from sqlalchemy.orm.decl_api import DeclarativeMeta
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import registry
+from ilikesql.orm.decl_api import DeclarativeMeta
 
 
 class Base(metaclass=DeclarativeMeta):

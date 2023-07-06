@@ -1,5 +1,5 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
+from ilikesql import Column
+from ilikesql import Integer
 from .base import Base
 
 

@@ -60,7 +60,7 @@ class ScopedSessionBackend(CacheBackend):
         return cache_dict
 
 
-register_backend("sqlalchemy.session", __name__, "ScopedSessionBackend")
+register_backend("ilikesql.session", __name__, "ScopedSessionBackend")
 
 
 if __name__ == "__main__":
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     # pointing to the scoped_session declared in the example
     # environment.
     regions["local_session"] = make_region().configure(
-        "sqlalchemy.session", arguments={"scoped_session": Session}
+        "ilikesql.session", arguments={"scoped_session": Session}
     )
 
     from .model import Person

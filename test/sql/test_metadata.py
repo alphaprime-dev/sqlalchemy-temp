@@ -1,71 +1,71 @@
 from contextlib import contextmanager
 import pickle
 
-import sqlalchemy as tsa
-from sqlalchemy import ARRAY
-from sqlalchemy import BigInteger
-from sqlalchemy import bindparam
-from sqlalchemy import BLANK_SCHEMA
-from sqlalchemy import Boolean
-from sqlalchemy import CheckConstraint
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import ColumnDefault
-from sqlalchemy import Computed
-from sqlalchemy import desc
-from sqlalchemy import Enum
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import Index
-from sqlalchemy import insert_sentinel
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import Numeric
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import TypeDecorator
-from sqlalchemy import types as sqltypes
-from sqlalchemy import Unicode
-from sqlalchemy import UniqueConstraint
-from sqlalchemy.engine import default
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.ext.compiler import deregister
-from sqlalchemy.schema import AddConstraint
-from sqlalchemy.schema import CreateIndex
-from sqlalchemy.schema import DefaultClause
-from sqlalchemy.schema import DropIndex
-from sqlalchemy.sql import naming
-from sqlalchemy.sql import operators
-from sqlalchemy.sql.base import _NONE_NAME
-from sqlalchemy.sql.elements import literal_column
-from sqlalchemy.sql.schema import _InsertSentinelColumnDefault
-from sqlalchemy.sql.schema import RETAIN_SCHEMA
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import ComparesTables
-from sqlalchemy.testing import emits_warning
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_ignore_whitespace
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import Variation
-from sqlalchemy.testing.assertions import expect_warnings
+import ilikesql as tsa
+from ilikesql import ARRAY
+from ilikesql import BigInteger
+from ilikesql import bindparam
+from ilikesql import BLANK_SCHEMA
+from ilikesql import Boolean
+from ilikesql import CheckConstraint
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import ColumnDefault
+from ilikesql import Computed
+from ilikesql import desc
+from ilikesql import Enum
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import Index
+from ilikesql import insert_sentinel
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import Numeric
+from ilikesql import PrimaryKeyConstraint
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import TypeDecorator
+from ilikesql import types as sqltypes
+from ilikesql import Unicode
+from ilikesql import UniqueConstraint
+from ilikesql.engine import default
+from ilikesql.ext.compiler import compiles
+from ilikesql.ext.compiler import deregister
+from ilikesql.schema import AddConstraint
+from ilikesql.schema import CreateIndex
+from ilikesql.schema import DefaultClause
+from ilikesql.schema import DropIndex
+from ilikesql.sql import naming
+from ilikesql.sql import operators
+from ilikesql.sql.base import _NONE_NAME
+from ilikesql.sql.elements import literal_column
+from ilikesql.sql.schema import _InsertSentinelColumnDefault
+from ilikesql.sql.schema import RETAIN_SCHEMA
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import ComparesTables
+from ilikesql.testing import emits_warning
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_ignore_whitespace
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import Variation
+from ilikesql.testing.assertions import expect_warnings
 
 
 class MetaDataTest(fixtures.TestBase, ComparesTables):
@@ -803,7 +803,7 @@ class ToMetaDataTest(fixtures.TestBase, AssertsCompiledSQL, ComparesTables):
     def test_copy(self):
         # TODO: modernize this test for 2.0
 
-        from sqlalchemy.testing.schema import Table
+        from ilikesql.testing.schema import Table
 
         meta = MetaData()
 
@@ -1703,7 +1703,7 @@ class TableTest(fixtures.TestBase, AssertsCompiledSQL):
     @testing.requires.temporary_tables
     @testing.skip_if("mssql", "different col format")
     def test_prefixes(self):
-        from sqlalchemy import Table
+        from ilikesql import Table
 
         table1 = Table(
             "temporary_table_1",
@@ -3226,7 +3226,7 @@ class ConstraintTest(fixtures.TestBase):
         self._assert_index_col_x(t1, idx, columns=True)
 
     def test_column_associated_w_lowercase_table(self):
-        from sqlalchemy import table
+        from ilikesql import table
 
         c = Column("x", Integer)
         table("foo", c)
@@ -4257,9 +4257,9 @@ class ColumnDefinitionTest(AssertsCompiledSQL, fixtures.TestBase):
     def test_custom_subclass_proxy(self):
         """test proxy generation of a Column subclass, can be compiled."""
 
-        from sqlalchemy.schema import Column
-        from sqlalchemy.ext.compiler import compiles
-        from sqlalchemy.sql import select
+        from ilikesql.schema import Column
+        from ilikesql.ext.compiler import compiles
+        from ilikesql.sql import select
 
         class MyColumn(Column):
             def _constructor(self, name, type_, **kw):
@@ -4301,8 +4301,8 @@ class ColumnDefinitionTest(AssertsCompiledSQL, fixtures.TestBase):
         )
 
     def test_custom_subclass_proxy_typeerror(self):
-        from sqlalchemy.schema import Column
-        from sqlalchemy.sql import select
+        from ilikesql.schema import Column
+        from ilikesql.sql import select
 
         class MyColumn(Column):
             def __init__(self, type_, **kw):
@@ -4838,7 +4838,7 @@ class CatchAllEventsTest(fixtures.RemovesEvents, fixtures.TestBase):
 class DialectKWArgTest(fixtures.TestBase):
     @contextmanager
     def _fixture(self):
-        from sqlalchemy.engine.default import DefaultDialect
+        from ilikesql.engine.default import DefaultDialect
 
         class ParticipatingDialect(DefaultDialect):
             construct_arguments = [
@@ -4865,7 +4865,7 @@ class DialectKWArgTest(fixtures.TestBase):
             else:
                 raise exc.NoSuchModuleError("no dialect %r" % dialect_name)
 
-        with mock.patch("sqlalchemy.dialects.registry.load", load):
+        with mock.patch("ilikesql.dialects.registry.load", load):
             yield
 
     def teardown_test(self):
@@ -4917,7 +4917,7 @@ class DialectKWArgTest(fixtures.TestBase):
                 exc.ArgumentError,
                 "Argument 'participating_q_p_x' is not accepted by dialect "
                 "'participating' on behalf of "
-                "<class 'sqlalchemy.sql.schema.Index'>",
+                "<class 'ilikesql.sql.schema.Index'>",
                 Index,
                 "a",
                 "b",
@@ -4933,7 +4933,7 @@ class DialectKWArgTest(fixtures.TestBase):
                 exc.ArgumentError,
                 "Argument 'participating_q_p_x' is not accepted by dialect "
                 "'participating' on behalf of "
-                "<class 'sqlalchemy.sql.schema.UniqueConstraint'>",
+                "<class 'ilikesql.sql.schema.UniqueConstraint'>",
                 UniqueConstraint,
                 "a",
                 "b",
@@ -5039,7 +5039,7 @@ class DialectKWArgTest(fixtures.TestBase):
                 exc.ArgumentError,
                 "Argument 'participating_fake' is not accepted by "
                 "dialect 'participating' on behalf of "
-                "<class 'sqlalchemy.sql.schema.ForeignKeyConstraint'>",
+                "<class 'ilikesql.sql.schema.ForeignKeyConstraint'>",
                 Table,
                 "t",
                 m,
@@ -5990,7 +5990,7 @@ class NamingConventionTest(fixtures.TestBase, AssertsCompiledSQL):
 class CopyDialectOptionsTest(fixtures.TestBase):
     @contextmanager
     def _fixture(self):
-        from sqlalchemy.engine.default import DefaultDialect
+        from ilikesql.engine.default import DefaultDialect
 
         class CopyDialectOptionsTestDialect(DefaultDialect):
             construct_arguments = [
@@ -6007,7 +6007,7 @@ class CopyDialectOptionsTest(fixtures.TestBase):
             else:
                 raise exc.NoSuchModuleError("no dialect %r" % dialect_name)
 
-        with mock.patch("sqlalchemy.dialects.registry.load", load):
+        with mock.patch("ilikesql.dialects.registry.load", load):
             yield
 
     @classmethod

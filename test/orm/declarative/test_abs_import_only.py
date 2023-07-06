@@ -6,11 +6,11 @@ mappings while guaranteeing that the Mapped name is not locally present
 
 from __future__ import annotations
 
-import sqlalchemy
-from sqlalchemy import orm
-import sqlalchemy.orm
-import sqlalchemy.testing
-import sqlalchemy.testing.fixtures
+import ilikesql
+from ilikesql import orm
+import ilikesql.orm
+import ilikesql.testing
+import ilikesql.testing.fixtures
 
 try:
     x = Mapped  # type: ignore
@@ -21,7 +21,7 @@ else:
 
 
 class MappedColumnTest(
-    sqlalchemy.testing.fixtures.TestBase, sqlalchemy.testing.AssertsCompiledSQL
+    ilikesql.testing.fixtures.TestBase, ilikesql.testing.AssertsCompiledSQL
 ):
     __dialect__ = "default"
 
@@ -31,17 +31,17 @@ class MappedColumnTest(
         class Foo(decl_base):
             __tablename__ = "foo"
 
-            id: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column(
+            id: ilikesql.orm.Mapped[int] = ilikesql.orm.mapped_column(
                 primary_key=True
             )
 
-            data: sqlalchemy.orm.Mapped[int] = sqlalchemy.orm.mapped_column()
+            data: ilikesql.orm.Mapped[int] = ilikesql.orm.mapped_column()
 
-            data2: sqlalchemy.orm.Mapped[int]
+            data2: ilikesql.orm.Mapped[int]
 
             data3: orm.Mapped[int]
 
         self.assert_compile(
-            sqlalchemy.select(Foo),
+            ilikesql.select(Foo),
             "SELECT foo.id, foo.data, foo.data2, foo.data3 FROM foo",
         )

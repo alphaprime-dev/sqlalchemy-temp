@@ -3,38 +3,38 @@ import time
 from unittest.mock import call
 from unittest.mock import Mock
 
-import sqlalchemy as tsa
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import pool
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import util
-from sqlalchemy.engine import default
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_raises_message_context_ok
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.engines import DBAPIProxyConnection
-from sqlalchemy.testing.engines import DBAPIProxyCursor
-from sqlalchemy.testing.engines import testing_engine
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
+import ilikesql as tsa
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import pool
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import util
+from ilikesql.engine import default
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_raises_message_context_ok
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import ne_
+from ilikesql.testing.engines import DBAPIProxyConnection
+from ilikesql.testing.engines import DBAPIProxyCursor
+from ilikesql.testing.engines import testing_engine
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
 
 
 class MockError(Exception):
@@ -269,7 +269,7 @@ class PrePingMockTest(fixtures.TestBase):
 
         @event.listens_for(pool._dialect, "handle_error")
         def setup_disconnect(ctx):
-            assert isinstance(ctx.sqlalchemy_exception, exc.DBAPIError)
+            assert isinstance(ctx.ilikesql_exception, exc.DBAPIError)
             assert isinstance(ctx.original_exception, MockDisconnect)
             ctx.is_disconnect = True
 
@@ -755,8 +755,8 @@ class MockReconnectTest(fixtures.TestBase):
         )
 
     def test_dialect_initialize_once(self):
-        from sqlalchemy.engine.url import URL
-        from sqlalchemy.engine.default import DefaultDialect
+        from ilikesql.engine.url import URL
+        from ilikesql.engine.default import DefaultDialect
 
         dbapi = self.dbapi
 
@@ -784,8 +784,8 @@ class MockReconnectTest(fixtures.TestBase):
         eq_(Dialect.initialize.call_count, 1)
 
     def test_dialect_initialize_retry_if_exception(self):
-        from sqlalchemy.engine.url import URL
-        from sqlalchemy.engine.default import DefaultDialect
+        from ilikesql.engine.url import URL
+        from ilikesql.engine.default import DefaultDialect
 
         dbapi = self.dbapi
 
@@ -949,7 +949,7 @@ class CursorErrTest(fixtures.TestBase):
 
         dbapi = MockDBAPI()
 
-        from sqlalchemy.engine import default
+        from ilikesql.engine import default
 
         url = Mock(
             get_dialect=lambda: default.DefaultDialect,

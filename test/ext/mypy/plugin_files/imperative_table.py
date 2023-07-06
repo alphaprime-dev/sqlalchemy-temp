@@ -1,13 +1,13 @@
 import datetime
 from typing import Optional
 
-from sqlalchemy import Column
-from sqlalchemy import DateTime
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Mapped
+from ilikesql import Column
+from ilikesql import DateTime
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import Table
+from ilikesql.orm import declarative_base
+from ilikesql.orm import Mapped
 
 
 Base = declarative_base()

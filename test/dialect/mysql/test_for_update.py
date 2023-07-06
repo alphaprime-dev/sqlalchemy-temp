@@ -5,25 +5,25 @@ See #4246
 """
 import contextlib
 
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import literal_column
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import update
-from sqlalchemy.dialects.mysql import base as mysql
-from sqlalchemy.exc import ProgrammingError
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.sql import column
-from sqlalchemy.sql import table
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import literal_column
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import update
+from ilikesql.dialects.mysql import base as mysql
+from ilikesql.exc import ProgrammingError
+from ilikesql.orm import joinedload
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.sql import column
+from ilikesql.sql import table
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
 
 
 class MySQLForUpdateLockingTest(fixtures.DeclarativeMappedTest):

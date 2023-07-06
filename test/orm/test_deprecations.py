@@ -1,69 +1,69 @@
 from unittest.mock import call
 from unittest.mock import Mock
 
-import sqlalchemy as sa
-from sqlalchemy import cast
-from sqlalchemy import column
-from sqlalchemy import desc
-from sqlalchemy import event
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy.engine import default
-from sqlalchemy.engine import result_tuple
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import collections
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import contains_alias
-from sqlalchemy.orm import contains_eager
-from sqlalchemy.orm import defaultload
-from sqlalchemy.orm import defer
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import foreign
-from sqlalchemy.orm import instrumentation
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm import synonym
-from sqlalchemy.orm import undefer
-from sqlalchemy.orm import with_parent
-from sqlalchemy.orm import with_polymorphic
-from sqlalchemy.orm.collections import collection
-from sqlalchemy.orm.util import polymorphic_union
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assertions
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_ignore_whitespace
-from sqlalchemy.testing import expect_deprecated
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import CacheKeyFixture
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.fixtures import RemoveORMEventsGlobally
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import cast
+from ilikesql import column
+from ilikesql import desc
+from ilikesql import event
+from ilikesql import exc as sa_exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql.engine import default
+from ilikesql.engine import result_tuple
+from ilikesql.orm import aliased
+from ilikesql.orm import attributes
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import collections
+from ilikesql.orm import column_property
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import contains_alias
+from ilikesql.orm import contains_eager
+from ilikesql.orm import defaultload
+from ilikesql.orm import defer
+from ilikesql.orm import deferred
+from ilikesql.orm import foreign
+from ilikesql.orm import instrumentation
+from ilikesql.orm import joinedload
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import scoped_session
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.orm import subqueryload
+from ilikesql.orm import synonym
+from ilikesql.orm import undefer
+from ilikesql.orm import with_parent
+from ilikesql.orm import with_polymorphic
+from ilikesql.orm.collections import collection
+from ilikesql.orm.util import polymorphic_union
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assertions
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_ignore_whitespace
+from ilikesql.testing import expect_deprecated
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import CacheKeyFixture
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.fixtures import RemoveORMEventsGlobally
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 from . import _fixtures
 from .inheritance import _poly_fixtures
 from .inheritance._poly_fixtures import Manager
@@ -422,9 +422,9 @@ class MiscDeprecationsTest(fixtures.TestBase):
             "name will be removed in a future release.  "
             "'_EvaluatorCompiler' is for internal use only"
         ):
-            from sqlalchemy.orm.evaluator import EvaluatorCompiler
+            from ilikesql.orm.evaluator import EvaluatorCompiler
 
-        from sqlalchemy.orm.evaluator import _EvaluatorCompiler
+        from ilikesql.orm.evaluator import _EvaluatorCompiler
 
         is_(EvaluatorCompiler, _EvaluatorCompiler)
 
@@ -673,12 +673,12 @@ class DeprecatedMapperTest(
     __dialect__ = "default"
 
     def test_listen_on_mapper_mapper_event_fn(self, registry):
-        from sqlalchemy.orm import mapper
+        from ilikesql.orm import mapper
 
         m1 = Mock()
 
         with expect_deprecated(
-            r"The `sqlalchemy.orm.mapper\(\)` symbol is deprecated and "
+            r"The `ilikesql.orm.mapper\(\)` symbol is deprecated and "
             "will be removed"
         ):
 
@@ -695,12 +695,12 @@ class DeprecatedMapperTest(
         eq_(m1.mock_calls, [call()])
 
     def test_listen_on_mapper_instrumentation_event_fn(self, registry):
-        from sqlalchemy.orm import mapper
+        from ilikesql.orm import mapper
 
         m1 = Mock()
 
         with expect_deprecated(
-            r"The `sqlalchemy.orm.mapper\(\)` symbol is deprecated and "
+            r"The `ilikesql.orm.mapper\(\)` symbol is deprecated and "
             "will be removed"
         ):
 
@@ -731,11 +731,11 @@ class DeprecatedMapperTest(
 
         t1 = Table("t1", MetaData(), Column("id", Integer, primary_key=True))
 
-        from sqlalchemy.orm import mapper
+        from ilikesql.orm import mapper
 
         with assertions.expect_raises_message(
             sa_exc.InvalidRequestError,
-            r"The 'sqlalchemy.orm.mapper\(\)' function is removed as of "
+            r"The 'ilikesql.orm.mapper\(\)' function is removed as of "
             "SQLAlchemy 2.0.",
         ):
             mapper(MyClass, t1)
@@ -1057,7 +1057,7 @@ class InstrumentationTest(fixtures.ORMTest):
                 def base_remove(self, x):
                     return "base_remove"
 
-        from sqlalchemy.orm.collections import _instrument_class
+        from ilikesql.orm.collections import _instrument_class
 
         _instrument_class(Base)
 
@@ -1766,7 +1766,7 @@ class InstancesTest(QueryTest, AssertsCompiledSQL):
         # test using Alias with more than one level deep
 
         # new way:
-        # from sqlalchemy.orm.strategy_options import Load
+        # from ilikesql.orm.strategy_options import Load
         # opt = Load(User).contains_eager('orders', alias=oalias).
         #     contains_eager('items', alias=ialias)
 
@@ -2005,7 +2005,7 @@ class MixedEntitiesTest(QueryTest, AssertsCompiledSQL):
     @testing.fails_on(
         "postgresql+asyncpg",
         "Asyncpg uses preprated statements that are not compatible with how "
-        "sqlalchemy passes the query. Fails with "
+        "ilikesql passes the query. Fails with "
         'ERROR:  column "users.name" must appear in the GROUP BY clause'
         " or be used in an aggregate function",
     )
@@ -2250,7 +2250,7 @@ class BindSensitiveStringifyTest(fixtures.MappedTest):
         class MyDialect(default.DefaultDialect):
             default_paramstyle = "qmark"
 
-        from sqlalchemy.engine import base
+        from ilikesql.engine import base
 
         return base.Engine(mock.Mock(), MyDialect(), mock.Mock())
 

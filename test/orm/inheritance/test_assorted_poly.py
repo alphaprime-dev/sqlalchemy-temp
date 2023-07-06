@@ -7,44 +7,44 @@ from __future__ import annotations
 
 from typing import Optional
 
-from sqlalchemy import and_
-from sqlalchemy import exists
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import Unicode
-from sqlalchemy import util
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import contains_eager
-from sqlalchemy.orm import immediateload
-from sqlalchemy.orm import join
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import polymorphic_union
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import with_polymorphic
-from sqlalchemy.orm.interfaces import MANYTOONE
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import config
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.provision import normalize_sequence
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import and_
+from ilikesql import exists
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import Unicode
+from ilikesql import util
+from ilikesql.orm import aliased
+from ilikesql.orm import class_mapper
+from ilikesql.orm import column_property
+from ilikesql.orm import contains_eager
+from ilikesql.orm import immediateload
+from ilikesql.orm import join
+from ilikesql.orm import joinedload
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import polymorphic_union
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.orm import with_polymorphic
+from ilikesql.orm.interfaces import MANYTOONE
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import config
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.provision import normalize_sequence
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class RelationshipTest1(fixtures.MappedTest):
@@ -2253,7 +2253,7 @@ class ColSubclassTest(
 
     @classmethod
     def setup_classes(cls):
-        from sqlalchemy.schema import Column
+        from ilikesql.schema import Column
 
         Base = cls.DeclarativeBasic
 

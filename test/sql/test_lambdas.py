@@ -5,41 +5,41 @@ import time
 from typing import List
 from typing import Optional
 
-from sqlalchemy import exc
-from sqlalchemy import testing
-from sqlalchemy.future import select as future_select
-from sqlalchemy.schema import Column
-from sqlalchemy.schema import ForeignKey
-from sqlalchemy.schema import Table
-from sqlalchemy.sql import and_
-from sqlalchemy.sql import bindparam
-from sqlalchemy.sql import coercions
-from sqlalchemy.sql import column
-from sqlalchemy.sql import func
-from sqlalchemy.sql import join
-from sqlalchemy.sql import lambda_stmt
-from sqlalchemy.sql import lambdas
-from sqlalchemy.sql import literal
-from sqlalchemy.sql import null
-from sqlalchemy.sql import roles
-from sqlalchemy.sql import select
-from sqlalchemy.sql import table
-from sqlalchemy.sql import util as sql_util
-from sqlalchemy.sql.base import ExecutableOption
-from sqlalchemy.sql.cache_key import HasCacheKey
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.types import ARRAY
-from sqlalchemy.types import Boolean
-from sqlalchemy.types import Integer
-from sqlalchemy.types import JSON
-from sqlalchemy.types import String
+from ilikesql import exc
+from ilikesql import testing
+from ilikesql.future import select as future_select
+from ilikesql.schema import Column
+from ilikesql.schema import ForeignKey
+from ilikesql.schema import Table
+from ilikesql.sql import and_
+from ilikesql.sql import bindparam
+from ilikesql.sql import coercions
+from ilikesql.sql import column
+from ilikesql.sql import func
+from ilikesql.sql import join
+from ilikesql.sql import lambda_stmt
+from ilikesql.sql import lambdas
+from ilikesql.sql import literal
+from ilikesql.sql import null
+from ilikesql.sql import roles
+from ilikesql.sql import select
+from ilikesql.sql import table
+from ilikesql.sql import util as sql_util
+from ilikesql.sql.base import ExecutableOption
+from ilikesql.sql.cache_key import HasCacheKey
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import ne_
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.types import ARRAY
+from ilikesql.types import Boolean
+from ilikesql.types import Integer
+from ilikesql.types import JSON
+from ilikesql.types import String
 
 
 class LambdaElementTest(
@@ -2104,7 +2104,7 @@ class ConcurrencyTest(fixtures.TestBase):
 
         decl_base.metadata.create_all(testing.db)
 
-        from sqlalchemy.orm import Session
+        from ilikesql.orm import Session
 
         with testing.db.connect() as conn:
             with Session(conn) as session:
@@ -2125,7 +2125,7 @@ class ConcurrencyTest(fixtures.TestBase):
         NUM_OF_LAMBDAS = 150
 
         code = """
-from sqlalchemy import lambda_stmt, select
+from ilikesql import lambda_stmt, select
 
 
 def generate_lambda_stmt(wanted):

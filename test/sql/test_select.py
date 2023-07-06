@@ -1,26 +1,26 @@
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import true
-from sqlalchemy import tuple_
-from sqlalchemy import union
-from sqlalchemy.sql import column
-from sqlalchemy.sql import literal
-from sqlalchemy.sql import table
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import true
+from ilikesql import tuple_
+from ilikesql import union
+from ilikesql.sql import column
+from ilikesql.sql import literal
+from ilikesql.sql import table
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
 
 table1 = table(
     "mytable",
@@ -125,7 +125,7 @@ class SelectTest(fixtures.TestBase, AssertsCompiledSQL):
             def __clause_element__(self):
                 return table1
 
-        from sqlalchemy.inspection import _inspects
+        from ilikesql.inspection import _inspects
 
         @_inspects(Thing)
         def _ce(thing):

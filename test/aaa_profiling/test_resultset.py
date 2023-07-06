@@ -1,17 +1,17 @@
 import sys
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Unicode
-from sqlalchemy.engine.row import Row
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import profiling
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Unicode
+from ilikesql.engine.row import Row
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import profiling
 
 
 NUM_FIELDS = 10

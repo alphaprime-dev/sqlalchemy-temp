@@ -1,13 +1,13 @@
 from typing import Optional
 
-from sqlalchemy import ForeignKey
-from sqlalchemy import Index
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import UniqueConstraint
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from ilikesql import ForeignKey
+from ilikesql import Index
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import UniqueConstraint
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
 
 
 class Base(DeclarativeBase):

@@ -1,29 +1,29 @@
 """Evaluating SQL expressions on ORM objects"""
 
-from sqlalchemy import and_
-from sqlalchemy import bindparam
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import JSON
-from sqlalchemy import not_
-from sqlalchemy import or_
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import tuple_
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import evaluator
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import and_
+from ilikesql import bindparam
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import JSON
+from ilikesql import not_
+from ilikesql import or_
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import tuple_
+from ilikesql.ext.hybrid import hybrid_property
+from ilikesql.orm import evaluator
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import relationship
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 compiler = evaluator._EvaluatorCompiler()
 

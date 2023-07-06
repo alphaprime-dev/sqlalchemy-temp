@@ -1,41 +1,41 @@
-from sqlalchemy import bindparam
-from sqlalchemy import Column
-from sqlalchemy import Computed
-from sqlalchemy import delete
-from sqlalchemy import exc
-from sqlalchemy import extract
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import Index
-from sqlalchemy import insert
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import try_cast
-from sqlalchemy import union
-from sqlalchemy import UniqueConstraint
-from sqlalchemy import update
-from sqlalchemy.dialects import mssql
-from sqlalchemy.dialects.mssql import base as mssql_base
-from sqlalchemy.sql import column
-from sqlalchemy.sql import quoted_name
-from sqlalchemy.sql import table
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing.assertions import eq_ignore_whitespace
-from sqlalchemy.types import TypeEngine
+from ilikesql import bindparam
+from ilikesql import Column
+from ilikesql import Computed
+from ilikesql import delete
+from ilikesql import exc
+from ilikesql import extract
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import Index
+from ilikesql import insert
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import PrimaryKeyConstraint
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import try_cast
+from ilikesql import union
+from ilikesql import UniqueConstraint
+from ilikesql import update
+from ilikesql.dialects import mssql
+from ilikesql.dialects.mssql import base as mssql_base
+from ilikesql.sql import column
+from ilikesql.sql import quoted_name
+from ilikesql.sql import table
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing.assertions import eq_ignore_whitespace
+from ilikesql.types import TypeEngine
 
 tbl = table("t", column("a"))
 
@@ -398,7 +398,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
     def test_strict_binds(self, expr, compiled, kw):
         """test the 'strict' compiler binds."""
 
-        from sqlalchemy.dialects.mssql.base import MSSQLStrictCompiler
+        from ilikesql.dialects.mssql.base import MSSQLStrictCompiler
 
         mssql_dialect = mssql.dialect()
         mssql_dialect.statement_compiler = MSSQLStrictCompiler

@@ -5,46 +5,46 @@ import random
 from typing import Optional
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Column
-from sqlalchemy import event
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import session as _session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.util import identity_key
-from sqlalchemy.sql import elements
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warnings
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.config import Variation
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.util import gc_collect
+from ilikesql import Column
+from ilikesql import event
+from ilikesql import exc as sa_exc
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql.orm import attributes
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import session as _session
+from ilikesql.orm import sessionmaker
+from ilikesql.orm.util import identity_key
+from ilikesql.sql import elements
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warnings
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_not
+from ilikesql.testing import mock
+from ilikesql.testing.config import Variation
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.util import gc_collect
 from test.orm._fixtures import FixtureTest
 
 if TYPE_CHECKING:
-    from sqlalchemy import NestedTransaction
-    from sqlalchemy import Transaction
+    from ilikesql import NestedTransaction
+    from ilikesql import Transaction
 
 
 class SessionTransactionTest(fixtures.RemovesEvents, FixtureTest):

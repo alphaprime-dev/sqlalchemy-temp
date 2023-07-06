@@ -13,19 +13,19 @@ from typing import TYPE_CHECKING
 from typing import TypeVar
 import uuid
 
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import Uuid
-import sqlalchemy.orm
-from sqlalchemy.orm import attribute_keyed_dict
-from sqlalchemy.orm import KeyFuncDict
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import is_
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import Uuid
+import ilikesql.orm
+from ilikesql.orm import attribute_keyed_dict
+from ilikesql.orm import KeyFuncDict
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import is_
 from .test_typed_mapping import expect_annotation_syntax_error
 from .test_typed_mapping import MappedColumnTest as _MappedColumnTest
 from .test_typed_mapping import RelationshipLHSTest as _RelationshipLHSTest
@@ -52,11 +52,11 @@ class MappedColumnTest(_MappedColumnTest):
         class Foo(decl_base):
             __tablename__ = "foo"
 
-            id: sqlalchemy.orm.Mapped[int] = mapped_column(primary_key=True)
+            id: ilikesql.orm.Mapped[int] = mapped_column(primary_key=True)
 
-            data: sqlalchemy.orm.Mapped[int] = mapped_column()
+            data: ilikesql.orm.Mapped[int] = mapped_column()
 
-            data2: sqlalchemy.orm.Mapped[int]
+            data2: ilikesql.orm.Mapped[int]
 
         self.assert_compile(
             select(Foo), "SELECT foo.id, foo.data, foo.data2 FROM foo"

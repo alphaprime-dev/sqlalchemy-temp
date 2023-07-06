@@ -4,17 +4,17 @@ https://www.intelligententerprise.com/001020/celko.jhtml
 
 """
 
-from sqlalchemy import case
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import Session
+from ilikesql import case
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import aliased
+from ilikesql.orm import Session
 
 
 Base = declarative_base()

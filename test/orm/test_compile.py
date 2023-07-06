@@ -1,18 +1,18 @@
-from sqlalchemy import Column
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import Unicode
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import fixtures
+from ilikesql import Column
+from ilikesql import exc as sa_exc
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import Unicode
+from ilikesql.orm import backref
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import fixtures
 
 
 class CompileTest(fixtures.MappedTest):

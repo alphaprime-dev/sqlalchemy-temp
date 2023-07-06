@@ -1,13 +1,13 @@
 from typing import Sequence
 from typing import TYPE_CHECKING
 
-from sqlalchemy import create_engine
-from sqlalchemy import select
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import with_polymorphic
+from ilikesql import create_engine
+from ilikesql import select
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import Session
+from ilikesql.orm import with_polymorphic
 
 
 class Base(DeclarativeBase):

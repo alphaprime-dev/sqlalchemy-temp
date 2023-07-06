@@ -2,90 +2,90 @@ import collections.abc as collections_abc
 import contextlib
 import functools
 
-import sqlalchemy as sa
-from sqlalchemy import and_
-from sqlalchemy import asc
-from sqlalchemy import between
-from sqlalchemy import bindparam
-from sqlalchemy import Boolean
-from sqlalchemy import case
-from sqlalchemy import cast
-from sqlalchemy import collate
-from sqlalchemy import column
-from sqlalchemy import desc
-from sqlalchemy import distinct
-from sqlalchemy import event
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import exists
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import LABEL_STYLE_DISAMBIGUATE_ONLY
-from sqlalchemy import LABEL_STYLE_NONE
-from sqlalchemy import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import null
-from sqlalchemy import or_
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import true
-from sqlalchemy import type_coerce
-from sqlalchemy import Unicode
-from sqlalchemy import union
-from sqlalchemy import util
-from sqlalchemy.engine import cursor as _cursor
-from sqlalchemy.engine import default
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import Bundle
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import contains_eager
-from sqlalchemy.orm import defer
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import join
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import lazyload
-from sqlalchemy.orm import Query
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm import synonym
-from sqlalchemy.orm import undefer
-from sqlalchemy.orm import with_parent
-from sqlalchemy.orm.context import QueryContext
-from sqlalchemy.sql import expression
-from sqlalchemy.sql import operators
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertions import assert_raises
-from sqlalchemy.testing.assertions import assert_raises_message
-from sqlalchemy.testing.assertions import assert_warns_message
-from sqlalchemy.testing.assertions import eq_
-from sqlalchemy.testing.assertions import expect_raises
-from sqlalchemy.testing.assertions import expect_warnings
-from sqlalchemy.testing.assertions import is_not_none
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
-from sqlalchemy.types import NullType
-from sqlalchemy.types import TypeDecorator
+import ilikesql as sa
+from ilikesql import and_
+from ilikesql import asc
+from ilikesql import between
+from ilikesql import bindparam
+from ilikesql import Boolean
+from ilikesql import case
+from ilikesql import cast
+from ilikesql import collate
+from ilikesql import column
+from ilikesql import desc
+from ilikesql import distinct
+from ilikesql import event
+from ilikesql import exc as sa_exc
+from ilikesql import exists
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import LABEL_STYLE_DISAMBIGUATE_ONLY
+from ilikesql import LABEL_STYLE_NONE
+from ilikesql import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import null
+from ilikesql import or_
+from ilikesql import select
+from ilikesql import String
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import true
+from ilikesql import type_coerce
+from ilikesql import Unicode
+from ilikesql import union
+from ilikesql import util
+from ilikesql.engine import cursor as _cursor
+from ilikesql.engine import default
+from ilikesql.ext.compiler import compiles
+from ilikesql.orm import aliased
+from ilikesql.orm import attributes
+from ilikesql.orm import backref
+from ilikesql.orm import Bundle
+from ilikesql.orm import column_property
+from ilikesql.orm import contains_eager
+from ilikesql.orm import defer
+from ilikesql.orm import deferred
+from ilikesql.orm import join
+from ilikesql.orm import joinedload
+from ilikesql.orm import lazyload
+from ilikesql.orm import Query
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import subqueryload
+from ilikesql.orm import synonym
+from ilikesql.orm import undefer
+from ilikesql.orm import with_parent
+from ilikesql.orm.context import QueryContext
+from ilikesql.sql import expression
+from ilikesql.sql import operators
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing.assertions import assert_raises
+from ilikesql.testing.assertions import assert_raises_message
+from ilikesql.testing.assertions import assert_warns_message
+from ilikesql.testing.assertions import eq_
+from ilikesql.testing.assertions import expect_raises
+from ilikesql.testing.assertions import expect_warnings
+from ilikesql.testing.assertions import is_not_none
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
+from ilikesql.types import NullType
+from ilikesql.types import TypeDecorator
 from test.orm import _fixtures
 
 
@@ -2862,7 +2862,7 @@ class ColumnPropertyTest(_fixtures.FixtureTest, AssertsCompiledSQL):
 
 class ComparatorTest(QueryTest):
     def test_clause_element_query_resolve(self):
-        from sqlalchemy.orm.properties import ColumnProperty
+        from ilikesql.orm.properties import ColumnProperty
 
         User = self.classes.User
 
@@ -5222,7 +5222,7 @@ class DistinctTest(QueryTest, AssertsCompiledSQL):
             "not a label"
         )
 
-        from sqlalchemy.dialects import postgresql
+        from ilikesql.dialects import postgresql
 
         assert_raises_message(
             sa_exc.CompileError,
@@ -5752,7 +5752,7 @@ class HintsTest(QueryTest, AssertsCompiledSQL):
     def test_hints(self):
         User = self.classes.User
 
-        from sqlalchemy.dialects import mysql
+        from ilikesql.dialects import mysql
 
         dialect = mysql.dialect()
 
@@ -7537,7 +7537,7 @@ class ExecutionOptionsTest(QueryTest):
 
         event.listen(s, "do_orm_execute", do_orm_execute)
 
-        from sqlalchemy.orm import loading
+        from ilikesql.orm import loading
 
         with mock.patch.object(loading, "instances") as m2:
             s.execute(stmt)

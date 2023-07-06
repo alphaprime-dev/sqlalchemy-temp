@@ -3,56 +3,56 @@ import datetime
 import decimal
 import pickle
 
-from sqlalchemy import ARRAY
-from sqlalchemy import bindparam
-from sqlalchemy import Boolean
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import Date
-from sqlalchemy import DateTime
-from sqlalchemy import extract
-from sqlalchemy import Float
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import JSON
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import Numeric
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import true
-from sqlalchemy.dialects import mysql
-from sqlalchemy.dialects import oracle
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.dialects import sqlite
-from sqlalchemy.dialects.postgresql import ARRAY as PG_ARRAY
-from sqlalchemy.dialects.postgresql import array
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.sql import column
-from sqlalchemy.sql import functions
-from sqlalchemy.sql import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import quoted_name
-from sqlalchemy.sql import sqltypes
-from sqlalchemy.sql import table
-from sqlalchemy.sql.compiler import BIND_TEMPLATES
-from sqlalchemy.sql.functions import FunctionElement
-from sqlalchemy.sql.functions import GenericFunction
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import config
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing.assertions import expect_warnings
-from sqlalchemy.testing.engines import all_dialects
-from sqlalchemy.testing.provision import normalize_sequence
+from ilikesql import ARRAY
+from ilikesql import bindparam
+from ilikesql import Boolean
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import Date
+from ilikesql import DateTime
+from ilikesql import extract
+from ilikesql import Float
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import JSON
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import Numeric
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import true
+from ilikesql.dialects import mysql
+from ilikesql.dialects import oracle
+from ilikesql.dialects import postgresql
+from ilikesql.dialects import sqlite
+from ilikesql.dialects.postgresql import ARRAY as PG_ARRAY
+from ilikesql.dialects.postgresql import array
+from ilikesql.ext.compiler import compiles
+from ilikesql.sql import column
+from ilikesql.sql import functions
+from ilikesql.sql import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.sql import operators
+from ilikesql.sql import quoted_name
+from ilikesql.sql import sqltypes
+from ilikesql.sql import table
+from ilikesql.sql.compiler import BIND_TEMPLATES
+from ilikesql.sql.functions import FunctionElement
+from ilikesql.sql.functions import GenericFunction
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import config
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing.assertions import expect_warnings
+from ilikesql.testing.engines import all_dialects
+from ilikesql.testing.provision import normalize_sequence
 
 
 table1 = table(
@@ -866,7 +866,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
         )
 
     def test_incorrect_none_type(self):
-        from sqlalchemy.sql.expression import FunctionElement
+        from ilikesql.sql.expression import FunctionElement
 
         class MissingType(FunctionElement):
             name = "mt"
@@ -899,7 +899,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
     def test_as_comparison_annotate(self):
         fn = func.foobar("x", "y", "q", "p", "r").as_comparison(2, 5)
 
-        from sqlalchemy.sql import annotation
+        from ilikesql.sql import annotation
 
         fn_annotated = annotation._deep_annotate(fn, {"token": "yes"})
 
@@ -923,7 +923,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
             checkparams={"some_comparison_1": "q"},
         )
 
-        from sqlalchemy.sql import visitors
+        from ilikesql.sql import visitors
 
         fn_2 = visitors.cloned_traverse(fn, {}, {})
         fn_2.right = literal_column("ABC")
@@ -987,7 +987,7 @@ class ReturnTypeTest(AssertsCompiledSQL, fixtures.TestBase):
         )
 
     def test_array_agg_array_literal_explicit_type(self):
-        from sqlalchemy.dialects.postgresql import array
+        from ilikesql.dialects.postgresql import array
 
         expr = array([column("data", Integer), column("d2", Integer)])
 
@@ -1037,8 +1037,8 @@ class ExecuteTest(fixtures.TestBase):
         pass
 
     def test_conn_execute(self, connection):
-        from sqlalchemy.sql.expression import FunctionElement
-        from sqlalchemy.ext.compiler import compiles
+        from ilikesql.sql.expression import FunctionElement
+        from ilikesql.ext.compiler import compiles
 
         class myfunc(FunctionElement):
             inherit_cache = True

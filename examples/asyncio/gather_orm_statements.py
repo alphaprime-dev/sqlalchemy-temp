@@ -19,13 +19,13 @@ traditional approach.
 import asyncio
 import random
 
-from sqlalchemy.ext.asyncio import async_sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.future import select
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import merge_frozen_result
+from ilikesql.ext.asyncio import async_sessionmaker
+from ilikesql.ext.asyncio import create_async_engine
+from ilikesql.future import select
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import merge_frozen_result
 
 
 class Base(DeclarativeBase):

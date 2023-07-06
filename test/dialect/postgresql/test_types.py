@@ -4,91 +4,91 @@ from enum import Enum as _PY_Enum
 import re
 import uuid
 
-import sqlalchemy as sa
-from sqlalchemy import any_
-from sqlalchemy import ARRAY
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import DateTime
-from sqlalchemy import Double
-from sqlalchemy import Enum
-from sqlalchemy import exc
-from sqlalchemy import Float
-from sqlalchemy import func
-from sqlalchemy import insert
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import null
-from sqlalchemy import Numeric
-from sqlalchemy import REAL
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import text
-from sqlalchemy import type_coerce
-from sqlalchemy import TypeDecorator
-from sqlalchemy import types
-from sqlalchemy import Unicode
-from sqlalchemy import util
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.dialects.postgresql import aggregate_order_by
-from sqlalchemy.dialects.postgresql import array
-from sqlalchemy.dialects.postgresql import array_agg
-from sqlalchemy.dialects.postgresql import base
-from sqlalchemy.dialects.postgresql import CITEXT
-from sqlalchemy.dialects.postgresql import DATEMULTIRANGE
-from sqlalchemy.dialects.postgresql import DATERANGE
-from sqlalchemy.dialects.postgresql import DOMAIN
-from sqlalchemy.dialects.postgresql import ENUM
-from sqlalchemy.dialects.postgresql import HSTORE
-from sqlalchemy.dialects.postgresql import hstore
-from sqlalchemy.dialects.postgresql import INT4MULTIRANGE
-from sqlalchemy.dialects.postgresql import INT4RANGE
-from sqlalchemy.dialects.postgresql import INT8MULTIRANGE
-from sqlalchemy.dialects.postgresql import INT8RANGE
-from sqlalchemy.dialects.postgresql import JSON
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.dialects.postgresql import NamedType
-from sqlalchemy.dialects.postgresql import NUMMULTIRANGE
-from sqlalchemy.dialects.postgresql import NUMRANGE
-from sqlalchemy.dialects.postgresql import pg8000
-from sqlalchemy.dialects.postgresql import psycopg2
-from sqlalchemy.dialects.postgresql import psycopg2cffi
-from sqlalchemy.dialects.postgresql import Range
-from sqlalchemy.dialects.postgresql import TSMULTIRANGE
-from sqlalchemy.dialects.postgresql import TSRANGE
-from sqlalchemy.dialects.postgresql import TSTZMULTIRANGE
-from sqlalchemy.dialects.postgresql import TSTZRANGE
-from sqlalchemy.exc import CompileError
-from sqlalchemy.exc import DBAPIError
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Session
-from sqlalchemy.sql import bindparam
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import sqltypes
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing.assertions import assert_raises
-from sqlalchemy.testing.assertions import assert_raises_message
-from sqlalchemy.testing.assertions import AssertsCompiledSQL
-from sqlalchemy.testing.assertions import AssertsExecutionResults
-from sqlalchemy.testing.assertions import ComparesTables
-from sqlalchemy.testing.assertions import eq_
-from sqlalchemy.testing.assertions import is_
-from sqlalchemy.testing.assertsql import RegexSQL
-from sqlalchemy.testing.schema import pep435_enum
-from sqlalchemy.testing.suite import test_types as suite
-from sqlalchemy.testing.util import round_decimal
-from sqlalchemy.types import UserDefinedType
+import ilikesql as sa
+from ilikesql import any_
+from ilikesql import ARRAY
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import DateTime
+from ilikesql import Double
+from ilikesql import Enum
+from ilikesql import exc
+from ilikesql import Float
+from ilikesql import func
+from ilikesql import insert
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import null
+from ilikesql import Numeric
+from ilikesql import REAL
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import text
+from ilikesql import type_coerce
+from ilikesql import TypeDecorator
+from ilikesql import types
+from ilikesql import Unicode
+from ilikesql import util
+from ilikesql.dialects import postgresql
+from ilikesql.dialects.postgresql import aggregate_order_by
+from ilikesql.dialects.postgresql import array
+from ilikesql.dialects.postgresql import array_agg
+from ilikesql.dialects.postgresql import base
+from ilikesql.dialects.postgresql import CITEXT
+from ilikesql.dialects.postgresql import DATEMULTIRANGE
+from ilikesql.dialects.postgresql import DATERANGE
+from ilikesql.dialects.postgresql import DOMAIN
+from ilikesql.dialects.postgresql import ENUM
+from ilikesql.dialects.postgresql import HSTORE
+from ilikesql.dialects.postgresql import hstore
+from ilikesql.dialects.postgresql import INT4MULTIRANGE
+from ilikesql.dialects.postgresql import INT4RANGE
+from ilikesql.dialects.postgresql import INT8MULTIRANGE
+from ilikesql.dialects.postgresql import INT8RANGE
+from ilikesql.dialects.postgresql import JSON
+from ilikesql.dialects.postgresql import JSONB
+from ilikesql.dialects.postgresql import NamedType
+from ilikesql.dialects.postgresql import NUMMULTIRANGE
+from ilikesql.dialects.postgresql import NUMRANGE
+from ilikesql.dialects.postgresql import pg8000
+from ilikesql.dialects.postgresql import psycopg2
+from ilikesql.dialects.postgresql import psycopg2cffi
+from ilikesql.dialects.postgresql import Range
+from ilikesql.dialects.postgresql import TSMULTIRANGE
+from ilikesql.dialects.postgresql import TSRANGE
+from ilikesql.dialects.postgresql import TSTZMULTIRANGE
+from ilikesql.dialects.postgresql import TSTZRANGE
+from ilikesql.exc import CompileError
+from ilikesql.exc import DBAPIError
+from ilikesql.orm import declarative_base
+from ilikesql.orm import Session
+from ilikesql.sql import bindparam
+from ilikesql.sql import operators
+from ilikesql.sql import sqltypes
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing.assertions import assert_raises
+from ilikesql.testing.assertions import assert_raises_message
+from ilikesql.testing.assertions import AssertsCompiledSQL
+from ilikesql.testing.assertions import AssertsExecutionResults
+from ilikesql.testing.assertions import ComparesTables
+from ilikesql.testing.assertions import eq_
+from ilikesql.testing.assertions import is_
+from ilikesql.testing.assertsql import RegexSQL
+from ilikesql.testing.schema import pep435_enum
+from ilikesql.testing.suite import test_types as suite
+from ilikesql.testing.util import round_decimal
+from ilikesql.types import UserDefinedType
 from ...engine.test_ddlevents import DDLEventWCreateHarness
 
 
@@ -218,7 +218,7 @@ class NamedTypeTest(
 
         with testing.expect_warnings(
             "the native_enum flag does not apply to the "
-            "sqlalchemy.dialects.postgresql.ENUM datatype;"
+            "ilikesql.dialects.postgresql.ENUM datatype;"
         ):
             e1 = postgresql.ENUM(
                 "a", "b", "c", name="pgenum", native_enum=False
@@ -3413,7 +3413,7 @@ class HStoreTest(AssertsCompiledSQL, fixtures.TestBase):
         eq_(proc('"\\\\\\"a"=>"\\\\\\"1"'), {'\\"a': '\\"1'})
 
     def test_bind_serialize_psycopg2(self):
-        from sqlalchemy.dialects.postgresql import psycopg2
+        from ilikesql.dialects.postgresql import psycopg2
 
         dialect = psycopg2.PGDialect_psycopg2()
         dialect._has_native_hstore = True
@@ -3429,7 +3429,7 @@ class HStoreTest(AssertsCompiledSQL, fixtures.TestBase):
         )
 
     def test_result_deserialize_psycopg2(self):
-        from sqlalchemy.dialects.postgresql import psycopg2
+        from ilikesql.dialects.postgresql import psycopg2
 
         dialect = psycopg2.PGDialect_psycopg2()
         dialect._has_native_hstore = True
@@ -4584,7 +4584,7 @@ class _RangeTypeRoundTrip(_RangeComparisonFixtures, fixtures.TablesTest):
         eq_(str(self._col_type()), self._col_str)
 
     def test_reflect(self, connection):
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         insp = inspect(connection)
         cols = insp.get_columns("data_table")
@@ -5113,7 +5113,7 @@ class _MultiRangeTypeRoundTrip(fixtures.TablesTest):
         eq_(str(self._col_type()), self._col_str)
 
     def test_reflect(self, connection):
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         insp = inspect(connection)
         cols = insp.get_columns("data_table")

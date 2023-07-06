@@ -6,23 +6,23 @@ This example adds a numerical version_id to the Versioned class as well
 as the ability to see which row is the most "current" version.
 
 """
-from sqlalchemy import Boolean
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import make_transient
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
+from ilikesql import Boolean
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import ForeignKeyConstraint
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import attributes
+from ilikesql.orm import backref
+from ilikesql.orm import column_property
+from ilikesql.orm import make_transient
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
 
 
 class Versioned:

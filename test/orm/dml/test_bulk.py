@@ -1,19 +1,19 @@
-from sqlalchemy import FetchedValue
-from sqlalchemy import ForeignKey
-from sqlalchemy import Identity
-from sqlalchemy import insert
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import update
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.assertsql import Conditional
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import FetchedValue
+from ilikesql import ForeignKey
+from ilikesql import Identity
+from ilikesql import insert
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import update
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import mock
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.assertsql import Conditional
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 from test.orm import _fixtures
 
 
@@ -167,7 +167,7 @@ class BulkInsertUpdateTest(BulkTest, _fixtures.FixtureTest):
 
         objects = [user1, user3, user2]
 
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         def _bulk_save_mappings(
             mapper,

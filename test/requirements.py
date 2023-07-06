@@ -3,22 +3,22 @@
 
 """
 
-from sqlalchemy import exc
-from sqlalchemy.sql import sqltypes
-from sqlalchemy.sql import text
-from sqlalchemy.testing import exclusions
-from sqlalchemy.testing.exclusions import against
-from sqlalchemy.testing.exclusions import fails_if
-from sqlalchemy.testing.exclusions import fails_on
-from sqlalchemy.testing.exclusions import fails_on_everything_except
-from sqlalchemy.testing.exclusions import LambdaPredicate
-from sqlalchemy.testing.exclusions import NotPredicate
-from sqlalchemy.testing.exclusions import only_if
-from sqlalchemy.testing.exclusions import only_on
-from sqlalchemy.testing.exclusions import skip_if
-from sqlalchemy.testing.exclusions import SpecPredicate
-from sqlalchemy.testing.exclusions import succeeds_if
-from sqlalchemy.testing.requirements import SuiteRequirements
+from ilikesql import exc
+from ilikesql.sql import sqltypes
+from ilikesql.sql import text
+from ilikesql.testing import exclusions
+from ilikesql.testing.exclusions import against
+from ilikesql.testing.exclusions import fails_if
+from ilikesql.testing.exclusions import fails_on
+from ilikesql.testing.exclusions import fails_on_everything_except
+from ilikesql.testing.exclusions import LambdaPredicate
+from ilikesql.testing.exclusions import NotPredicate
+from ilikesql.testing.exclusions import only_if
+from ilikesql.testing.exclusions import only_on
+from ilikesql.testing.exclusions import skip_if
+from ilikesql.testing.exclusions import SpecPredicate
+from ilikesql.testing.exclusions import succeeds_if
+from ilikesql.testing.requirements import SuiteRequirements
 
 
 def no_support(db, reason):

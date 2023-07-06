@@ -9,14 +9,14 @@ from typing import List
 from typing import Set
 from typing import Type
 
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm.collections import attribute_keyed_dict
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm.collections import attribute_keyed_dict
 
 
 class Base(DeclarativeBase):
@@ -101,45 +101,45 @@ class Address(Base):
 
 
 if typing.TYPE_CHECKING:
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[builtins.list\*?\[trad_relationship_uselist.Address\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[builtins.list\*?\[trad_relationship_uselist.Address\]\]
     reveal_type(User.addresses_style_one)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[builtins.set\*?\[trad_relationship_uselist.Address\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[builtins.set\*?\[trad_relationship_uselist.Address\]\]
     reveal_type(User.addresses_style_two)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[Any\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[Any\]
     reveal_type(User.addresses_style_three)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[Any\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[Any\]
     reveal_type(User.addresses_style_three_cast)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[Any\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[Any\]
     reveal_type(User.addresses_style_four)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[Any\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[Any\]
     reveal_type(Address.user_style_one)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[trad_relationship_uselist.User\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[trad_relationship_uselist.User\*?\]
     reveal_type(Address.user_style_one_typed)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[Any\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[Any\]
     reveal_type(Address.user_style_two)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[trad_relationship_uselist.User\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[trad_relationship_uselist.User\*?\]
     reveal_type(Address.user_style_two_typed)
 
     # reveal_type(Address.user_style_six)
 
     # reveal_type(Address.user_style_seven)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[Any\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[Any\]
     reveal_type(Address.user_style_eight)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[Any\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[Any\]
     reveal_type(Address.user_style_nine)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[Any\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[Any\]
     reveal_type(Address.user_style_ten)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.InstrumentedAttribute\[builtins.dict\*?\[builtins.str, trad_relationship_uselist.User\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*.InstrumentedAttribute\[builtins.dict\*?\[builtins.str, trad_relationship_uselist.User\]\]
     reveal_type(Address.user_style_ten_typed)

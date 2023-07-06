@@ -1,5 +1,5 @@
 """Same example as basic_association, adding in
-usage of :mod:`sqlalchemy.ext.associationproxy` to make explicit references
+usage of :mod:`ilikesql.ext.associationproxy` to make explicit references
 to ``OrderItem`` optional.
 
 
@@ -7,17 +7,17 @@ to ``OrderItem`` optional.
 
 from datetime import datetime
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import DateTime
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import DateTime
+from ilikesql import Float
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
 
 
 Base = declarative_base()

@@ -10,14 +10,14 @@ from typing import List
 from typing import Optional
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
+from ilikesql import Column
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
 
 mapper_registry: registry = registry()
 

@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from sqlalchemy import bindparam
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import Identity
-from sqlalchemy import insert
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Session
+from ilikesql import bindparam
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import Identity
+from ilikesql import insert
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import declarative_base
+from ilikesql.orm import Session
 from . import Profiler
 
 """This series of tests illustrates different ways to INSERT a large number

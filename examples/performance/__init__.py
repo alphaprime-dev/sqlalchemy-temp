@@ -100,8 +100,8 @@ individual tests::
        ncalls  tottime  percall  cumtime  percall filename:lineno(function)
          1000    0.634    0.001    0.634    0.001 {method 'commit' of 'sqlite3.Connection' objects}
          1000    0.154    0.000    0.154    0.000 {method 'execute' of 'sqlite3.Cursor' objects}
-         1000    0.021    0.000    0.074    0.000 /Users/classic/dev/sqlalchemy/lib/sqlalchemy/sql/compiler.py:1950(_get_colparams)
-         1000    0.015    0.000    0.034    0.000 /Users/classic/dev/sqlalchemy/lib/sqlalchemy/engine/default.py:503(_init_compiled)
+         1000    0.021    0.000    0.074    0.000 /Users/classic/dev/ilikesql/lib/ilikesql/sql/compiler.py:1950(_get_colparams)
+         1000    0.015    0.000    0.034    0.000 /Users/classic/dev/ilikesql/lib/ilikesql/engine/default.py:503(_init_compiled)
             1    0.012    0.012    1.091    1.091 examples/performance/single_inserts.py:79(test_core)
 
         ...
@@ -119,9 +119,9 @@ if we wanted to profile the difference between several kinds of loading,
 we can create a file ``test_loads.py``, with the following content::
 
     from examples.performance import Profiler
-    from sqlalchemy import Integer, Column, create_engine, ForeignKey
-    from sqlalchemy.orm import relationship, joinedload, subqueryload, Session
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Integer, Column, create_engine, ForeignKey
+    from ilikesql.orm import relationship, joinedload, subqueryload, Session
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
     engine = None

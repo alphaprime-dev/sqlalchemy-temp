@@ -7,10 +7,10 @@ import os
 
 from dogpile.cache.region import make_region
 
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm import sessionmaker
+from ilikesql import create_engine
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import scoped_session
+from ilikesql.orm import sessionmaker
 from . import caching_query
 
 

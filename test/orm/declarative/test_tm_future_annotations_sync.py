@@ -30,59 +30,59 @@ import uuid
 from typing_extensions import get_args as get_args
 from typing_extensions import Literal as Literal
 
-from sqlalchemy import BIGINT
-from sqlalchemy import BigInteger
-from sqlalchemy import Column
-from sqlalchemy import DateTime
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import JSON
-from sqlalchemy import Numeric
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import types
-from sqlalchemy import VARCHAR
-from sqlalchemy.exc import ArgumentError
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.associationproxy import AssociationProxy
-from sqlalchemy.ext.mutable import MutableDict
-from sqlalchemy.orm import as_declarative
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import DynamicMapped
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import MappedAsDataclass
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import undefer
-from sqlalchemy.orm import WriteOnlyMapped
-from sqlalchemy.orm.collections import attribute_keyed_dict
-from sqlalchemy.orm.collections import KeyFuncDict
-from sqlalchemy.schema import CreateTable
-from sqlalchemy.sql.sqltypes import Enum
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import Variation
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.util import compat
-from sqlalchemy.util.typing import Annotated
+from ilikesql import BIGINT
+from ilikesql import BigInteger
+from ilikesql import Column
+from ilikesql import DateTime
+from ilikesql import exc as sa_exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import JSON
+from ilikesql import Numeric
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import types
+from ilikesql import VARCHAR
+from ilikesql.exc import ArgumentError
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.ext.associationproxy import AssociationProxy
+from ilikesql.ext.mutable import MutableDict
+from ilikesql.orm import as_declarative
+from ilikesql.orm import composite
+from ilikesql.orm import declarative_base
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import declared_attr
+from ilikesql.orm import deferred
+from ilikesql.orm import DynamicMapped
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import MappedAsDataclass
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import undefer
+from ilikesql.orm import WriteOnlyMapped
+from ilikesql.orm.collections import attribute_keyed_dict
+from ilikesql.orm.collections import KeyFuncDict
+from ilikesql.schema import CreateTable
+from ilikesql.sql.sqltypes import Enum
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing import Variation
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.util import compat
+from ilikesql.util.typing import Annotated
 
 
 def expect_annotation_syntax_error(name):
@@ -421,7 +421,7 @@ class MappedColumnTest(fixtures.TestBase, testing.AssertsCompiledSQL):
                 id: Mapped[int] = mapped_column(primary_key=True)
                 data: Mapped[MyClass] = mapped_column()
 
-    def test_construct_lhs_sqlalchemy_type(self, decl_base):
+    def test_construct_lhs_ilikesql_type(self, decl_base):
         with expect_raises_message(
             sa_exc.ArgumentError,
             "The type provided inside the 'data' attribute Mapped "
@@ -700,7 +700,7 @@ class MappedColumnTest(fixtures.TestBase, testing.AssertsCompiledSQL):
 
         with expect_raises_message(
             NotImplementedError,
-            r"Use of the \<class 'sqlalchemy.orm."
+            r"Use of the \<class 'ilikesql.orm."
             r"relationships.Relationship'\> construct inside of an Annotated "
             r"object is not yet supported.",
         ):

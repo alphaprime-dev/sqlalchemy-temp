@@ -1,13 +1,13 @@
 from typing import Callable
 
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm.decl_api import declarative_mixin
-from sqlalchemy.orm.decl_api import declared_attr
-from sqlalchemy.orm.interfaces import MapperProperty
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import deferred
+from ilikesql.orm import Mapped
+from ilikesql.orm.decl_api import declarative_mixin
+from ilikesql.orm.decl_api import declared_attr
+from ilikesql.orm.interfaces import MapperProperty
 
 
 def some_other_decorator(fn: Callable[..., None]) -> Callable[..., None]:

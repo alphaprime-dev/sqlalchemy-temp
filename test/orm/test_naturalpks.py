@@ -5,25 +5,25 @@ Primary key changing capabilities and passive/non-passive cascading updates.
 
 import itertools
 
-import sqlalchemy as sa
-from sqlalchemy import bindparam
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import TypeDecorator
-from sqlalchemy.orm import make_transient
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import with_parent
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import bindparam
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import TypeDecorator
+from ilikesql.orm import make_transient
+from ilikesql.orm import relationship
+from ilikesql.orm import with_parent
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import ne_
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 from test.orm import _fixtures
 
 
@@ -1405,7 +1405,7 @@ class CascadeToFKPKTest(fixtures.MappedTest, testing.AssertsCompiledSQL):
         sess.add(u2)
         sess.add(a2)
 
-        from sqlalchemy.testing.assertsql import CompiledSQL
+        from ilikesql.testing.assertsql import CompiledSQL
 
         # test that the primary key columns of addresses are not
         # being updated as well, since this is a row switch.

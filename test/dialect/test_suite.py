@@ -1,1 +1,1 @@
-from sqlalchemy.testing.suite import *  # noqa
+from ilikesql.testing.suite import *  # noqa

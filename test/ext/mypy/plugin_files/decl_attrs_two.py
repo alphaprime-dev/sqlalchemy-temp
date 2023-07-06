@@ -1,11 +1,11 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import registry
-from sqlalchemy.sql.schema import ForeignKey
-from sqlalchemy.sql.schema import MetaData
-from sqlalchemy.sql.schema import Table
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import declarative_base
+from ilikesql.orm import registry
+from ilikesql.sql.schema import ForeignKey
+from ilikesql.sql.schema import MetaData
+from ilikesql.sql.schema import Table
 
 
 Base = declarative_base()

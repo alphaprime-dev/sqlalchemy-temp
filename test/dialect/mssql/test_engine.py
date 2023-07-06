@@ -2,32 +2,32 @@ from decimal import Decimal
 import re
 from unittest.mock import Mock
 
-from sqlalchemy import Column
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import Numeric
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy.dialects.mssql import base
-from sqlalchemy.dialects.mssql import pymssql
-from sqlalchemy.dialects.mssql import pyodbc
-from sqlalchemy.engine import url
-from sqlalchemy.exc import DBAPIError
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warnings
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import mock
+from ilikesql import Column
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import Numeric
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql.dialects.mssql import base
+from ilikesql.dialects.mssql import pymssql
+from ilikesql.dialects.mssql import pyodbc
+from ilikesql.engine import url
+from ilikesql.exc import DBAPIError
+from ilikesql.exc import IntegrityError
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warnings
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import mock
 
 
 class ParseConnectTest(fixtures.TestBase):

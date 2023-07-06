@@ -1,14 +1,14 @@
 from typing import List
 from typing import Optional
 
-from sqlalchemy import Column
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm.decl_api import declared_attr
-from sqlalchemy.sql.schema import ForeignKey
-from sqlalchemy.sql.sqltypes import Integer
-from sqlalchemy.sql.sqltypes import String
+from ilikesql import Column
+from ilikesql.orm import Mapped
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
+from ilikesql.orm.decl_api import declared_attr
+from ilikesql.sql.schema import ForeignKey
+from ilikesql.sql.sqltypes import Integer
+from ilikesql.sql.sqltypes import String
 
 reg: registry = registry()
 

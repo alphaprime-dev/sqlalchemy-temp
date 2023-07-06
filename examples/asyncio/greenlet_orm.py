@@ -1,4 +1,4 @@
-"""Illustrates use of the sqlalchemy.ext.asyncio.AsyncSession object
+"""Illustrates use of the ilikesql.ext.asyncio.AsyncSession object
 for asynchronous ORM use, including the optional run_sync() method.
 
 
@@ -6,16 +6,16 @@ for asynchronous ORM use, including the optional run_sync() method.
 
 import asyncio
 
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.asyncio import AsyncAttrs
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.future import select
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import relationship
+from ilikesql import Column
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.asyncio import AsyncAttrs
+from ilikesql.ext.asyncio import AsyncSession
+from ilikesql.ext.asyncio import create_async_engine
+from ilikesql.future import select
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import relationship
 
 
 class Base(AsyncAttrs, DeclarativeBase):

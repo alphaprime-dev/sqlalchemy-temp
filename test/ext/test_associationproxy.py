@@ -8,51 +8,51 @@ from typing import List
 from unittest.mock import call
 from unittest.mock import Mock
 
-from sqlalchemy import cast
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import or_
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.engine import default
-from sqlalchemy.ext.associationproxy import _AssociationList
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.associationproxy import AssociationProxy
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import collections
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import mapper
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.collections import attribute_keyed_dict
-from sqlalchemy.orm.collections import collection
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_none
-from sqlalchemy.testing import is_not_none
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.entities import ComparableEntity  # noqa
-from sqlalchemy.testing.entities import ComparableMixin  # noqa
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
+from ilikesql import cast
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import or_
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.engine import default
+from ilikesql.ext.associationproxy import _AssociationList
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.ext.associationproxy import AssociationProxy
+from ilikesql.orm import aliased
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import collections
+from ilikesql.orm import composite
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import declarative_base
+from ilikesql.orm import declared_attr
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import mapper
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm.collections import attribute_keyed_dict
+from ilikesql.orm.collections import collection
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_none
+from ilikesql.testing import is_not_none
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.entities import ComparableEntity  # noqa
+from ilikesql.testing.entities import ComparableMixin  # noqa
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
 
 
 class DictCollection(dict):
@@ -3331,7 +3331,7 @@ class ProxyOfSynonymTest(AssertsCompiledSQL, fixtures.DeclarativeMappedTest):
 
     @classmethod
     def setup_classes(cls):
-        from sqlalchemy.orm import synonym
+        from ilikesql.orm import synonym
 
         Base = cls.DeclarativeBasic
 
@@ -3383,7 +3383,7 @@ class SynonymOfProxyTest(AssertsCompiledSQL, fixtures.DeclarativeMappedTest):
 
     @classmethod
     def setup_classes(cls):
-        from sqlalchemy.orm import synonym
+        from ilikesql.orm import synonym
 
         Base = cls.DeclarativeBasic
 
@@ -3431,8 +3431,8 @@ class ProxyHybridTest(fixtures.DeclarativeMappedTest, AssertsCompiledSQL):
 
     @classmethod
     def setup_classes(cls):
-        from sqlalchemy.ext.hybrid import hybrid_property
-        from sqlalchemy.orm.interfaces import PropComparator
+        from ilikesql.ext.hybrid import hybrid_property
+        from ilikesql.orm.interfaces import PropComparator
 
         Base = cls.DeclarativeBasic
 

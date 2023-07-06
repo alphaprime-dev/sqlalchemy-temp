@@ -62,12 +62,12 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
-from sqlalchemy import util
-from sqlalchemy.util import compat
-from sqlalchemy.util import langhelpers
-from sqlalchemy.util.langhelpers import format_argspec_plus
-from sqlalchemy.util.langhelpers import inject_docstring_text
-from sqlalchemy.util.tool_support import code_writer_cmd
+from ilikesql import util
+from ilikesql.util import compat
+from ilikesql.util import langhelpers
+from ilikesql.util.langhelpers import format_argspec_plus
+from ilikesql.util.langhelpers import inject_docstring_text
+from ilikesql.util.tool_support import code_writer_cmd
 
 is_posix = os.name == "posix"
 
@@ -392,8 +392,8 @@ def run_module(modname: str, cmd: code_writer_cmd) -> None:
 
 
 def main(cmd: code_writer_cmd) -> None:
-    from sqlalchemy import util
-    from sqlalchemy.util import langhelpers
+    from ilikesql import util
+    from ilikesql.util import langhelpers
 
     util.create_proxy_methods = (
         langhelpers.create_proxy_methods
@@ -405,10 +405,10 @@ def main(cmd: code_writer_cmd) -> None:
 
 
 entries = [
-    "sqlalchemy.orm.scoping",
-    "sqlalchemy.ext.asyncio.engine",
-    "sqlalchemy.ext.asyncio.session",
-    "sqlalchemy.ext.asyncio.scoping",
+    "ilikesql.orm.scoping",
+    "ilikesql.ext.asyncio.engine",
+    "ilikesql.ext.asyncio.session",
+    "ilikesql.ext.asyncio.scoping",
 ]
 
 if __name__ == "__main__":

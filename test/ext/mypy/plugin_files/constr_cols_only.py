@@ -1,7 +1,7 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
 
 Base = declarative_base()
 

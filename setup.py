@@ -2,8 +2,7 @@ from __future__ import annotations
 
 import os
 import platform
-from typing import cast
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from setuptools import setup
 
@@ -44,8 +43,8 @@ if HAS_CYTHON and IS_CPYTHON and not DISABLE_EXTENSION:
     ]
     cython_directives = {"language_level": "3"}
 
-    module_prefix = "sqlalchemy.cyextension."
-    source_prefix = "lib/sqlalchemy/cyextension/"
+    module_prefix = "ilikesql.cyextension."
+    source_prefix = "lib/ilikesql/cyextension/"
 
     ext_modules = cast(
         "list[Extension]",
@@ -78,4 +77,4 @@ else:
     ext_modules = []
     cmdclass = {}
 
-setup(cmdclass=cmdclass, ext_modules=ext_modules)
+setup(name="ilikesql", cmdclass=cmdclass, ext_modules=ext_modules)

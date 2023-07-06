@@ -1,16 +1,16 @@
-from sqlalchemy import Column
-from sqlalchemy import Computed
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import Table
-from sqlalchemy.exc import ArgumentError
-from sqlalchemy.schema import CreateTable
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import combinations
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not
+from ilikesql import Column
+from ilikesql import Computed
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import Table
+from ilikesql.exc import ArgumentError
+from ilikesql.schema import CreateTable
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import combinations
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_not
 
 
 class DDLComputedTest(fixtures.TestBase, AssertsCompiledSQL):

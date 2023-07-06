@@ -1,8 +1,8 @@
 from typing import Any
 from typing import Dict
 
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import declared_attr
+from ilikesql.orm import declarative_base
+from ilikesql.orm import declared_attr
 
 
 Base = declarative_base()

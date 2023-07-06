@@ -1,9 +1,9 @@
-from sqlalchemy import exc
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.util import conforms_partial_ordering
-from sqlalchemy.util import topological
+from ilikesql import exc
+from ilikesql.testing import assert_raises
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.util import conforms_partial_ordering
+from ilikesql.util import topological
 
 
 class DependencySortTest(fixtures.TestBase):

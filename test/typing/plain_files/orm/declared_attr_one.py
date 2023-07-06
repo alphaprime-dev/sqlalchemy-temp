@@ -1,17 +1,17 @@
 from datetime import datetime
 import typing
 
-from sqlalchemy import DateTime
-from sqlalchemy import Index
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import UniqueConstraint
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import MappedClassProtocol
-from sqlalchemy.sql.schema import PrimaryKeyConstraint
+from ilikesql import DateTime
+from ilikesql import Index
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import UniqueConstraint
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import declared_attr
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import MappedClassProtocol
+from ilikesql.sql.schema import PrimaryKeyConstraint
 
 
 class Base(DeclarativeBase):

@@ -1,20 +1,20 @@
-from sqlalchemy import Boolean
-from sqlalchemy import CheckConstraint
-from sqlalchemy import Column
-from sqlalchemy import DateTime
-from sqlalchemy import FetchedValue
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Index
-from sqlalchemy import Integer
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import text
-from sqlalchemy import true
-from sqlalchemy import UUID
+from ilikesql import Boolean
+from ilikesql import CheckConstraint
+from ilikesql import Column
+from ilikesql import DateTime
+from ilikesql import FetchedValue
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Index
+from ilikesql import Integer
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import PrimaryKeyConstraint
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import text
+from ilikesql import true
+from ilikesql import UUID
 
 
 m = MetaData()

@@ -1,39 +1,39 @@
 """Test the TextClause and related constructs."""
 
-from sqlalchemy import and_
-from sqlalchemy import asc
-from sqlalchemy import bindparam
-from sqlalchemy import Column
-from sqlalchemy import desc
-from sqlalchemy import exc
-from sqlalchemy import extract
-from sqlalchemy import Float
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import union
-from sqlalchemy import util
-from sqlalchemy.sql import column
-from sqlalchemy.sql import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.sql import quoted_name
-from sqlalchemy.sql import sqltypes
-from sqlalchemy.sql import table
-from sqlalchemy.sql import util as sql_util
-from sqlalchemy.sql.selectable import LABEL_STYLE_DISAMBIGUATE_ONLY
-from sqlalchemy.sql.selectable import LABEL_STYLE_NONE
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.types import NullType
+from ilikesql import and_
+from ilikesql import asc
+from ilikesql import bindparam
+from ilikesql import Column
+from ilikesql import desc
+from ilikesql import exc
+from ilikesql import extract
+from ilikesql import Float
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import union
+from ilikesql import util
+from ilikesql.sql import column
+from ilikesql.sql import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.sql import quoted_name
+from ilikesql.sql import sqltypes
+from ilikesql.sql import table
+from ilikesql.sql import util as sql_util
+from ilikesql.sql.selectable import LABEL_STYLE_DISAMBIGUATE_ONLY
+from ilikesql.sql.selectable import LABEL_STYLE_NONE
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.types import NullType
 
 table1 = table(
     "mytable",
@@ -952,7 +952,7 @@ class OrderByLabelResolutionTest(fixtures.TestBase, AssertsCompiledSQL):
         )
 
     def test_unresolvable_distinct_label(self):
-        from sqlalchemy.dialects import postgresql
+        from ilikesql.dialects import postgresql
 
         stmt = select(table1.c.myid.label("foo")).distinct("not a label")
         self._test_exception(stmt, "not a label", dialect=postgresql.dialect())

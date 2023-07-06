@@ -1,53 +1,53 @@
-from sqlalchemy import bindparam
-from sqlalchemy import Column
-from sqlalchemy import delete
-from sqlalchemy import exc
-from sqlalchemy import exists
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import insert
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import null
-from sqlalchemy import or_
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import true
-from sqlalchemy import union
-from sqlalchemy import update
-from sqlalchemy import util
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import contains_eager
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import join as orm_join
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import query_expression
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import undefer
-from sqlalchemy.orm import with_expression
-from sqlalchemy.orm import with_loader_criteria
-from sqlalchemy.orm import with_polymorphic
-from sqlalchemy.sql import and_
-from sqlalchemy.sql import sqltypes
-from sqlalchemy.sql.selectable import Join as core_join
-from sqlalchemy.sql.selectable import LABEL_STYLE_DISAMBIGUATE_ONLY
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import Variation
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.util import resolve_lambda
-from sqlalchemy.util.langhelpers import hybridproperty
+from ilikesql import bindparam
+from ilikesql import Column
+from ilikesql import delete
+from ilikesql import exc
+from ilikesql import exists
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import insert
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import null
+from ilikesql import or_
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import true
+from ilikesql import union
+from ilikesql import update
+from ilikesql import util
+from ilikesql.orm import aliased
+from ilikesql.orm import column_property
+from ilikesql.orm import contains_eager
+from ilikesql.orm import deferred
+from ilikesql.orm import join as orm_join
+from ilikesql.orm import joinedload
+from ilikesql.orm import query_expression
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import undefer
+from ilikesql.orm import with_expression
+from ilikesql.orm import with_loader_criteria
+from ilikesql.orm import with_polymorphic
+from ilikesql.sql import and_
+from ilikesql.sql import sqltypes
+from ilikesql.sql.selectable import Join as core_join
+from ilikesql.sql.selectable import LABEL_STYLE_DISAMBIGUATE_ONLY
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing import Variation
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.util import resolve_lambda
+from ilikesql.util.langhelpers import hybridproperty
 from .inheritance import _poly_fixtures
 from .test_query import QueryTest
 from ..sql import test_compiler
@@ -2745,7 +2745,7 @@ class RawSelectTest(QueryTest, AssertsCompiledSQL):
         )
 
     def test_update_from_entity(self):
-        from sqlalchemy.sql import update
+        from ilikesql.sql import update
 
         User = self.classes.User
         self.assert_compile(
@@ -2765,7 +2765,7 @@ class RawSelectTest(QueryTest, AssertsCompiledSQL):
         )
 
     def test_delete_from_entity(self):
-        from sqlalchemy.sql import delete
+        from ilikesql.sql import delete
 
         User = self.classes.User
         self.assert_compile(delete(User), "DELETE FROM users")
@@ -2777,7 +2777,7 @@ class RawSelectTest(QueryTest, AssertsCompiledSQL):
         )
 
     def test_insert_from_entity(self):
-        from sqlalchemy.sql import insert
+        from ilikesql.sql import insert
 
         User = self.classes.User
         self.assert_compile(
@@ -2858,7 +2858,7 @@ class CrudParamOverlapTest(test_compiler.CrudParamOverlapTest):
         type_ = request.param
 
         if type_.orm:
-            from sqlalchemy.orm import declarative_base
+            from ilikesql.orm import declarative_base
 
             Base = declarative_base()
 

@@ -1,25 +1,25 @@
 import logging.handlers
 import re
 
-import sqlalchemy as tsa
-from sqlalchemy import bindparam
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import or_
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy.sql import util as sql_util
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_regex
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.util import lazy_gc
+import ilikesql as tsa
+from ilikesql import bindparam
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import or_
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql.sql import util as sql_util
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_regex
+from ilikesql.testing import fixtures
+from ilikesql.testing import mock
+from ilikesql.testing.util import lazy_gc
 
 
 def exec_sql(engine, sql, *args, **kwargs):
@@ -44,13 +44,13 @@ class LogParamsTest(fixtures.TestBase):
             "create table if not exists foo (data string)",
         )
         self.buf = logging.handlers.BufferingHandler(100)
-        for log in [logging.getLogger("sqlalchemy.engine")]:
+        for log in [logging.getLogger("ilikesql.engine")]:
             log.addHandler(self.buf)
 
     def teardown_test(self):
         self.eng = engines.testing_engine(options={"echo": True})
         exec_sql(self.eng, "drop table if exists foo")
-        for log in [logging.getLogger("sqlalchemy.engine")]:
+        for log in [logging.getLogger("ilikesql.engine")]:
             log.removeHandler(self.buf)
 
     def test_log_large_list_of_dict(self):
@@ -422,7 +422,7 @@ class LogParamsTest(fixtures.TestBase):
         with self.no_param_engine.connect() as conn:
             assert_raises_message(
                 tsa.exc.StatementError,
-                r"\(sqlalchemy.exc.InvalidRequestError\) A value is required "
+                r"\(ilikesql.exc.InvalidRequestError\) A value is required "
                 r"for bind parameter 'the_data_2'\n"
                 r"\[SQL: SELECT foo.data \nFROM foo \nWHERE "
                 r"foo.data = \? OR foo.data = \?\]\n"
@@ -519,29 +519,29 @@ class LogParamsTest(fixtures.TestBase):
 
 class PoolLoggingTest(fixtures.TestBase):
     def setup_test(self):
-        self.existing_level = logging.getLogger("sqlalchemy.pool").level
+        self.existing_level = logging.getLogger("ilikesql.pool").level
 
         self.buf = logging.handlers.BufferingHandler(100)
-        for log in [logging.getLogger("sqlalchemy.pool")]:
+        for log in [logging.getLogger("ilikesql.pool")]:
             log.addHandler(self.buf)
 
     def teardown_test(self):
-        for log in [logging.getLogger("sqlalchemy.pool")]:
+        for log in [logging.getLogger("ilikesql.pool")]:
             log.removeHandler(self.buf)
-        logging.getLogger("sqlalchemy.pool").setLevel(self.existing_level)
+        logging.getLogger("ilikesql.pool").setLevel(self.existing_level)
 
     def _queuepool_echo_fixture(self):
         return tsa.pool.QueuePool(creator=mock.Mock(), echo="debug")
 
     def _queuepool_logging_fixture(self):
-        logging.getLogger("sqlalchemy.pool").setLevel(logging.DEBUG)
+        logging.getLogger("ilikesql.pool").setLevel(logging.DEBUG)
         return tsa.pool.QueuePool(creator=mock.Mock())
 
     def _stpool_echo_fixture(self):
         return tsa.pool.SingletonThreadPool(creator=mock.Mock(), echo="debug")
 
     def _stpool_logging_fixture(self):
-        logging.getLogger("sqlalchemy.pool").setLevel(logging.DEBUG)
+        logging.getLogger("ilikesql.pool").setLevel(logging.DEBUG)
         return tsa.pool.SingletonThreadPool(creator=mock.Mock())
 
     def _test_queuepool(self, q, dispose=True):
@@ -619,8 +619,8 @@ class LoggingNameTest(fixtures.TestBase):
         assert self.buf.buffer
         for name in [b.name for b in self.buf.buffer]:
             assert name in (
-                "sqlalchemy.engine.Engine.%s" % eng_name,
-                "sqlalchemy.pool.impl.%s.%s"
+                "ilikesql.engine.Engine.%s" % eng_name,
+                "ilikesql.pool.impl.%s.%s"
                 % (eng.pool.__class__.__name__, pool_name),
             )
 
@@ -630,8 +630,8 @@ class LoggingNameTest(fixtures.TestBase):
         assert self.buf.buffer
         for name in [b.name for b in self.buf.buffer]:
             assert name in (
-                "sqlalchemy.engine.Engine",
-                "sqlalchemy.pool.impl.%s" % eng.pool.__class__.__name__,
+                "ilikesql.engine.Engine",
+                "ilikesql.pool.impl.%s" % eng.pool.__class__.__name__,
             )
 
     def _named_engine(self, **kw):
@@ -650,15 +650,15 @@ class LoggingNameTest(fixtures.TestBase):
     def setup_test(self):
         self.buf = logging.handlers.BufferingHandler(100)
         for log in [
-            logging.getLogger("sqlalchemy.engine"),
-            logging.getLogger("sqlalchemy.pool"),
+            logging.getLogger("ilikesql.engine"),
+            logging.getLogger("ilikesql.pool"),
         ]:
             log.addHandler(self.buf)
 
     def teardown_test(self):
         for log in [
-            logging.getLogger("sqlalchemy.engine"),
-            logging.getLogger("sqlalchemy.pool"),
+            logging.getLogger("ilikesql.engine"),
+            logging.getLogger("ilikesql.pool"),
         ]:
             log.removeHandler(self.buf)
 
@@ -711,7 +711,7 @@ class TransactionContextLoggingTest(fixtures.TestBase):
     def plain_assert_buf(self, plain_logging_engine):
         buf = logging.handlers.BufferingHandler(100)
         for log in [
-            logging.getLogger("sqlalchemy.engine"),
+            logging.getLogger("ilikesql.engine"),
         ]:
             log.addHandler(buf)
 
@@ -725,7 +725,7 @@ class TransactionContextLoggingTest(fixtures.TestBase):
 
         yield go
         for log in [
-            logging.getLogger("sqlalchemy.engine"),
+            logging.getLogger("ilikesql.engine"),
         ]:
             log.removeHandler(buf)
 
@@ -733,7 +733,7 @@ class TransactionContextLoggingTest(fixtures.TestBase):
     def assert_buf(self, logging_engine):
         buf = logging.handlers.BufferingHandler(100)
         for log in [
-            logging.getLogger("sqlalchemy.engine"),
+            logging.getLogger("ilikesql.engine"),
         ]:
             log.addHandler(buf)
 
@@ -747,7 +747,7 @@ class TransactionContextLoggingTest(fixtures.TestBase):
 
         yield go
         for log in [
-            logging.getLogger("sqlalchemy.engine"),
+            logging.getLogger("ilikesql.engine"),
         ]:
             log.removeHandler(buf)
 
@@ -769,7 +769,7 @@ class TransactionContextLoggingTest(fixtures.TestBase):
     def plain_logging_engine(self, testing_engine):
         # deliver an engine with logging using the plain logging API,
         # not the echo parameter
-        log = logging.getLogger("sqlalchemy.engine")
+        log = logging.getLogger("ilikesql.engine")
         existing_level = log.level
         log.setLevel(logging.DEBUG)
 
@@ -907,7 +907,7 @@ class TransactionContextLoggingTest(fixtures.TestBase):
 
     def _test_log_messages_have_correct_metadata(self, logging_engine):
         buf = logging.handlers.BufferingHandler(100)
-        log = logging.getLogger("sqlalchemy.engine")
+        log = logging.getLogger("ilikesql.engine")
         try:
             log.addHandler(buf)
 
@@ -940,13 +940,13 @@ class LoggingTokenTest(fixtures.TestBase):
     def setup_test(self):
         self.buf = logging.handlers.BufferingHandler(100)
         for log in [
-            logging.getLogger("sqlalchemy.engine"),
+            logging.getLogger("ilikesql.engine"),
         ]:
             log.addHandler(self.buf)
 
     def teardown_test(self):
         for log in [
-            logging.getLogger("sqlalchemy.engine"),
+            logging.getLogger("ilikesql.engine"),
         ]:
             log.removeHandler(self.buf)
 
@@ -1010,14 +1010,14 @@ class EchoTest(fixtures.TestBase):
     __requires__ = ("ad_hoc_engines",)
 
     def setup_test(self):
-        self.level = logging.getLogger("sqlalchemy.engine").level
-        logging.getLogger("sqlalchemy.engine").setLevel(logging.WARN)
+        self.level = logging.getLogger("ilikesql.engine").level
+        logging.getLogger("ilikesql.engine").setLevel(logging.WARN)
         self.buf = logging.handlers.BufferingHandler(100)
-        logging.getLogger("sqlalchemy.engine").addHandler(self.buf)
+        logging.getLogger("ilikesql.engine").addHandler(self.buf)
 
     def teardown_test(self):
-        logging.getLogger("sqlalchemy.engine").removeHandler(self.buf)
-        logging.getLogger("sqlalchemy.engine").setLevel(self.level)
+        logging.getLogger("ilikesql.engine").removeHandler(self.buf)
+        logging.getLogger("ilikesql.engine").setLevel(self.level)
 
     def _testing_engine(self):
         e = engines.testing_engine()

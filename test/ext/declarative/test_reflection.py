@@ -1,32 +1,32 @@
 from __future__ import annotations
 
-from sqlalchemy import DDL
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.ext.declarative import DeferredReflection
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import decl_api as decl
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.decl_base import _DeferredMapperConfig
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
+from ilikesql import DDL
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.ext.declarative import DeferredReflection
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import decl_api as decl
+from ilikesql.orm import declared_attr
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm.decl_base import _DeferredMapperConfig
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
 
 
 class DeclarativeReflectionBase(fixtures.TablesTest):

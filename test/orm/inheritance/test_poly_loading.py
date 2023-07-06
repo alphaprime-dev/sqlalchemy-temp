@@ -1,40 +1,40 @@
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import union
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import defaultload
-from sqlalchemy.orm import immediateload
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import lazyload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectin_polymorphic
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm import with_polymorphic
-from sqlalchemy.orm.interfaces import CompileStateOption
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.testing import assertsql
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.assertsql import AllOf
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.assertsql import Conditional
-from sqlalchemy.testing.assertsql import EachOf
-from sqlalchemy.testing.assertsql import Or
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import union
+from ilikesql.orm import aliased
+from ilikesql.orm import backref
+from ilikesql.orm import column_property
+from ilikesql.orm import composite
+from ilikesql.orm import defaultload
+from ilikesql.orm import immediateload
+from ilikesql.orm import joinedload
+from ilikesql.orm import lazyload
+from ilikesql.orm import relationship
+from ilikesql.orm import selectin_polymorphic
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import subqueryload
+from ilikesql.orm import with_polymorphic
+from ilikesql.orm.interfaces import CompileStateOption
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.testing import assertsql
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.assertsql import AllOf
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.assertsql import Conditional
+from ilikesql.testing.assertsql import EachOf
+from ilikesql.testing.assertsql import Or
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
 from ._poly_fixtures import _Polymorphic
 from ._poly_fixtures import Company
 from ._poly_fixtures import Engineer
@@ -683,7 +683,7 @@ class TestGeometries(GeometryFixtureBase):
         sess.add_all([d(d_data="d1"), e(e_data="e1")])
         sess.commit()
 
-        from sqlalchemy import select
+        from ilikesql import select
 
         a_table, c_table, d_table, e_table = self.tables("a", "c", "d", "e")
 

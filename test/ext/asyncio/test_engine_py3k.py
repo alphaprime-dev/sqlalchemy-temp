@@ -2,49 +2,49 @@ import asyncio
 import inspect as stdlib_inspect
 from unittest.mock import patch
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import delete
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import union_all
-from sqlalchemy.engine import cursor as _cursor
-from sqlalchemy.ext.asyncio import async_engine_from_config
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.ext.asyncio import create_async_pool_from_url
-from sqlalchemy.ext.asyncio import engine as _async_engine
-from sqlalchemy.ext.asyncio import exc as async_exc
-from sqlalchemy.ext.asyncio import exc as asyncio_exc
-from sqlalchemy.ext.asyncio.base import ReversibleProxy
-from sqlalchemy.ext.asyncio.engine import AsyncConnection
-from sqlalchemy.ext.asyncio.engine import AsyncEngine
-from sqlalchemy.pool import AsyncAdaptedQueuePool
-from sqlalchemy.testing import assertions
-from sqlalchemy.testing import async_test
-from sqlalchemy.testing import combinations
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_regex
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_none
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import ne_
-from sqlalchemy.util import greenlet_spawn
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import delete
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import union_all
+from ilikesql.engine import cursor as _cursor
+from ilikesql.ext.asyncio import async_engine_from_config
+from ilikesql.ext.asyncio import create_async_engine
+from ilikesql.ext.asyncio import create_async_pool_from_url
+from ilikesql.ext.asyncio import engine as _async_engine
+from ilikesql.ext.asyncio import exc as async_exc
+from ilikesql.ext.asyncio import exc as asyncio_exc
+from ilikesql.ext.asyncio.base import ReversibleProxy
+from ilikesql.ext.asyncio.engine import AsyncConnection
+from ilikesql.ext.asyncio.engine import AsyncEngine
+from ilikesql.pool import AsyncAdaptedQueuePool
+from ilikesql.testing import assertions
+from ilikesql.testing import async_test
+from ilikesql.testing import combinations
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_regex
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_none
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import ne_
+from ilikesql.util import greenlet_spawn
 
 
 class AsyncFixture:
@@ -350,7 +350,7 @@ class AsyncEngineTest(EngineFixture):
             pool_connection = await conn.get_raw_connection()
             return pool_connection
 
-        from sqlalchemy.util.concurrency import await_only
+        from ilikesql.util.concurrency import await_only
 
         pool_connection = await_only(go())
 
@@ -363,13 +363,13 @@ class AsyncEngineTest(EngineFixture):
             # not using expect_warnings() here because we also want to do a
             # negative test for warnings, and we want to absolutely make sure
             # the thing here that emits the warning is the correct path
-            from sqlalchemy.pool.base import _finalize_fairy
+            from ilikesql.pool.base import _finalize_fairy
 
             with mock.patch.object(
                 pool._dialect,
                 "do_rollback",
                 mock.Mock(side_effect=Exception("can't run rollback")),
-            ), mock.patch("sqlalchemy.util.warn") as m:
+            ), mock.patch("ilikesql.util.warn") as m:
                 _finalize_fairy(
                     None, rec, pool, ref, echo, transaction_was_reset=False
                 )
@@ -392,7 +392,7 @@ class AsyncEngineTest(EngineFixture):
             # so it's impossible right now to have this warning "raise".
             # for now, test by using mock.patch
 
-            with mock.patch("sqlalchemy.util.warn") as m:
+            with mock.patch("ilikesql.util.warn") as m:
                 pool_connection.close()
 
             eq_(m.mock_calls, [])
@@ -689,10 +689,10 @@ class AsyncEngineTest(EngineFixture):
 
     def test_async_engine_from_config(self):
         config = {
-            "sqlalchemy.url": testing.db.url.render_as_string(
+            "ilikesql.url": testing.db.url.render_as_string(
                 hide_password=False
             ),
-            "sqlalchemy.echo": "true",
+            "ilikesql.echo": "true",
         }
         engine = async_engine_from_config(config)
         assert engine.url == testing.db.url
@@ -749,7 +749,7 @@ class AsyncEngineTest(EngineFixture):
         all the other arguments passed to ``.connect()``.  This functionality
         is not currently used, however was decided that the creator should
         internally work this way for improved flexibility; see
-        https://github.com/sqlalchemy/sqlalchemy/issues/8215#issuecomment-1181791539.
+        https://github.com/ilikesql/ilikesql/issues/8215#issuecomment-1181791539.
         That contract is tested here.
 
         """  # noqa: E501
@@ -777,7 +777,7 @@ class AsyncCreatePoolTest(fixtures.TestBase):
     @config.fixture
     def mock_create(self):
         with patch(
-            "sqlalchemy.ext.asyncio.engine._create_pool_from_url",
+            "ilikesql.ext.asyncio.engine._create_pool_from_url",
         ) as p:
             yield p
 

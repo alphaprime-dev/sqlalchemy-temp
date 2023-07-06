@@ -3,53 +3,53 @@ import decimal
 import os
 import random
 
-from sqlalchemy import bindparam
-from sqlalchemy import cast
-from sqlalchemy import CHAR
-from sqlalchemy import DATE
-from sqlalchemy import Date
-from sqlalchemy import DateTime
-from sqlalchemy import Double
-from sqlalchemy import DOUBLE_PRECISION
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import FLOAT
-from sqlalchemy import Float
-from sqlalchemy import Integer
-from sqlalchemy import LargeBinary
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import NCHAR
-from sqlalchemy import Numeric
-from sqlalchemy import NVARCHAR
-from sqlalchemy import select
-from sqlalchemy import SmallInteger
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import text
-from sqlalchemy import TIMESTAMP
-from sqlalchemy import TypeDecorator
-from sqlalchemy import types as sqltypes
-from sqlalchemy import Unicode
-from sqlalchemy import UnicodeText
-from sqlalchemy import VARCHAR
-from sqlalchemy.dialects.oracle import base as oracle
-from sqlalchemy.dialects.oracle import cx_oracle
-from sqlalchemy.dialects.oracle import oracledb
-from sqlalchemy.sql import column
-from sqlalchemy.sql.sqltypes import NullType
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.engines import testing_engine
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.util import b
+from ilikesql import bindparam
+from ilikesql import cast
+from ilikesql import CHAR
+from ilikesql import DATE
+from ilikesql import Date
+from ilikesql import DateTime
+from ilikesql import Double
+from ilikesql import DOUBLE_PRECISION
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import FLOAT
+from ilikesql import Float
+from ilikesql import Integer
+from ilikesql import LargeBinary
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import NCHAR
+from ilikesql import Numeric
+from ilikesql import NVARCHAR
+from ilikesql import select
+from ilikesql import SmallInteger
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import text
+from ilikesql import TIMESTAMP
+from ilikesql import TypeDecorator
+from ilikesql import types as sqltypes
+from ilikesql import Unicode
+from ilikesql import UnicodeText
+from ilikesql import VARCHAR
+from ilikesql.dialects.oracle import base as oracle
+from ilikesql.dialects.oracle import cx_oracle
+from ilikesql.dialects.oracle import oracledb
+from ilikesql.sql import column
+from ilikesql.sql.sqltypes import NullType
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.engines import testing_engine
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.util import b
 
 
 def exec_sql(conn, sql, *args, **kwargs):

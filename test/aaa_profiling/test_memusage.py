@@ -5,52 +5,52 @@ import multiprocessing
 import pickle
 import weakref
 
-import sqlalchemy as sa
-from sqlalchemy import and_
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import types
-from sqlalchemy import Unicode
-from sqlalchemy import util
-from sqlalchemy.dialects import mysql
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.dialects import sqlite
-from sqlalchemy.engine import result
-from sqlalchemy.engine.processors import to_decimal_processor_factory
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import join as orm_join
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import Load
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm.session import _sessions
-from sqlalchemy.sql import column
-from sqlalchemy.sql import util as sql_util
-from sqlalchemy.sql.util import visit_binary_product
-from sqlalchemy.sql.visitors import cloned_traverse
-from sqlalchemy.sql.visitors import replacement_traverse
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import pickleable
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
+import ilikesql as sa
+from ilikesql import and_
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import types
+from ilikesql import Unicode
+from ilikesql import util
+from ilikesql.dialects import mysql
+from ilikesql.dialects import postgresql
+from ilikesql.dialects import sqlite
+from ilikesql.engine import result
+from ilikesql.engine.processors import to_decimal_processor_factory
+from ilikesql.orm import aliased
+from ilikesql.orm import attributes
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import declarative_base
+from ilikesql.orm import join as orm_join
+from ilikesql.orm import joinedload
+from ilikesql.orm import Load
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.orm import subqueryload
+from ilikesql.orm.session import _sessions
+from ilikesql.sql import column
+from ilikesql.sql import util as sql_util
+from ilikesql.sql.util import visit_binary_product
+from ilikesql.sql.visitors import cloned_traverse
+from ilikesql.sql.visitors import replacement_traverse
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import pickleable
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
 from ..orm import _fixtures
 
 
@@ -268,7 +268,7 @@ class MemUsageTest(EnsureZeroed):
     __requires__ = ("cpython", "no_windows")
 
     def test_type_compile(self):
-        from sqlalchemy.dialects.sqlite.base import dialect as SQLiteDialect
+        from ilikesql.dialects.sqlite.base import dialect as SQLiteDialect
 
         cast = sa.cast(column("x"), sa.Integer)
 
@@ -1241,7 +1241,7 @@ class CycleTest(_fixtures.FixtureTest):
         go()
 
     def test_proxied_attribute(self):
-        from sqlalchemy.ext import hybrid
+        from ilikesql.ext import hybrid
 
         users = self.tables.users
 

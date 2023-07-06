@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import typing
 
-from sqlalchemy import ForeignKey
-from sqlalchemy import select
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import DynamicMapped
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
+from ilikesql import ForeignKey
+from ilikesql import select
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import DynamicMapped
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
 
 
 class Base(DeclarativeBase):

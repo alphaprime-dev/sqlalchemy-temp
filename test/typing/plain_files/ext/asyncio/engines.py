@@ -1,5 +1,5 @@
-from sqlalchemy import text
-from sqlalchemy.ext.asyncio import create_async_engine
+from ilikesql import text
+from ilikesql.ext.asyncio import create_async_engine
 
 
 async def asyncio() -> None:

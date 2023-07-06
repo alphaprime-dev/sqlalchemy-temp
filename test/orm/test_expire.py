@@ -2,40 +2,40 @@
 
 import re
 
-import sqlalchemy as sa
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import FetchedValue
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import contains_eager
-from sqlalchemy.orm import defer
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import immediateload
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import lazyload
-from sqlalchemy.orm import make_transient_to_detached
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import strategies
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm import undefer
-from sqlalchemy.sql import select
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.assertsql import CountStatements
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
+import ilikesql as sa
+from ilikesql import exc as sa_exc
+from ilikesql import FetchedValue
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import attributes
+from ilikesql.orm import contains_eager
+from ilikesql.orm import defer
+from ilikesql.orm import deferred
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import immediateload
+from ilikesql.orm import joinedload
+from ilikesql.orm import lazyload
+from ilikesql.orm import make_transient_to_detached
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import strategies
+from ilikesql.orm import subqueryload
+from ilikesql.orm import undefer
+from ilikesql.sql import select
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.assertsql import CountStatements
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
 from test.orm import _fixtures
 
 

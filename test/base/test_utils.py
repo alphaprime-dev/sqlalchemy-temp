@@ -4,39 +4,39 @@ from pathlib import Path
 import pickle
 import sys
 
-from sqlalchemy import exc
-from sqlalchemy import sql
-from sqlalchemy import testing
-from sqlalchemy import util
-from sqlalchemy.sql import column
-from sqlalchemy.sql.base import DedupeColumnCollection
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import combinations
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_instance_of
-from sqlalchemy.testing import is_none
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing import not_in
-from sqlalchemy.testing.util import gc_collect
-from sqlalchemy.testing.util import picklers
-from sqlalchemy.util import classproperty
-from sqlalchemy.util import compat
-from sqlalchemy.util import FastIntFlag
-from sqlalchemy.util import get_callable_argspec
-from sqlalchemy.util import langhelpers
-from sqlalchemy.util import preloaded
-from sqlalchemy.util import WeakSequence
-from sqlalchemy.util._collections import merge_lists_w_ordering
-from sqlalchemy.util._has_cy import _import_cy_extensions
-from sqlalchemy.util._has_cy import HAS_CYEXTENSION
+from ilikesql import exc
+from ilikesql import sql
+from ilikesql import testing
+from ilikesql import util
+from ilikesql.sql import column
+from ilikesql.sql.base import DedupeColumnCollection
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import combinations
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_instance_of
+from ilikesql.testing import is_none
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import ne_
+from ilikesql.testing import not_in
+from ilikesql.testing.util import gc_collect
+from ilikesql.testing.util import picklers
+from ilikesql.util import classproperty
+from ilikesql.util import compat
+from ilikesql.util import FastIntFlag
+from ilikesql.util import get_callable_argspec
+from ilikesql.util import langhelpers
+from ilikesql.util import preloaded
+from ilikesql.util import WeakSequence
+from ilikesql.util._collections import merge_lists_w_ordering
+from ilikesql.util._has_cy import _import_cy_extensions
+from ilikesql.util._has_cy import HAS_CYEXTENSION
 
 
 class WeakSequenceTest(fixtures.TestBase):
@@ -2544,7 +2544,7 @@ class SymbolTest(fixtures.TestBase):
         if native == "native":
             from enum import IntFlag
         else:
-            from sqlalchemy.util import FastIntFlag as IntFlag
+            from ilikesql.util import FastIntFlag as IntFlag
 
         class Enum(IntFlag):
             fi_sym1 = 1
@@ -3478,7 +3478,7 @@ class TestModuleRegistry(fixtures.TestBase):
             mr = preloaded._ModuleRegistry()
 
             ret = mr.preload_module(
-                "xml.dom", "wsgiref.simple_server", "sqlalchemy.sql.util"
+                "xml.dom", "wsgiref.simple_server", "ilikesql.sql.util"
             )
             o = object()
             is_(ret(o), o)
@@ -3493,8 +3493,8 @@ class TestModuleRegistry(fixtures.TestBase):
             is_true("wsgiref.simple_server" in sys.modules)
             is_(sys.modules["wsgiref.simple_server"], mr.wsgiref_simple_server)
 
-            mr.import_prefix("sqlalchemy")
-            is_(sys.modules["sqlalchemy.sql.util"], mr.sql_util)
+            mr.import_prefix("ilikesql")
+            is_(sys.modules["ilikesql.sql.util"], mr.sql_util)
         finally:
             for name, mod in to_restore:
                 if mod is not None:
@@ -3595,7 +3595,7 @@ class CyExtensionTest(fixtures.TestBase):
     def test_all_cyext_imported(self):
         ext = _import_cy_extensions()
         lib_folder = (Path(__file__).parent / ".." / ".." / "lib").resolve()
-        sa_folder = lib_folder / "sqlalchemy"
+        sa_folder = lib_folder / "ilikesql"
         cython_files = [f.resolve() for f in sa_folder.glob("**/*.pyx")]
         eq_(len(ext), len(cython_files))
         names = {

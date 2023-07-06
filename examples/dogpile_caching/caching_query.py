@@ -21,9 +21,9 @@ dogpile.cache constructs.
 """
 from dogpile.cache.api import NO_VALUE
 
-from sqlalchemy import event
-from sqlalchemy.orm import loading
-from sqlalchemy.orm.interfaces import UserDefinedOption
+from ilikesql import event
+from ilikesql.orm import loading
+from ilikesql.orm.interfaces import UserDefinedOption
 
 
 class ORMCache:

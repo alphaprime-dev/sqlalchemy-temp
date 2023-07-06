@@ -1,15 +1,15 @@
-from sqlalchemy import exc
-from sqlalchemy import testing
-from sqlalchemy.engine import result
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing.assertions import expect_raises
-from sqlalchemy.testing.util import picklers
-from sqlalchemy.util import compat
+from ilikesql import exc
+from ilikesql import testing
+from ilikesql.engine import result
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing.assertions import expect_raises
+from ilikesql.testing.util import picklers
+from ilikesql.util import compat
 
 
 class ResultTupleTest(fixtures.TestBase):
@@ -203,8 +203,8 @@ class ResultTupleTest(fixtures.TestBase):
     @testing.requires.cextensions
     @testing.variation("direction", ["py_to_cy", "cy_to_py"])
     def test_serialize_cy_py_cy(self, direction: testing.Variation):
-        from sqlalchemy.engine import _py_row
-        from sqlalchemy.cyextension import resultproxy as _cy_row
+        from ilikesql.engine import _py_row
+        from ilikesql.cyextension import resultproxy as _cy_row
 
         global Row
 

@@ -2,25 +2,25 @@ from __future__ import annotations
 
 from typing import Tuple
 
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import create_engine
-from sqlalchemy import delete
-from sqlalchemy import func
-from sqlalchemy import insert
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import Select
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import text
-from sqlalchemy import update
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import Session
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import create_engine
+from ilikesql import delete
+from ilikesql import func
+from ilikesql import insert
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import Select
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import text
+from ilikesql import update
+from ilikesql.orm import aliased
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import Session
 
 
 class Base(DeclarativeBase):

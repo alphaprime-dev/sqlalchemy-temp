@@ -2,60 +2,60 @@ import logging
 import logging.handlers
 import re
 
-import sqlalchemy as sa
-from sqlalchemy import column
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import util
-from sqlalchemy.engine import default
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import dynamic_loader
-from sqlalchemy.orm import Load
-from sqlalchemy.orm import load_only
-from sqlalchemy.orm import reconstructor
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import RelationshipProperty
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import synonym
-from sqlalchemy.orm.base import _is_aliased_class
-from sqlalchemy.orm.base import _is_mapped_class
-from sqlalchemy.orm.persistence import _sort_states
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_deprecated
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.entities import ComparableMixin
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import column
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import util
+from ilikesql.engine import default
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.orm import aliased
+from ilikesql.orm import attributes
+from ilikesql.orm import backref
+from ilikesql.orm import class_mapper
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import column_property
+from ilikesql.orm import composite
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import declared_attr
+from ilikesql.orm import deferred
+from ilikesql.orm import dynamic_loader
+from ilikesql.orm import Load
+from ilikesql.orm import load_only
+from ilikesql.orm import reconstructor
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
+from ilikesql.orm import RelationshipProperty
+from ilikesql.orm import Session
+from ilikesql.orm import synonym
+from ilikesql.orm.base import _is_aliased_class
+from ilikesql.orm.base import _is_mapped_class
+from ilikesql.orm.persistence import _sort_states
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_deprecated
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import ne_
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.entities import ComparableMixin
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 from test.orm import _fixtures
 
 
@@ -163,7 +163,7 @@ class MapperTest(_fixtures.FixtureTest, AssertsCompiledSQL):
             self.classes.User,
         )
 
-        from sqlalchemy.orm import Mapper
+        from ilikesql.orm import Mapper
 
         with expect_raises_message(
             sa.exc.InvalidRequestError,
@@ -260,7 +260,7 @@ class MapperTest(_fixtures.FixtureTest, AssertsCompiledSQL):
     def test_entity_descriptor(self):
         users = self.tables.users
 
-        from sqlalchemy.orm.base import _entity_descriptor
+        from ilikesql.orm.base import _entity_descriptor
 
         class Foo:
             x = "something"
@@ -653,11 +653,11 @@ class MapperTest(_fixtures.FixtureTest, AssertsCompiledSQL):
         class B:
             pass
 
-        from sqlalchemy.testing import mock
-        from sqlalchemy.orm.attributes import register_attribute_impl
+        from ilikesql.testing import mock
+        from ilikesql.orm.attributes import register_attribute_impl
 
         with mock.patch(
-            "sqlalchemy.orm.attributes.register_attribute_impl",
+            "ilikesql.orm.attributes.register_attribute_impl",
             side_effect=register_attribute_impl,
         ) as some_mock:
             self.mapper(A, users, properties={"bs": relationship(B)})
@@ -3065,13 +3065,13 @@ class DocumentTest(fixtures.TestBase):
 class ORMLoggingTest(_fixtures.FixtureTest):
     def setup_test(self):
         self.buf = logging.handlers.BufferingHandler(100)
-        for log in [logging.getLogger("sqlalchemy.orm")]:
+        for log in [logging.getLogger("ilikesql.orm")]:
             log.addHandler(self.buf)
 
         self.mapper = registry().map_imperatively
 
     def teardown_test(self):
-        for log in [logging.getLogger("sqlalchemy.orm")]:
+        for log in [logging.getLogger("ilikesql.orm")]:
             log.removeHandler(self.buf)
 
     def _current_messages(self):
@@ -3097,7 +3097,7 @@ class ComparatorFactoryTest(_fixtures.FixtureTest, AssertsCompiledSQL):
             def __init__(self, x, y):
                 pass
 
-        from sqlalchemy.orm.interfaces import PropComparator
+        from ilikesql.orm.interfaces import PropComparator
 
         class MyFactory(PropComparator):
             pass
@@ -3118,7 +3118,7 @@ class ComparatorFactoryTest(_fixtures.FixtureTest, AssertsCompiledSQL):
     def test_column(self):
         User, users = self.classes.User, self.tables.users
 
-        from sqlalchemy.orm.properties import ColumnProperty
+        from ilikesql.orm.properties import ColumnProperty
 
         class MyFactory(ColumnProperty.Comparator):
             __hash__ = None
@@ -3151,7 +3151,7 @@ class ComparatorFactoryTest(_fixtures.FixtureTest, AssertsCompiledSQL):
     def test_synonym(self):
         users, User = self.tables.users, self.classes.User
 
-        from sqlalchemy.orm.properties import ColumnProperty
+        from ilikesql.orm.properties import ColumnProperty
 
         class MyFactory(ColumnProperty.Comparator):
             __hash__ = None

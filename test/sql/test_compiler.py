@@ -14,105 +14,105 @@ import datetime
 import decimal
 from typing import TYPE_CHECKING
 
-from sqlalchemy import alias
-from sqlalchemy import and_
-from sqlalchemy import asc
-from sqlalchemy import bindparam
-from sqlalchemy import Boolean
-from sqlalchemy import case
-from sqlalchemy import cast
-from sqlalchemy import CheckConstraint
-from sqlalchemy import Column
-from sqlalchemy import Date
-from sqlalchemy import desc
-from sqlalchemy import distinct
-from sqlalchemy import Enum
-from sqlalchemy import exc
-from sqlalchemy import except_
-from sqlalchemy import exists
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Index
-from sqlalchemy import insert
-from sqlalchemy import insert_sentinel
-from sqlalchemy import Integer
-from sqlalchemy import intersect
-from sqlalchemy import join
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import not_
-from sqlalchemy import null
-from sqlalchemy import Numeric
-from sqlalchemy import or_
-from sqlalchemy import outerjoin
-from sqlalchemy import over
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import text
-from sqlalchemy import TIMESTAMP
-from sqlalchemy import true
-from sqlalchemy import try_cast
-from sqlalchemy import tuple_
-from sqlalchemy import type_coerce
-from sqlalchemy import types
-from sqlalchemy import union
-from sqlalchemy import union_all
-from sqlalchemy import update
-from sqlalchemy import util
-from sqlalchemy.dialects import mssql
-from sqlalchemy.dialects import mysql
-from sqlalchemy.dialects import oracle
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.dialects import sqlite
-from sqlalchemy.dialects.postgresql.base import PGCompiler
-from sqlalchemy.dialects.postgresql.base import PGDialect
-from sqlalchemy.engine import default
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.sql import column
-from sqlalchemy.sql import compiler
-from sqlalchemy.sql import elements
-from sqlalchemy.sql import label
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import table
-from sqlalchemy.sql import util as sql_util
-from sqlalchemy.sql.elements import BooleanClauseList
-from sqlalchemy.sql.elements import ColumnElement
-from sqlalchemy.sql.elements import CompilerColumnElement
-from sqlalchemy.sql.elements import Grouping
-from sqlalchemy.sql.expression import ClauseElement
-from sqlalchemy.sql.expression import ClauseList
-from sqlalchemy.sql.expression import ColumnClause
-from sqlalchemy.sql.expression import TableClause
-from sqlalchemy.sql.selectable import LABEL_STYLE_NONE
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_ignore_whitespace
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_none
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing import Variation
-from sqlalchemy.testing.schema import pep435_enum
-from sqlalchemy.types import UserDefinedType
+from ilikesql import alias
+from ilikesql import and_
+from ilikesql import asc
+from ilikesql import bindparam
+from ilikesql import Boolean
+from ilikesql import case
+from ilikesql import cast
+from ilikesql import CheckConstraint
+from ilikesql import Column
+from ilikesql import Date
+from ilikesql import desc
+from ilikesql import distinct
+from ilikesql import Enum
+from ilikesql import exc
+from ilikesql import except_
+from ilikesql import exists
+from ilikesql import Float
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Index
+from ilikesql import insert
+from ilikesql import insert_sentinel
+from ilikesql import Integer
+from ilikesql import intersect
+from ilikesql import join
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import not_
+from ilikesql import null
+from ilikesql import Numeric
+from ilikesql import or_
+from ilikesql import outerjoin
+from ilikesql import over
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import text
+from ilikesql import TIMESTAMP
+from ilikesql import true
+from ilikesql import try_cast
+from ilikesql import tuple_
+from ilikesql import type_coerce
+from ilikesql import types
+from ilikesql import union
+from ilikesql import union_all
+from ilikesql import update
+from ilikesql import util
+from ilikesql.dialects import mssql
+from ilikesql.dialects import mysql
+from ilikesql.dialects import oracle
+from ilikesql.dialects import postgresql
+from ilikesql.dialects import sqlite
+from ilikesql.dialects.postgresql.base import PGCompiler
+from ilikesql.dialects.postgresql.base import PGDialect
+from ilikesql.engine import default
+from ilikesql.ext.compiler import compiles
+from ilikesql.sql import column
+from ilikesql.sql import compiler
+from ilikesql.sql import elements
+from ilikesql.sql import label
+from ilikesql.sql import operators
+from ilikesql.sql import table
+from ilikesql.sql import util as sql_util
+from ilikesql.sql.elements import BooleanClauseList
+from ilikesql.sql.elements import ColumnElement
+from ilikesql.sql.elements import CompilerColumnElement
+from ilikesql.sql.elements import Grouping
+from ilikesql.sql.expression import ClauseElement
+from ilikesql.sql.expression import ClauseList
+from ilikesql.sql.expression import ColumnClause
+from ilikesql.sql.expression import TableClause
+from ilikesql.sql.selectable import LABEL_STYLE_NONE
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_ignore_whitespace
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_none
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import ne_
+from ilikesql.testing import Variation
+from ilikesql.testing.schema import pep435_enum
+from ilikesql.types import UserDefinedType
 
 
 if TYPE_CHECKING:
-    from sqlalchemy import Select
+    from ilikesql import Select
 
 
 table1 = table(
@@ -3204,7 +3204,7 @@ class SelectTest(fixtures.TestBase, AssertsCompiledSQL):
         )
 
     def test_over_within_group(self):
-        from sqlalchemy import within_group
+        from ilikesql import within_group
 
         stmt = select(
             table1.c.myid,
@@ -5197,7 +5197,7 @@ class BindParameterTest(AssertsCompiledSQL, fixtures.TestBase):
 
         The main test for actual known characters passing through for bound
         params is in
-        sqlalchemy.testing.suite.test_dialect.DifficultParametersTest.
+        ilikesql.testing.suite.test_dialect.DifficultParametersTest.
 
         """
         dialect = default.DefaultDialect()
@@ -5770,20 +5770,20 @@ class CompileUXTest(fixtures.TestBase):
 
 class UnsupportedTest(fixtures.TestBase):
     def test_unsupported_element_str_visit_name(self):
-        from sqlalchemy.sql.expression import ClauseElement
+        from ilikesql.sql.expression import ClauseElement
 
         class SomeElement(ClauseElement):
             __visit_name__ = "some_element"
 
         assert_raises_message(
             exc.UnsupportedCompilationError,
-            r"Compiler <sqlalchemy.sql.compiler.StrSQLCompiler .*"
+            r"Compiler <ilikesql.sql.compiler.StrSQLCompiler .*"
             r"can't render element of type <class '.*SomeElement'>",
             SomeElement().compile,
         )
 
     def test_unsupported_element_meth_visit_name(self):
-        from sqlalchemy.sql.expression import ClauseElement
+        from ilikesql.sql.expression import ClauseElement
 
         def go():
             class SomeElement(ClauseElement):
@@ -5812,7 +5812,7 @@ class UnsupportedTest(fixtures.TestBase):
             schema.CreateTable(t).compile(dialect=sqlite.dialect())
 
     def test_unsupported_operator(self):
-        from sqlalchemy.sql.expression import BinaryExpression
+        from ilikesql.sql.expression import BinaryExpression
 
         def myop(x, y):
             pass
@@ -5820,7 +5820,7 @@ class UnsupportedTest(fixtures.TestBase):
         binary = BinaryExpression(column("foo"), column("bar"), myop)
         assert_raises_message(
             exc.UnsupportedCompilationError,
-            r"Compiler <sqlalchemy.sql.compiler.StrSQLCompiler .*"
+            r"Compiler <ilikesql.sql.compiler.StrSQLCompiler .*"
             r"can't render element of type <function.*",
             binary.compile,
         )
@@ -5953,7 +5953,7 @@ class StringifySpecialTest(fixtures.TestBase):
             return "widget"
 
         with mock.patch(
-            "sqlalchemy.dialects.sqlite.base.SQLiteCompiler.visit_widget",
+            "ilikesql.dialects.sqlite.base.SQLiteCompiler.visit_widget",
             visit_widget,
             create=True,
         ):
@@ -5974,7 +5974,7 @@ class StringifySpecialTest(fixtures.TestBase):
             return f"widget {self.process(bindparam('q'), **kw)}"
 
         with mock.patch(
-            "sqlalchemy.dialects.sqlite.base.SQLiteCompiler.visit_widget",
+            "ilikesql.dialects.sqlite.base.SQLiteCompiler.visit_widget",
             visit_widget,
             create=True,
         ):
@@ -5982,7 +5982,7 @@ class StringifySpecialTest(fixtures.TestBase):
 
     def test_within_group(self):
         # stringify of these was supported anyway by defaultdialect.
-        from sqlalchemy import within_group
+        from ilikesql import within_group
 
         stmt = select(
             table1.c.myid,
@@ -6049,7 +6049,7 @@ class StringifySpecialTest(fixtures.TestBase):
             "my_table", column("id"), column("data"), column("user_email")
         )
 
-        from sqlalchemy.dialects.postgresql import insert
+        from ilikesql.dialects.postgresql import insert
 
         insert_stmt = insert(my_table).values(
             id="some_existing_id", data="inserted value"
@@ -6065,7 +6065,7 @@ class StringifySpecialTest(fixtures.TestBase):
         )
 
     def test_dialect_specific_ddl(self):
-        from sqlalchemy.dialects.postgresql import ExcludeConstraint
+        from ilikesql.dialects.postgresql import ExcludeConstraint
 
         m = MetaData()
         tbl = Table("testtbl", m, Column("room", Integer, primary_key=True))
@@ -7574,7 +7574,7 @@ class ResultMapTest(fixtures.TestBase):
         )
 
     def test_nested_api(self):
-        from sqlalchemy.engine.cursor import CursorResultMetaData
+        from ilikesql.engine.cursor import CursorResultMetaData
 
         stmt2 = select(table2).subquery()
 

@@ -1,36 +1,36 @@
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import desc
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import noload
-from sqlalchemy.orm import PassiveFlag
-from sqlalchemy.orm import Query
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import WriteOnlyMapped
-from sqlalchemy.orm.session import make_transient_to_detached
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import is_
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.assertsql import Conditional
-from sqlalchemy.testing.fixtures import fixture_session
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import desc
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import attributes
+from ilikesql.orm import backref
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import noload
+from ilikesql.orm import PassiveFlag
+from ilikesql.orm import Query
+from ilikesql.orm import relationship
+from ilikesql.orm import WriteOnlyMapped
+from ilikesql.orm.session import make_transient_to_detached
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import is_
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.assertsql import Conditional
+from ilikesql.testing.fixtures import fixture_session
 from test.orm import _fixtures
 
 
@@ -1460,7 +1460,7 @@ class DynamicUOWTest(
         sess.add(u)
         sess.commit()
 
-        from sqlalchemy import case
+        from ilikesql import case
 
         # the byzantine syntax here is so the query works on MSSQL
         isnull_stmt = select(

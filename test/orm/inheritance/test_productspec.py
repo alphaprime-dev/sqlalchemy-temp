@@ -1,18 +1,18 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import LargeBinary
-from sqlalchemy import String
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import DateTime
+from ilikesql import Float
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import LargeBinary
+from ilikesql import String
+from ilikesql.orm import backref
+from ilikesql.orm import deferred
+from ilikesql.orm import relationship
+from ilikesql.testing import fixtures
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class InheritTest(fixtures.MappedTest):

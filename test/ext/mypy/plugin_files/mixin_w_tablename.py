@@ -1,9 +1,9 @@
 # test #6937
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import Mapped
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql.orm import declarative_base
+from ilikesql.orm import declared_attr
+from ilikesql.orm import Mapped
 
 
 Base = declarative_base()

@@ -4,30 +4,30 @@ module functions."""
 import unittest
 import warnings
 
-from sqlalchemy import Boolean
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import join
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_ignore_whitespace
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.entities import ComparableEntity
+from ilikesql import Boolean
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import join
+from ilikesql import select
+from ilikesql import String
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import column_property
+from ilikesql.orm import declarative_base
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import deferred
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.testing import assert_raises
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_ignore_whitespace
+from ilikesql.testing import is_
+from ilikesql.testing import ne_
+from ilikesql.testing.entities import ComparableEntity
 from .history_meta import Versioned
 from .history_meta import versioned_session
 

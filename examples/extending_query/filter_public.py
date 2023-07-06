@@ -12,20 +12,20 @@ that should be applied on a per-request basis, etc.
 
 """
 
-from sqlalchemy import Boolean
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import orm
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import true
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
+from ilikesql import Boolean
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import orm
+from ilikesql import select
+from ilikesql import String
+from ilikesql import true
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
 
 
 @event.listens_for(Session, "do_orm_execute")

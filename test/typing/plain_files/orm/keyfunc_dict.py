@@ -2,12 +2,12 @@ import typing
 from typing import Dict
 from typing import Optional
 
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import attribute_keyed_dict
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
+from ilikesql import ForeignKey
+from ilikesql.orm import attribute_keyed_dict
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
 
 
 class Base(DeclarativeBase):

@@ -28,7 +28,7 @@ import sys
 from tempfile import NamedTemporaryFile
 import textwrap
 
-from sqlalchemy.util.tool_support import code_writer_cmd
+from ilikesql.util.tool_support import code_writer_cmd
 
 is_posix = os.name == "posix"
 
@@ -133,11 +133,11 @@ def main(cmd: code_writer_cmd) -> None:
 
 
 entries = [
-    "sqlalchemy.sql._selectable_constructors",
-    "sqlalchemy.orm.session",
-    "sqlalchemy.orm.query",
-    "sqlalchemy.sql.selectable",
-    "sqlalchemy.sql.dml",
+    "ilikesql.sql._selectable_constructors",
+    "ilikesql.orm.session",
+    "ilikesql.orm.query",
+    "ilikesql.sql.selectable",
+    "ilikesql.sql.dml",
 ]
 
 if __name__ == "__main__":

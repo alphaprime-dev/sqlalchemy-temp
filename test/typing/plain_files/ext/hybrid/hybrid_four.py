@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from typing import Any
 
-from sqlalchemy import ColumnElement
-from sqlalchemy import func
-from sqlalchemy.ext.hybrid import Comparator
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from ilikesql import ColumnElement
+from ilikesql import func
+from ilikesql.ext.hybrid import Comparator
+from ilikesql.ext.hybrid import hybrid_property
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
 
 
 class Base(DeclarativeBase):

@@ -2,54 +2,54 @@ from unittest.mock import Mock
 from unittest.mock import patch
 import uuid
 
-from sqlalchemy import cast
-from sqlalchemy import DateTime
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import FetchedValue
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import insert
-from sqlalchemy import insert_sentinel
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import JSON
-from sqlalchemy import literal
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import util
-from sqlalchemy import Uuid
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import unitofwork
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import variation_fixture
-from sqlalchemy.testing.assertsql import AllOf
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.assertsql import Conditional
-from sqlalchemy.testing.assertsql import RegexSQL
-from sqlalchemy.testing.entities import BasicEntity
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.provision import normalize_sequence
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import cast
+from ilikesql import DateTime
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import FetchedValue
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import insert
+from ilikesql import insert_sentinel
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import JSON
+from ilikesql import literal
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import util
+from ilikesql import Uuid
+from ilikesql.orm import attributes
+from ilikesql.orm import backref
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import declarative_base
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import unitofwork
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import variation_fixture
+from ilikesql.testing.assertsql import AllOf
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.assertsql import Conditional
+from ilikesql.testing.assertsql import RegexSQL
+from ilikesql.testing.entities import BasicEntity
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.provision import normalize_sequence
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 from test.orm import _fixtures
 
 
@@ -1842,7 +1842,7 @@ class BasicStaleChecksTest(fixtures.MappedTest):
             config.db.dialect, "supports_sane_multi_rowcount", False
         ):
             with patch(
-                "sqlalchemy.engine.cursor.CursorResult.rowcount", rowcount
+                "ilikesql.engine.cursor.CursorResult.rowcount", rowcount
             ):
                 Parent, Child = self._fixture()
                 sess = fixture_session()
@@ -1872,7 +1872,7 @@ class BasicStaleChecksTest(fixtures.MappedTest):
             config.db.dialect, "supports_sane_multi_rowcount", False
         ):
             with patch(
-                "sqlalchemy.engine.cursor.CursorResult.rowcount", rowcount
+                "ilikesql.engine.cursor.CursorResult.rowcount", rowcount
             ):
                 Parent, Child = self._fixture()
                 sess = fixture_session()
@@ -1902,7 +1902,7 @@ class BasicStaleChecksTest(fixtures.MappedTest):
             config.db.dialect, "supports_sane_multi_rowcount", False
         ):
             with patch(
-                "sqlalchemy.engine.cursor.CursorResult.rowcount", rowcount
+                "ilikesql.engine.cursor.CursorResult.rowcount", rowcount
             ):
                 Parent, Child = self._fixture()
                 sess = fixture_session()
@@ -2217,7 +2217,7 @@ class LoadersUsingCommittedTest(UOWTest):
             # it will be still be u1 instead of u2
             assert target.user.id == target.user_id == u2.id
 
-        from sqlalchemy import event
+        from ilikesql import event
 
         event.listen(Address, "before_update", before_update)
 
@@ -2289,7 +2289,7 @@ class LoadersUsingCommittedTest(UOWTest):
                 eq_([a.id for a in target.addresses], [a.id for a in [a1, a2]])
             raise AvoidReferencialError()
 
-        from sqlalchemy import event
+        from ilikesql import event
 
         event.listen(User, "before_update", before_update)
 
@@ -3376,7 +3376,7 @@ class TypeWoBoolTest(fixtures.MappedTest, testing.AssertsExecutionResults):
 
     @classmethod
     def define_tables(cls, metadata):
-        from sqlalchemy import TypeDecorator
+        from ilikesql import TypeDecorator
 
         class NoBool:
             def __nonzero__(self):
@@ -3478,7 +3478,7 @@ class TypeWoBoolTest(fixtures.MappedTest, testing.AssertsExecutionResults):
 class NullEvaluatingTest(fixtures.MappedTest, testing.AssertsExecutionResults):
     @classmethod
     def define_tables(cls, metadata):
-        from sqlalchemy import TypeDecorator
+        from ilikesql import TypeDecorator
 
         class EvalsNull(TypeDecorator):
             impl = String(50)

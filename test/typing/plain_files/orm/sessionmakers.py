@@ -1,16 +1,16 @@
 """test sessionmaker, originally for #7656"""
 
-from sqlalchemy import create_engine
-from sqlalchemy import Engine
-from sqlalchemy.ext.asyncio import async_scoped_session
-from sqlalchemy.ext.asyncio import async_sessionmaker
-from sqlalchemy.ext.asyncio import AsyncEngine
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import QueryPropertyDescriptor
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
+from ilikesql import create_engine
+from ilikesql import Engine
+from ilikesql.ext.asyncio import async_scoped_session
+from ilikesql.ext.asyncio import async_sessionmaker
+from ilikesql.ext.asyncio import AsyncEngine
+from ilikesql.ext.asyncio import AsyncSession
+from ilikesql.ext.asyncio import create_async_engine
+from ilikesql.orm import QueryPropertyDescriptor
+from ilikesql.orm import scoped_session
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
 
 
 async_engine = create_async_engine("...")
