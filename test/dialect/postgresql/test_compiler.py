@@ -1,76 +1,76 @@
-from sqlalchemy import and_
-from sqlalchemy import BigInteger
-from sqlalchemy import bindparam
-from sqlalchemy import case
-from sqlalchemy import cast
-from sqlalchemy import CheckConstraint
-from sqlalchemy import Column
-from sqlalchemy import Computed
-from sqlalchemy import Date
-from sqlalchemy import delete
-from sqlalchemy import Enum
-from sqlalchemy import exc
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import Index
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import null
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import SmallInteger
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import text
-from sqlalchemy import true
-from sqlalchemy import tuple_
-from sqlalchemy import types as sqltypes
-from sqlalchemy import UniqueConstraint
-from sqlalchemy import update
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.dialects.postgresql import aggregate_order_by
-from sqlalchemy.dialects.postgresql import ARRAY as PG_ARRAY
-from sqlalchemy.dialects.postgresql import array
-from sqlalchemy.dialects.postgresql import array_agg as pg_array_agg
-from sqlalchemy.dialects.postgresql import DOMAIN
-from sqlalchemy.dialects.postgresql import ExcludeConstraint
-from sqlalchemy.dialects.postgresql import insert
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.dialects.postgresql import JSONPATH
-from sqlalchemy.dialects.postgresql import Range
-from sqlalchemy.dialects.postgresql import REGCONFIG
-from sqlalchemy.dialects.postgresql import TSQUERY
-from sqlalchemy.dialects.postgresql import TSRANGE
-from sqlalchemy.dialects.postgresql.base import PGDialect
-from sqlalchemy.dialects.postgresql.psycopg2 import PGDialect_psycopg2
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import Session
-from sqlalchemy.sql import column
-from sqlalchemy.sql import literal_column
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import table
-from sqlalchemy.sql import util as sql_util
-from sqlalchemy.sql.functions import GenericFunction
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertions import assert_raises
-from sqlalchemy.testing.assertions import assert_raises_message
-from sqlalchemy.testing.assertions import AssertsCompiledSQL
-from sqlalchemy.testing.assertions import eq_
-from sqlalchemy.testing.assertions import eq_ignore_whitespace
-from sqlalchemy.testing.assertions import expect_warnings
-from sqlalchemy.testing.assertions import is_
-from sqlalchemy.types import TypeEngine
-from sqlalchemy.util import OrderedDict
+from ilikesql import and_
+from ilikesql import BigInteger
+from ilikesql import bindparam
+from ilikesql import case
+from ilikesql import cast
+from ilikesql import CheckConstraint
+from ilikesql import Column
+from ilikesql import Computed
+from ilikesql import Date
+from ilikesql import delete
+from ilikesql import Enum
+from ilikesql import exc
+from ilikesql import Float
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import Index
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import null
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import SmallInteger
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import text
+from ilikesql import true
+from ilikesql import tuple_
+from ilikesql import types as sqltypes
+from ilikesql import UniqueConstraint
+from ilikesql import update
+from ilikesql.dialects import postgresql
+from ilikesql.dialects.postgresql import aggregate_order_by
+from ilikesql.dialects.postgresql import ARRAY as PG_ARRAY
+from ilikesql.dialects.postgresql import array
+from ilikesql.dialects.postgresql import array_agg as pg_array_agg
+from ilikesql.dialects.postgresql import DOMAIN
+from ilikesql.dialects.postgresql import ExcludeConstraint
+from ilikesql.dialects.postgresql import insert
+from ilikesql.dialects.postgresql import JSONB
+from ilikesql.dialects.postgresql import JSONPATH
+from ilikesql.dialects.postgresql import Range
+from ilikesql.dialects.postgresql import REGCONFIG
+from ilikesql.dialects.postgresql import TSQUERY
+from ilikesql.dialects.postgresql import TSRANGE
+from ilikesql.dialects.postgresql.base import PGDialect
+from ilikesql.dialects.postgresql.psycopg2 import PGDialect_psycopg2
+from ilikesql.orm import aliased
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import Session
+from ilikesql.sql import column
+from ilikesql.sql import literal_column
+from ilikesql.sql import operators
+from ilikesql.sql import table
+from ilikesql.sql import util as sql_util
+from ilikesql.sql.functions import GenericFunction
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertions import assert_raises
+from ilikesql.testing.assertions import assert_raises_message
+from ilikesql.testing.assertions import AssertsCompiledSQL
+from ilikesql.testing.assertions import eq_
+from ilikesql.testing.assertions import eq_ignore_whitespace
+from ilikesql.testing.assertions import expect_warnings
+from ilikesql.testing.assertions import is_
+from ilikesql.types import TypeEngine
+from ilikesql.util import OrderedDict
 
 
 class SequenceTest(fixtures.TestBase, AssertsCompiledSQL):
@@ -302,7 +302,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
     def test_cast_double_pg_double(self):
         """test #5465:
 
-        test sqlalchemy Double/DOUBLE to PostgreSQL DOUBLE PRECISION
+        test ilikesql Double/DOUBLE to PostgreSQL DOUBLE PRECISION
         """
         d1 = sqltypes.Double
 
@@ -426,7 +426,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
         table = Table(
             "some_table", MetaData(), Column("q", e1), Column("p", e2)
         )
-        from sqlalchemy.schema import CreateTable
+        from ilikesql.schema import CreateTable
 
         self.assert_compile(
             CreateTable(table),
@@ -447,7 +447,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
             Column("q", PG_ARRAY(e1)),
             Column("p", PG_ARRAY(e2)),
         )
-        from sqlalchemy.schema import CreateTable
+        from ilikesql.schema import CreateTable
 
         self.assert_compile(
             CreateTable(table),
@@ -3502,10 +3502,10 @@ class FullTextSearchTest(fixtures.TestBase, AssertsCompiledSQL):
             exc.CompileError,
             rf"Can't compile \"{to_ts_name}\(\)\" full text search "
             f"function construct that does not originate from the "
-            f'"sqlalchemy.dialects.postgresql" package.  '
-            f'Please ensure "import sqlalchemy.dialects.postgresql" is '
+            f'"ilikesql.dialects.postgresql" package.  '
+            f'Please ensure "import ilikesql.dialects.postgresql" is '
             f"called before constructing "
-            rf"\"sqlalchemy.func.{to_ts_name}\(\)\" to ensure "
+            rf"\"ilikesql.func.{to_ts_name}\(\)\" to ensure "
             f"registration of the correct "
             f"argument and return types.",
         ):

@@ -3,33 +3,33 @@
 import random
 import textwrap
 
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.associationproxy import AssociationProxyExtensionType
-from sqlalchemy.ext.hybrid import hybrid_method
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.ext.hybrid import HybridExtensionType
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import synonym
-from sqlalchemy.orm.attributes import instance_state
-from sqlalchemy.orm.attributes import NO_VALUE
-from sqlalchemy.orm.base import InspectionAttr
-from sqlalchemy.orm.interfaces import NotExtension
-from sqlalchemy.orm.util import identity_key
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing.fixtures import fixture_session
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.ext.associationproxy import AssociationProxyExtensionType
+from ilikesql.ext.hybrid import hybrid_method
+from ilikesql.ext.hybrid import hybrid_property
+from ilikesql.ext.hybrid import HybridExtensionType
+from ilikesql.orm import aliased
+from ilikesql.orm import class_mapper
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import synonym
+from ilikesql.orm.attributes import instance_state
+from ilikesql.orm.attributes import NO_VALUE
+from ilikesql.orm.base import InspectionAttr
+from ilikesql.orm.interfaces import NotExtension
+from ilikesql.orm.util import identity_key
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import is_
+from ilikesql.testing.fixtures import fixture_session
 from test.orm import _fixtures
 
 
@@ -412,8 +412,8 @@ class TestORMInspection(_fixtures.FixtureTest):
             __foo__ = "bar"
             __bat__ = Thing()
 
-        from sqlalchemy.orm import column_property
-        from sqlalchemy.ext.hybrid import hybrid_property
+        from ilikesql.orm import column_property
+        from ilikesql.ext.hybrid import hybrid_property
 
         m = self.mapper_registry.map_imperatively(AnonClass, self.tables.users)
 
@@ -494,9 +494,9 @@ class TestORMInspection(_fixtures.FixtureTest):
             glbls["MyOtherClass"] = MyOtherClass
         code = """
 
-from sqlalchemy import Column, Integer, ForeignKey
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.hybrid import hybrid_property
+from ilikesql import Column, Integer, ForeignKey
+from ilikesql.orm import relationship
+from ilikesql.ext.hybrid import hybrid_property
 
 class %s(SuperCls):
     %s
@@ -514,7 +514,7 @@ class %s(SuperCls):
         return names, glbls[clsname]
 
     def test_all_orm_descriptors_pep520_noinh(self):
-        from sqlalchemy.orm import declarative_base
+        from ilikesql.orm import declarative_base
 
         Base = declarative_base()
 
@@ -526,7 +526,7 @@ class %s(SuperCls):
         eq_(MyClass.__mapper__.all_orm_descriptors.keys(), names)
 
     def test_all_orm_descriptors_pep520_onelevel_inh(self):
-        from sqlalchemy.orm import declarative_base
+        from ilikesql.orm import declarative_base
 
         Base = declarative_base()
 

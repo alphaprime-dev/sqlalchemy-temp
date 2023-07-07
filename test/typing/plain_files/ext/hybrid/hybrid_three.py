@@ -5,15 +5,15 @@ from typing import cast
 from typing import List
 from typing import Optional
 
-from sqlalchemy import ForeignKey
-from sqlalchemy import Numeric
-from sqlalchemy import SQLColumnExpression
-from sqlalchemy import String
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
+from ilikesql import ForeignKey
+from ilikesql import Numeric
+from ilikesql import SQLColumnExpression
+from ilikesql import String
+from ilikesql.ext.hybrid import hybrid_property
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
 
 
 class Base(DeclarativeBase):

@@ -14,16 +14,16 @@ class itself.
    shared among many classes using :pep:`593` ``Annotated`` types; see
    :ref:`orm_declarative_mapped_column_type_map_pep593` and
    :ref:`orm_declarative_mapped_column_pep593` for background on these
-   SQLAlchemy 2.0 features.
+   ilikesql 2.0 features.
 
 An example of some commonly mixed-in idioms is below::
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import declared_attr
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql.orm import declared_attr
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -97,7 +97,7 @@ example:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> print(select(MyModel).join(MyModel.log_record))
     {printsql}SELECT mymodel.name, mymodel.id, mymodel.log_record_id
     FROM mymodel JOIN logrecord ON logrecord.id = mymodel.log_record_id
@@ -116,7 +116,7 @@ example:
    ``__tablename__``, ``__mapper_args__`` and ``__table_args__``.
 
    .. versionadded:: 2.0  As part of :pep:`484` typing support for the
-      SQLAlchemy ORM, added the :attr:`_orm.declared_attr.directive` to
+      ilikesql ORM, added the :attr:`_orm.declared_attr.directive` to
       :class:`_orm.declared_attr` to distinguish between :class:`_orm.Mapped`
       attributes and Declarative configurational attributes
 
@@ -140,7 +140,7 @@ attribute is used on the newly defined class.
    using :class:`_schema.Column` directly instead of
    :func:`_orm.mapped_column`.
 
-.. versionchanged:: 2.0 For users coming from the 1.4 series of SQLAlchemy
+.. versionchanged:: 2.0 For users coming from the 1.4 series of ilikesql
    who may have been using the :ref:`mypy plugin <mypy_toplevel>`, the
    :func:`_orm.declarative_mixin` class decorator is no longer needed
    to mark declarative mixins, assuming the mypy plugin is no longer in use.
@@ -155,12 +155,12 @@ should apply to all classes derived from a particular base.  The example
 below illustrates some of the the previous section's example in terms of the
 ``Base`` class::
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import declared_attr
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql.orm import declared_attr
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -207,12 +207,12 @@ example below::
 
     # legacy declarative_base() use
 
-    from sqlalchemy import Integer, String
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import declared_attr
-    from sqlalchemy.orm import declarative_base
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import Integer, String
+    from ilikesql import ForeignKey
+    from ilikesql.orm import declared_attr
+    from ilikesql.orm import declarative_base
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base:
@@ -321,7 +321,7 @@ applied to the target class.
 Mixing in Relationships
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Relationships created by :func:`~sqlalchemy.orm.relationship` are provided
+Relationships created by :func:`~ilikesql.orm.relationship` are provided
 with declarative mixin classes exclusively using the
 :class:`_orm.declared_attr` approach, eliminating any ambiguity
 which could arise when copying a relationship and its possibly column-bound
@@ -329,12 +329,12 @@ contents. Below is an example which combines a foreign key column and a
 relationship so that two classes ``Foo`` and ``Bar`` can both be configured to
 reference a common target class via many-to-one::
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import declared_attr
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import declared_attr
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -368,7 +368,7 @@ to ``Target`` accessed along the ``.target`` attribute:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> print(select(Foo).join(Foo.target))
     {printsql}SELECT foo.id, foo.target_id
     FROM foo JOIN target ON target.id = foo.target_id{stop}
@@ -414,11 +414,11 @@ other ordinary mapped columns that were declared with :func:`_orm.mapped_column`
 so that they may be used to compose new attributes, as in the example below which adds two
 columns together::
 
-    from sqlalchemy.orm import column_property
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import declared_attr
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql.orm import column_property
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import declared_attr
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -444,7 +444,7 @@ it produces the full expression:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> print(select(Something.x_plus_y))
     {printsql}SELECT something.x + something.y AS anon_1
     FROM something
@@ -516,11 +516,11 @@ of ``Person``, but not for the ``Manager`` subclass of ``Person``::
 
     from typing import Optional
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import declared_attr
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql import ForeignKey
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import declared_attr
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -593,12 +593,12 @@ so that we may **conditionally** return ``None`` for the table name,
 if a table is already present, thus indicating single-table inheritance
 for inheriting subclasses by default::
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import declared_attr
-    from sqlalchemy.orm import has_inherited_table
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql import ForeignKey
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import declared_attr
+    from ilikesql.orm import has_inherited_table
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -724,7 +724,7 @@ define on the class itself. The
 here to create user-defined collation routines that pull
 from multiple collections::
 
-    from sqlalchemy.orm import declarative_mixin, declared_attr
+    from ilikesql.orm import declarative_mixin, declared_attr
 
 
     class MySQLSettings:

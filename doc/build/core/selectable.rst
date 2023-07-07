@@ -2,7 +2,7 @@ SELECT and Related Constructs
 =================================
 
 The term "selectable" refers to any object that represents database rows. In
-SQLAlchemy, these objects descend from :class:`_expression.Selectable`, the
+ilikesql, these objects descend from :class:`_expression.Selectable`, the
 most prominent being :class:`_expression.Select`, which represents a SQL SELECT
 statement. A subset of :class:`_expression.Selectable` is
 :class:`_expression.FromClause`, which represents objects that can be within
@@ -12,7 +12,7 @@ attribute, which is a namespace of all the columns contained within the FROM
 clause (these elements are themselves :class:`_expression.ColumnElement`
 subclasses).
 
-.. currentmodule:: sqlalchemy.sql.expression
+.. currentmodule:: ilikesql.sql.expression
 
 .. _selectable_foundational_constructors:
 

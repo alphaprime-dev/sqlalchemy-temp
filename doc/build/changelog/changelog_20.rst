@@ -205,7 +205,7 @@
         ``default`` value and set ``init=False`` would not work.
         The dataclasses behavior in this case is to set the default
         value on the class, that's not compatible with the descriptors used
-        by SQLAlchemy. To support this case the default is transformed to
+        by ilikesql. To support this case the default is transformed to
         a ``default_factory`` when generating the dataclass.
 
     .. change::
@@ -337,8 +337,8 @@
 
 
         Generalized the MSSQL :func:`_sql.try_cast` function into the
-        ``sqlalchemy.`` import namespace so that it may be implemented by third
-        party dialects as well. Within SQLAlchemy, the :func:`_sql.try_cast`
+        ``ilikesql.`` import namespace so that it may be implemented by third
+        party dialects as well. Within ilikesql, the :func:`_sql.try_cast`
         function remains a SQL Server-only construct that will raise
         :class:`.CompileError` if used with backends that don't support it.
 
@@ -441,7 +441,7 @@
         :tickets: 9656
 
         Added type :data:`_sql.ColumnExpressionArgument` as a public-facing type
-        that indicates column-oriented arguments which are passed to SQLAlchemy
+        that indicates column-oriented arguments which are passed to ilikesql
         constructs, such as :meth:`_sql.Select.where`, :func:`_sql.and_` and
         others. This may be used to add typing to end-user functions which call
         these methods.
@@ -657,10 +657,10 @@
         * ``__getattr__`` performance of the row's "named tuple" interface has
           been improved; within this change, the :class:`_engine.Row`
           implementation has been streamlined, removing constructs and logic
-          that were specific to the 1.4 and prior series of SQLAlchemy.
+          that were specific to the 1.4 and prior series of ilikesql.
           As part of this change, the serialization format of :class:`_engine.Row`
           has been modified slightly, however rows which were pickled with previous
-          SQLAlchemy 2.0 releases will be recognized within the new format.
+          ilikesql 2.0 releases will be recognized within the new format.
           Pull request courtesy J. Nick Koston.
 
         * Improved row processing performance for "binary" datatypes by making the
@@ -888,7 +888,7 @@
         :tags: bug, mssql
         :tickets: 9603
 
-        The SQLAlchemy "insertmanyvalues" feature which allows fast INSERT of
+        The ilikesql "insertmanyvalues" feature which allows fast INSERT of
         many rows while also supporting RETURNING is temporarily disabled for
         SQL Server. As the unit of work currently relies upon this feature such
         that it matches existing ORM objects to returned primary key
@@ -919,7 +919,7 @@
         pyodbc when ``fast_executemany`` is set to ``True`` by using
         ``fast_executemany`` / ``cursor.executemany()`` for bulk INSERT that does
         not include RETURNING, restoring the same behavior as was used in
-        SQLAlchemy 1.4 when this parameter is set.
+        ilikesql 1.4 when this parameter is set.
 
         New performance details from end users have shown that ``fast_executemany``
         is still much faster for very large datasets as it uses ODBC commands that
@@ -1128,7 +1128,7 @@
           :tickets: 9442
 
           Modifications to the base PostgreSQL dialect to allow for better integration with the
-          sqlalchemy-redshift third party dialect for SQLAlchemy 2.0. Pull request courtesy
+          ilikesql-redshift third party dialect for ilikesql 2.0. Pull request courtesy
           matthewgdv.
 
 .. changelog::
@@ -1160,7 +1160,7 @@
         Fixed bug where the "active history" feature was not fully
         implemented for composite attributes, making it impossible to receive
         events that included the "old" value.   This seems to have been the case
-        with older SQLAlchemy versions as well, where "active_history" would
+        with older ilikesql versions as well, where "active_history" would
         be propagated to the underlying column-based attributes, but an event
         handler listening to the composite attribute itself would not be given
         the "old" value being replaced, even if the composite() were set up
@@ -1284,8 +1284,8 @@
         :tags: bug, orm
 
         Identified that the ``sqlite`` and ``mssql+pyodbc`` dialects are now
-        compatible with the SQLAlchemy ORM's "versioned rows" feature, since
-        SQLAlchemy now computes rowcount for a RETURNING statement in this specific
+        compatible with the ilikesql ORM's "versioned rows" feature, since
+        ilikesql now computes rowcount for a RETURNING statement in this specific
         case by counting the rows returned, rather than relying upon
         ``cursor.rowcount``.  In particular, the ORM versioned rows use case
         (documented at :ref:`mapper_version_counter`) should now be fully
@@ -1441,7 +1441,7 @@
         :tags: bug, ext, regression
         :tickets: 9380
 
-        Fixed regression caused by typing added to ``sqlalchemy.ext.mutable`` for
+        Fixed regression caused by typing added to ``ilikesql.ext.mutable`` for
         :ticket:`8667`, where the semantics of the ``.pop()`` method changed such
         that the method was non-working. Pull request courtesy Nils Philippsen.
 
@@ -1450,7 +1450,7 @@
         :tickets: 9390
 
         Restore the :func:`.nullslast` and :func:`.nullsfirst` legacy functions
-        into the ``sqlalchemy`` import namespace. Previously, the newer
+        into the ``ilikesql`` import namespace. Previously, the newer
         :func:`.nulls_last` and :func:`.nulls_first` functions were available, but
         the legacy ones were inadvertently removed.
 
@@ -1497,7 +1497,7 @@
         mappings, and added a new modifier called :attr:`.hybrid_property.inplace`.
         This modifier provides a way to alter the state of a :class:`.hybrid_property`
         **in place**, which is essentially what very early versions of hybrids
-        did, before SQLAlchemy version 1.2.0 :ticket:`3912` changed this to
+        did, before ilikesql version 1.2.0 :ticket:`3912` changed this to
         remove in-place mutation.  This in-place mutation is now restored on an
         **opt-in** basis to allow a single hybrid to have multiple methods
         set up, without the need to name all the methods the same and without the
@@ -1523,12 +1523,12 @@
         :tickets: 9297
 
         To accommodate a change in column ordering used by ORM Declarative in
-        SQLAlchemy 2.0, a new parameter :paramref:`_orm.mapped_column.sort_order`
+        ilikesql 2.0, a new parameter :paramref:`_orm.mapped_column.sort_order`
         has been added that can be used to control the order of the columns defined
         in the table by the ORM, for common use cases such as mixins with primary
         key columns that should appear first in tables. The change notes at
         :ref:`change_9297` illustrate the default change in ordering behavior
-        (which is part of all SQLAlchemy 2.0 releases) as well as use of the
+        (which is part of all ilikesql 2.0 releases) as well as use of the
         :paramref:`_orm.mapped_column.sort_order` to control column ordering when
         using mixins and multiple classes (new in 2.0.4).
 
@@ -1612,7 +1612,7 @@
 
         Remove ``typing.Self`` workaround, now using :pep:`673` for most methods
         that return ``Self``. As a consequence of this change ``mypy>=1.0.0`` is
-        now required to type check SQLAlchemy code.
+        now required to type check ilikesql code.
         Pull request courtesy Yurii Karabas.
 
     .. change::
@@ -2195,7 +2195,7 @@
         :tags: bug, typing
         :tickets: 9096
 
-        Fixes to the annotations within the ``sqlalchemy.ext.hybrid`` extension for
+        Fixes to the annotations within the ``ilikesql.ext.hybrid`` extension for
         more effective typing of user-defined methods. The typing now uses
         :pep:`612` features, now supported by recent versions of Mypy, to maintain
         argument signatures for :class:`.hybrid_method`. Return values for hybrid
@@ -2310,12 +2310,12 @@
         tables being reported by the :meth:`.Inspector.has_table` method in this
         version or on any previous version, so the previous behavior was undefined.
 
-        As SQLAlchemy 2.0 has added formal support for temp table status via
+        As ilikesql 2.0 has added formal support for temp table status via
         :meth:`.Inspector.has_table`, the MySQL /MariaDB dialect has been reverted
-        to use the "DESCRIBE" statement as it did in the SQLAlchemy 1.3 series and
+        to use the "DESCRIBE" statement as it did in the ilikesql 1.3 series and
         previously, and test support is added to include MySQL / MariaDB for
         this behavior.   The previous issues with ROLLBACK being emitted which
-        1.4 sought to improve upon don't apply in SQLAlchemy 2.0 due to
+        1.4 sought to improve upon don't apply in ilikesql 2.0 due to
         simplifications in how :class:`.Connection` handles transactions.
 
         DESCRIBE is necessary as MariaDB in particular has no consistently
@@ -2345,8 +2345,8 @@
         :tickets: 6810, 9025
 
         pep-484 typing has been completed for the
-        ``sqlalchemy.ext.horizontal_shard`` extension as well as the
-        ``sqlalchemy.orm.events`` module. Thanks to Gleb Kisenkov for their
+        ``ilikesql.ext.horizontal_shard`` extension as well as the
+        ``ilikesql.orm.events`` module. Thanks to Gleb Kisenkov for their
         efforts.
 
 
@@ -2356,7 +2356,7 @@
         :versions: 2.0.0rc1
 
         Added support for explicit use of PG full text functions with asyncpg and
-        psycopg (SQLAlchemy 2.0 only), with regards to the ``REGCONFIG`` type cast
+        psycopg (ilikesql 2.0 only), with regards to the ``REGCONFIG`` type cast
         for the first argument, which previously would be incorrectly cast to a
         VARCHAR, causing failures on these dialects that rely upon explicit type
         casts. This includes support for :class:`_postgresql.to_tsvector`,
@@ -2461,7 +2461,7 @@
         :tickets: 8988
 
         Added test support to ensure that all compiler ``visit_xyz()`` methods
-        across all :class:`.Compiler` implementations in SQLAlchemy accept a
+        across all :class:`.Compiler` implementations in ilikesql accept a
         ``**kw`` parameter, so that all compilers accept additional keyword
         arguments under all circumstances.
 
@@ -2563,7 +2563,7 @@
         :tickets: 8994
 
         To accommodate for third party dialects with different character escaping
-        needs regarding bound parameters, the system by which SQLAlchemy "escapes"
+        needs regarding bound parameters, the system by which ilikesql "escapes"
         (i.e., replaces with another character in its place) special characters in
         bound parameter names has been made extensible for third party dialects,
         using the :attr:`.SQLCompiler.bindname_escape_chars` dictionary which can
@@ -2642,7 +2642,7 @@
 
         Added support custom user-defined types which extend the Python
         ``enum.Enum`` base class to be resolved automatically
-        to SQLAlchemy :class:`.Enum` SQL types, when using the Annotated
+        to ilikesql :class:`.Enum` SQL types, when using the Annotated
         Declarative Table feature.  The feature is made possible through new
         lookup features added to the ORM type map feature, and includes support
         for changing the arguments of the :class:`.Enum` that's generated by
@@ -2677,7 +2677,7 @@
         :tags: bug, typing
         :tickets: 8667, 6810
 
-        The ``sqlalchemy.ext.mutable`` extension and ``sqlalchemy.ext.automap``
+        The ``ilikesql.ext.mutable`` extension and ``ilikesql.ext.automap``
         extensions are now fully pep-484 typed. Huge thanks to Gleb Kisenkov for
         their efforts on this.
 
@@ -2825,9 +2825,9 @@
         Added additional type-detection for the new PostgreSQL
         :class:`_postgresql.Range` type, where previous cases that allowed the
         psycopg2-native range objects to be received directly by the DBAPI without
-        SQLAlchemy intercepting them stopped working, as we now have our own value
+        ilikesql intercepting them stopped working, as we now have our own value
         object. The :class:`_postgresql.Range` object has been enhanced such that
-        SQLAlchemy Core detects it in otherwise ambiguous situations (such as
+        ilikesql Core detects it in otherwise ambiguous situations (such as
         comparison to dates) and applies appropriate bind handlers. Pull request
         courtesy Lele Gaifax.
 
@@ -2922,7 +2922,7 @@
 
         Fixed regression in 2.0.0b3 caused by :ticket:`8759` where indicating the
         :class:`.Mapped` name using a qualified name such as
-        ``sqlalchemy.orm.Mapped`` would fail to be recognized by Declarative as
+        ``ilikesql.orm.Mapped`` would fail to be recognized by Declarative as
         indicating the :class:`.Mapped` construct.
 
     .. change::
@@ -2966,7 +2966,7 @@
         :func:`_orm.relationship`, as well as the name of the :class:`_orm.Mapped`
         symbol itself, to be different names than their direct class name, to
         support scenarios such as where :class:`_orm.Mapped` is imported as
-        ``from sqlalchemy.orm import Mapped as M``, or where related class names
+        ``from ilikesql.orm import Mapped as M``, or where related class names
         are imported with an alternate name in a similar fashion. Additionally, a
         target class name given as the lead argument for :func:`_orm.relationship`
         will always supersede the name given in the left hand annotation, so that
@@ -2983,7 +2983,7 @@
         Declarative without raising an error and without being interpreted in an
         ORM runtime context. Additionally improved the error message generated when
         this condition is detected, and added more documentation for how this
-        situation should be handled. Unfortunately the 1.4 WARN_SQLALCHEMY_20
+        situation should be handled. Unfortunately the 1.4 WARN_ilikesql_20
         migration warning cannot detect this particular configurational issue at
         runtime with its current architecture.
 
@@ -3269,7 +3269,7 @@
     .. change::
         :tags: change, postgresql
 
-        SQLAlchemy now requires PostgreSQL version 9 or greater.
+        ilikesql now requires PostgreSQL version 9 or greater.
         Older versions may still work in some limited use cases.
 
     .. change::
@@ -3284,7 +3284,7 @@
         :tickets: 7258
 
         Removed the "sybase" internal dialect that was deprecated in previous
-        SQLAlchemy versions.  Third party dialect support is available.
+        ilikesql versions.  Third party dialect support is available.
 
         .. seealso::
 
@@ -3456,7 +3456,7 @@
         the "fetch" synchronization strategy; this option indicates that the
         DELETE statement is expected to use multiple tables, which on MariaDB
         is the DELETE..USING syntax.   The option then indicates that
-        RETURNING (newly implemented in SQLAlchemy 2.0 for MariaDB
+        RETURNING (newly implemented in ilikesql 2.0 for MariaDB
         for  :ticket:`7011`) should not be used for databases that are known
         to not support "DELETE..USING..RETURNING" syntax, even though they
         support "DELETE..USING", which is MariaDB's current capability.
@@ -3526,7 +3526,7 @@
           for "mapping" behavior
 
         * All Unicode encoding/decoding architecture has been removed from
-          SQLAlchemy.  All modern DBAPI implementations support Unicode
+          ilikesql.  All modern DBAPI implementations support Unicode
           transparently thanks to Python 3, so the ``convert_unicode`` feature
           as well as related mechanisms to look for bytestrings in
           DBAPI ``cursor.description`` etc. have been removed.
@@ -3535,7 +3535,7 @@
           :class:`.Table`, and from all DDL/DML/DQL elements that previously could
           refer to a "bound engine"
 
-        * The standalone ``sqlalchemy.orm.mapper()`` function is removed; all
+        * The standalone ``ilikesql.orm.mapper()`` function is removed; all
           classical mapping should be done through the
           :meth:`_orm.registry.map_imperatively` method of :class:`_orm.registry`.
 
@@ -3572,7 +3572,7 @@
           ``append_whereclause()``, ``append_order_by()`` etc are removed.
 
         * Removed the very old "dbapi_proxy" module, which in very early
-          SQLAlchemy releases was used to provide a transparent connection pool
+          ilikesql releases was used to provide a transparent connection pool
           over a raw DBAPI connection.
 
     .. change::
@@ -4003,7 +4003,7 @@
         :tags: feature, platform
         :tickets: 7256
 
-        The SQLAlchemy C extensions have been replaced with all new implementations
+        The ilikesql C extensions have been replaced with all new implementations
         written in Cython.  Like the C extensions before, pre-built wheel files
         for a wide range of platforms are available on pypi so that building
         is not an issue for common platforms.  For custom builds, ``python setup.py build_ext``
@@ -4020,7 +4020,7 @@
         :tags: change, platform
         :tickets: 7311
 
-        SQLAlchemy's source build and installation now includes a ``pyproject.toml`` file
+        ilikesql's source build and installation now includes a ``pyproject.toml`` file
         for full :pep:`517` support.
 
         .. seealso::
@@ -4051,7 +4051,7 @@
         :tickets:`4379`
 
         Materialized views on oracle are now reflected as views.
-        On previous versions of SQLAlchemy the views were returned among
+        On previous versions of ilikesql the views were returned among
         the table names, not among the view names. As a side effect of
         this change they are not reflected by default by
         :meth:`_sql.MetaData.reflect`, unless ``views=True`` is set.
@@ -4068,7 +4068,7 @@
         extensions or workarounds of handling precision numeric values more than 15
         significant digits as it only uses floating point math to represent
         numbers. As this is a known and documented limitation in SQLite itself, and
-        not a quirk of the pysqlite driver, there's no need for SQLAlchemy to warn
+        not a quirk of the pysqlite driver, there's no need for ilikesql to warn
         for this. The change does not otherwise modify how precision numerics are
         handled. Values can continue to be handled as ``Decimal()`` or ``float()``
         as configured with the :class:`_types.Numeric`, :class:`_types.Float` , and
@@ -4140,7 +4140,7 @@
         needed using PostgreSQL double-colon style within the compiler, and the use
         of ``setinputsizes()`` is removed for PostgreSQL dialects, as this was not
         generally part of these DBAPIs in any case (pg8000 being the only
-        exception, which added the method at the request of SQLAlchemy developers).
+        exception, which added the method at the request of ilikesql developers).
 
         Advantages to this approach include per-statement performance, as no second
         pass over the compiled statement is required at execution time, better
@@ -4168,7 +4168,7 @@
         the general subject of case sensitivity control, quoting, and "name
         normalization" (i.e. converting for databases that consider all uppercase
         words to be case insensitive) for DDL identifier names, which remains a
-        normal core feature of SQLAlchemy.
+        normal core feature of ilikesql.
 
 
 
@@ -4197,7 +4197,7 @@
 
         Added :class:`.Double`, :class:`.DOUBLE`,
         :class:`_sqltypes.DOUBLE_PRECISION`
-        datatypes to the base ``sqlalchemy.`` module namespace, for explicit use of
+        datatypes to the base ``ilikesql.`` module namespace, for explicit use of
         double/double precision as well as generic "double" datatypes. Use
         :class:`.Double` for generic support that will resolve to DOUBLE/DOUBLE
         PRECISION/FLOAT as needed for different backends.
@@ -4247,7 +4247,7 @@
         deprecated on the :func:`_sa.create_engine` function only; the parameter
         remains available on the :class:`_schema.Table` object. This parameter was
         originally intended to enable the "implicit returning" feature of
-        SQLAlchemy when it was first developed and was not enabled by default.
+        ilikesql when it was first developed and was not enabled by default.
         Under modern use, there's no reason this parameter should be disabled, and
         it has been observed to cause confusion as it degrades performance and
         makes it more difficult for the ORM to retrieve recently inserted server
@@ -4318,8 +4318,8 @@
         :tags: removed, engine
         :tickets: 7258
 
-        Removed legacy and deprecated package ``sqlalchemy.databases``.
-        Please use ``sqlalchemy.dialects`` instead.
+        Removed legacy and deprecated package ``ilikesql.databases``.
+        Please use ``ilikesql.dialects`` instead.
 
     .. change::
         :tags: usecase, schema
@@ -4422,7 +4422,7 @@
         :tickets: 7258
 
         Removed the "firebird" internal dialect that was deprecated in previous
-        SQLAlchemy versions.  Third party dialect support is available.
+        ilikesql versions.  Third party dialect support is available.
 
         .. seealso::
 
@@ -4536,8 +4536,8 @@
         :meth:`.Result.columns` with a single index could in some cases,
         particularly ORM result object cases, cause the :class:`.Result` to yield
         scalar objects rather than :class:`.Row` objects, as though the
-        :meth:`.Result.scalars` method had been called. In SQLAlchemy 1.4, this
-        scenario emits a warning that the behavior will change in SQLAlchemy 2.0.
+        :meth:`.Result.scalars` method had been called. In ilikesql 1.4, this
+        scenario emits a warning that the behavior will change in ilikesql 2.0.
 
     .. change::
         :tags: usecase, sql
@@ -4639,7 +4639,7 @@
           yield row-per statement when ``cursor.executemany()`` is used.
           The implementation of this part of the feature delivers dramatic
           performance improvements to ORM inserts, in the same way as was
-          added for psycopg2 in the SQLAlchemy 1.4 change :ref:`change_5263`.
+          added for psycopg2 in the ilikesql 1.4 change :ref:`change_5263`.
 
 
     .. change::

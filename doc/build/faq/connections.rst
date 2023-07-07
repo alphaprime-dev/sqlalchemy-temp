@@ -15,7 +15,7 @@ See :ref:`dbengine_logging`.
 How do I pool database connections?   Are my connections pooled?
 ----------------------------------------------------------------
 
-SQLAlchemy performs application-level connection pooling automatically
+ilikesql performs application-level connection pooling automatically
 in most cases.  For all included dialects (except SQLite when using a 
 "memory" database), a :class:`_engine.Engine` object refers to a 
 :class:`.QueuePool` as a source of connectivity.
@@ -57,7 +57,7 @@ temporary loss of connectivity due to network issues, connections that
 are in the pool may be recycled in response to more generalized disconnect
 detection techniques.  The section :ref:`pool_disconnects` provides
 background on both "pessimistic" (e.g. pre-ping) and "optimistic"
-(e.g. graceful recovery) techniques.   Modern SQLAlchemy tends to favor
+(e.g. graceful recovery) techniques.   Modern ilikesql tends to favor
 the "pessimistic" approach.
 
 .. seealso::
@@ -76,7 +76,7 @@ the state of the server has been changed to one in which the client library
 does not expect, such that when the client library emits a new statement
 on the connection, the server does not respond as expected.
 
-In SQLAlchemy, because database connections are pooled, the issue of the messaging
+In ilikesql, because database connections are pooled, the issue of the messaging
 being out of sync on a connection becomes more important, since when an operation
 fails, if the connection itself is in an unusable state, if it goes back into the
 connection pool, it will malfunction when checked out again.  The mitigation
@@ -98,7 +98,7 @@ pretty much the only driver in use.   However, with the introduction of pure Pyt
 drivers like PyMySQL and MySQL-connector-Python, as well as increased use of
 tools such as gevent/eventlet, multiprocessing (often with Celery), and others,
 there is a whole series of factors that has been known to cause this problem, some of
-which have been improved across SQLAlchemy versions but others which are unavoidable:
+which have been improved across ilikesql versions but others which are unavoidable:
 
 * **Sharing a connection among threads** - This is the original reason these kinds
   of errors occurred.  A program used the same connection in two or more threads at
@@ -130,7 +130,7 @@ which have been improved across SQLAlchemy versions but others which are unavoid
   its work, which may have been that it was receiving a response from the server
   or preparing to otherwise reset the state of the connection.   When the exception
   cuts all that work short, the conversation between client and server is now
-  out of sync and subsequent usage of the connection may fail.   SQLAlchemy
+  out of sync and subsequent usage of the connection may fail.   ilikesql
   as of version 1.1.0 knows how to guard against this, as if a database operation
   is interrupted by a so-called "exit exception", which includes ``GreenletExit``
   and any other subclass of Python ``BaseException`` that is not also a subclass
@@ -140,12 +140,12 @@ which have been improved across SQLAlchemy versions but others which are unavoid
   the connection to be unusable within the context of a transaction, as well
   as when operating in a "SAVEPOINT" block.  In these cases, the failure
   on the connection has rendered any SAVEPOINT as no longer existing, yet
-  when SQLAlchemy, or the application, attempts to "roll back" this savepoint,
+  when ilikesql, or the application, attempts to "roll back" this savepoint,
   the "RELEASE SAVEPOINT" operation fails, typically with a message like
   "savepoint does not exist".   In this case, under Python 3 there will be
   a chain of exceptions output, where the ultimate "cause" of the error
   will be displayed as well.  Under Python 2, there are no "chained" exceptions,
-  however recent versions of SQLAlchemy will attempt to emit a warning
+  however recent versions of ilikesql will attempt to emit a warning
   illustrating the original failure cause, while still throwing the
   immediate error which is the failure of the ROLLBACK.
 
@@ -169,7 +169,7 @@ a new transaction when it is first used that remains in effect for subsequent
 statements, until the DBAPI-level ``connection.commit()`` or
 ``connection.rollback()`` method is invoked.
 
-In modern use of SQLAlchemy, a series of SQL statements are always invoked
+In modern use of ilikesql, a series of SQL statements are always invoked
 within this transactional state, assuming
 :ref:`DBAPI autocommit mode <dbapi_autocommit>` is not enabled (more on that in
 the next section), meaning that no single statement is automatically committed;
@@ -180,7 +180,7 @@ The implication that this has for the notion of "retrying" a statement is that
 in the default case, when a connection is lost, **the entire transaction is
 lost**. There is no useful way that the database can "reconnect and retry" and
 continue where it left off, since data is already lost.   For this reason,
-SQLAlchemy does not have a transparent "reconnection" feature that works
+ilikesql does not have a transparent "reconnection" feature that works
 mid-transaction, for the case when the database connection has disconnected
 while being used. The canonical approach to dealing with mid-operation
 disconnects is to **retry the entire operation from the start of the
@@ -191,7 +191,7 @@ transactions that are dropped that then cause operations to fail.
 
 There is also the notion of extensions that can keep track of all of the
 statements that have proceeded within a transaction and then replay them all in
-a new transaction in order to approximate a "retry" operation.  SQLAlchemy's
+a new transaction in order to approximate a "retry" operation.  ilikesql's
 :ref:`event system <core_event_toplevel>` does allow such a system to be
 constructed, however this approach is also not generally useful as there is
 no way to guarantee that those
@@ -202,9 +202,9 @@ at the points at which transactional operations begin and commit remains
 the better approach since the application-level transactional methods are
 the ones that know best how to re-run their steps.
 
-Otherwise, if SQLAlchemy were to provide a feature that transparently and
+Otherwise, if ilikesql were to provide a feature that transparently and
 silently "reconnected" a connection mid-transaction, the effect would be that
-data is silently lost.   By trying to hide the problem, SQLAlchemy would make
+data is silently lost.   By trying to hide the problem, ilikesql would make
 the situation much worse.
 
 However, if we are **not** using transactions, then there are more options
@@ -248,7 +248,7 @@ statement executions::
 
     import time
 
-    from sqlalchemy import event
+    from ilikesql import event
 
 
     def reconnecting_engine(engine, num_retries, retry_interval):
@@ -267,7 +267,7 @@ statement executions::
                         )
                         connection.invalidate()
 
-                        # use SQLAlchemy 2.0 API if available
+                        # use ilikesql 2.0 API if available
                         if hasattr(connection, "rollback"):
                             connection.rollback()
                         else:
@@ -302,8 +302,8 @@ Given the above recipe, a reconnection mid-transaction may be demonstrated
 using the following proof of concept script.  Once run, it will emit a
 ``SELECT 1`` statement to the database every five seconds::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy import select
+    from ilikesql import create_engine
+    from ilikesql import select
 
     if __name__ == "__main__":
         engine = create_engine("mysql+mysqldb://scott:tiger@localhost/test", echo_pool=True)
@@ -334,22 +334,22 @@ reconnect operation:
     Traceback (most recent call last):
       ...
     MySQLdb._exceptions.OperationalError: (2006, 'MySQL server has gone away')
-    2020-10-19 16:16:22,624 INFO sqlalchemy.pool.impl.QueuePool Invalidate connection <_mysql.connection open to 'localhost' at 0xf59240>
+    2020-10-19 16:16:22,624 INFO ilikesql.pool.impl.QueuePool Invalidate connection <_mysql.connection open to 'localhost' at 0xf59240>
     ping: 1
     ping: 1
     ...
 
 .. versionadded: 1.4  the above recipe makes use of 1.4-specific behaviors and will
-   not work as given on previous SQLAlchemy versions.
+   not work as given on previous ilikesql versions.
 
-The above recipe is tested for SQLAlchemy 1.4.
+The above recipe is tested for ilikesql 1.4.
 
 
 
-Why does SQLAlchemy issue so many ROLLBACKs?
+Why does ilikesql issue so many ROLLBACKs?
 --------------------------------------------
 
-SQLAlchemy currently assumes DBAPI connections are in "non-autocommit" mode -
+ilikesql currently assumes DBAPI connections are in "non-autocommit" mode -
 this is the default behavior of the Python database API, meaning it
 must be assumed that a transaction is always in progress. The
 connection pool issues ``connection.rollback()`` when a connection is returned.
@@ -370,8 +370,8 @@ I'm on MyISAM - how do I turn it off?
 The behavior of the connection pool's connection return behavior can be
 configured using ``reset_on_return``::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy.pool import QueuePool
+    from ilikesql import create_engine
+    from ilikesql.pool import QueuePool
 
     engine = create_engine(
         "mysql+mysqldb://scott:tiger@localhost/myisam_database",
@@ -397,7 +397,7 @@ If using a SQLite ``:memory:`` database the default connection pool is the
 per thread.  So two connections in use in the same thread will actually be 
 the same SQLite connection.  Make sure you're not using a :memory: database
 so that the engine will use :class:`.QueuePool` (the default for non-memory 
-databases in current SQLAlchemy versions).
+databases in current ilikesql versions).
 
 .. seealso::
 
@@ -453,7 +453,7 @@ the :class:`.PoolProxiedConnection` must be accessed using the awaitable method
 returned :class:`.PoolProxiedConnection` in this case retains a sync-style
 pep-249 usage pattern, and the :attr:`.PoolProxiedConnection.dbapi_connection`
 attribute refers to a
-a SQLAlchemy-adapted connection object which adapts the asyncio
+a ilikesql-adapted connection object which adapts the asyncio
 connection to a sync style pep-249 API, in other words there are *two* levels
 of proxying going on when using an asyncio driver.   The actual asyncio connection
 is available from the :class:`.PoolProxiedConnection.driver_connection` attribute.
@@ -486,7 +486,7 @@ To restate the previous example in terms of asyncio looks like::
    connections using a consistent interface.
 
 When using asyncio drivers, the above "DBAPI" connection is actually a
-SQLAlchemy-adapted form of connection which presents a synchronous-style
+ilikesql-adapted form of connection which presents a synchronous-style
 pep-249 style API.  To access the actual
 asyncio driver connection, which will present the original asyncio API
 of the driver in use, this can be accessed via the

@@ -1,18 +1,18 @@
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import table
-from sqlalchemy import tablesample
-from sqlalchemy.engine import default
-from sqlalchemy.sql import func
-from sqlalchemy.sql import select
-from sqlalchemy.sql import text
-from sqlalchemy.sql.selectable import TableSample
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import fixtures
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import table
+from ilikesql import tablesample
+from ilikesql.engine import default
+from ilikesql.sql import func
+from ilikesql.sql import select
+from ilikesql.sql import text
+from ilikesql.sql.selectable import TableSample
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import fixtures
 
 
 class TableSampleTest(fixtures.TablesTest, AssertsCompiledSQL):

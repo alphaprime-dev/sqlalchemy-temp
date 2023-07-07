@@ -1,5 +1,5 @@
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 Class Mapping API
 =================
@@ -129,7 +129,7 @@ Class Mapping API
 
 .. autofunction:: clear_mappers
 
-.. autofunction:: sqlalchemy.orm.util.identity_key
+.. autofunction:: ilikesql.orm.util.identity_key
 
 .. autofunction:: polymorphic_union
 

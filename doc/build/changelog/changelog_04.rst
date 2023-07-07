@@ -85,7 +85,7 @@
       Added "add()" and "add_all()" to scoped_session
       methods.  Workaround for 0.4.7::
 
-        from sqlalchemy.orm.scoping import ScopedSession, instrument
+        from ilikesql.orm.scoping import ScopedSession, instrument
 
         setattr(ScopedSession, "add", instrument("add"))
         setattr(ScopedSession, "add_all", instrument("add_all"))
@@ -443,7 +443,7 @@
 
       Added "odbc_options" parameter to engine / dburi
       parameters. The given string is simply appended to the
-      SQLAlchemy-generated odbc connection string.
+      ilikesql-generated odbc connection string.
       
       This should obviate the need of adding a myriad of ODBC
       options in the future.
@@ -1169,7 +1169,7 @@
       which allows Table and mapper() configuration to take
       place inline underneath a class declaration.  This
       extension differs from ActiveMapper and Elixir in that it
-      does not redefine any SQLAlchemy semantics at all; literal
+      does not redefine any ilikesql semantics at all; literal
       Column, Table and relation() constructs are used to define
       the class behavior and table definition.
 
@@ -2183,7 +2183,7 @@
         :tickets: 
 
       Assigning an incompatible collection type to a relation attribute now
-      raises TypeError instead of sqlalchemy's ArgumentError.
+      raises TypeError instead of ilikesql's ArgumentError.
 
     .. change::
         :tags: orm
@@ -2752,7 +2752,7 @@
         :tickets: 
 
       (see 0.4.0beta1 for the start of major changes against 0.3,
-      as well as https://www.sqlalchemy.org/trac/wiki/WhatsNewIn04 )
+      as well as https://www.ilikesql.org/trac/wiki/WhatsNewIn04 )
 
     .. change::
         :tags: 
@@ -3245,7 +3245,7 @@
         :tags: 
         :tickets: 
 
-      Tidied up what ends up in your namespace when you 'from sqlalchemy import \*':
+      Tidied up what ends up in your namespace when you 'from ilikesql import \*':
 
     .. change::
         :tags: 
@@ -3255,7 +3255,7 @@
       direct reference (as in 'sql.table' and 'sql.column') or a glob import
       from the sql package.  It was too easy to accidentally use a
       sql.expressions.table instead of schema.Table when just starting out
-      with SQLAlchemy, likewise column.
+      with ilikesql, likewise column.
 
     .. change::
         :tags: 

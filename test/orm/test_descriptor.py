@@ -1,16 +1,16 @@
-from sqlalchemy import Column
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import descriptor_props
-from sqlalchemy.orm.interfaces import PropComparator
-from sqlalchemy.orm.properties import ColumnProperty
-from sqlalchemy.sql import column
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.util import partial
+from ilikesql import Column
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import aliased
+from ilikesql.orm import declarative_base
+from ilikesql.orm import descriptor_props
+from ilikesql.orm.interfaces import PropComparator
+from ilikesql.orm.properties import ColumnProperty
+from ilikesql.sql import column
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.util import partial
 
 
 class MockDescriptor(descriptor_props.DescriptorProperty):

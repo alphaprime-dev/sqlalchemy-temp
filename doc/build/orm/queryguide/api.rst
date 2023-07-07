@@ -316,9 +316,9 @@ within the scope of queries.  Given a mapping as:
 
 .. sourcecode:: python
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -391,7 +391,7 @@ This is how the ``identity_token`` comes into play, which we can see in the
 inspection of each object, where we look at :attr:`_orm.InstanceState.key`
 to view the two distinct identity tokens::
 
-    >>> from sqlalchemy import inspect
+    >>> from ilikesql import inspect
     >>> inspect(obj1).key
     (<class '__main__.MyTable'>, (1,), 'test_schema')
     >>> inspect(obj2).key
@@ -419,7 +419,7 @@ Inspecting entities and columns from ORM-enabled SELECT and DML statements
 ==========================================================================
 
 The :func:`_sql.select` construct, as well as the :func:`_sql.insert`, :func:`_sql.update`
-and :func:`_sql.delete` constructs (for the latter DML constructs, as of SQLAlchemy
+and :func:`_sql.delete` constructs (for the latter DML constructs, as of ilikesql
 1.4.33), all support the ability to inspect the entities in which these
 statements are created against, as well as the columns and datatypes that would
 be returned in a result set.
@@ -480,7 +480,7 @@ two separate attributes. One is :attr:`.UpdateBase.entity_description` which
 returns information about the primary ORM entity and database table which the
 DML construct would be affecting::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> stmt = update(User).values(name="somename").returning(User.id)
     >>> pprint(stmt.entity_description)
     {'entity': <class 'User'>,
@@ -503,7 +503,7 @@ in a manner roughly similar to that of :attr:`.Select.column_descriptions`::
     >>> pprint(stmt.returning_column_descriptions)
     [{'aliased': False,
       'entity': <class 'User'>,
-      'expr': <sqlalchemy.orm.attributes.InstrumentedAttribute ...>,
+      'expr': <ilikesql.orm.attributes.InstrumentedAttribute ...>,
       'name': 'id',
       'type': Integer()}]
 
@@ -517,22 +517,22 @@ Additional ORM API Constructs
 =============================
 
 
-.. autofunction:: sqlalchemy.orm.aliased
+.. autofunction:: ilikesql.orm.aliased
 
-.. autoclass:: sqlalchemy.orm.util.AliasedClass
+.. autoclass:: ilikesql.orm.util.AliasedClass
 
-.. autoclass:: sqlalchemy.orm.util.AliasedInsp
+.. autoclass:: ilikesql.orm.util.AliasedInsp
 
-.. autoclass:: sqlalchemy.orm.Bundle
+.. autoclass:: ilikesql.orm.Bundle
     :members:
 
-.. autofunction:: sqlalchemy.orm.with_loader_criteria
+.. autofunction:: ilikesql.orm.with_loader_criteria
 
-.. autofunction:: sqlalchemy.orm.join
+.. autofunction:: ilikesql.orm.join
 
-.. autofunction:: sqlalchemy.orm.outerjoin
+.. autofunction:: ilikesql.orm.outerjoin
 
-.. autofunction:: sqlalchemy.orm.with_parent
+.. autofunction:: ilikesql.orm.with_parent
 
 
 ..  Setup code, not for display

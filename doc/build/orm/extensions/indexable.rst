@@ -3,11 +3,11 @@
 Indexable
 =========
 
-.. automodule:: sqlalchemy.ext.indexable
+.. automodule:: ilikesql.ext.indexable
 
 API Reference
 -------------
 
-.. autoclass:: sqlalchemy.ext.indexable.index_property
+.. autoclass:: ilikesql.ext.indexable.index_property
     :members:
 

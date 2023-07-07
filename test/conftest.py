@@ -3,7 +3,7 @@
 pytest plugin script.
 
 This script is an extension to pytest which
-installs SQLAlchemy's testing plugin into the local environment.
+installs ilikesql's testing plugin into the local environment.
 
 """
 import os
@@ -12,13 +12,13 @@ import sys
 import pytest
 
 
-os.environ["SQLALCHEMY_WARN_20"] = "true"
+os.environ["ilikesql_WARN_20"] = "true"
 
 collect_ignore_glob = []
 
-# this requires that sqlalchemy.testing was not already
+# this requires that ilikesql.testing was not already
 # imported in order to work
-pytest.register_assert_rewrite("sqlalchemy.testing.assertions")
+pytest.register_assert_rewrite("ilikesql.testing.assertions")
 
 
 if not sys.flags.no_user_site:
@@ -42,7 +42,7 @@ bootstrap_file = os.path.join(
     os.path.dirname(__file__),
     "..",
     "lib",
-    "sqlalchemy",
+    "ilikesql",
     "testing",
     "plugin",
     "bootstrap.py",

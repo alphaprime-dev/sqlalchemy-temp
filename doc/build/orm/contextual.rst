@@ -10,7 +10,7 @@ of a web request.   Most modern web frameworks include integration tools
 so that the scope of the :class:`.Session` can be managed automatically,
 and these tools should be used as they are available.
 
-SQLAlchemy includes its own helper object, which helps with the establishment
+ilikesql includes its own helper object, which helps with the establishment
 of user-defined :class:`.Session` scopes.  It is also used by third-party
 integration systems to help construct their integration schemes.
 
@@ -37,13 +37,13 @@ Architecture <https://martinfowler.com/eaaCatalog/registry.html>`_.
 .. note::
 
    The :class:`.scoped_session` object is a very popular and useful object
-   used by many SQLAlchemy applications.  However, it is important to note
+   used by many ilikesql applications.  However, it is important to note
    that it presents **only one approach** to the issue of :class:`.Session`
-   management.  If you're new to SQLAlchemy, and especially if the
+   management.  If you're new to ilikesql, and especially if the
    term "thread-local variable" seems strange to you, we recommend that
    if possible you familiarize first with an off-the-shelf integration
-   system such as `Flask-SQLAlchemy <https://pypi.org/project/Flask-SQLAlchemy/>`_
-   or `zope.sqlalchemy <https://pypi.org/project/zope.sqlalchemy>`_.
+   system such as `Flask-ilikesql <https://pypi.org/project/Flask-ilikesql/>`_
+   or `zope.ilikesql <https://pypi.org/project/zope.ilikesql>`_.
 
 A :class:`.scoped_session` is constructed by calling it, passing it a
 **factory** which can create new :class:`.Session` objects.   A factory
@@ -51,8 +51,8 @@ is just something that produces a new object when called, and in the
 case of :class:`.Session`, the most common factory is the :class:`.sessionmaker`,
 introduced earlier in this section.  Below we illustrate this usage::
 
-    >>> from sqlalchemy.orm import scoped_session
-    >>> from sqlalchemy.orm import sessionmaker
+    >>> from ilikesql.orm import scoped_session
+    >>> from ilikesql.orm import sessionmaker
 
     >>> session_factory = sessionmaker(bind=some_engine)
     >>> Session = scoped_session(session_factory)
@@ -182,7 +182,7 @@ diagram below illustrates this flow:
 
 .. sourcecode:: text
 
-    Web Server          Web Framework        SQLAlchemy ORM Code
+    Web Server          Web Framework        ilikesql ORM Code
     --------------      --------------       ------------------------------
     startup        ->   Web framework        # Session registry is established
                         initializes          Session = scoped_session(sessionmaker())
@@ -251,7 +251,7 @@ this in conjunction with a hypothetical event marker provided by the web framewo
 ``on_request_end``, which allows code to be invoked whenever a request ends::
 
     from my_web_framework import get_current_request, on_request_end
-    from sqlalchemy.orm import scoped_session, sessionmaker
+    from ilikesql.orm import scoped_session, sessionmaker
 
     Session = scoped_session(sessionmaker(bind=some_engine), scopefunc=get_current_request)
 
@@ -271,13 +271,13 @@ otherwise self-managed.
 Contextual Session API
 ----------------------
 
-.. autoclass:: sqlalchemy.orm.scoped_session
+.. autoclass:: ilikesql.orm.scoped_session
     :members:
     :inherited-members:
 
-.. autoclass:: sqlalchemy.util.ScopedRegistry
+.. autoclass:: ilikesql.util.ScopedRegistry
     :members:
 
-.. autoclass:: sqlalchemy.util.ThreadLocalRegistry
+.. autoclass:: ilikesql.util.ThreadLocalRegistry
 
-.. autoclass:: sqlalchemy.orm.QueryPropertyDescriptor
+.. autoclass:: ilikesql.orm.QueryPropertyDescriptor

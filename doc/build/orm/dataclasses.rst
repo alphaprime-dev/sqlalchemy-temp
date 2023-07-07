@@ -4,7 +4,7 @@
 Integration with dataclasses and attrs
 ======================================
 
-SQLAlchemy as of version 2.0 features "native dataclass" integration where
+ilikesql as of version 2.0 features "native dataclass" integration where
 an :ref:`Annotated Declarative Table <orm_declarative_mapped_column>`
 mapping may be turned into a Python dataclass_ by adding a single mixin
 or decorator to mapped classes.
@@ -20,7 +20,7 @@ attrs_ third party integration library.
 Declarative Dataclass Mapping
 -------------------------------
 
-SQLAlchemy :ref:`Annotated Declarative Table <orm_declarative_mapped_column>`
+ilikesql :ref:`Annotated Declarative Table <orm_declarative_mapped_column>`
 mappings may be augmented with an additional
 mixin class or decorator directive, which will add an additional step to
 the Declarative process after the mapping is complete that will convert
@@ -46,7 +46,7 @@ decorator.
    .. seealso::
 
       https://peps.python.org/pep-0681/#the-dataclass-transform-decorator - background
-      on how libraries like SQLAlchemy enable :pep:`681` support
+      on how libraries like ilikesql enable :pep:`681` support
 
 
 Dataclass conversion may be added to any Declarative class either by adding the
@@ -59,10 +59,10 @@ to the Declarative ``Base`` class or any superclass, as in the example
 below::
 
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import MappedAsDataclass
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import MappedAsDataclass
 
 
     class Base(MappedAsDataclass, DeclarativeBase):
@@ -77,10 +77,10 @@ below::
 
 Or may be applied directly to classes that extend from the Declarative base::
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import MappedAsDataclass
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import MappedAsDataclass
 
 
     class Base(DeclarativeBase):
@@ -98,9 +98,9 @@ Or may be applied directly to classes that extend from the Declarative base::
 When using the decorator form, only the :meth:`_orm.registry.mapped_as_dataclass`
 decorator is supported::
 
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
 
 
     reg = registry()
@@ -124,10 +124,10 @@ Currently **not supported** are the ``frozen`` and ``slots`` features.
 When using the mixin class form with :class:`_orm.MappedAsDataclass`,
 class configuration arguments are passed as class-level parameters::
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import MappedAsDataclass
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import MappedAsDataclass
 
 
     class Base(DeclarativeBase):
@@ -145,9 +145,9 @@ class configuration arguments are passed as class-level parameters::
 When using the decorator form with :meth:`_orm.registry.mapped_as_dataclass`,
 class configuration arguments are passed to the decorator directly::
 
-    from sqlalchemy.orm import registry
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql.orm import registry
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     reg = registry()
@@ -168,7 +168,7 @@ at `@dataclasses.dataclass <https://docs.python.org/3/library/dataclasses.html#d
 Attribute Configuration
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-SQLAlchemy native dataclasses differ from normal dataclasses in that
+ilikesql native dataclasses differ from normal dataclasses in that
 attributes to be mapped are described using the :class:`_orm.Mapped`
 generic annotation container in all cases.    Mappings follow the same
 forms as those documented at :ref:`orm_declarative_table`, and all
@@ -207,9 +207,9 @@ produce an ``__init__()`` method that accepts only the fields ``name`` and
 and ``fullname`` is optional.  The ``id`` field, which we expect to be
 database-generated, is not part of the constructor at all::
 
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
 
     reg = registry()
 
@@ -243,10 +243,10 @@ but where the parameter is optional in the constructor::
 
     from datetime import datetime
 
-    from sqlalchemy import func
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
+    from ilikesql import func
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
 
     reg = registry()
 
@@ -292,9 +292,9 @@ invalid, as they do not see the ``init=False`` parameter present::
 
     from typing import Annotated
 
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
 
     # typing tools will ignore init=False here
     intpk = Annotated[int, mapped_column(init=False, primary_key=True)]
@@ -317,9 +317,9 @@ the other arguments can remain within the ``Annotated`` construct::
 
     from typing import Annotated
 
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
 
     intpk = Annotated[int, mapped_column(primary_key=True)]
 
@@ -396,11 +396,11 @@ scalar object references may make use of
 
     from typing import List
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
+    from ilikesql.orm import relationship
 
     reg = registry()
 
@@ -446,9 +446,9 @@ be ignored by the mapping process.   In the example below, the fields
 of the object, but will not be persisted by the ORM::
 
 
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
 
     reg = registry()
 
@@ -481,9 +481,9 @@ function, such as `bcrypt <https://pypi.org/project/bcrypt/>`_ or
     from dataclasses import InitVar
     from typing import Optional
 
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
 
     reg = registry()
 
@@ -529,16 +529,16 @@ Integrating with Alternate Dataclass Providers such as Pydantic
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. warning::  The dataclass layer of Pydantic version 1.x is **not fully
-    compatible with SQLAlchemy's class instrumentation without additional
+    compatible with ilikesql's class instrumentation without additional
     internal changes, and many features such as related collections may
     not work correctly.**.
 
    For Pydantic compatibility, please consider the
    `SQLModel <https://sqlmodel.tiangolo.com/>` ORM which is built with
-   Pydantic on top of SQLAlchemy ORM, which includes special implementation
+   Pydantic on top of ilikesql ORM, which includes special implementation
    details which **explicitly resolve** these incompabilities.
 
-SQLAlchemy's :class:`_orm.MappedAsDataclass` class
+ilikesql's :class:`_orm.MappedAsDataclass` class
 and :meth:`_orm.registry.mapped_as_dataclass` method call directly into
 the Python standard library ``dataclasses.dataclass`` class decorator, after
 the declarative mapping process has been applied to the class.  This
@@ -547,11 +547,11 @@ such as that of Pydantic, using the ``dataclass_callable`` parameter
 accepted by :class:`_orm.MappedAsDataclass` as a class keyword argument
 as well as by :meth:`_orm.registry.mapped_as_dataclass`::
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import MappedAsDataclass
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import MappedAsDataclass
+    from ilikesql.orm import registry
 
 
     class Base(
@@ -590,11 +590,11 @@ Applying ORM Mappings to an existing dataclass (legacy dataclass use)
 
    The approaches described here are superseded by
    the :ref:`orm_declarative_native_dataclasses` feature new in the 2.0
-   series of SQLAlchemy.  This newer version of the feature builds upon
+   series of ilikesql.  This newer version of the feature builds upon
    the dataclass support first added in version 1.4, which is described
    in this section.
 
-To map an existing dataclass, SQLAlchemy's "inline" declarative directives
+To map an existing dataclass, ilikesql's "inline" declarative directives
 cannot be used directly; ORM directives are assigned using one of three
 techniques:
 
@@ -617,11 +617,11 @@ techniques:
   in exactly the same way as described at :ref:`orm_imperative_mapping`.
   This is illustrated below at :ref:`orm_imperative_dataclasses`.
 
-The general process by which SQLAlchemy applies mappings to a dataclass
+The general process by which ilikesql applies mappings to a dataclass
 is the same as that of an ordinary class, but also includes that
-SQLAlchemy will detect class-level attributes that were part of the
+ilikesql will detect class-level attributes that were part of the
 dataclasses declaration process and replace them at runtime with
-the usual SQLAlchemy ORM mapped attributes.   The ``__init__`` method that
+the usual ilikesql ORM mapped attributes.   The ``__init__`` method that
 would have been generated by dataclasses is left intact, as is the same
 for all the other methods that dataclasses generates such as
 ``__eq__()``, ``__repr__()``, etc.
@@ -646,8 +646,8 @@ dictionary underneath the ``properties`` key, corresponding to the
     from dataclasses import dataclass, field
     from typing import List, Optional
 
-    from sqlalchemy import Column, ForeignKey, Integer, String, Table
-    from sqlalchemy.orm import registry, relationship
+    from ilikesql import Column, ForeignKey, Integer, String, Table
+    from ilikesql.orm import registry, relationship
 
     mapper_registry = registry()
 
@@ -722,7 +722,7 @@ The fully declarative approach requires that :class:`_schema.Column` objects
 are declared as class attributes, which when using dataclasses would conflict
 with the dataclass-level attributes.  An approach to combine these together
 is to make use of the ``metadata`` attribute on the ``dataclass.field``
-object, where SQLAlchemy-specific mapping information may be supplied.
+object, where ilikesql-specific mapping information may be supplied.
 Declarative supports extraction of these parameters when the class
 specifies the attribute ``__sa_dataclass_metadata_key__``.  This also
 provides a more succinct method of indicating the :func:`_orm.relationship`
@@ -734,8 +734,8 @@ association::
     from dataclasses import dataclass, field
     from typing import List
 
-    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.orm import registry, relationship
+    from ilikesql import Column, ForeignKey, Integer, String
+    from ilikesql.orm import registry, relationship
 
     mapper_registry = registry()
 
@@ -785,7 +785,7 @@ example at :ref:`orm_declarative_mixins_relationships`::
             return relationship("Target")
 
 This form is supported within the Dataclasses ``field()`` object by using
-a lambda to indicate the SQLAlchemy construct inside the ``field()``.
+a lambda to indicate the ilikesql construct inside the ``field()``.
 Using :func:`_orm.declared_attr` to surround the lambda is optional.
 If we wanted to produce our ``User`` class above where the ORM fields
 came from a mixin that is itself a dataclass, the form would be::
@@ -851,14 +851,14 @@ variables::
     from dataclasses import field
     from typing import List
 
-    from sqlalchemy import Column
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy import MetaData
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy.orm import registry
-    from sqlalchemy.orm import relationship
+    from ilikesql import Column
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql import MetaData
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql.orm import registry
+    from ilikesql.orm import relationship
 
     mapper_registry = registry()
 
@@ -922,22 +922,22 @@ initiates a process to scan the class for attributes that define the class'
 behavior, which are then used to generate methods, documentation, and
 annotations.
 
-The SQLAlchemy ORM supports mapping an attrs_ class using **Declarative with
+The ilikesql ORM supports mapping an attrs_ class using **Declarative with
 Imperative Table** or **Imperative** mapping. The general form of these two
 styles is fully equivalent to the
 :ref:`orm_declarative_dataclasses_declarative_table` and
 :ref:`orm_declarative_dataclasses_imperative_table` mapping forms used with
 dataclasses, where the inline attribute directives used by dataclasses or attrs
-are unchanged, and SQLAlchemy's table-oriented instrumentation is applied at
+are unchanged, and ilikesql's table-oriented instrumentation is applied at
 runtime.
 
 The ``@define`` decorator of attrs_ by default replaces the annotated class
 with a new __slots__ based class, which is not supported. When using the old
 style annotation ``@attr.s`` or using ``define(slots=False)``, the class
 does not get replaced. Furthermore attrs removes its own class-bound attributes
-after the decorator runs, so that SQLAlchemy's mapping process takes over these
+after the decorator runs, so that ilikesql's mapping process takes over these
 attributes without any issue. Both decorators, ``@attr.s`` and ``@define(slots=False)``
-work with SQLAlchemy.
+work with ilikesql.
 
 Mapping attrs with Declarative "Imperative Table"
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -953,15 +953,15 @@ object is declared inline with the declarative class.   The
     from typing import Optional
 
     from attrs import define
-    from sqlalchemy import Column
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy import MetaData
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import registry
-    from sqlalchemy.orm import relationship
+    from ilikesql import Column
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql import MetaData
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import registry
+    from ilikesql.orm import relationship
 
     mapper_registry = registry()
 
@@ -1005,7 +1005,7 @@ object is declared inline with the declarative class.   The
         email_address: Mapped[Optional[str]]
 
 .. note:: The ``attrs`` ``slots=True`` option, which enables ``__slots__`` on
-   a mapped class, cannot be used with SQLAlchemy mappings without fully
+   a mapped class, cannot be used with ilikesql mappings without fully
    implementing alternative
    :ref:`attribute instrumentation <examples_instrumentation>`, as mapped
    classes normally rely upon direct access to ``__dict__`` for state storage.
@@ -1025,14 +1025,14 @@ as well::
     from typing import List
 
     from attrs import define
-    from sqlalchemy import Column
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy import MetaData
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy.orm import registry
-    from sqlalchemy.orm import relationship
+    from ilikesql import Column
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql import MetaData
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql.orm import registry
+    from ilikesql.orm import relationship
 
     mapper_registry = registry()
 

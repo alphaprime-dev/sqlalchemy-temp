@@ -1,43 +1,43 @@
 import re
 
-from sqlalchemy import BigInteger
-from sqlalchemy import Column
-from sqlalchemy import DateTime
-from sqlalchemy import DDL
-from sqlalchemy import DefaultClause
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import Index
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import LargeBinary
-from sqlalchemy import MetaData
-from sqlalchemy import NCHAR
-from sqlalchemy import Numeric
-from sqlalchemy import select
-from sqlalchemy import SmallInteger
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import TIMESTAMP
-from sqlalchemy import types
-from sqlalchemy import Unicode
-from sqlalchemy import UnicodeText
-from sqlalchemy import UniqueConstraint
-from sqlalchemy.dialects.mysql import base as mysql
-from sqlalchemy.dialects.mysql import reflection as _reflection
-from sqlalchemy.schema import CreateIndex
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
+from ilikesql import BigInteger
+from ilikesql import Column
+from ilikesql import DateTime
+from ilikesql import DDL
+from ilikesql import DefaultClause
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import Index
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import LargeBinary
+from ilikesql import MetaData
+from ilikesql import NCHAR
+from ilikesql import Numeric
+from ilikesql import select
+from ilikesql import SmallInteger
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import TIMESTAMP
+from ilikesql import types
+from ilikesql import Unicode
+from ilikesql import UnicodeText
+from ilikesql import UniqueConstraint
+from ilikesql.dialects.mysql import base as mysql
+from ilikesql.dialects.mysql import reflection as _reflection
+from ilikesql.schema import CreateIndex
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
 
 
 class TypeReflectionTest(fixtures.TestBase):

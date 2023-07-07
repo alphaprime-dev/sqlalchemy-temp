@@ -3,19 +3,19 @@ an UPDATE statement on a single row into an INSERT statement, so that a new
 row is inserted with the new data, keeping the old row intact.
 
 """
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import make_transient
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import attributes
+from ilikesql.orm import backref
+from ilikesql.orm import make_transient
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
 
 
 class Versioned:

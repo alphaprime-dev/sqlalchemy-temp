@@ -58,8 +58,8 @@ The :class:`_orm.Session` may be constructed on its own or by using the
 :class:`_engine.Engine` as a source of connectivity up front.  A typical use
 may look like::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import Session
+    from ilikesql import create_engine
+    from ilikesql.orm import Session
 
     # an Engine, which the Session will use for connection
     # resources
@@ -153,8 +153,8 @@ that an application will have an :class:`_engine.Engine` object in module
 scope, the :class:`_orm.sessionmaker` can provide a factory for
 :class:`_orm.Session` objects that are against this engine::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql import create_engine
+    from ilikesql.orm import sessionmaker
 
     # an Engine, which the Session will use for connection
     # resources, typically in module scope
@@ -178,8 +178,8 @@ to :meth:`_engine.Engine.begin`, which returns a :class:`_orm.Session` object
 and also maintains a begin/commit/rollback block::
 
 
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql import create_engine
+    from ilikesql.orm import sessionmaker
 
     # an Engine, which the Session will use for connection
     # resources
@@ -225,11 +225,11 @@ return a result using methods such as :meth:`_orm.Session.execute` and
 :class:`_result.Result` objects, including sub-variants such as
 :class:`_result.ScalarResult`.
 
-A complete guide to SQLAlchemy ORM querying can be found at
+A complete guide to ilikesql ORM querying can be found at
 :ref:`queryguide_toplevel`.   Some brief examples follow::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import Session
+    from ilikesql import select
+    from ilikesql.orm import Session
 
     with Session(engine) as session:
         # query for ``User`` objects
@@ -368,7 +368,7 @@ the rules are:
 Flushing
 ~~~~~~~~
 
-When the :class:`~sqlalchemy.orm.session.Session` is used with its default
+When the :class:`~ilikesql.orm.session.Session` is used with its default
 configuration, the flush step is nearly always done transparently.
 Specifically, the flush occurs before any individual
 SQL statement is issued as a result of a :class:`_query.Query` or
@@ -477,7 +477,7 @@ Expiring / Refreshing
 An important consideration that will often come up when using the
 :class:`_orm.Session` is that of dealing with the state that is present on
 objects that have been loaded from the database, in terms of keeping them
-synchronized with the current state of the transaction.   The SQLAlchemy
+synchronized with the current state of the transaction.   The ilikesql
 ORM is based around the concept of an :term:`identity map` such that when
 an object is "loaded" from a SQL query, there will be a unique Python
 object instance maintained corresponding to a particular database identity.
@@ -548,7 +548,7 @@ Further discussion on the refresh / expire concept can be found at
 UPDATE and DELETE with arbitrary WHERE clause
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy 2.0 includes enhanced capabilities for emitting several varieties
+ilikesql 2.0 includes enhanced capabilities for emitting several varieties
 of ORM-enabled INSERT, UPDATE and DELETE statements.  See the
 document at :doc:`queryguide/dml` for documentation.
 
@@ -675,7 +675,7 @@ method explicitly, is as follows:
     connection pool, unless the Session was bound directly to a Connection, in
     which case the connection is still maintained (but still rolled back).
   * Objects which were initially in the :term:`pending` state when they were added
-    to the :class:`~sqlalchemy.orm.session.Session` within the lifespan of the
+    to the :class:`~ilikesql.orm.session.Session` within the lifespan of the
     transaction are expunged, corresponding to their INSERT statement being
     rolled back. The state of their attributes remains unchanged.
   * Objects which were marked as :term:`deleted` within the lifespan of the
@@ -816,7 +816,7 @@ challenging situations.
 
 Some sample scenarios include:
 
-* Web applications.  In this case, it's best to make use of the SQLAlchemy
+* Web applications.  In this case, it's best to make use of the ilikesql
   integrations provided by the web framework in use.  Or otherwise, the
   basic pattern is create a :class:`_orm.Session` at the start of a web
   request, call the :meth:`_orm.Session.commit` method at the end of
@@ -917,28 +917,28 @@ It has to issue SQL to the database, get the rows back, and then when it
 sees the primary key in the row, *then* it can look in the local identity
 map and see that the object is already there. It's only when you say
 ``query.get({some primary key})`` that the
-:class:`~sqlalchemy.orm.session.Session` doesn't have to issue a query.
+:class:`~ilikesql.orm.session.Session` doesn't have to issue a query.
 
 Additionally, the Session stores object instances using a weak reference
 by default. This also defeats the purpose of using the Session as a cache.
 
 The :class:`.Session` is not designed to be a
 global object from which everyone consults as a "registry" of objects.
-That's more the job of a **second level cache**.   SQLAlchemy provides
+That's more the job of a **second level cache**.   ilikesql provides
 a pattern for implementing second level caching using `dogpile.cache <https://dogpilecache.readthedocs.io/>`_,
 via the :ref:`examples_caching` example.
 
-How can I get the :class:`~sqlalchemy.orm.session.Session` for a certain object?
+How can I get the :class:`~ilikesql.orm.session.Session` for a certain object?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use the :meth:`~.Session.object_session` classmethod
-available on :class:`~sqlalchemy.orm.session.Session`::
+available on :class:`~ilikesql.orm.session.Session`::
 
     session = Session.object_session(someobject)
 
 The newer :ref:`core_inspection_toplevel` system can also be used::
 
-    from sqlalchemy import inspect
+    from ilikesql import inspect
 
     session = inspect(someobject).session
 
@@ -954,7 +954,7 @@ synchronization**. The :class:`.Session` is intended to be used in a
 **non-concurrent** fashion, that is, a particular instance of :class:`.Session`
 should be used in only one thread or task at a time.
 
-When using the :class:`_asyncio.AsyncSession` object from SQLAlchemy's
+When using the :class:`_asyncio.AsyncSession` object from ilikesql's
 :ref:`asyncio <asyncio_toplevel>` extension, this object is only a thin proxy
 on top of a :class:`_orm.Session`, and the same rules apply; it is an
 **unsynchronized, mutable, stateful object**, so it is **not** safe to use a single
@@ -987,7 +987,7 @@ terminology used is **multiple, concurrent transactions**.   Within traditional
 RDMS there is no analogue for a single database transaction that is receiving
 and processing multiple commands concurrently.
 
-The concurrency model for SQLAlchemy's :class:`_orm.Session` and
+The concurrency model for ilikesql's :class:`_orm.Session` and
 :class:`_asyncio.AsyncSession` is therefore **Session per thread, AsyncSession per
 task**.  An application that uses multiple threads, or multiple tasks in
 asyncio such as when using an API like ``asyncio.gather()`` would want to ensure

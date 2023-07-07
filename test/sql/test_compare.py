@@ -2,86 +2,86 @@ import importlib
 import itertools
 import random
 
-from sqlalchemy import and_
-from sqlalchemy import Boolean
-from sqlalchemy import case
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import dialects
-from sqlalchemy import exists
-from sqlalchemy import extract
-from sqlalchemy import Float
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import or_
-from sqlalchemy import PickleType
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import tuple_
-from sqlalchemy import TypeDecorator
-from sqlalchemy import union
-from sqlalchemy import union_all
-from sqlalchemy import values
-from sqlalchemy.dialects import mysql
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.schema import Sequence
-from sqlalchemy.sql import bindparam
-from sqlalchemy.sql import ColumnElement
-from sqlalchemy.sql import dml
-from sqlalchemy.sql import False_
-from sqlalchemy.sql import func
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import roles
-from sqlalchemy.sql import True_
-from sqlalchemy.sql import type_coerce
-from sqlalchemy.sql import visitors
-from sqlalchemy.sql.base import HasCacheKey
-from sqlalchemy.sql.elements import _label_reference
-from sqlalchemy.sql.elements import _textual_label_reference
-from sqlalchemy.sql.elements import Annotated
-from sqlalchemy.sql.elements import BindParameter
-from sqlalchemy.sql.elements import ClauseElement
-from sqlalchemy.sql.elements import ClauseList
-from sqlalchemy.sql.elements import CollationClause
-from sqlalchemy.sql.elements import Immutable
-from sqlalchemy.sql.elements import Null
-from sqlalchemy.sql.elements import Slice
-from sqlalchemy.sql.elements import UnaryExpression
-from sqlalchemy.sql.functions import FunctionElement
-from sqlalchemy.sql.functions import GenericFunction
-from sqlalchemy.sql.functions import ReturnTypeFromArgs
-from sqlalchemy.sql.lambdas import lambda_stmt
-from sqlalchemy.sql.lambdas import LambdaElement
-from sqlalchemy.sql.lambdas import LambdaOptions
-from sqlalchemy.sql.selectable import _OffsetLimitParam
-from sqlalchemy.sql.selectable import AliasedReturnsRows
-from sqlalchemy.sql.selectable import FromGrouping
-from sqlalchemy.sql.selectable import LABEL_STYLE_NONE
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.sql.selectable import Select
-from sqlalchemy.sql.selectable import Selectable
-from sqlalchemy.sql.selectable import SelectStatementGrouping
-from sqlalchemy.sql.type_api import UserDefinedType
-from sqlalchemy.sql.visitors import InternalTraversal
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.assertions import expect_warnings
-from sqlalchemy.testing.util import random_choices
-from sqlalchemy.types import ARRAY
-from sqlalchemy.types import JSON
-from sqlalchemy.util import class_hierarchy
+from ilikesql import and_
+from ilikesql import Boolean
+from ilikesql import case
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import dialects
+from ilikesql import exists
+from ilikesql import extract
+from ilikesql import Float
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import or_
+from ilikesql import PickleType
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import tuple_
+from ilikesql import TypeDecorator
+from ilikesql import union
+from ilikesql import union_all
+from ilikesql import values
+from ilikesql.dialects import mysql
+from ilikesql.dialects import postgresql
+from ilikesql.schema import Sequence
+from ilikesql.sql import bindparam
+from ilikesql.sql import ColumnElement
+from ilikesql.sql import dml
+from ilikesql.sql import False_
+from ilikesql.sql import func
+from ilikesql.sql import operators
+from ilikesql.sql import roles
+from ilikesql.sql import True_
+from ilikesql.sql import type_coerce
+from ilikesql.sql import visitors
+from ilikesql.sql.base import HasCacheKey
+from ilikesql.sql.elements import _label_reference
+from ilikesql.sql.elements import _textual_label_reference
+from ilikesql.sql.elements import Annotated
+from ilikesql.sql.elements import BindParameter
+from ilikesql.sql.elements import ClauseElement
+from ilikesql.sql.elements import ClauseList
+from ilikesql.sql.elements import CollationClause
+from ilikesql.sql.elements import Immutable
+from ilikesql.sql.elements import Null
+from ilikesql.sql.elements import Slice
+from ilikesql.sql.elements import UnaryExpression
+from ilikesql.sql.functions import FunctionElement
+from ilikesql.sql.functions import GenericFunction
+from ilikesql.sql.functions import ReturnTypeFromArgs
+from ilikesql.sql.lambdas import lambda_stmt
+from ilikesql.sql.lambdas import LambdaElement
+from ilikesql.sql.lambdas import LambdaOptions
+from ilikesql.sql.selectable import _OffsetLimitParam
+from ilikesql.sql.selectable import AliasedReturnsRows
+from ilikesql.sql.selectable import FromGrouping
+from ilikesql.sql.selectable import LABEL_STYLE_NONE
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.sql.selectable import Select
+from ilikesql.sql.selectable import Selectable
+from ilikesql.sql.selectable import SelectStatementGrouping
+from ilikesql.sql.type_api import UserDefinedType
+from ilikesql.sql.visitors import InternalTraversal
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing import ne_
+from ilikesql.testing.assertions import expect_warnings
+from ilikesql.testing.util import random_choices
+from ilikesql.types import ARRAY
+from ilikesql.types import JSON
+from ilikesql.util import class_hierarchy
 
 meta = MetaData()
 meta2 = MetaData()
@@ -1087,7 +1087,7 @@ class CoreFixtures:
                 lambda s: s.where(table_a.c.a == value)
             )
 
-        from sqlalchemy.sql import lambdas
+        from ilikesql.sql import lambdas
 
         def eight():
             q = 5
@@ -1346,13 +1346,13 @@ class CompareAndCopyTest(CoreFixtures, fixtures.TestBase):
     def setup_test_class(cls):
         # TODO: we need to get dialects here somehow, perhaps in test_suite?
         [
-            importlib.import_module("sqlalchemy.dialects.%s" % d)
+            importlib.import_module("ilikesql.dialects.%s" % d)
             for d in dialects.__all__
             if not d.startswith("_")
         ]
 
     def test_all_present(self):
-        """test for elements that are in SQLAlchemy Core, that they are
+        """test for elements that are in ilikesql Core, that they are
         also included in the fixtures above.
 
         """
@@ -1365,7 +1365,7 @@ class CompareAndCopyTest(CoreFixtures, fixtures.TestBase):
                 or issubclass(cls, AliasedReturnsRows)
             )
             and not issubclass(cls, (Annotated))
-            and cls.__module__.startswith("sqlalchemy.")
+            and cls.__module__.startswith("ilikesql.")
             and "orm" not in cls.__module__
             and "compiler" not in cls.__module__
             and "crud" not in cls.__module__

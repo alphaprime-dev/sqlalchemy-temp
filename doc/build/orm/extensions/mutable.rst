@@ -3,7 +3,7 @@
 Mutation Tracking
 =================
 
-.. automodule:: sqlalchemy.ext.mutable
+.. automodule:: ilikesql.ext.mutable
 
 API Reference
 -------------

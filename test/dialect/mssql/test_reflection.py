@@ -2,40 +2,40 @@ import datetime
 import decimal
 import random
 
-from sqlalchemy import Column
-from sqlalchemy import DDL
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import Identity
-from sqlalchemy import Index
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import schema
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import types
-from sqlalchemy import types as sqltypes
-from sqlalchemy.dialects import mssql
-from sqlalchemy.dialects.mssql import base
-from sqlalchemy.dialects.mssql.information_schema import tables
-from sqlalchemy.pool import NullPool
-from sqlalchemy.schema import CreateIndex
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import ComparesTables
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import provision
-from sqlalchemy.testing.assertions import is_false
+from ilikesql import Column
+from ilikesql import DDL
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import Identity
+from ilikesql import Index
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import PrimaryKeyConstraint
+from ilikesql import schema
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import types
+from ilikesql import types as sqltypes
+from ilikesql.dialects import mssql
+from ilikesql.dialects.mssql import base
+from ilikesql.dialects.mssql.information_schema import tables
+from ilikesql.pool import NullPool
+from ilikesql.schema import CreateIndex
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import ComparesTables
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import is_
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import provision
+from ilikesql.testing.assertions import is_false
 
 
 class ReflectionTest(fixtures.TestBase, ComparesTables, AssertsCompiledSQL):

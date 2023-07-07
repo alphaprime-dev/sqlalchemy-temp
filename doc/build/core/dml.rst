@@ -5,7 +5,7 @@ INSERT, UPDATE and DELETE statements build on a hierarchy starting
 with :class:`.UpdateBase`.   The :class:`_expression.Insert` and :class:`_expression.Update`
 constructs build on the intermediary :class:`.ValuesBase`.
 
-.. currentmodule:: sqlalchemy.sql.expression
+.. currentmodule:: ilikesql.sql.expression
 
 .. _dml_foundational_consructors:
 
@@ -50,10 +50,10 @@ Class documentation for the constructors listed at
 
    .. automethod:: Update.values
 
-.. autoclass:: sqlalchemy.sql.expression.UpdateBase
+.. autoclass:: ilikesql.sql.expression.UpdateBase
    :members:
 
-.. autoclass:: sqlalchemy.sql.expression.ValuesBase
+.. autoclass:: ilikesql.sql.expression.ValuesBase
    :members:
 
 

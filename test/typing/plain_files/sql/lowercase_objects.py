@@ -1,4 +1,4 @@
-import sqlalchemy as sa
+import ilikesql as sa
 
 Book = sa.table(
     "book",

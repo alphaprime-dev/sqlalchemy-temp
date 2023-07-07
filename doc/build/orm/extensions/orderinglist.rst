@@ -1,7 +1,7 @@
 Ordering List
 =============
 
-.. automodule:: sqlalchemy.ext.orderinglist
+.. automodule:: ilikesql.ext.orderinglist
 
 API Reference
 -------------

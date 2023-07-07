@@ -8,32 +8,32 @@ from unittest.mock import Mock
 from unittest.mock import patch
 import weakref
 
-import sqlalchemy as tsa
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import pool
-from sqlalchemy import PoolResetState
-from sqlalchemy import select
-from sqlalchemy import testing
-from sqlalchemy.engine import default
-from sqlalchemy.pool.base import _AsyncConnDialect
-from sqlalchemy.pool.base import _ConnDialect
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_context_ok
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_none
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_not_none
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.engines import testing_engine
-from sqlalchemy.testing.util import gc_collect
-from sqlalchemy.testing.util import lazy_gc
+import ilikesql as tsa
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import pool
+from ilikesql import PoolResetState
+from ilikesql import select
+from ilikesql import testing
+from ilikesql.engine import default
+from ilikesql.pool.base import _AsyncConnDialect
+from ilikesql.pool.base import _ConnDialect
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_context_ok
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_none
+from ilikesql.testing import is_not
+from ilikesql.testing import is_not_none
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing.engines import testing_engine
+from ilikesql.testing.util import gc_collect
+from ilikesql.testing.util import lazy_gc
 
 join_timeout = 10
 
@@ -1335,7 +1335,7 @@ class QueuePoolTest(PoolTestBase):
             return fairy
 
         with patch(
-            "sqlalchemy.pool._ConnectionRecord.checkout",
+            "ilikesql.pool._ConnectionRecord.checkout",
             _decorate_existing_checkout,
         ):
             conn = p.connect()
@@ -1466,7 +1466,7 @@ class QueuePoolTest(PoolTestBase):
         )
 
     def test_recycle(self):
-        with patch("sqlalchemy.pool.base.time.time") as mock:
+        with patch("ilikesql.pool.base.time.time") as mock:
             mock.return_value = 10000
 
             p = self._queuepool_fixture(
@@ -1783,7 +1783,7 @@ class QueuePoolTest(PoolTestBase):
 
         p1 = TrackQueuePool(creator=creator, pool_size=20)
 
-        from sqlalchemy import create_engine
+        from ilikesql import create_engine
 
         eng = create_engine(testing.db.url, pool=p1, _initialize=False)
         eng.dialect = dialect

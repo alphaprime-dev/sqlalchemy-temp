@@ -6,8 +6,8 @@ from textwrap import wrap
 from timeit import timeit
 from types import MappingProxyType
 
-from sqlalchemy import bindparam
-from sqlalchemy import column
+from ilikesql import bindparam
+from ilikesql import column
 
 
 def test_case(fn=None, *, number=None):
@@ -121,19 +121,19 @@ class Case:
 class ImmutableDict(Case):
     @staticmethod
     def python():
-        from sqlalchemy.util._py_collections import immutabledict
+        from ilikesql.util._py_collections import immutabledict
 
         return immutabledict
 
     @staticmethod
     def c():
-        from sqlalchemy.cimmutabledict import immutabledict
+        from ilikesql.cimmutabledict import immutabledict
 
         return immutabledict
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension.immutabledict import immutabledict
+        from ilikesql.cyextension.immutabledict import immutabledict
 
         return immutabledict
 
@@ -266,13 +266,13 @@ class ImmutableDict(Case):
 class Processor(Case):
     @staticmethod
     def python():
-        from sqlalchemy.engine import processors
+        from ilikesql.engine import processors
 
         return processors
 
     @staticmethod
     def c():
-        from sqlalchemy import cprocessors as mod
+        from ilikesql import cprocessors as mod
 
         mod.to_decimal_processor_factory = (
             lambda t, s: mod.DecimalResultProcessor(t, "%%.%df" % s).process
@@ -282,7 +282,7 @@ class Processor(Case):
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension import processors as mod
+        from ilikesql.cyextension import processors as mod
 
         mod.to_decimal_processor_factory = (
             lambda t, s: mod.DecimalResultProcessor(t, "%%.%df" % s).process
@@ -363,13 +363,13 @@ class DistillParam(Case):
 
     @staticmethod
     def python():
-        from sqlalchemy.engine import _py_util
+        from ilikesql.engine import _py_util
 
         return _py_util
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension import util as mod
+        from ilikesql.cyextension import util as mod
 
         return mod
 
@@ -458,13 +458,13 @@ class IdentitySet(Case):
 
     @staticmethod
     def python():
-        from sqlalchemy.util._py_collections import IdentitySet
+        from ilikesql.util._py_collections import IdentitySet
 
         return IdentitySet
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension import collections
+        from ilikesql.cyextension import collections
 
         return collections.IdentitySet
 
@@ -735,13 +735,13 @@ class OrderedSet(IdentitySet):
 
     @staticmethod
     def python():
-        from sqlalchemy.util._py_collections import OrderedSet
+        from ilikesql.util._py_collections import OrderedSet
 
         return OrderedSet
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension import collections
+        from ilikesql.cyextension import collections
 
         return collections.OrderedSet
 
@@ -791,19 +791,19 @@ class TupleGetter(Case):
 
     @staticmethod
     def python():
-        from sqlalchemy.engine._py_row import tuplegetter
+        from ilikesql.engine._py_row import tuplegetter
 
         return tuplegetter
 
     @staticmethod
     def c():
-        from sqlalchemy import cresultproxy
+        from ilikesql import cresultproxy
 
         return cresultproxy.tuplegetter
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension import resultproxy
+        from ilikesql.cyextension import resultproxy
 
         return resultproxy.tuplegetter
 
@@ -855,19 +855,19 @@ class TupleGetter(Case):
 class BaseRow(Case):
     @staticmethod
     def python():
-        from sqlalchemy.engine._py_row import BaseRow
+        from ilikesql.engine._py_row import BaseRow
 
         return BaseRow
 
     @staticmethod
     def c():
-        from sqlalchemy.cresultproxy import BaseRow
+        from ilikesql.cresultproxy import BaseRow
 
         return BaseRow
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension import resultproxy
+        from ilikesql.cyextension import resultproxy
 
         return resultproxy.BaseRow
 
@@ -878,7 +878,7 @@ class BaseRow(Case):
     }
 
     def init_objects(self):
-        from sqlalchemy.engine.result import SimpleResultMetaData
+        from ilikesql.engine.result import SimpleResultMetaData
         from string import ascii_letters
 
         self.parent = SimpleResultMetaData(("a", "b", "c"))
@@ -1062,13 +1062,13 @@ class BaseRow(Case):
 class CacheAnonMap(Case):
     @staticmethod
     def python():
-        from sqlalchemy.sql._py_util import cache_anon_map
+        from ilikesql.sql._py_util import cache_anon_map
 
         return cache_anon_map
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension.util import cache_anon_map
+        from ilikesql.cyextension.util import cache_anon_map
 
         return cache_anon_map
 
@@ -1109,13 +1109,13 @@ class CacheAnonMap(Case):
 class PrefixAnonMap(Case):
     @staticmethod
     def python():
-        from sqlalchemy.sql._py_util import prefix_anon_map
+        from ilikesql.sql._py_util import prefix_anon_map
 
         return prefix_anon_map
 
     @staticmethod
     def cython():
-        from sqlalchemy.cyextension.util import prefix_anon_map
+        from ilikesql.cyextension.util import prefix_anon_map
 
         return prefix_anon_map
 
@@ -1124,7 +1124,7 @@ class PrefixAnonMap(Case):
     NUMBER = 1000000
 
     def init_objects(self):
-        from sqlalchemy.sql.elements import _anonymous_label
+        from ilikesql.sql.elements import _anonymous_label
 
         self.name = _anonymous_label.safe_construct(58243, "some_column_name")
 

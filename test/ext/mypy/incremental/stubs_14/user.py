@@ -1,14 +1,14 @@
 from typing import List
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm.decl_api import declared_attr
-from sqlalchemy.orm.relationships import RelationshipProperty
+from ilikesql import Column
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import Mapped
+from ilikesql.orm import relationship
+from ilikesql.orm.decl_api import declared_attr
+from ilikesql.orm.relationships import RelationshipProperty
 from . import Base
 
 if TYPE_CHECKING:

@@ -3,49 +3,49 @@
 import datetime
 import operator
 
-import sqlalchemy as sa
-from sqlalchemy import and_
-from sqlalchemy import Date
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import null
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import true
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import close_all_sessions
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import contains_eager
-from sqlalchemy.orm import defaultload
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import lazyload
-from sqlalchemy.orm import Load
-from sqlalchemy.orm import load_only
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import undefer
-from sqlalchemy.sql import operators
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.util import OrderedDict as odict
+import ilikesql as sa
+from ilikesql import and_
+from ilikesql import Date
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import null
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import true
+from ilikesql.orm import aliased
+from ilikesql.orm import backref
+from ilikesql.orm import close_all_sessions
+from ilikesql.orm import column_property
+from ilikesql.orm import contains_eager
+from ilikesql.orm import defaultload
+from ilikesql.orm import deferred
+from ilikesql.orm import joinedload
+from ilikesql.orm import lazyload
+from ilikesql.orm import Load
+from ilikesql.orm import load_only
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import undefer
+from ilikesql.sql import operators
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import is_
+from ilikesql.testing import is_not
+from ilikesql.testing import mock
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.util import OrderedDict as odict
 from test.orm import _fixtures
 
 
@@ -735,7 +735,7 @@ class EagerTest(_fixtures.FixtureTest, testing.AssertsCompiledSQL):
             return operator.itemgetter(index)
 
         with mock.patch(
-            "sqlalchemy.engine.result.ResultMetaData._getter", strict_getter
+            "ilikesql.engine.result.ResultMetaData._getter", strict_getter
         ):
             result = s.execute(q).unique().scalars().all()
 
@@ -1692,7 +1692,7 @@ class EagerTest(_fixtures.FixtureTest, testing.AssertsCompiledSQL):
             },
         )
 
-        from sqlalchemy.orm.interfaces import MapperOption
+        from ilikesql.orm.interfaces import MapperOption
 
         class MyBogusOption(MapperOption):
             propagate_to_loaders = True
@@ -3547,7 +3547,7 @@ class InnerJoinSplicingTest(fixtures.MappedTest, testing.AssertsCompiledSQL):
         b_table = self.tables.b
         c1_table = self.tables.c1
 
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         weird_selectable = b_table.outerjoin(c1_table)
 

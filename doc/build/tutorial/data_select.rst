@@ -35,7 +35,7 @@ as that of :func:`_sql.insert`, using a :term:`generative` approach where
 each method builds more state onto the object.  Like the other SQL constructs,
 it can be stringified in place::
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> stmt = select(user_table).where(user_table.c.name == "spongebob")
     >>> print(stmt)
     {printsql}SELECT user_account.id, user_account.name, user_account.fullname
@@ -215,8 +215,8 @@ it with full ``Address`` entities in the second element::
     FROM user_account, address
     WHERE user_account.id = address.user_id ORDER BY address.id
     [...] (){stop}
-    [('spongebob', Address(id=1, email_address='spongebob@sqlalchemy.org')),
-    ('sandy', Address(id=2, email_address='sandy@sqlalchemy.org')),
+    [('spongebob', Address(id=1, email_address='spongebob@ilikesql.org')),
+    ('sandy', Address(id=2, email_address='sandy@ilikesql.org')),
     ('sandy', Address(id=3, email_address='sandy@squirrelpower.org'))]
 
 Approaches towards selecting ORM entities and columns as well as common methods
@@ -236,7 +236,7 @@ when referring to arbitrary SQL expressions in a result row by name:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import func, cast
+    >>> from ilikesql import func, cast
     >>> stmt = select(
     ...     ("Username: " + user_table.c.name).label("username"),
     ... ).order_by(user_table.c.name)
@@ -277,7 +277,7 @@ The :func:`_sql.text` construct introduced at
 a hardcoded string literal ``'some phrase'`` and embed it within the
 SELECT statement::
 
-  >>> from sqlalchemy import text
+  >>> from ilikesql import text
   >>> stmt = select(text("'some phrase'"), user_table.c.name).order_by(user_table.c.name)
   >>> with engine.connect() as conn:
   ...     print(conn.execute(stmt).all())
@@ -299,7 +299,7 @@ it explicitly represents a single "column" and can then be labeled and referred
 towards in subqueries and other expressions::
 
 
-  >>> from sqlalchemy import literal_column
+  >>> from ilikesql import literal_column
   >>> stmt = select(literal_column("'some phrase'").label("p"), user_table.c.name).order_by(
   ...     user_table.c.name
   ... )
@@ -326,7 +326,7 @@ are necessary for the SQL we want to see rendered.
 The WHERE clause
 ^^^^^^^^^^^^^^^^
 
-SQLAlchemy allows us to compose SQL expressions, such as ``name = 'squidward'``
+ilikesql allows us to compose SQL expressions, such as ``name = 'squidward'``
 or ``user_id > 10``, by making use of standard Python operators in
 conjunction with
 :class:`_schema.Column` and similar objects.   For boolean expressions, most
@@ -378,7 +378,7 @@ with the same effect::
 :func:`_sql.and_` and :func:`_sql.or_` functions, illustrated below in terms
 of ORM entities::
 
-    >>> from sqlalchemy import and_, or_
+    >>> from ilikesql import and_, or_
     >>> print(
     ...     select(Address.email_address).where(
     ...         and_(
@@ -406,7 +406,7 @@ against the leftmost FROM clause or the last entity joined::
 .. seealso::
 
 
-    :doc:`/core/operators` - descriptions of most SQL operator functions in SQLAlchemy
+    :doc:`/core/operators` - descriptions of most SQL operator functions in ilikesql
 
 
 .. _tutorial_select_join:
@@ -474,10 +474,10 @@ the second::
 Another example where we might want to use :meth:`_sql.Select.select_from`
 is if our columns clause doesn't have enough information to provide for a
 FROM clause.  For example, to SELECT from the common SQL expression
-``count(*)``, we use a SQLAlchemy element known as :attr:`_sql.func` to
+``count(*)``, we use a ilikesql element known as :attr:`_sql.func` to
 produce the SQL ``count()`` function::
 
-    >>> from sqlalchemy import func
+    >>> from ilikesql import func
     >>> print(select(func.count("*")).select_from(user_table))
     {printsql}SELECT count(:count_2) AS count_1
     FROM user_account
@@ -544,7 +544,7 @@ using ``.join(..., isouter=True)``.
 
 .. tip::
 
-    SQL also has a "RIGHT OUTER JOIN".  SQLAlchemy doesn't render this directly;
+    SQL also has a "RIGHT OUTER JOIN".  ilikesql doesn't render this directly;
     instead, reverse the order of the tables and use "LEFT OUTER JOIN".
 
 .. _tutorial_order_by_group_by_having:
@@ -596,7 +596,7 @@ to be aggregated together to produce a single result.  Examples include
 counting, computing averages, as well as locating the maximum or minimum
 value in a set of values.
 
-SQLAlchemy provides for SQL functions in an open-ended way using a namespace
+ilikesql provides for SQL functions in an open-ended way using a namespace
 known as :data:`_sql.func`.  This is a special constructor object which
 will create new instances of :class:`_functions.Function` when given the name
 of a particular SQL function, which can have any name, as well as zero or
@@ -605,7 +605,7 @@ SQL Expression constructs.   For example, to
 render the SQL COUNT() function against the ``user_account.id`` column,
 we call upon the ``count()`` name::
 
-    >>> from sqlalchemy import func
+    >>> from ilikesql import func
     >>> count_fn = func.count(user_table.c.id)
     >>> print(count_fn)
     {printsql}count(user_account.id)
@@ -622,7 +622,7 @@ a primary key association.    The HAVING clause is then used in a similar
 manner as the WHERE clause, except that it filters out rows based on aggregated
 values rather than direct row contents.
 
-SQLAlchemy provides for these two clauses using the :meth:`_sql.Select.group_by`
+ilikesql provides for these two clauses using the :meth:`_sql.Select.group_by`
 and :meth:`_sql.Select.having` methods.   Below we illustrate selecting
 user name fields as well as count of addresses, for those users that have more
 than one address:
@@ -663,7 +663,7 @@ error if no match is found.   The unary modifiers
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import func, desc
+    >>> from ilikesql import func, desc
     >>> stmt = (
     ...     select(Address.user_id, func.count(Address.id).label("num_addresses"))
     ...     .group_by("user_id")
@@ -684,7 +684,7 @@ in the FROM clause of a statement.  We accomplish this using SQL **aliases**,
 which are a syntax that supplies an alternative name to a table or subquery
 from which it can be referred towards in the statement.
 
-In the SQLAlchemy Expression Language, these "names" are instead represented by
+In the ilikesql Expression Language, these "names" are instead represented by
 :class:`_sql.FromClause` objects known as the :class:`_sql.Alias` construct,
 which is constructed in Core using the :meth:`_sql.FromClause.alias`
 method. An :class:`_sql.Alias` construct is just like a :class:`_sql.Table`
@@ -715,7 +715,7 @@ internally that's against the original mapped :class:`_schema.Table` object,
 while maintaining ORM functionality.  The SELECT below selects from the
 ``User`` entity all objects that include two particular email addresses::
 
-    >>> from sqlalchemy.orm import aliased
+    >>> from ilikesql.orm import aliased
     >>> address_alias_1 = aliased(Address)
     >>> address_alias_2 = aliased(Address)
     >>> print(
@@ -754,7 +754,7 @@ placed in the FROM clause of an enclosing SELECT.   We will also cover the
 Common Table Expression or CTE, which is used in a similar way as a subquery,
 but includes additional features.
 
-SQLAlchemy uses the :class:`_sql.Subquery` object to represent a subquery and
+ilikesql uses the :class:`_sql.Subquery` object to represent a subquery and
 the :class:`_sql.CTE` to represent a CTE, usually obtained from the
 :meth:`_sql.Select.subquery` and :meth:`_sql.Select.cte` methods, respectively.
 Either object can be used as a FROM element inside of a larger
@@ -806,7 +806,7 @@ the ``user_account`` table::
 In order to join from ``user_account`` to ``address``, we made use of the
 :meth:`_sql.Select.join_from` method.   As has been illustrated previously, the
 ON clause of this join was again **inferred** based on foreign key constraints.
-Even though a SQL subquery does not itself have any constraints, SQLAlchemy can
+Even though a SQL subquery does not itself have any constraints, ilikesql can
 act upon constraints represented on the columns by determining that the
 ``subq.c.user_id`` column is **derived** from the ``address_table.c.user_id``
 column, which does express a foreign key relationship back to the
@@ -815,7 +815,7 @@ column, which does express a foreign key relationship back to the
 Common Table Expressions (CTEs)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Usage of the :class:`_sql.CTE` construct in SQLAlchemy is virtually
+Usage of the :class:`_sql.CTE` construct in ilikesql is virtually
 the same as how the :class:`_sql.Subquery` construct is used.  By changing
 the invocation of the :meth:`_sql.Select.subquery` method to use
 :meth:`_sql.Select.cte` instead, we can use the resulting object as a FROM
@@ -900,8 +900,8 @@ each ``Address`` object ultimately came from a subquery against the
     WHERE address.email_address NOT LIKE ?) AS anon_1 ON user_account.id = anon_1.user_id
     ORDER BY user_account.id, anon_1.id
     [...] ('%@aol.com',){stop}
-    User(id=1, name='spongebob', fullname='Spongebob Squarepants') Address(id=1, email_address='spongebob@sqlalchemy.org')
-    User(id=2, name='sandy', fullname='Sandy Cheeks') Address(id=2, email_address='sandy@sqlalchemy.org')
+    User(id=1, name='spongebob', fullname='Spongebob Squarepants') Address(id=1, email_address='spongebob@ilikesql.org')
+    User(id=2, name='sandy', fullname='Sandy Cheeks') Address(id=2, email_address='sandy@ilikesql.org')
     User(id=2, name='sandy', fullname='Sandy Cheeks') Address(id=3, email_address='sandy@squirrelpower.org')
     {execsql}ROLLBACK{stop}
 
@@ -931,8 +931,8 @@ Another example follows, which is exactly the same except it makes use of the
     JOIN anon_1 ON user_account.id = anon_1.user_id
     ORDER BY user_account.id, anon_1.id
     [...] ('%@aol.com',){stop}
-    User(id=1, name='spongebob', fullname='Spongebob Squarepants') Address(id=1, email_address='spongebob@sqlalchemy.org')
-    User(id=2, name='sandy', fullname='Sandy Cheeks') Address(id=2, email_address='sandy@sqlalchemy.org')
+    User(id=1, name='spongebob', fullname='Spongebob Squarepants') Address(id=1, email_address='spongebob@ilikesql.org')
+    User(id=2, name='sandy', fullname='Sandy Cheeks') Address(id=2, email_address='sandy@ilikesql.org')
     User(id=2, name='sandy', fullname='Sandy Cheeks') Address(id=3, email_address='sandy@squirrelpower.org')
     {execsql}ROLLBACK{stop}
 
@@ -951,7 +951,7 @@ of an enclosing SELECT statement and is different than a regular subquery in
 that it is not used in the FROM clause.   A :term:`correlated subquery` is a
 scalar subquery that refers to a table in the enclosing SELECT statement.
 
-SQLAlchemy represents the scalar subquery using the
+ilikesql represents the scalar subquery using the
 :class:`_sql.ScalarSelect` construct, which is part of the
 :class:`_sql.ColumnElement` expression hierarchy, in contrast to the regular
 subquery which is represented by the :class:`_sql.Subquery` construct, which is
@@ -997,7 +997,7 @@ into an enclosing :func:`_sql.select` construct that deals with the
     FROM user_account
 
 Simple correlated subqueries will usually do the right thing that's desired.
-However, in the case where the correlation is ambiguous, SQLAlchemy will let
+However, in the case where the correlation is ambiguous, ilikesql will let
 us know that more clarity is needed::
 
     >>> stmt = (
@@ -1048,7 +1048,7 @@ The statement then can return the data for this column like any other:
     WHERE user_account.id = address.user_id) AS address_count
     FROM user_account JOIN address ON user_account.id = address.user_id ORDER BY user_account.id, address.id
     [...] (){stop}
-    [('spongebob', 'spongebob@sqlalchemy.org', 1), ('sandy', 'sandy@sqlalchemy.org', 2),
+    [('spongebob', 'spongebob@ilikesql.org', 1), ('sandy', 'sandy@ilikesql.org', 2),
      ('sandy', 'sandy@squirrelpower.org', 2)]
     {execsql}ROLLBACK{stop}
 
@@ -1071,7 +1071,7 @@ correlation may only refer to a table that is part of another SELECT that
 entirely encloses this SELECT.  The LATERAL keyword allows us to turn this
 behavior around and allow correlation from the right side JOIN.
 
-SQLAlchemy supports this feature using the :meth:`_expression.Select.lateral`
+ilikesql supports this feature using the :meth:`_expression.Select.lateral`
 method, which creates an object known as :class:`.Lateral`. :class:`.Lateral`
 is in the same family as :class:`.Subquery` and :class:`.Alias`, but also
 includes correlation behavior when the construct is added to the FROM clause of
@@ -1129,7 +1129,7 @@ SQL operation, which produces the set of all rows produced by one or more
 statements together.  Other set operations such as INTERSECT [ALL] and
 EXCEPT [ALL] are also possible.
 
-SQLAlchemy's :class:`_sql.Select` construct supports compositions of this
+ilikesql's :class:`_sql.Select` construct supports compositions of this
 nature using functions like :func:`_sql.union`, :func:`_sql.intersect` and
 :func:`_sql.except_`, and the "all" counterparts :func:`_sql.union_all`,
 :func:`_sql.intersect_all` and :func:`_sql.except_all`. These functions all
@@ -1142,7 +1142,7 @@ that it has fewer methods.   The :class:`_sql.CompoundSelect` produced by
 :func:`_sql.union_all` for example may be invoked directly using
 :meth:`_engine.Connection.execute`::
 
-    >>> from sqlalchemy import union_all
+    >>> from ilikesql import union_all
     >>> stmt1 = select(user_table).where(user_table.c.name == "sandy")
     >>> stmt2 = select(user_table).where(user_table.c.name == "spongebob")
     >>> u = union_all(stmt1, stmt2)
@@ -1187,7 +1187,7 @@ collection that may be referred towards in an enclosing :func:`_sql.select`::
     AS anon_1 ON anon_1.id = address.user_id
     ORDER BY anon_1.name, address.email_address
     [generated in ...] ('sandy', 'spongebob')
-    {stop}[('sandy', 'sandy@sqlalchemy.org'), ('sandy', 'sandy@squirrelpower.org'), ('spongebob', 'spongebob@sqlalchemy.org')]
+    {stop}[('sandy', 'sandy@ilikesql.org'), ('sandy', 'sandy@squirrelpower.org'), ('spongebob', 'spongebob@ilikesql.org')]
     {execsql}ROLLBACK{stop}
 
 .. _tutorial_orm_union:
@@ -1269,7 +1269,7 @@ EXISTS subqueries
 
 The SQL EXISTS keyword is an operator that is used with :ref:`scalar subqueries
 <tutorial_scalar_subquery>` to return a boolean true or false depending on if
-the SELECT statement would return a row.  SQLAlchemy includes a variant of the
+the SELECT statement would return a row.  ilikesql includes a variant of the
 :class:`_sql.ScalarSelect` object called :class:`_sql.Exists`, which will
 generate an EXISTS subquery and is most conveniently generated using the
 :meth:`_sql.SelectBase.exists` method.  Below we produce an EXISTS so that we
@@ -1357,7 +1357,7 @@ possibly some arguments. Examples of typical SQL functions include:
   ..
 
 * the ``now()`` function, which provides for the current date and time; as this
-  is a common function, SQLAlchemy knows how to render this differently for each
+  is a common function, ilikesql knows how to render this differently for each
   backend, in the case of SQLite using the CURRENT_TIMESTAMP function:
 
   .. sourcecode:: pycon+sql
@@ -1391,10 +1391,10 @@ generation in some cases.  The example below contrasts the SQL generation
 that occurs for the PostgreSQL dialect compared to the Oracle dialect for
 the :class:`_functions.now` function::
 
-    >>> from sqlalchemy.dialects import postgresql
+    >>> from ilikesql.dialects import postgresql
     >>> print(select(func.now()).compile(dialect=postgresql.dialect()))
     {printsql}SELECT now() AS now_1{stop}
-    >>> from sqlalchemy.dialects import oracle
+    >>> from ilikesql.dialects import oracle
     >>> print(select(func.now()).compile(dialect=oracle.dialect()))
     {printsql}SELECT CURRENT_TIMESTAMP AS now_1 FROM DUAL{stop}
 
@@ -1426,9 +1426,9 @@ such functions are referred towards
 as :ref:`table valued functions <tutorial_functions_table_valued>`.
 
 The SQL return type of the function may also be significant when executing a
-statement and getting rows back, for those cases where SQLAlchemy has to apply
+statement and getting rows back, for those cases where ilikesql has to apply
 result-set processing. A prime example of this are date-related functions on
-SQLite, where SQLAlchemy's :class:`_types.DateTime` and related datatypes take
+SQLite, where ilikesql's :class:`_types.DateTime` and related datatypes take
 on the role of converting from string values to Python ``datetime()`` objects
 as result rows are received.
 
@@ -1439,7 +1439,7 @@ below we pass the :class:`_types.JSON` class to generate the PostgreSQL
 ``json_object()`` function, noting that the SQL return type will be of
 type JSON::
 
-    >>> from sqlalchemy import JSON
+    >>> from ilikesql import JSON
     >>> function_expr = func.json_object('{a, 1, b, "def", c, 3.5}', type_=JSON)
 
 By creating our JSON function with the :class:`_types.JSON` datatype, the
@@ -1483,10 +1483,10 @@ will know that a SQL expression would be of type :class:`_types.String`::
     >>> func.concat("x", "y").type
     String()
 
-However, for the vast majority of SQL functions, SQLAlchemy does not have them
+However, for the vast majority of SQL functions, ilikesql does not have them
 explicitly present in its very small list of known functions.  For example,
 while there is typically no issue using SQL functions ``func.lower()``
-and ``func.upper()`` to convert the casing of strings, SQLAlchemy doesn't
+and ``func.upper()`` to convert the casing of strings, ilikesql doesn't
 actually know about these functions, so they have a "null" SQL return type::
 
     >>> func.upper("lowercase").type
@@ -1494,7 +1494,7 @@ actually know about these functions, so they have a "null" SQL return type::
 
 For simple functions like ``upper`` and ``lower``, the issue is not usually
 significant, as string values may be received from the database without any
-special type handling on the SQLAlchemy side, and SQLAlchemy's type
+special type handling on the ilikesql side, and ilikesql's type
 coercion rules can often correctly guess intent as well; the Python ``+``
 operator for example will be correctly interpreted as the string concatenation
 operator based on looking at both sides of the expression::
@@ -1505,7 +1505,7 @@ operator based on looking at both sides of the expression::
 Overall, the scenario where the
 :paramref:`_functions.Function.type_` parameter is likely necessary is:
 
-1. the function is not already a SQLAlchemy built-in function; this can be
+1. the function is not already a ilikesql built-in function; this can be
    evidenced by creating the function and observing the :attr:`_functions.Function.type`
    attribute, that is::
 
@@ -1554,7 +1554,7 @@ function should be applied, a "partition" value which considers the window
 over different sub-sets of rows, and an "order by" expression which importantly
 indicates the order in which rows should be applied to the aggregate function.
 
-In SQLAlchemy, all SQL functions generated by the :data:`_sql.func` namespace
+In ilikesql, all SQL functions generated by the :data:`_sql.func` namespace
 include a method :meth:`_functions.FunctionElement.over` which
 grants the window function, or "OVER", syntax; the construct produced
 is the :class:`_sql.Over` construct.
@@ -1582,7 +1582,7 @@ number the email addresses of individual users:
     user_account.name, address.email_address
     FROM user_account JOIN address ON user_account.id = address.user_id
     [...] ()
-    {stop}[(1, 'sandy', 'sandy@sqlalchemy.org'), (2, 'sandy', 'sandy@squirrelpower.org'), (1, 'spongebob', 'spongebob@sqlalchemy.org')]
+    {stop}[(1, 'sandy', 'sandy@ilikesql.org'), (2, 'sandy', 'sandy@squirrelpower.org'), (1, 'spongebob', 'spongebob@ilikesql.org')]
     {printsql}ROLLBACK{stop}
 
 Above, the :paramref:`_functions.FunctionElement.over.partition_by` parameter
@@ -1608,7 +1608,7 @@ We also may make use of the ``ORDER BY`` clause using :paramref:`_functions.Func
     user_account.name, address.email_address
     FROM user_account JOIN address ON user_account.id = address.user_id
     [...] ()
-    {stop}[(2, 'sandy', 'sandy@sqlalchemy.org'), (2, 'sandy', 'sandy@squirrelpower.org'), (3, 'spongebob', 'spongebob@sqlalchemy.org')]
+    {stop}[(2, 'sandy', 'sandy@ilikesql.org'), (2, 'sandy', 'sandy@squirrelpower.org'), (3, 'spongebob', 'spongebob@ilikesql.org')]
     {printsql}ROLLBACK{stop}
 
 Further options for window functions include usage of ranges; see
@@ -1630,7 +1630,7 @@ Special Modifiers WITHIN GROUP, FILTER
 The "WITHIN GROUP" SQL syntax is used in conjunction with an "ordered set"
 or a "hypothetical set" aggregate
 function.  Common "ordered set" functions include ``percentile_cont()``
-and ``rank()``.  SQLAlchemy includes built in implementations
+and ``rank()``.  ilikesql includes built in implementations
 :class:`_functions.rank`, :class:`_functions.dense_rank`,
 :class:`_functions.mode`, :class:`_functions.percentile_cont` and
 :class:`_functions.percentile_disc` which include a :meth:`_functions.FunctionElement.within_group`
@@ -1690,7 +1690,7 @@ Oracle, and SQL Server.
     features.   See this section for additional examples of PostgreSQL
     syntaxes as well as additional features.
 
-SQLAlchemy provides the :meth:`_functions.FunctionElement.table_valued` method
+ilikesql provides the :meth:`_functions.FunctionElement.table_valued` method
 as the basic "table valued function" construct, which will convert a
 :data:`_sql.func` object into a FROM clause containing a series of named
 columns, based on string names passed positionally. This returns a
@@ -1735,11 +1735,11 @@ expression context.  PostgreSQL makes great use of this syntax for such
 functions as ``json_array_elements()``, ``json_object_keys()``,
 ``json_each_text()``, ``json_each()``, etc.
 
-SQLAlchemy refers to this as a "column valued" function and is available
+ilikesql refers to this as a "column valued" function and is available
 by applying the :meth:`_functions.FunctionElement.column_valued` modifier
 to a :class:`_functions.Function` construct::
 
-    >>> from sqlalchemy import select, func
+    >>> from ilikesql import select, func
     >>> stmt = select(func.json_array_elements('["one", "two"]').column_valued("x"))
     >>> print(stmt)
     {printsql}SELECT x
@@ -1748,7 +1748,7 @@ to a :class:`_functions.Function` construct::
 The "column valued" form is also supported by the Oracle dialect, where
 it is usable for custom SQL functions::
 
-    >>> from sqlalchemy.dialects import oracle
+    >>> from ilikesql.dialects import oracle
     >>> stmt = select(func.scalar_strings(5).column_valued("s"))
     >>> print(stmt.compile(dialect=oracle.dialect()))
     {printsql}SELECT s.COLUMN_VALUE
@@ -1768,13 +1768,13 @@ In SQL, we often need to indicate the datatype of an expression explicitly,
 either to tell the database what type is expected in an otherwise ambiguous
 expression, or in some cases when we want to convert the implied datatype
 of a SQL expression into something else.   The SQL CAST keyword is used for
-this task, which in SQLAlchemy is provided by the :func:`.cast` function.
+this task, which in ilikesql is provided by the :func:`.cast` function.
 This function accepts a column expression and a data type
 object as arguments, as demonstrated below where we produce a SQL expression
 ``CAST(user_account.id AS VARCHAR)`` from the ``user_table.c.id`` column
 object::
 
-    >>> from sqlalchemy import cast
+    >>> from ilikesql import cast
     >>> stmt = select(cast(user_table.c.id, String))
     >>> with engine.connect() as conn:
     ...     result = conn.execute(stmt)
@@ -1787,11 +1787,11 @@ object::
     {execsql}ROLLBACK{stop}
 
 The :func:`.cast` function not only renders the SQL CAST syntax, it also
-produces a SQLAlchemy column expression that will act as the given datatype on
+produces a ilikesql column expression that will act as the given datatype on
 the Python side as well. A string expression that is :func:`.cast` to
 :class:`_sqltypes.JSON` will gain JSON subscript and comparison operators, for example::
 
-    >>> from sqlalchemy import JSON
+    >>> from ilikesql import JSON
     >>> print(cast("{'a': 'b'}", JSON)["a"])
     {printsql}CAST(:param_1 AS JSON)[:param_2]
 
@@ -1799,7 +1799,7 @@ the Python side as well. A string expression that is :func:`.cast` to
 type_coerce() - a Python-only "cast"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes there is the need to have SQLAlchemy know the datatype of an
+Sometimes there is the need to have ilikesql know the datatype of an
 expression, for all the reasons mentioned above, but to not render the CAST
 expression itself on the SQL side, where it may interfere with a SQL operation
 that already works without it.  For this fairly common use case there is
@@ -1816,9 +1816,9 @@ string into one of MySQL's JSON functions:
 .. sourcecode:: pycon+sql
 
     >>> import json
-    >>> from sqlalchemy import JSON
-    >>> from sqlalchemy import type_coerce
-    >>> from sqlalchemy.dialects import mysql
+    >>> from ilikesql import JSON
+    >>> from ilikesql import type_coerce
+    >>> from ilikesql.dialects import mysql
     >>> s = select(type_coerce({"some_key": {"foo": "bar"}}, JSON)["some_key"])
     >>> print(s.compile(dialect=mysql.dialect()))
     {printsql}SELECT JSON_EXTRACT(%s, %s) AS anon_1

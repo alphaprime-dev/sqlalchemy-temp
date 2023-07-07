@@ -61,7 +61,7 @@ of the object, including:
 
 E.g.::
 
-  >>> from sqlalchemy import inspect
+  >>> from ilikesql import inspect
   >>> insp = inspect(my_object)
   >>> insp.persistent
   True
@@ -76,7 +76,7 @@ E.g.::
 Session Attributes
 ------------------
 
-The :class:`~sqlalchemy.orm.session.Session` itself acts somewhat like a
+The :class:`~ilikesql.orm.session.Session` itself acts somewhat like a
 set-like collection. All items present may be accessed using the iterator
 interface::
 
@@ -117,7 +117,7 @@ Session Referencing Behavior
 
 Objects within the session are *weakly referenced*. This
 means that when they are dereferenced in the outside application, they fall
-out of scope from within the :class:`~sqlalchemy.orm.session.Session` as well
+out of scope from within the :class:`~ilikesql.orm.session.Session` as well
 and are subject to garbage collection by the Python interpreter. The
 exceptions to this include objects which are pending, objects which are marked
 as deleted, or persistent objects which have pending changes on them. After a
@@ -137,7 +137,7 @@ An event based approach is also feasible.  A simple recipe that provides
 "strong referencing" behavior for all objects as they remain within
 the :term:`persistent` state is as follows::
 
-    from sqlalchemy import event
+    from ilikesql import event
 
 
     def strong_reference_session(session):
@@ -171,14 +171,14 @@ objects as they leave the persistent state.
 The above function may be called for any :class:`.Session` in order to
 provide strong-referencing behavior on a per-:class:`.Session` basis::
 
-    from sqlalchemy.orm import Session
+    from ilikesql.orm import Session
 
     my_session = Session()
     strong_reference_session(my_session)
 
 It may also be called for any :class:`.sessionmaker`::
 
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql.orm import sessionmaker
 
     maker = sessionmaker()
     strong_reference_session(maker)
@@ -242,7 +242,7 @@ new session. Here's some examples:
   structure. Later, when the file has changed, the same
   process can be re-run, producing a slightly different
   object structure, which can then be ``merged`` in again,
-  and the :class:`~sqlalchemy.orm.session.Session` will
+  and the :class:`~ilikesql.orm.session.Session` will
   automatically update the database to reflect those
   changes, loading each object from the database by primary key and
   then updating its state with the new state given.
@@ -317,7 +317,7 @@ A surprise would occur if we said this::
     >>> a1.user = u1
     >>> a1 = session.merge(a1)
     >>> session.commit()
-    sqlalchemy.orm.exc.FlushError: New instance <Address at 0x1298f50>
+    ilikesql.orm.exc.FlushError: New instance <Address at 0x1298f50>
     with identity key (<class '__main__.Address'>, (1,)) conflicts with
     persistent instance <Address at 0x12a25d0>
 
@@ -357,7 +357,7 @@ Another example of unexpected state::
     >>> a1.user = None
     >>> a1 = session.merge(a1)
     >>> session.commit()
-    sqlalchemy.exc.IntegrityError: (IntegrityError) address.user_id
+    ilikesql.exc.IntegrityError: (IntegrityError) address.user_id
     may not be NULL
 
 Above, the assignment of ``user`` takes precedence over the foreign key
@@ -379,7 +379,7 @@ is a quick way to check::
     >>> a1 = Address(id=existing_a1, user_id=user.id)
     >>> a1.user
     >>> a1.__dict__
-    {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x1298d10>,
+    {'_sa_instance_state': <ilikesql.orm.state.InstanceState object at 0x1298d10>,
         'user_id': 1,
         'id': 1,
         'user': None}
@@ -429,7 +429,7 @@ loaded::
     }
 
 where ``id`` and ``name`` refer to those columns in the database.
-``_sa_instance_state`` is a non-database-persisted value used by SQLAlchemy
+``_sa_instance_state`` is a non-database-persisted value used by ilikesql
 internally (it refers to the :class:`.InstanceState` for the instance.
 While not directly relevant to this section, if we want to get at it,
 we should use the :func:`_sa.inspect` function to access it).
@@ -467,10 +467,10 @@ the ``__dict__`` is again populated::
     }
 
 .. note::  While we are peeking inside of ``__dict__`` in order to see a bit
-   of what SQLAlchemy does with object attributes, we **should not modify**
+   of what ilikesql does with object attributes, we **should not modify**
    the contents of ``__dict__`` directly, at least as far as those attributes
-   which the SQLAlchemy ORM is maintaining (other attributes outside of SQLA's
-   realm are fine).  This is because SQLAlchemy uses :term:`descriptors` in
+   which the ilikesql ORM is maintaining (other attributes outside of SQLA's
+   realm are fine).  This is because ilikesql uses :term:`descriptors` in
    order to track the changes we make to an object, and when we modify ``__dict__``
    directly, the ORM won't be able to track that we changed something.
 
@@ -653,5 +653,5 @@ transactions, an understanding of the isolation behavior in effect is essential.
     :term:`isolation` - glossary explanation of isolation which includes links
     to Wikipedia.
 
-    `The SQLAlchemy Session In-Depth <https://techspot.zzzeek.org/2012/11/14/pycon-canada-the-sqlalchemy-session-in-depth/>`_ - a video + slides with an in-depth discussion of the object
+    `The ilikesql Session In-Depth <https://techspot.zzzeek.org/2012/11/14/pycon-canada-the-ilikesql-session-in-depth/>`_ - a video + slides with an in-depth discussion of the object
     lifecycle including the role of data expiration.

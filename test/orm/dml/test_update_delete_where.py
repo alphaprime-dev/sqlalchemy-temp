@@ -1,46 +1,46 @@
-from sqlalchemy import Boolean
-from sqlalchemy import case
-from sqlalchemy import column
-from sqlalchemy import delete
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import insert
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import lambda_stmt
-from sqlalchemy import MetaData
-from sqlalchemy import or_
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import update
-from sqlalchemy import values
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import synonym
-from sqlalchemy.orm import with_loader_criteria
-from sqlalchemy.sql.dml import Delete
-from sqlalchemy.sql.dml import Update
-from sqlalchemy.sql.selectable import Select
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import not_in
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import Boolean
+from ilikesql import case
+from ilikesql import column
+from ilikesql import delete
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import insert
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import lambda_stmt
+from ilikesql import MetaData
+from ilikesql import or_
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import update
+from ilikesql import values
+from ilikesql.orm import backref
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import joinedload
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.orm import synonym
+from ilikesql.orm import with_loader_criteria
+from ilikesql.sql.dml import Delete
+from ilikesql.sql.dml import Update
+from ilikesql.sql.selectable import Select
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import not_in
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class UpdateDeleteTest(fixtures.MappedTest):
@@ -459,7 +459,7 @@ class UpdateDeleteTest(fixtures.MappedTest):
     ):
         """test #5664.
 
-        approach is revised in SQLAlchemy 2.0 to not pre-emptively
+        approach is revised in ilikesql 2.0 to not pre-emptively
         unexpire the involved attributes
 
         """

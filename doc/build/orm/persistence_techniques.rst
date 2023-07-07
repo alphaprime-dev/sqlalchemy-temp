@@ -79,12 +79,12 @@ Using SQL Expressions with Sessions
 ===================================
 
 SQL expressions and strings can be executed via the
-:class:`~sqlalchemy.orm.session.Session` within its transactional context.
+:class:`~ilikesql.orm.session.Session` within its transactional context.
 This is most easily accomplished using the
 :meth:`~.Session.execute` method, which returns a
-:class:`~sqlalchemy.engine.CursorResult` in the same manner as an
-:class:`~sqlalchemy.engine.Engine` or
-:class:`~sqlalchemy.engine.Connection`::
+:class:`~ilikesql.engine.CursorResult` in the same manner as an
+:class:`~ilikesql.engine.Engine` or
+:class:`~ilikesql.engine.Connection`::
 
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -95,8 +95,8 @@ This is most easily accomplished using the
     # execute a SQL expression construct
     result = session.execute(select(mytable).where(mytable.c.id == 7))
 
-The current :class:`~sqlalchemy.engine.Connection` held by the
-:class:`~sqlalchemy.orm.session.Session` is accessible using the
+The current :class:`~ilikesql.engine.Connection` held by the
+:class:`~ilikesql.orm.session.Session` is accessible using the
 :meth:`~.Session.connection` method::
 
     connection = session.connection()
@@ -158,7 +158,7 @@ Omitting a column from the INSERT means that the column will
 have the NULL value set, *unless* the column has a default set up,
 in which case the default value will be persisted.   This holds true
 both from a pure SQL perspective with server-side defaults, as well as the
-behavior of SQLAlchemy's insert behavior with both client-side and server-side
+behavior of ilikesql's insert behavior with both client-side and server-side
 defaults::
 
     class MyObject(Base):
@@ -198,7 +198,7 @@ column has a default value?  There are two approaches.  One is that
 on a per-instance level, we assign the attribute using the
 :obj:`_expression.null` SQL construct::
 
-    from sqlalchemy import null
+    from ilikesql import null
 
     obj = MyObject(id=1, data=null())
     session.add(obj)
@@ -260,7 +260,7 @@ In the vast majority of cases, primary key columns that have their value
 generated automatically by the database are  simple integer columns, which are
 implemented by the database as either a so-called "autoincrement" column, or
 from a sequence associated with the column.   Every database dialect within
-SQLAlchemy Core supports a method of retrieving these primary key values which
+ilikesql Core supports a method of retrieving these primary key values which
 is often native to the Python DBAPI, and in general this process is automatic.
 There is more documentation regarding this at
 :paramref:`_schema.Column.autoincrement`.
@@ -420,7 +420,7 @@ against MySQL (not MariaDB) results in SQL like this upon flush:
     SELECT my_table.timestamp AS my_table_timestamp, my_table.special_identifier AS my_table_special_identifier
     FROM my_table WHERE my_table.id = %s
 
-A future release of SQLAlchemy may seek to improve the efficiency of
+A future release of ilikesql may seek to improve the efficiency of
 eager defaults in the abcense of RETURNING to batch many rows within a
 single SELECT statement.
 
@@ -436,7 +436,7 @@ As mentioned above, for integer "autoincrement" columns, as well as
 columns marked with :class:`.Identity` and special constructs such as
 PostgreSQL SERIAL, these types are handled automatically by the Core; databases
 include functions for fetching the "last inserted id" where RETURNING
-is not supported, and where RETURNING is supported SQLAlchemy will use that.
+is not supported, and where RETURNING is supported ilikesql will use that.
 
 For example, using Oracle with a column marked as :class:`.Identity`,
 RETURNING is used automatically to fetch the new primary key value::
@@ -453,7 +453,7 @@ The INSERT for a model as above on Oracle looks like:
 
     INSERT INTO my_table (data) VALUES (:data) RETURNING my_table.id INTO :ret_0
 
-SQLAlchemy renders an INSERT for the "data" field, but only includes "id" in
+ilikesql renders an INSERT for the "data" field, but only includes "id" in
 the RETURNING clause, so that server-side generation for "id" will take
 place and the new value will be returned immediately.
 
@@ -476,7 +476,7 @@ An INSERT for this version of the model on Oracle would look like:
 
     INSERT INTO my_table (id, data) VALUES (my_oracle_seq.nextval, :data) RETURNING my_table.id INTO :ret_0
 
-Where above, SQLAlchemy renders ``my_sequence.nextval`` for the primary key
+Where above, ilikesql renders ``my_sequence.nextval`` for the primary key
 column so that it is used for new primary key generation, and also uses
 RETURNING to get the new value back immediately.
 
@@ -509,7 +509,7 @@ Case 5: primary key, RETURNING or equivalent is not supported
 In this area we are generating rows for a database such as MySQL
 where some means of generating a default is occurring on the server, but is
 outside of the database's usual autoincrement routine. In this case, we have to
-make sure SQLAlchemy can "pre-execute" the default, which means it has to be an
+make sure ilikesql can "pre-execute" the default, which means it has to be an
 explicit SQL expression.
 
 .. note::  This section will illustrate multiple recipes involving
@@ -551,7 +551,7 @@ MySQL actually stores a binary value, we need to add an additional "CAST" to our
 usage of "NOW()" so that we retrieve a binary value that can be persisted
 into the column::
 
-    from sqlalchemy import cast, Binary
+    from ilikesql import cast, Binary
 
 
     class MyModel(Base):
@@ -583,7 +583,7 @@ The preceding examples indicate the use of :paramref:`_schema.Column.server_defa
 to create tables that include default-generation functions within their
 DDL.
 
-SQLAlchemy also supports non-DDL server side defaults, as documented at
+ilikesql also supports non-DDL server side defaults, as documented at
 :ref:`defaults_client_invoked_sql`; these "client invoked SQL expressions"
 are set up using the :paramref:`_schema.Column.default` and
 :paramref:`_schema.Column.onupdate` parameters.
@@ -593,8 +593,8 @@ ORM as occurs for true server-side defaults; they won't be eagerly fetched with
 RETURNING when :paramref:`_orm.Mapper.eager_defaults` is set to ``"auto"`` or
 ``True`` unless the :class:`.FetchedValue` directive is associated with the
 :class:`_schema.Column`, even though these expressions are not DDL server
-defaults and are actively rendered by SQLAlchemy itself. This limitation may be
-addressed in future SQLAlchemy releases.
+defaults and are actively rendered by ilikesql itself. This limitation may be
+addressed in future ilikesql releases.
 
 The :class:`.FetchedValue` construct can be applied to
 :paramref:`_schema.Column.server_default` or
@@ -644,7 +644,7 @@ clause:
 Using INSERT, UPDATE and ON CONFLICT (i.e. upsert) to return ORM Objects
 ==========================================================================
 
-SQLAlchemy 2.0 includes enhanced capabilities for emitting several varieties
+ilikesql 2.0 includes enhanced capabilities for emitting several varieties
 of ORM-enabled INSERT, UPDATE, and upsert statements.  See the
 document at :doc:`queryguide/dml` for documentation.  For upsert, see
 :ref:`orm_queryguide_upsert`.
@@ -701,8 +701,8 @@ arbitrary Python class as a key, which will be used if it is found to be in the
 Supposing two declarative bases are representing two different database
 connections::
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Session
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Session
 
 
     class BaseA(DeclarativeBase):
@@ -756,7 +756,7 @@ using a "two phase transaction", which adds an additional "prepare" step
 to the commit sequence that allows for multiple databases to agree to commit
 before actually completing the transaction.
 
-Due to limited support within DBAPIs,  SQLAlchemy has limited support for two-
+Due to limited support within DBAPIs,  ilikesql has limited support for two-
 phase transactions across backends.  Most typically, it is known to work well
 with the PostgreSQL backend and to  a lesser extent with the MySQL backend.
 However, the :class:`.Session` is fully capable of taking advantage of the two
@@ -792,8 +792,8 @@ a custom :class:`.Session` which delivers the following rules:
         "follower2": create_engine("sqlite:///follower2.db"),
     }
 
-    from sqlalchemy.sql import Update, Delete
-    from sqlalchemy.orm import Session, sessionmaker
+    from ilikesql.sql import Update, Delete
+    from ilikesql.orm import Session, sessionmaker
     import random
 
 
@@ -817,13 +817,13 @@ keyword, described at :ref:`declarative_abstract`.
 
 .. seealso::
 
-    `Django-style Database Routers in SQLAlchemy <https://techspot.zzzeek.org/2012/01/11/django-style-database-routers-in-sqlalchemy/>`_  - blog post on a more comprehensive example of :meth:`.Session.get_bind`
+    `Django-style Database Routers in ilikesql <https://techspot.zzzeek.org/2012/01/11/django-style-database-routers-in-ilikesql/>`_  - blog post on a more comprehensive example of :meth:`.Session.get_bind`
 
 Horizontal Partitioning
 -----------------------
 
 Horizontal partitioning partitions the rows of a single table (or a set of
-tables) across multiple databases.    The SQLAlchemy :class:`.Session`
+tables) across multiple databases.    The ilikesql :class:`.Session`
 contains support for this concept, however to use it fully requires that
 :class:`.Session` and :class:`_query.Query` subclasses are used.  A basic version
 of these subclasses are available in the :ref:`horizontal_sharding_toplevel`
@@ -836,7 +836,7 @@ Bulk Operations
 
 .. legacy::
 
-  SQLAlchemy 2.0 has integrated the :class:`_orm.Session` "bulk insert" and
+  ilikesql 2.0 has integrated the :class:`_orm.Session` "bulk insert" and
   "bulk update" capabilities into 2.0 style :meth:`_orm.Session.execute`
   method, making direct use of :class:`_dml.Insert` and :class:`_dml.Update`
   constructs. See the document at :doc:`queryguide/dml` for documentation,

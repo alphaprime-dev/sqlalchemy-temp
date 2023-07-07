@@ -1,33 +1,33 @@
 .. _migration_20_toplevel:
 
 ======================================
-SQLAlchemy 2.0 - Major Migration Guide
+ilikesql 2.0 - Major Migration Guide
 ======================================
 
 .. admonition:: Note for Readers
 
-    SQLAlchemy 2.0's transition documents are separated into **two**
+    ilikesql 2.0's transition documents are separated into **two**
     documents - one which details major API shifts from the 1.x to 2.x
     series, and the other which details new features and behaviors relative
-    to SQLAlchemy 1.4:
+    to ilikesql 1.4:
 
     * :ref:`migration_20_toplevel` - this document, 1.x to 2.x API shifts
-    * :ref:`whatsnew_20_toplevel` - new features and behaviors for SQLAlchemy 2.0
+    * :ref:`whatsnew_20_toplevel` - new features and behaviors for ilikesql 2.0
 
     Readers who have already updated their 1.4 application to follow
-    SQLAlchemy 2.0 engine and ORM conventions may navigate to
+    ilikesql 2.0 engine and ORM conventions may navigate to
     :ref:`whatsnew_20_toplevel` for an overview of new features and
     capabilities.
 
 .. admonition:: About this document
 
-    This document describes changes between SQLAlchemy version 1.4
-    and SQLAlchemy version 2.0.
+    This document describes changes between ilikesql version 1.4
+    and ilikesql version 2.0.
 
-    SQLAlchemy 2.0 presents a major shift for a wide variety of key
-    SQLAlchemy usage patterns in both the Core and ORM components.   The goal
+    ilikesql 2.0 presents a major shift for a wide variety of key
+    ilikesql usage patterns in both the Core and ORM components.   The goal
     of this release is to make a slight readjustment in some of the most
-    fundamental assumptions of SQLAlchemy since its early beginnings, and to
+    fundamental assumptions of ilikesql since its early beginnings, and to
     deliver a newly streamlined usage model that is hoped to be significantly
     more minimalist and consistent between the Core and ORM components, as well
     as more capable.   The move of Python to be Python 3 only as well as the
@@ -37,11 +37,11 @@ SQLAlchemy 2.0 - Major Migration Guide
     vast new community of data scientists and students of many different
     disciplines.
 
-    SQLAlchemy started with Python 2.3 which had no context managers, no
+    ilikesql started with Python 2.3 which had no context managers, no
     function decorators, Unicode as a second class feature, and a variety of
     other shortcomings that would be unknown today.  The biggest changes in
-    SQLAlchemy 2.0 are targeting the residual assumptions left over from this
-    early period in SQLAlchemy's development as well as the leftover artifacts
+    ilikesql 2.0 are targeting the residual assumptions left over from this
+    early period in ilikesql's development as well as the leftover artifacts
     resulting from the incremental  introduction of key API features such as
     :class:`.orm.query.Query`  and Declarative. It also hopes standardize some
     newer capabilities that have proven to be very effective.
@@ -50,7 +50,7 @@ The 1.4->2.0 Migration Path
 ---------------------------
 
 The most prominent architectural features and API changes that are considered
-to be "SQLAlchemy 2.0" were in fact released as fully available within the 1.4
+to be "ilikesql 2.0" were in fact released as fully available within the 1.4
 series, to provide for a clean upgrade path from the 1.x to the 2.x series
 as well as to serve as a beta platform for the features themselves.  These
 changes include:
@@ -63,9 +63,9 @@ changes include:
 * :ref:`asyncio support for Core and ORM <change_3414>`
 
 The above bullets link to the description of these new paradigms as introduced
-in SQLAlchemy 1.4. in the :ref:`migration_14_toplevel` document.
+in ilikesql 1.4. in the :ref:`migration_14_toplevel` document.
 
-For SQLAlchemy 2.0, all API features and behaviors
+For ilikesql 2.0, all API features and behaviors
 that were marked as :ref:`deprecated for 2.0 <deprecation_20_mode>` are
 now finalized; in particular, major APIs that are **no longer present**
 include:
@@ -79,7 +79,7 @@ include:
 The above bullets refer to the most prominent fully backwards-incompatible
 changes that are finalized in the 2.0 release. The migration path for
 applications to accommodate for these changes as well as others is framed as
-a transition path first into the 1.4 series of SQLAlchemy where the "future"
+a transition path first into the 1.4 series of ilikesql where the "future"
 APIs are available to provide for the "2.0" way of working, and then to the
 2.0 series where the no-longer-used APIs above and others are removed.
 
@@ -92,9 +92,9 @@ The complete steps for this migration path are later in this document at
 1.x -> 2.x Migration Overview
 -----------------------------
 
-The SQLAlchemy 2.0 transition presents itself in the SQLAlchemy 1.4 release as
+The ilikesql 2.0 transition presents itself in the ilikesql 1.4 release as
 a series of steps that allow an application of any size or complexity to be
-migrated to SQLAlchemy 2.0 using a gradual, iterative process.  Lessons learned
+migrated to ilikesql 2.0 using a gradual, iterative process.  Lessons learned
 from the Python 2 to Python 3 transition have inspired a system that intends to
 as great a degree as possible to not require any "breaking" changes, or any
 change that would need to be made universally or not at all.
@@ -110,9 +110,9 @@ support for Python dataclasses, and asyncio support for Core and ORM.
 The steps to achieve 2.0 migration are in the following subsections; overall,
 the general strategy is that once an application runs on 1.4 with all warning
 flags turned on and does not emit any 2.0-deprecation warnings, it is now
-**mostly** cross-compatible with SQLAlchemy 2.0. **Please note there may be
+**mostly** cross-compatible with ilikesql 2.0. **Please note there may be
 additional API and behavioral changes that may behave differently when running
-against SQLAlchemy 2.0; always test code against an actual SQLAlchemy 2.0
+against ilikesql 2.0; always test code against an actual ilikesql 2.0
 release as the final step in migrating**.
 
 
@@ -120,7 +120,7 @@ First Prerequisite, step one - A Working 1.3 Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The first step is getting an existing application onto 1.4, in the case of
-a typical non trivial application, is to ensure it runs on SQLAlchemy 1.3 with
+a typical non trivial application, is to ensure it runs on ilikesql 1.3 with
 no deprecation warnings.   Release 1.4 does have a few changes linked to
 conditions that warn in previous version, including some warnings that were
 introduced in 1.3, in particular some changes to the behavior of the
@@ -128,18 +128,18 @@ introduced in 1.3, in particular some changes to the behavior of the
 :paramref:`_orm.relationship.sync_backref` flags.
 
 For best results, the application should be able to run, or pass all of its
-tests, with the latest SQLAlchemy 1.3 release with no SQLAlchemy deprecation
+tests, with the latest ilikesql 1.3 release with no ilikesql deprecation
 warnings; these are warnings emitted for the :class:`_exc.SADeprecationWarning`
 class.
 
 First Prerequisite, step two - A Working 1.4 Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once the application is good to go on SQLAlchemy 1.3, the next step is to get
-it running on SQLAlchemy 1.4.  In the vast majority of cases, applications
-should run without problems from SQLAlchemy 1.3 to 1.4.   However, it's always
+Once the application is good to go on ilikesql 1.3, the next step is to get
+it running on ilikesql 1.4.  In the vast majority of cases, applications
+should run without problems from ilikesql 1.3 to 1.4.   However, it's always
 the case between any 1.x and 1.y release, APIs and behaviors have changed
-either subtly or in some cases a little less subtly, and the SQLAlchemy
+either subtly or in some cases a little less subtly, and the ilikesql
 project always gets a good deal of regression reports for the first few
 months.
 
@@ -177,16 +177,16 @@ as being in this realm are as follows:
   emitted until compilation / execution, rather than at construction time.
   This might impact some test suites that are testing against failure modes.
 
-For the full overview of SQLAlchemy 1.4 changes, see the
+For the full overview of ilikesql 1.4 changes, see the
 :doc:`/changelog/migration_14` document.
 
 Migration to 2.0 Step One - Python 3 only (Python 3.7 minimum for 2.0 compatibility)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy 2.0 was first inspired by the fact that Python 2's EOL was in 2020.
-SQLAlchemy is taking a longer period of time than other major projects to drop
-Python 2.7 support. However, in order to use SQLAlchemy 2.0, the application
-will need to be runnable on at least **Python 3.7**. SQLAlchemy 1.4 supports
+ilikesql 2.0 was first inspired by the fact that Python 2's EOL was in 2020.
+ilikesql is taking a longer period of time than other major projects to drop
+Python 2.7 support. However, in order to use ilikesql 2.0, the application
+will need to be runnable on at least **Python 3.7**. ilikesql 1.4 supports
 Python 3.6 or newer within the Python 3 series; throughout the 1.4 series, the
 application can remain running on Python 2.7 or on at least Python 3.6. Version
 2.0 however starts at Python 3.7.
@@ -196,18 +196,18 @@ application can remain running on Python 2.7 or on at least Python 3.6. Version
 Migration to 2.0 Step Two - Turn on RemovedIn20Warnings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy 1.4 features a conditional deprecation warning system inspired
+ilikesql 1.4 features a conditional deprecation warning system inspired
 by the Python "-3" flag that would indicate legacy patterns in a running
-application.   For SQLAlchemy 1.4, the :class:`_exc.RemovedIn20Warning`
+application.   For ilikesql 1.4, the :class:`_exc.RemovedIn20Warning`
 deprecation class is emitted only when an environment variable
-``SQLALCHEMY_WARN_20`` is set to either of ``true`` or ``1``.
+``ilikesql_WARN_20`` is set to either of ``true`` or ``1``.
 
 Given the example program below::
 
-    from sqlalchemy import column
-    from sqlalchemy import create_engine
-    from sqlalchemy import select
-    from sqlalchemy import table
+    from ilikesql import column
+    from ilikesql import create_engine
+    from ilikesql import select
+    from ilikesql import table
 
 
     engine = create_engine("sqlite://")
@@ -231,13 +231,13 @@ program against 1.4, it returns a single line:
   $ python test3.py
   [(1,)]
 
-To enable "2.0 deprecations mode", we enable the ``SQLALCHEMY_WARN_20=1``
+To enable "2.0 deprecations mode", we enable the ``ilikesql_WARN_20=1``
 variable, and additionally ensure that a `warnings filter`_ that will not
 suppress any warnings is selected:
 
 .. sourcecode:: text
 
-    SQLALCHEMY_WARN_20=1 python -W always::DeprecationWarning test3.py
+    ilikesql_WARN_20=1 python -W always::DeprecationWarning test3.py
 
 Since the reported warning location is not always in the correct place, locating
 the offending code may be difficult without the full stacktrace. This can be achieved
@@ -250,33 +250,33 @@ With warnings turned on, our program now has a lot to say:
 
 .. sourcecode:: text
 
-  $ SQLALCHEMY_WARN_20=1 python2 -W always::DeprecationWarning test3.py
-  test3.py:9: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of SQLAlchemy and will be removed in 2.0. All statement execution in SQLAlchemy 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  $ ilikesql_WARN_20=1 python2 -W always::DeprecationWarning test3.py
+  test3.py:9: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of ilikesql and will be removed in 2.0. All statement execution in ilikesql 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9) (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9)
     engine.execute("CREATE TABLE foo (id integer)")
-  /home/classic/dev/sqlalchemy/lib/sqlalchemy/engine/base.py:2856: RemovedIn20Warning: Passing a string to Connection.execute() is deprecated and will be removed in version 2.0.  Use the text() construct, or the Connection.exec_driver_sql() method to invoke a driver-level SQL string. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  /home/classic/dev/ilikesql/lib/ilikesql/engine/base.py:2856: RemovedIn20Warning: Passing a string to Connection.execute() is deprecated and will be removed in version 2.0.  Use the text() construct, or the Connection.exec_driver_sql() method to invoke a driver-level SQL string. (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9)
     return connection.execute(statement, *multiparams, **params)
-  /home/classic/dev/sqlalchemy/lib/sqlalchemy/engine/base.py:1639: RemovedIn20Warning: The current statement is being autocommitted using implicit autocommit.Implicit autocommit will be removed in SQLAlchemy 2.0.   Use the .begin() method of Engine or Connection in order to use an explicit transaction for DML and DDL statements. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  /home/classic/dev/ilikesql/lib/ilikesql/engine/base.py:1639: RemovedIn20Warning: The current statement is being autocommitted using implicit autocommit.Implicit autocommit will be removed in ilikesql 2.0.   Use the .begin() method of Engine or Connection in order to use an explicit transaction for DML and DDL statements. (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9)
     self._commit_impl(autocommit=True)
-  test3.py:10: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of SQLAlchemy and will be removed in 2.0. All statement execution in SQLAlchemy 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  test3.py:10: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of ilikesql and will be removed in 2.0. All statement execution in ilikesql 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9) (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9)
     engine.execute("INSERT INTO foo (id) VALUES (1)")
-  /home/classic/dev/sqlalchemy/lib/sqlalchemy/engine/base.py:2856: RemovedIn20Warning: Passing a string to Connection.execute() is deprecated and will be removed in version 2.0.  Use the text() construct, or the Connection.exec_driver_sql() method to invoke a driver-level SQL string. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  /home/classic/dev/ilikesql/lib/ilikesql/engine/base.py:2856: RemovedIn20Warning: Passing a string to Connection.execute() is deprecated and will be removed in version 2.0.  Use the text() construct, or the Connection.exec_driver_sql() method to invoke a driver-level SQL string. (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9)
     return connection.execute(statement, *multiparams, **params)
-  /home/classic/dev/sqlalchemy/lib/sqlalchemy/engine/base.py:1639: RemovedIn20Warning: The current statement is being autocommitted using implicit autocommit.Implicit autocommit will be removed in SQLAlchemy 2.0.   Use the .begin() method of Engine or Connection in order to use an explicit transaction for DML and DDL statements. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  /home/classic/dev/ilikesql/lib/ilikesql/engine/base.py:1639: RemovedIn20Warning: The current statement is being autocommitted using implicit autocommit.Implicit autocommit will be removed in ilikesql 2.0.   Use the .begin() method of Engine or Connection in order to use an explicit transaction for DML and DDL statements. (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9)
     self._commit_impl(autocommit=True)
-  /home/classic/dev/sqlalchemy/lib/sqlalchemy/sql/selectable.py:4271: RemovedIn20Warning: The legacy calling style of select() is deprecated and will be removed in SQLAlchemy 2.0.  Please use the new calling style described at select(). (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  /home/classic/dev/ilikesql/lib/ilikesql/sql/selectable.py:4271: RemovedIn20Warning: The legacy calling style of select() is deprecated and will be removed in ilikesql 2.0.  Please use the new calling style described at select(). (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9) (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9)
     return cls.create_legacy_select(*args, **kw)
-  test3.py:14: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of SQLAlchemy and will be removed in 2.0. All statement execution in SQLAlchemy 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  test3.py:14: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of ilikesql and will be removed in 2.0. All statement execution in ilikesql 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9) (Background on ilikesql 2.0 at: https://sqlalche.me/e/b8d9)
     result = engine.execute(select([foo.c.id]))
   [(1,)]
 
 With the above guidance, we can migrate our program to use 2.0 styles, and
 as a bonus our program is much clearer::
 
-    from sqlalchemy import column
-    from sqlalchemy import create_engine
-    from sqlalchemy import select
-    from sqlalchemy import table
-    from sqlalchemy import text
+    from ilikesql import column
+    from ilikesql import create_engine
+    from ilikesql import select
+    from ilikesql import table
+    from ilikesql import text
 
 
     engine = create_engine("sqlite://")
@@ -300,17 +300,17 @@ as a bonus our program is much clearer::
 
 The goal of "2.0 deprecations mode" is that a program which runs with no
 :class:`_exc.RemovedIn20Warning` warnings with "2.0 deprecations mode" turned
-on is then ready to run in SQLAlchemy 2.0.
+on is then ready to run in ilikesql 2.0.
 
 
 Migration to 2.0 Step Three - Resolve all RemovedIn20Warnings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Code can be developed iteratively to resolve these warnings.  Within
-the SQLAlchemy project itself, the approach taken is as follows:
+the ilikesql project itself, the approach taken is as follows:
 
-1. enable the ``SQLALCHEMY_WARN_20=1`` environment variable in the test suite,
-   for SQLAlchemy this is in the tox.ini file
+1. enable the ``ilikesql_WARN_20=1`` environment variable in the test suite,
+   for ilikesql this is in the tox.ini file
 
 2. Within the setup for the test suite, set up a series of warnings filters
    that will select for particular subsets of warnings to either raise an
@@ -322,7 +322,7 @@ the SQLAlchemy project itself, the approach taken is as follows:
    .. sourcecode::
 
         import warnings
-        from sqlalchemy import exc
+        from ilikesql import exc
 
         # for warnings not included in regex-based filter below, just log
         warnings.filterwarnings("always", category=exc.RemovedIn20Warning)
@@ -331,7 +331,7 @@ the SQLAlchemy project itself, the approach taken is as follows:
         for msg in [
             r"The (?:Executable|Engine)\.(?:execute|scalar)\(\) function",
             r"The current statement is being autocommitted using implicit autocommit,",
-            r"The connection.execute\(\) method in SQLAlchemy 2.0 will accept "
+            r"The connection.execute\(\) method in ilikesql 2.0 will accept "
             "parameters as a single dictionary or a single sequence of "
             "dictionaries only.",
             r"The Connection.connect\(\) function/method is considered legacy",
@@ -378,7 +378,7 @@ The new engine is described at :class:`_engine.Engine` which delivers a new
 "commit-as-you-go" mode of operation::
 
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     engine = create_engine("postgresql+psycopg2:///")
 
@@ -419,7 +419,7 @@ in 1.4 which are now closely matched to the patterns used by the
 :class:`_engine.Connection` object.   Highlights include that the
 :class:`_orm.Session` may be used as a context manager::
 
-    from sqlalchemy.orm import Session
+    from ilikesql.orm import Session
 
     with Session(engine) as session:
         session.add(MyObject())
@@ -429,7 +429,7 @@ In addition, the :class:`_orm.sessionmaker` object supports a
 :meth:`_orm.sessionmaker.begin` context manager that will create a
 :class:`_orm.Session` and begin /commit a transaction in one block::
 
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql.orm import sessionmaker
 
     Session = sessionmaker(engine)
 
@@ -440,7 +440,7 @@ See the section :ref:`orm_session_vs_engine` for a comparison of
 :class:`_orm.Session` creational patterns compared to those of
 :class:`_engine.Connection`.
 
-Once the application passes all tests/ runs with ``SQLALCHEMY_WARN_20=1``
+Once the application passes all tests/ runs with ``ilikesql_WARN_20=1``
 and all ``exc.RemovedIn20Warning`` occurrences set to raise an error,
 **the application is ready!**.
 
@@ -452,13 +452,13 @@ major API modifications.
 Migration to 2.0 Step Six - Add ``__allow_unmapped__`` to explicitly typed ORM models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy 2.0 has new support for runtime interpretation of :pep:`484` typing annotations
+ilikesql 2.0 has new support for runtime interpretation of :pep:`484` typing annotations
 on ORM models.   A requirement of these annotations is that they must make use
 of the :class:`_orm.Mapped` generic container.  Annotations which don't use
 :class:`_orm.Mapped` which link to constructs such as :func:`_orm.relationship`
 will raise errors in Python, as they suggest mis-configurations.
 
-SQLAlchemy applications that use the :ref:`Mypy plugin <mypy_toplevel>` with
+ilikesql applications that use the :ref:`Mypy plugin <mypy_toplevel>` with
 explicit annotations that don't use :class:`_orm.Mapped` in their annotations
 are subject to these errors, as would occur in the example below::
 
@@ -538,17 +538,17 @@ that descend from ``Base``::
 
 .. _migration_20_step_seven:
 
-Migration to 2.0 Step Seven - Test against a SQLAlchemy 2.0 Release
+Migration to 2.0 Step Seven - Test against a ilikesql 2.0 Release
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As mentioned previously, SQLAlchemy 2.0 has additional API and behavioral
+As mentioned previously, ilikesql 2.0 has additional API and behavioral
 changes that are intended to be backwards compatible, however may introduce
 some incompatibilities nonetheless.  Therefore after the overall porting
 process is complete, the final step is to test against the most recent release
-of SQLAlchemy 2.0 to correct for any remaining issues that might be present.
+of ilikesql 2.0 to correct for any remaining issues that might be present.
 
 The guide at :ref:`whatsnew_20_toplevel` provides an overview of
-new features and behaviors for SQLAlchemy 2.0 which extend beyond the base
+new features and behaviors for ilikesql 2.0 which extend beyond the base
 set of 1.4->2.0 API changes.
 
 2.0 Migration - Core Connection / Transaction
@@ -562,8 +562,8 @@ Library-level (but not driver level) "Autocommit" removed from both Core and ORM
 
 **Synopsis**
 
-In SQLAlchemy 1.x, the following statements will automatically commit
-the underlying DBAPI transaction, but in SQLAlchemy
+In ilikesql 1.x, the following statements will automatically commit
+the underlying DBAPI transaction, but in ilikesql
 2.0 this will not occur::
 
     conn = engine.connect()
@@ -624,13 +624,13 @@ indicating those places where an explicit transaction should be noted.
 
 **Discussion**
 
-SQLAlchemy's first releases were at odds with the spirit of the Python DBAPI
+ilikesql's first releases were at odds with the spirit of the Python DBAPI
 (:pep:`249`) in that it tried to hide :pep:`249`'s emphasis on "implicit begin"
 and "explicit commit" of transactions.    Fifteen years later we now see this
-was essentially a mistake, as SQLAlchemy's many patterns that attempt to "hide"
+was essentially a mistake, as ilikesql's many patterns that attempt to "hide"
 the presence of a transaction make for a more complex API which works
 inconsistently and is extremely confusing to especially those users who are new
-to relational databases and ACID transactions in general.   SQLAlchemy 2.0 will
+to relational databases and ACID transactions in general.   ilikesql 2.0 will
 do away with all attempts to implicitly commit transactions, and usage patterns
 will always require that the user demarcate the "beginning" and the "end" of a
 transaction in some way, in the same way as reading or writing to a file in
@@ -646,7 +646,7 @@ transactional concept, we get a lot of bug reports on this one because users
 don't understand that databases always use a transaction, whether or not some
 layer is autocommitting it.
 
-SQLAlchemy 2.0 will require that all database actions at every level be
+ilikesql 2.0 will require that all database actions at every level be
 explicit as to how the transaction should be used.    For the vast majority
 of Core use cases, it's the pattern that is already recommended::
 
@@ -664,7 +664,7 @@ a statement is first invoked::
 
     # 1.4 / 2.0 code
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     engine = create_engine(..., future=True)
 
@@ -678,7 +678,7 @@ a statement is first invoked::
 Above, the ``engine.connect()`` method will return a :class:`_engine.Connection` that
 features **autobegin**, meaning the ``begin()`` event is emitted when the
 execute method is first used (note however that there is no actual "BEGIN" in
-the Python DBAPI).  "autobegin" is a new pattern in SQLAlchemy 1.4 that
+the Python DBAPI).  "autobegin" is a new pattern in ilikesql 1.4 that
 is featured both by :class:`_engine.Connection` as well as the ORM
 :class:`_orm.Session` object; autobegin allows that the :meth:`_engine.Connection.begin`
 method may be called explicitly when the object is first acquired, for schemes
@@ -688,14 +688,14 @@ is not called, then it occurs implicitly when work is first done on the object.
 The removal of "autocommit" is closely related to the removal of
 "connectionless" execution discussed at :ref:`migration_20_implicit_execution`.
 All of these legacy patterns built up from the fact that Python did not have
-context managers or decorators when SQLAlchemy was first created, so there were
+context managers or decorators when ilikesql was first created, so there were
 no convenient idiomatic patterns for demarcating the use of a resource.
 
 Driver-level autocommit remains available
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 True "autocommit" behavior is now widely available with most DBAPI
-implementations, and is supported by SQLAlchemy via the
+implementations, and is supported by ilikesql via the
 :paramref:`_engine.Connection.execution_options.isolation_level` parameter as
 discussed at :ref:`dbapi_autocommit`.  True autocommit is treated as an "isolation level"
 so that the structure of application code does not change when autocommit is
@@ -715,7 +715,7 @@ The ability to associate an :class:`_engine.Engine` with a :class:`_schema.MetaD
 object, which then makes available a range of so-called "connectionless"
 execution patterns, is removed::
 
-    from sqlalchemy import MetaData
+    from ilikesql import MetaData
 
     metadata_obj = MetaData(bind=engine)  # no longer supported
 
@@ -740,7 +740,7 @@ has a :meth:`_engine.Connection.execute` method (in addition to
 the ORM-level :meth:`_orm.Session.execute` method)::
 
 
-    from sqlalchemy import MetaData
+    from ilikesql import MetaData
 
     metadata_obj = MetaData()
 
@@ -807,9 +807,9 @@ convenience feature, it has been shown to give rise to several issues:
   released once the result set has fully consumed the rows waiting within the
   cursor.   This means that ``Engine.execute`` does not actually close out the
   connection resources that it claims to be managing when the call is complete.
-  SQLAlchemy's "autoclose" behavior is well-tuned enough that users don't
+  ilikesql's "autoclose" behavior is well-tuned enough that users don't
   generally report any negative effects from this system, however it remains
-  an overly implicit and inefficient system left over from SQLAlchemy's
+  an overly implicit and inefficient system left over from ilikesql's
   earliest releases.
 
 The removal of "connectionless" execution then leads to the removal of
@@ -818,8 +818,8 @@ an even more legacy pattern, that of "implicit, connectionless" execution::
   result = some_statement.execute()
 
 The above pattern has all the issues of "connectionless" execution, plus it
-relies upon the "bound metadata" pattern, which SQLAlchemy has tried to
-de-emphasize for many years.   This was SQLAlchemy's very first advertised
+relies upon the "bound metadata" pattern, which ilikesql has tried to
+de-emphasize for many years.   This was ilikesql's very first advertised
 usage model in version 0.1, which became obsolete almost immediately when
 the :class:`_engine.Connection` object was introduced and later Python
 context managers provided a better pattern for using resources within a
@@ -835,7 +835,7 @@ application design.
 Many Choices becomes One Choice
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Overall, the above executional patterns were introduced in SQLAlchemy's
+Overall, the above executional patterns were introduced in ilikesql's
 very first 0.1 release before the :class:`_engine.Connection` object even existed.
 After many years of de-emphasizing these patterns, "implicit, connectionless"
 execution and "bound metadata" are no longer as widely used so in 2.0 we seek
@@ -902,7 +902,7 @@ execute() method more strict, execution options are more prominent
 **Synopsis**
 
 The argument patterns that may be used with the :meth:`_engine.Connection`
-execute method in SQLAlchemy 2.0 are highly simplified, removing many previously
+execute method in ilikesql 2.0 are highly simplified, removing many previously
 available argument patterns.  The new API in the 1.4 series is described at
 :meth:`_engine.Connection`. The examples below illustrate the patterns that
 require modification::
@@ -934,7 +934,7 @@ method, so the following code is cross-compatible between 1.x and 2.0::
 
     connection = engine.connect()
 
-    from sqlalchemy import text
+    from ilikesql import text
 
     result = connection.execute(text("select * from table"))
 
@@ -1019,7 +1019,7 @@ such as ``row["some_column"]`` can be used.
 In order to receive results as mappings up front, the ``mappings()`` modifier
 on the result can be used::
 
-    from sqlalchemy.future.orm import Session
+    from ilikesql.future.orm import Session
 
     session = Session(some_engine)
 
@@ -1030,7 +1030,7 @@ on the result can be used::
 The :class:`.Row` class as used by the ORM also supports access via entity
 or attribute::
 
-    from sqlalchemy.future import select
+    from ilikesql.future import select
 
     stmt = select(User, Address).join(User.addresses)
 
@@ -1080,7 +1080,7 @@ now accepts its WHEN criteria positionally, rather than as a list::
 
 Only the "generative" style of :func:`_sql.select` will be supported.  The list
 of columns / tables to SELECT from should be passed positionally.  The
-:func:`_sql.select` construct in SQLAlchemy 1.4 accepts both the legacy
+:func:`_sql.select` construct in ilikesql 1.4 accepts both the legacy
 styles and the new styles using an auto-detection scheme, so the code below
 is cross-compatible with 1.4 and 2.0::
 
@@ -1103,7 +1103,7 @@ is cross-compatible with 1.4 and 2.0::
 
 **Discussion**
 
-SQLAlchemy has for many years developed a convention for SQL constructs
+ilikesql has for many years developed a convention for SQL constructs
 accepting an argument either as a list or as positional arguments.   This
 convention states that **structural** elements, those that form the structure
 of a SQL statement, should be passed **positionally**.   Conversely,
@@ -1111,7 +1111,7 @@ of a SQL statement, should be passed **positionally**.   Conversely,
 should be passed **as lists**.   For many years, the :func:`_sql.select`
 construct could not participate in this convention smoothly because of the
 very legacy calling pattern where the "WHERE" clause would be passed positionally.
-SQLAlchemy 2.0 finally resolves this by changing the :func:`_sql.select` construct
+ilikesql 2.0 finally resolves this by changing the :func:`_sql.select` construct
 to only accept the "generative" style that has for many years been the only
 documented style in the Core tutorial.
 
@@ -1193,8 +1193,8 @@ Declarative becomes a first class API
 
 **Synopsis**
 
-The ``sqlalchemy.ext.declarative`` package is mostly, with some exceptions,
-moved to the ``sqlalchemy.orm`` package.  The :func:`_orm.declarative_base`
+The ``ilikesql.ext.declarative`` package is mostly, with some exceptions,
+moved to the ``ilikesql.orm`` package.  The :func:`_orm.declarative_base`
 and :func:`_orm.declared_attr` functions are present without any behavioral
 changes.  A new super-implementation of :func:`_orm.declarative_base`
 known as :class:`_orm.registry` now serves as the top-level ORM configurational
@@ -1205,16 +1205,16 @@ support for classical mappings that integrate with the declarative registry.
 
 Change imports::
 
-    from sqlalchemy.ext import declarative_base, declared_attr
+    from ilikesql.ext import declarative_base, declared_attr
 
 To::
 
-    from sqlalchemy.orm import declarative_base, declared_attr
+    from ilikesql.orm import declarative_base, declared_attr
 
 **Discussion**
 
-After ten years or so of popularity, the ``sqlalchemy.ext.declarative``
-package is now integrated into the ``sqlalchemy.orm`` namespace, with the
+After ten years or so of popularity, the ``ilikesql.ext.declarative``
+package is now integrated into the ``ilikesql.orm`` namespace, with the
 exception of the declarative "extension" classes which remain as Declarative
 extensions.   The change is detailed further in the 1.4 migration guide
 at :ref:`change_5508`.
@@ -1234,7 +1234,7 @@ The original "mapper()" function now a core element of Declarative, renamed
 
 **Synopsis**
 
-The ``sqlalchemy.orm.mapper()`` standalone function moves behind the scenes to
+The ``ilikesql.orm.mapper()`` standalone function moves behind the scenes to
 be invoked by higher level APIs. The new version of this function is the method
 :meth:`_orm.registry.map_imperatively` taken from a :class:`_orm.registry`
 object.
@@ -1243,14 +1243,14 @@ object.
 
 Code that works with classical mappings should change imports and code from::
 
-    from sqlalchemy.orm import mapper
+    from ilikesql.orm import mapper
 
 
     mapper(SomeClass, some_table, properties={"related": relationship(SomeRelatedClass)})
 
 To work from a central :class:`_orm.registry` object::
 
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import registry
 
     mapper_reg = registry()
 
@@ -1262,7 +1262,7 @@ The above :class:`_orm.registry` is also the source for declarative mappings,
 and classical mappings now have access to this registry including string-based
 configuration on :func:`_orm.relationship`::
 
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import registry
 
     mapper_reg = registry()
 
@@ -1313,7 +1313,7 @@ declarative decorator and classical mapping forms.
 2.0 Migration - ORM Usage
 ---------------------------------------------
 
-The biggest visible change in SQLAlchemy 2.0 is the use of
+The biggest visible change in ilikesql 2.0 is the use of
 :meth:`_orm.Session.execute` in conjunction with :func:`_sql.select` to run ORM
 queries, instead of using :meth:`_orm.Session.query`.  As mentioned elsewhere,
 there is no plan to actually remove the :meth:`_orm.Session.query` API itself,
@@ -1596,7 +1596,7 @@ etc.    Other more supplemental methods of :class:`_orm.Query` such as
 :meth:`_orm.Query.populate_existing` are implemented via execution options.
 
 Return results are in terms of a
-:class:`_result.Result` object, the new version of the SQLAlchemy
+:class:`_result.Result` object, the new version of the ilikesql
 ``ResultProxy`` object, which also adds many new methods for compatibility
 with :class:`_orm.Query`, including :meth:`_engine.Result.one`, :meth:`_engine.Result.all`,
 :meth:`_engine.Result.first`, :meth:`_engine.Result.one_or_none`, etc.
@@ -1650,21 +1650,21 @@ Below are some examples of how to migrate to :func:`_sql.select`::
 
 **Discussion**
 
-The fact that SQLAlchemy has both a :func:`_expression.select` construct
+The fact that ilikesql has both a :func:`_expression.select` construct
 as well as a separate :class:`_orm.Query` object that features an extremely
 similar, but fundamentally incompatible interface is likely the greatest
-inconsistency in SQLAlchemy, one that arose as a result of small incremental
+inconsistency in ilikesql, one that arose as a result of small incremental
 additions over time that added up to two major APIs that are divergent.
 
-In SQLAlchemy's first releases, the :class:`_orm.Query` object didn't exist
+In ilikesql's first releases, the :class:`_orm.Query` object didn't exist
 at all.  The original idea was that the :class:`_orm.Mapper` construct itself would
 be able to select rows, and that :class:`_schema.Table` objects, not classes,
 would be used to create the various criteria in a Core-style approach.   The
-:class:`_query.Query` came along some months / years into SQLAlchemy's history
+:class:`_query.Query` came along some months / years into ilikesql's history
 as a user proposal for a new, "buildable" querying object originally called ``SelectResults``
 was accepted.
 Concepts like a ``.where()`` method, which ``SelectResults`` called ``.filter()``,
-were not present in SQLAlchemy previously, and the :func:`_sql.select` construct
+were not present in ilikesql previously, and the :func:`_sql.select` construct
 used only the "all-at-once" construction style that's now deprecated
 at :ref:`migration_20_5284`.
 
@@ -1678,7 +1678,7 @@ build SELECT statements fully with no explicit use of :func:`_sql.select`
 needed.   At the same time, :func:`_sql.select` had also evolved "generative"
 methods like :meth:`_sql.Select.where` and :meth:`_sql.Select.order_by`.
 
-In modern SQLAlchemy, this goal has been achieved and the two objects are now
+In modern ilikesql, this goal has been achieved and the two objects are now
 completely overlapping in functionality.  The major challenge to unifying these
 objects was that the :func:`_sql.select` object needed to remain **completely
 agnostic of the ORM**.  To achieve this, the vast majority of logic from
@@ -1726,7 +1726,7 @@ appropriate that it be part of :class:`_orm.Session`, where it is similar
 to other "identity" methods such as :class:`_orm.Session.refresh` and
 :class:`_orm.Session.merge`.
 
-SQLAlchemy originally included "get()" to resemble the Hibernate
+ilikesql originally included "get()" to resemble the Hibernate
 ``Session.load()`` method.  As is so often the case, we got it slightly
 wrong as this method is really more about the :class:`_orm.Session` than
 with writing a SQL query.
@@ -1754,10 +1754,10 @@ will all be removed in 2.0::
 
 **Migration to 2.0**
 
-Modern SQLAlchemy 1.x versions support the recommended technique which
+Modern ilikesql 1.x versions support the recommended technique which
 is to use mapped attributes::
 
-    # compatible with all modern SQLAlchemy versions
+    # compatible with all modern ilikesql versions
 
     q = session.query(User).join(User.addresses)
 
@@ -1767,7 +1767,7 @@ is to use mapped attributes::
 
 The same techniques apply to :term:`2.0-style` style use::
 
-    # SQLAlchemy 1.4 / 2.0 cross compatible use
+    # ilikesql 1.4 / 2.0 cross compatible use
 
     stmt = select(User).join(User.addresses)
     result = session.execute(stmt)
@@ -1872,7 +1872,7 @@ the automatic adaption of the filter criteria is enormously
 complicated internally and almost never used in real world applications.  The
 pattern also leads to issues such as if filter criteria need to be added
 at each link in the chain; the pattern then must use the ``from_joinpoint``
-flag which SQLAlchemy developers could absolutely find no occurrence of this
+flag which ilikesql developers could absolutely find no occurrence of this
 parameter ever being used in real world applications.
 
 The ``aliased=True`` and ``from_joinpoint`` parameters were developed at a time
@@ -1964,7 +1964,7 @@ used in :term:`1.x style` with :class:`_orm.Query` as below; note that
 since the final query wants to query in terms of both the ``User`` and
 ``Address`` entities, two separate :func:`_orm.aliased` constructs are created::
 
-    from sqlalchemy.orm import aliased
+    from ilikesql.orm import aliased
 
     subq = session.query(User, Address.email_address).join(User.addresses).subquery()
 
@@ -1976,7 +1976,7 @@ since the final query wants to query in terms of both the ``User`` and
 
 The same form may be used in :term:`2.0 style`::
 
-    from sqlalchemy.orm import aliased
+    from ilikesql.orm import aliased
 
     subq = select(User, Address.email_address).join(User.addresses).subquery()
 
@@ -2011,7 +2011,7 @@ an unambiguous marker as to where the subquery should be referred towards
 as well as what entity column or relationship is being considered for a given
 component of the query.
 
-SQLAlchemy 1.4 also features an improved labeling style that no longer requires
+ilikesql 1.4 also features an improved labeling style that no longer requires
 the use of long labels that include the table name in order to disambiguate
 columns of same names from different tables.  In the above examples, even if
 our ``User`` and ``Address`` entities have overlapping column names, we can
@@ -2062,7 +2062,7 @@ As is the case described at :ref:`migration_20_query_from_self`, the
 :func:`_orm.aliased` object provides a single place that operations like
 "select entity from a subquery" may be achieved.  Using :term:`1.x style`::
 
-    from sqlalchemy.orm import aliased
+    from ilikesql.orm import aliased
 
     subquery = session.query(User).filter(User.name.like("%somename%")).subquery()
 
@@ -2072,7 +2072,7 @@ As is the case described at :ref:`migration_20_query_from_self`, the
 
 Using :term:`2.0 style`::
 
-    from sqlalchemy.orm import aliased
+    from ilikesql.orm import aliased
 
     subquery = select(User).where(User.name.like("%somename%")).subquery()
 
@@ -2092,7 +2092,7 @@ query later on, such as in the WHERE clause or ORDER BY.   This intensely
 complex feature is seldom used in this way, where as was the case with
 :meth:`_orm.Query.from_self`, it's much easier to follow what's going on
 when using an explicit :func:`_orm.aliased` object, both from a user point
-of view as well as how the internals of the SQLAlchemy ORM must handle it.
+of view as well as how the internals of the ilikesql ORM must handle it.
 
 
 .. _joinedload_not_uniqued:
@@ -2138,7 +2138,7 @@ while still maintaining explicitness::
 
 **Discussion**
 
-The situation here is a little bit unusual, in that SQLAlchemy is requiring
+The situation here is a little bit unusual, in that ilikesql is requiring
 that a method be invoked that it is in fact entirely capable of doing
 automatically.   The reason for requiring that the method be called is to
 ensure the developer is "opting in" to the use of the
@@ -2151,7 +2151,7 @@ also improve clarity in those cases where automatic uniquing was causing
 confusing results.
 
 To the degree that having to call :meth:`_engine.Result.unique` when joined
-eager load collections are used is inconvenient, in modern SQLAlchemy
+eager load collections are used is inconvenient, in modern ilikesql
 the :func:`_orm.selectinload` strategy presents a collection-oriented
 eager loader that is superior in most respects to :func:`_orm.joinedload`
 and should be preferred.
@@ -2183,7 +2183,7 @@ are fully on the 2.0 series.
 
 **Migration to 2.0**
 
-The new "write only" feature is only available in SQLAlchemy 2.0, and is
+The new "write only" feature is only available in ilikesql 2.0, and is
 not part of 1.4.  At the same time, the ``lazy="dynamic"`` loader strategy
 remains fully supported in version 2.0, and even includes new pep-484
 and annotated mapping support.
@@ -2218,7 +2218,7 @@ terms of a specific relationship:
 * Use the :func:`_orm.with_parent` function to construct a :func:`_sql.select`
   construct directly::
 
-    from sqlalchemy.orm import with_parent
+    from ilikesql.orm import with_parent
 
     jack = session.get(User, 5)
 
@@ -2263,7 +2263,7 @@ Autocommit mode removed from Session; autobegin support added
 The :class:`_orm.Session` will no longer support "autocommit" mode, that
 is, this pattern::
 
-    from sqlalchemy.orm import Session
+    from ilikesql.orm import Session
 
     sess = Session(engine, autocommit=True)
 
@@ -2285,7 +2285,7 @@ which resolves this issue; the :meth:`_orm.Session.begin` method may now
 be called::
 
 
-    from sqlalchemy.orm import Session
+    from ilikesql.orm import Session
 
     sess = Session(engine)
 
@@ -2299,7 +2299,7 @@ be called::
 **Discussion**
 
 The "autocommit" mode is another holdover from the first versions
-of SQLAlchemy.  The flag has stayed around mostly in support of allowing
+of ilikesql.  The flag has stayed around mostly in support of allowing
 explicit use of :meth:`_orm.Session.begin`, which is now solved by 1.4,
 as well as to allow the use of "subtransactions", which are also removed in
 2.0.
@@ -2415,6 +2415,6 @@ See :ref:`sql_caching` for full background on the new caching system.
 Asyncio Support
 ---------------------
 
-SQLAlchemy 1.4 includes asyncio support for both Core and ORM.
+ilikesql 1.4 includes asyncio support for both Core and ORM.
 The new API exclusively makes use of the "future" patterns noted above.
 See :ref:`change_3414` for background.

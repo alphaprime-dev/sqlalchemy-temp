@@ -8,17 +8,17 @@ import asyncio
 import datetime
 from typing import Optional
 
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy.ext.asyncio import async_sessionmaker
-from sqlalchemy.ext.asyncio import AsyncAttrs
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.future import select
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import WriteOnlyMapped
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql.ext.asyncio import async_sessionmaker
+from ilikesql.ext.asyncio import AsyncAttrs
+from ilikesql.ext.asyncio import create_async_engine
+from ilikesql.future import select
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import WriteOnlyMapped
 
 
 class Base(AsyncAttrs, DeclarativeBase):

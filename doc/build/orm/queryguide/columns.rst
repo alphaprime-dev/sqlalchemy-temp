@@ -8,7 +8,7 @@
 
 .. doctest-include _deferred_setup.rst
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 .. _loading_columns:
 
@@ -36,7 +36,7 @@ Limiting which Columns Load with Column Deferral
 statement when objects of that type are queried. The general rationale here is
 performance, in cases where tables have seldom-used columns with potentially
 large data values, as fully loading these columns on every query may be
-time and/or memory intensive. SQLAlchemy ORM offers a variety of ways to
+time and/or memory intensive. ilikesql ORM offers a variety of ways to
 control the loading of columns when entities are loaded.
 
 Most examples in this section are illustrating **ORM loader options**. These
@@ -59,8 +59,8 @@ columns ``.title``, ``.summary`` and ``.cover_photo``. Using
 :func:`_orm.load_only` we can instruct the ORM to only load the
 ``.title`` and ``.summary`` columns up front::
 
-    >>> from sqlalchemy import select
-    >>> from sqlalchemy.orm import load_only
+    >>> from ilikesql import select
+    >>> from ilikesql.orm import load_only
     >>> stmt = select(Book).options(load_only(Book.title, Book.summary))
     >>> books = session.scalars(stmt).all()
     {execsql}SELECT book.id, book.title, book.summary
@@ -150,7 +150,7 @@ option object, when objects are loaded for the relationship, the
 SELECT emitted will only refer to the ``title`` column
 in addition to primary key column::
 
-    >>> from sqlalchemy.orm import selectinload
+    >>> from ilikesql.orm import selectinload
     >>> stmt = select(User).options(selectinload(User.books).load_only(Book.title))
     >>> for user in session.scalars(stmt):
     ...     print(f"{user.fullname}   {[b.title for b in user.books]}")
@@ -177,7 +177,7 @@ option, which in this case will retain the default relationship loading
 style of ``"lazy"``, and applying our custom :func:`_orm.load_only` rule to
 the SELECT statement emitted for each ``User.books`` collection::
 
-    >>> from sqlalchemy.orm import defaultload
+    >>> from ilikesql.orm import defaultload
     >>> stmt = select(User).options(defaultload(User.books).load_only(Book.title))
     >>> for user in session.scalars(stmt):
     ...     print(f"{user.fullname}   {[b.title for b in user.books]}")
@@ -206,7 +206,7 @@ The :func:`_orm.defer` loader option is a more fine grained alternative to
 ``.cover_photo`` column, leaving the behavior of all other columns
 unchanged::
 
-    >>> from sqlalchemy.orm import defer
+    >>> from ilikesql.orm import defer
     >>> stmt = select(Book).where(Book.owner_id == 2).options(defer(Book.cover_photo))
     >>> books = session.scalars(stmt).all()
     {execsql}SELECT book.id, book.owner_id, book.title, book.summary
@@ -274,7 +274,7 @@ access::
   {stop}>>> book.cover_photo
   Traceback (most recent call last):
   ...
-  sqlalchemy.exc.InvalidRequestError: 'Book.cover_photo' is not available due to raiseload=True
+  ilikesql.exc.InvalidRequestError: 'Book.cover_photo' is not available due to raiseload=True
 
 When using :func:`_orm.load_only` to name a specific set of non-deferred
 columns, ``raiseload`` behavior may be applied to the remaining columns
@@ -292,7 +292,7 @@ to all deferred attributes::
   {stop}>>> book.summary
   Traceback (most recent call last):
   ...
-  sqlalchemy.exc.InvalidRequestError: 'Book.summary' is not available due to raiseload=True
+  ilikesql.exc.InvalidRequestError: 'Book.summary' is not available due to raiseload=True
 
 .. note::
 
@@ -375,7 +375,7 @@ Using ``deferred()`` for imperative mappers, mapped SQL expressions
 
 The :func:`_orm.deferred` function is the earlier, more general purpose
 "deferred column" mapping directive that precedes the introduction of the
-:func:`_orm.mapped_column` construct in SQLAlchemy.
+:func:`_orm.mapped_column` construct in ilikesql.
 
 :func:`_orm.deferred` is used when configuring ORM mappers, and accepts
 arbitrary SQL expressions or
@@ -385,14 +385,14 @@ to the :paramref:`_orm.registry.map_imperatively.properties` dictionary:
 
 .. sourcecode:: python
 
-    from sqlalchemy import Blob
-    from sqlalchemy import Column
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy import Text
-    from sqlalchemy.orm import registry
+    from ilikesql import Blob
+    from ilikesql import Column
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql import Text
+    from ilikesql.orm import registry
 
     mapper_registry = registry()
 
@@ -424,7 +424,7 @@ when mapped SQL expressions should be loaded on a deferred basis:
 
 .. sourcecode:: python
 
-    from sqlalchemy.orm import deferred
+    from ilikesql.orm import deferred
 
 
     class User(Base):
@@ -453,7 +453,7 @@ of the mapping.   For example we may apply :func:`_orm.undefer` to the
 ``Book.summary`` column, which is indicated in the previous mapping
 as deferred::
 
-    >>> from sqlalchemy.orm import undefer
+    >>> from ilikesql.orm import undefer
     >>> book = session.scalar(select(Book).where(Book.id == 2).options(undefer(Book.summary)))
     {execsql}SELECT book.id, book.owner_id, book.title, book.summary
     FROM book
@@ -524,7 +524,7 @@ as introduced in the preceding section, the
 entire group may be indicated to load eagerly using the :func:`_orm.undefer_group`
 option, passing the string name of the group to be eagerly loaded::
 
-    >>> from sqlalchemy.orm import undefer_group
+    >>> from ilikesql.orm import undefer_group
     >>> book = session.scalar(
     ...     select(Book).where(Book.id == 2).options(undefer_group("book_attrs"))
     ... )
@@ -593,7 +593,7 @@ by default not loadable::
     {stop}>>> book.summary
     Traceback (most recent call last):
     ...
-    sqlalchemy.exc.InvalidRequestError: 'Book.summary' is not available due to raiseload=True
+    ilikesql.exc.InvalidRequestError: 'Book.summary' is not available due to raiseload=True
 
 Only by overridding their behavior at query time, typically using
 :func:`_orm.undefer` or :func:`_orm.undefer_group`, or less commonly
@@ -656,7 +656,7 @@ column to a query which includes a JOIN to ``Book`` as well as a GROUP BY
 owner id.  This will yield :class:`.Row` objects that each contain two
 entries, one for ``User`` and one for ``func.count(Book.id)``::
 
-    >>> from sqlalchemy import func
+    >>> from ilikesql import func
     >>> stmt = select(User, func.count(Book.id)).join_from(User, Book).group_by(Book.owner_id)
     >>> for user, book_count in session.execute(stmt):
     ...     print(f"Username: {user.name}  Number of books: {book_count}")
@@ -675,7 +675,7 @@ will yield ``User`` objects alone, which can be iterated for example using
 SQL expression is applied *dynamically* to each ``User`` entity. The end result
 would be similar to the case where an arbitrary SQL expression were mapped to
 the class using :func:`_orm.column_property`, except that the SQL expression
-can be modified at query time. For this use case SQLAlchemy provides the
+can be modified at query time. For this use case ilikesql provides the
 :func:`_orm.with_expression` loader option, which when combined with the mapper
 level :func:`_orm.query_expression` directive may produce this result.
 
@@ -703,7 +703,7 @@ we add a new attribute ``User.book_count`` to ``User``.  This ORM mapped attribu
 is read-only and has no default value; accessing it on a loaded instance will
 normally produce ``None``::
 
-    >>> from sqlalchemy.orm import query_expression
+    >>> from ilikesql.orm import query_expression
     >>> class User(Base):
     ...     __tablename__ = "user_account"
     ...     id: Mapped[int] = mapped_column(primary_key=True)
@@ -720,7 +720,7 @@ it with data from a SQL expression using the
 to each ``User`` object as it's loaded::
 
 
-    >>> from sqlalchemy.orm import with_expression
+    >>> from ilikesql.orm import with_expression
     >>> stmt = (
     ...     select(User)
     ...     .join_from(User, Book)
@@ -854,7 +854,7 @@ querying technique described at :ref:`orm_queryguide_unions`, adding an
 option with :func:`_orm.with_expression` to extract this SQL expression
 onto newly loaded instances of ``A``::
 
-    >>> from sqlalchemy import union_all
+    >>> from ilikesql import union_all
     >>> s1 = (
     ...     select(User, func.count(Book.id).label("book_count"))
     ...     .join_from(User, Book)

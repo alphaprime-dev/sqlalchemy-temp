@@ -1,28 +1,28 @@
-from sqlalchemy import and_
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import join
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import Bundle
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import defaultload
-from sqlalchemy.orm import defer
-from sqlalchemy.orm import join as orm_join
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import Load
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import profiling
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.fixtures import NoCache
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import and_
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import join
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import aliased
+from ilikesql.orm import Bundle
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import defaultload
+from ilikesql.orm import defer
+from ilikesql.orm import join as orm_join
+from ilikesql.orm import joinedload
+from ilikesql.orm import Load
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.testing import fixtures
+from ilikesql.testing import profiling
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.fixtures import NoCache
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class MergeTest(NoCache, fixtures.MappedTest):

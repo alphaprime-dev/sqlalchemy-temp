@@ -7,15 +7,15 @@ ORM Querying Guide
 ==================
 
 This section provides an overview of emitting queries with the
-SQLAlchemy ORM using :term:`2.0 style` usage.
+ilikesql ORM using :term:`2.0 style` usage.
 
-Readers of this section should be familiar with the SQLAlchemy overview
+Readers of this section should be familiar with the ilikesql overview
 at :ref:`unified_tutorial`, and in particular most of the content here expands
 upon the content at :ref:`tutorial_selecting_data`.
 
-.. admonition:: For users of SQLAlchemy 1.x
+.. admonition:: For users of ilikesql 1.x
 
-    In the SQLAlchemy 2.x series, SQL SELECT statements for the ORM are
+    In the ilikesql 2.x series, SQL SELECT statements for the ORM are
     constructed using the same :func:`_sql.select` construct as is used in
     Core, which is then invoked in terms of a :class:`_orm.Session` using the
     :meth:`_orm.Session.execute` method (as are the :func:`_sql.update` and

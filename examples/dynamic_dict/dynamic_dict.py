@@ -1,11 +1,11 @@
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import relationship
+from ilikesql.orm import sessionmaker
 
 
 class ProxyDict:

@@ -15,9 +15,9 @@ function creates a selectable unit comprised of
 multiple tables, complete with its own composite primary key, which can be
 mapped in the same way as a :class:`_schema.Table`::
 
-    from sqlalchemy import Table, Column, Integer, String, MetaData, join, ForeignKey
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import column_property
+    from ilikesql import Table, Column, Integer, String, MetaData, join, ForeignKey
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import column_property
 
     metadata_obj = MetaData()
 
@@ -108,7 +108,7 @@ may be used::
     A recipe to allow for an on-the-fly “insert” of the related row might make
     use of the .MapperEvents.before_update event and look like::
 
-        from sqlalchemy import event
+        from ilikesql import event
 
 
         @event.listens_for(PtoQ, "before_update")
@@ -133,7 +133,7 @@ can be used with a mapper as well.  The example fragment below illustrates
 mapping a class called ``Customer`` to a :func:`_expression.select` which
 includes a join to a subquery::
 
-    from sqlalchemy import select, func
+    from ilikesql import select, func
 
     subq = (
         select(
@@ -175,7 +175,7 @@ key.
     almost never needed; it necessarily tends to produce complex queries
     which are often less efficient than that which would be produced
     by direct query construction.   The practice is to some degree
-    based on the very early history of SQLAlchemy where the :class:`_orm.Mapper`
+    based on the very early history of ilikesql where the :class:`_orm.Mapper`
     construct was meant to represent the primary querying interface;
     in modern usage, the :class:`_query.Query` object can be used to construct
     virtually any SELECT statement, including complex composites, and should
@@ -184,7 +184,7 @@ key.
 Multiple Mappers for One Class
 ==============================
 
-In modern SQLAlchemy, a particular class is mapped by only one so-called
+In modern ilikesql, a particular class is mapped by only one so-called
 **primary** mapper at a time.   This mapper is involved in three main areas of
 functionality: querying, persistence, and instrumentation of the mapped class.
 The rationale of the primary mapper relates to the fact that the
@@ -195,7 +195,7 @@ not possible for more than one mapper to be associated with a class in equal
 measure, since only one mapper can actually instrument the class.
 
 The concept of a "non-primary" mapper had existed for many versions of
-SQLAlchemy however as of version 1.3 this feature is deprecated.   The
+ilikesql however as of version 1.3 this feature is deprecated.   The
 one case where such a non-primary mapper is useful is when constructing
 a relationship to a class against an alternative selectable.   This
 use case is now suited using the :class:`.aliased` construct and is described
@@ -203,13 +203,13 @@ at :ref:`relationship_aliased_class`.
 
 As far as the use case of a class that can actually be fully persisted
 to different tables under different scenarios, very early versions of
-SQLAlchemy offered a feature for this adapted from Hibernate, known
+ilikesql offered a feature for this adapted from Hibernate, known
 as the "entity name" feature.  However, this use case became infeasible
-within SQLAlchemy once the mapped class itself became the source of SQL
+within ilikesql once the mapped class itself became the source of SQL
 expression construction; that is, the class' attributes themselves link
 directly to mapped table columns.   The feature was removed and replaced
 with a simple recipe-oriented approach to accomplishing this task
 without any ambiguity of instrumentation - to create new subclasses, each
 mapped individually.  This pattern is now available as a recipe at `Entity Name
-<https://www.sqlalchemy.org/trac/wiki/UsageRecipes/EntityName>`_.
+<https://www.ilikesql.org/trac/wiki/UsageRecipes/EntityName>`_.
 

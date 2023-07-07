@@ -1,22 +1,22 @@
-import sqlalchemy
-from sqlalchemy import Column
-from sqlalchemy import Enum
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy.ext.declarative import ConcreteBase
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import join as ormjoin
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import profiling
-from sqlalchemy.util import classproperty
+import ilikesql
+from ilikesql import Column
+from ilikesql import Enum
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql.ext.declarative import ConcreteBase
+from ilikesql.orm import aliased
+from ilikesql.orm import join as ormjoin
+from ilikesql.orm import relationship
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import profiling
+from ilikesql.util import classproperty
 
 
 class EnumTest(fixtures.TestBase):
@@ -24,7 +24,7 @@ class EnumTest(fixtures.TestBase):
 
     def setup_test(self):
         class SomeEnum:
-            # Implements PEP 435 in the minimal fashion needed by SQLAlchemy
+            # Implements PEP 435 in the minimal fashion needed by ilikesql
 
             _members = {}
 
@@ -61,7 +61,7 @@ class CacheKeyTest(fixtures.TestBase):
         # a whole new model of setup/teardown, since pytest "fixture"
         # sort of purposely works badly with setup/teardown
 
-        registry = sqlalchemy.orm.registry()
+        registry = ilikesql.orm.registry()
 
         metadata = MetaData()
         parent = Table(

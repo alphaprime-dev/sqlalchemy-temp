@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import typing
 
-from sqlalchemy import Float
-from sqlalchemy import func
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.sql.expression import ColumnElement
+from ilikesql import Float
+from ilikesql import func
+from ilikesql.ext.hybrid import hybrid_property
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.sql.expression import ColumnElement
 
 
 class Base(DeclarativeBase):
@@ -44,10 +44,10 @@ class Interval(Base):
 
         # while we are here, check some Float[] / div type stuff
         if typing.TYPE_CHECKING:
-            # EXPECTED_RE_TYPE: sqlalchemy.*Function\[builtins.float\*?\]
+            # EXPECTED_RE_TYPE: ilikesql.*Function\[builtins.float\*?\]
             reveal_type(f1)
 
-            # EXPECTED_RE_TYPE: sqlalchemy.*ColumnElement\[builtins.float\*?\]
+            # EXPECTED_RE_TYPE: ilikesql.*ColumnElement\[builtins.float\*?\]
             reveal_type(expr)
         return expr
 
@@ -66,10 +66,10 @@ class Interval(Base):
 
         # while we are here, check some Float[] / div type stuff
         if typing.TYPE_CHECKING:
-            # EXPECTED_RE_TYPE: sqlalchemy.*Function\[builtins.float\*?\]
+            # EXPECTED_RE_TYPE: ilikesql.*Function\[builtins.float\*?\]
             reveal_type(f1)
 
-            # EXPECTED_RE_TYPE: sqlalchemy.*ColumnElement\[builtins.float\*?\]
+            # EXPECTED_RE_TYPE: ilikesql.*ColumnElement\[builtins.float\*?\]
             reveal_type(expr)
         return expr
 
@@ -101,28 +101,28 @@ if typing.TYPE_CHECKING:
     # EXPECTED_RE_TYPE: builtins.float\*?
     reveal_type(i2.new_radius)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*._HybridClassLevelAccessor\[builtins.int\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*._HybridClassLevelAccessor\[builtins.int\*?\]
     reveal_type(Interval.length)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*._HybridClassLevelAccessor\[builtins.float\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*._HybridClassLevelAccessor\[builtins.float\*?\]
     reveal_type(Interval.old_radius)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*._HybridClassLevelAccessor\[builtins.float\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*._HybridClassLevelAccessor\[builtins.float\*?\]
     reveal_type(Interval.new_radius)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.BinaryExpression\[builtins.bool\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*.BinaryExpression\[builtins.bool\*?\]
     reveal_type(expr1)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*._HybridClassLevelAccessor\[builtins.float\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*._HybridClassLevelAccessor\[builtins.float\*?\]
     reveal_type(expr2o)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*._HybridClassLevelAccessor\[builtins.float\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*._HybridClassLevelAccessor\[builtins.float\*?\]
     reveal_type(expr2n)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.BinaryExpression\[builtins.bool\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*.BinaryExpression\[builtins.bool\*?\]
     reveal_type(expr3o)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*.BinaryExpression\[builtins.bool\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*.BinaryExpression\[builtins.bool\*?\]
     reveal_type(expr3n)
 
 # test #9268

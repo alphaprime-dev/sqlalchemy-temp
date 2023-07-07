@@ -1,56 +1,56 @@
-from sqlalchemy import Boolean
-from sqlalchemy import case
-from sqlalchemy import column
-from sqlalchemy import event
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import util
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import object_mapper
-from sqlalchemy.orm import polymorphic_union
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import synonym
-from sqlalchemy.orm.util import instance_str
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertions import assert_warns_message
-from sqlalchemy.testing.assertsql import AllOf
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.assertsql import Conditional
-from sqlalchemy.testing.assertsql import Or
-from sqlalchemy.testing.assertsql import RegexSQL
-from sqlalchemy.testing.entities import BasicEntity
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import Boolean
+from ilikesql import case
+from ilikesql import column
+from ilikesql import event
+from ilikesql import exc as sa_exc
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import util
+from ilikesql.orm import attributes
+from ilikesql.orm import class_mapper
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import column_property
+from ilikesql.orm import composite
+from ilikesql.orm import declarative_base
+from ilikesql.orm import deferred
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import joinedload
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import object_mapper
+from ilikesql.orm import polymorphic_union
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import synonym
+from ilikesql.orm.util import instance_str
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.assertions import assert_warns_message
+from ilikesql.testing.assertsql import AllOf
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.assertsql import Conditional
+from ilikesql.testing.assertsql import Or
+from ilikesql.testing.assertsql import RegexSQL
+from ilikesql.testing.entities import BasicEntity
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class O2MTest(fixtures.MappedTest):
@@ -2939,7 +2939,7 @@ class OptimizedLoadTest(fixtures.MappedTest):
             raise KeyError(key)
 
         with mock.patch(
-            "sqlalchemy.engine.result.ResultMetaData._key_fallback",
+            "ilikesql.engine.result.ResultMetaData._key_fallback",
             _key_fallback,
         ):
             eq_(s1.sub, "s1sub")

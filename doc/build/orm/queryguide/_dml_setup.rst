@@ -13,15 +13,15 @@ This page illustrates the mappings and fixture data used by the
     >>> from typing import Optional
     >>> import datetime
     >>>
-    >>> from sqlalchemy import Column
-    >>> from sqlalchemy import create_engine
-    >>> from sqlalchemy import ForeignKey
-    >>> from sqlalchemy import Table
-    >>> from sqlalchemy.orm import DeclarativeBase
-    >>> from sqlalchemy.orm import Mapped
-    >>> from sqlalchemy.orm import mapped_column
-    >>> from sqlalchemy.orm import relationship
-    >>> from sqlalchemy.orm import Session
+    >>> from ilikesql import Column
+    >>> from ilikesql import create_engine
+    >>> from ilikesql import ForeignKey
+    >>> from ilikesql import Table
+    >>> from ilikesql.orm import DeclarativeBase
+    >>> from ilikesql.orm import Mapped
+    >>> from ilikesql.orm import mapped_column
+    >>> from ilikesql.orm import relationship
+    >>> from ilikesql.orm import Session
     >>>
     >>>
     >>> class Base(DeclarativeBase):

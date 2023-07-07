@@ -1,30 +1,30 @@
 from unittest import mock
 from unittest.mock import Mock
 
-import sqlalchemy as tsa
-from sqlalchemy import create_engine
-from sqlalchemy import create_mock_engine
-from sqlalchemy import event
-from sqlalchemy import Index
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy.schema import AddConstraint
-from sqlalchemy.schema import CheckConstraint
-from sqlalchemy.schema import DDL
-from sqlalchemy.schema import DropConstraint
-from sqlalchemy.schema import ForeignKeyConstraint
-from sqlalchemy.schema import Sequence
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.provision import normalize_sequence
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as tsa
+from ilikesql import create_engine
+from ilikesql import create_mock_engine
+from ilikesql import event
+from ilikesql import Index
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql.schema import AddConstraint
+from ilikesql.schema import CheckConstraint
+from ilikesql.schema import DDL
+from ilikesql.schema import DropConstraint
+from ilikesql.schema import ForeignKeyConstraint
+from ilikesql.schema import Sequence
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.provision import normalize_sequence
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class DDLEventTest(fixtures.TestBase):
@@ -861,7 +861,7 @@ class DDLExecutionTest(AssertsCompiledSQL, fixtures.TestBase):
 
 
 class DDLTransactionTest(fixtures.TestBase):
-    """test DDL transactional behavior as of SQLAlchemy 1.4."""
+    """test DDL transactional behavior as of ilikesql 1.4."""
 
     @testing.fixture
     def metadata_fixture(self):

@@ -1,11 +1,11 @@
 from typing import Optional
 
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import registry
+from ilikesql import Column
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import Mapped
+from ilikesql.orm import registry
 
 reg: registry = registry()
 

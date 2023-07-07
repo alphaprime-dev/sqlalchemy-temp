@@ -89,7 +89,7 @@ relationship using two :func:`_orm.relationship` constructs linked by
 
 .. seealso::
 
-    :ref:`examples_adjacencylist` - working example, updated for SQLAlchemy 2.0
+    :ref:`examples_adjacencylist` - working example, updated for ilikesql 2.0
 
 Composite Adjacency Lists
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,7 +149,7 @@ looks like:
 
 .. sourcecode:: python+sql
 
-    from sqlalchemy.orm import aliased
+    from ilikesql.orm import aliased
 
     nodealias = aliased(Node)
     session.scalars(
@@ -177,10 +177,10 @@ Eager loading of relationships occurs using joins or outerjoins from parent to
 child table during a normal query operation, such that the parent and its
 immediate child collection or reference can be populated from a single SQL
 statement, or a second statement for all immediate child collections.
-SQLAlchemy's joined and subquery eager loading use aliased tables in all cases
+ilikesql's joined and subquery eager loading use aliased tables in all cases
 when joining to related items, so are compatible with self-referential
 joining. However, to use eager loading with a self-referential relationship,
-SQLAlchemy needs to be told how many levels deep it should join and/or query;
+ilikesql needs to be told how many levels deep it should join and/or query;
 otherwise the eager load will not take place at all. This depth setting is
 configured via :paramref:`~.relationships.join_depth`:
 

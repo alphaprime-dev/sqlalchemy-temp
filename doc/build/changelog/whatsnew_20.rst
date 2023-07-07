@@ -1,36 +1,36 @@
 .. _whatsnew_20_toplevel:
 
 =============================
-What's New in SQLAlchemy 2.0?
+What's New in ilikesql 2.0?
 =============================
 
 .. admonition:: Note for Readers
 
-    SQLAlchemy 2.0's transition documents are separated into **two**
+    ilikesql 2.0's transition documents are separated into **two**
     documents - one which details major API shifts from the 1.x to 2.x
     series, and the other which details new features and behaviors relative
-    to SQLAlchemy 1.4:
+    to ilikesql 1.4:
 
     * :ref:`migration_20_toplevel` - 1.x to 2.x API shifts
-    * :ref:`whatsnew_20_toplevel` - this document, new features and behaviors for SQLAlchemy 2.0
+    * :ref:`whatsnew_20_toplevel` - this document, new features and behaviors for ilikesql 2.0
 
     Readers who have not yet updated their 1.4 application to follow
-    SQLAlchemy 2.0 engine and ORM conventions may navigate to
-    :ref:`migration_20_toplevel` for a guide to ensuring SQLAlchemy 2.0
+    ilikesql 2.0 engine and ORM conventions may navigate to
+    :ref:`migration_20_toplevel` for a guide to ensuring ilikesql 2.0
     compatibility, which is a prerequisite for having working code under
     version 2.0.
 
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 1.4
-    and SQLAlchemy version 2.0, **independent** of the major changes between
+    This document describes changes between ilikesql version 1.4
+    and ilikesql version 2.0, **independent** of the major changes between
     :term:`1.x style` and :term:`2.0 style` usage.   Readers should start
     with the :ref:`migration_20_toplevel` document to get an overall picture
     of the major compatibility changes between the 1.x and 2.x series.
 
     Aside from the major 1.x->2.x migration path, the next largest
-    paradigm shift in SQLAlchemy 2.0 is deep integration with :pep:`484` typing
+    paradigm shift in ilikesql 2.0 is deep integration with :pep:`484` typing
     practices and current capabilities, particularly within the ORM. New
     type-driven ORM declarative styles inspired by Python dataclasses_, as well
     as new integrations with dataclasses themselves, complement an overall
@@ -40,7 +40,7 @@ What's New in SQLAlchemy 2.0?
     The prominence of Python typing is significant not only so that type checkers
     like mypy_ can run without plugins; more significantly it allows IDEs
     like vscode_ and pycharm_ to take a much more active role in assisting
-    with the composition of a SQLAlchemy application.
+    with the composition of a ilikesql application.
 
 
 .. _typeshed: https://github.com/python/typeshed
@@ -62,8 +62,8 @@ New Typing Support in Core and ORM - Stubs / Extensions no longer used
 
 The approach to typing for Core and ORM has been completely reworked, compared
 to the interim approach that was provided in version 1.4 via the
-sqlalchemy2-stubs_ package.   The new approach begins at the most fundamental
-element in SQLAlchemy which is the :class:`_schema.Column`, or more
+ilikesql2-stubs_ package.   The new approach begins at the most fundamental
+element in ilikesql which is the :class:`_schema.Column`, or more
 accurately the :class:`.ColumnElement` that underlies all SQL
 expressions that have a type.   This expression-level typing then extends into the area of
 statement construction, statement execution, and result sets, and finally into the ORM
@@ -79,7 +79,7 @@ result set.
 SQL Expression / Statement / Result Set Typing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This section provides background and examples for SQLAlchemy's new
+This section provides background and examples for ilikesql's new
 SQL expression typing approach, which extends from base :class:`.ColumnElement`
 constructs through SQL statements and result sets and into realm of ORM mapping.
 
@@ -92,11 +92,11 @@ Rationale and Overview
   :ref:`whatsnew_20_expression_typing_examples` to just see what the new typing
   looks like.
 
-In sqlalchemy2-stubs_, SQL expressions were typed as generics_ that then
+In ilikesql2-stubs_, SQL expressions were typed as generics_ that then
 referred to a :class:`.TypeEngine` object such as :class:`.Integer`,
 :class:`.DateTime`, or :class:`.String` as their generic argument
 (such as ``Column[Integer]``). This was itself a departure from what
-the original Dropbox sqlalchemy-stubs_ package did, where
+the original Dropbox ilikesql-stubs_ package did, where
 :class:`.Column` and its foundational constructs were directly generic on
 Python types, such as ``int``, ``datetime`` and ``str``.   It was hoped
 that since :class:`.Integer` / :class:`.DateTime` / :class:`.String` themselves
@@ -109,8 +109,8 @@ lacking capabilities such as
 `higher kinded TypeVars <https://github.com/python/typing/issues/548>`_.
 
 So after a `deep assessment <https://github.com/python/typing/discussions/999>`_
-of the current capabilities of :pep:`484`, SQLAlchemy 2.0 has realized the
-original wisdom of sqlalchemy-stubs_ in this area and returned to linking
+of the current capabilities of :pep:`484`, ilikesql 2.0 has realized the
+original wisdom of ilikesql-stubs_ in this area and returned to linking
 column expressions directly to Python types.  This does mean that if one
 has SQL expressions to different subtypes, like ``Column(VARCHAR)`` vs.
 ``Column(Unicode)``, the specifics of those two :class:`.String` subtypes
@@ -121,7 +121,7 @@ in-Python data one will be storing and receiving for this column directly.
 
 Concretely, this means that an expression like ``Column('id', Integer)``
 is typed as ``Column[int]``.    This allows for a viable pipeline of
-SQLAlchemy construct -> Python datatype to be set up, without the need for
+ilikesql construct -> Python datatype to be set up, without the need for
 typing plugins.  Crucially, it allows full interoperability with
 the ORM's paradigm of using :func:`_sql.select` and :class:`_engine.Row`
 constructs that reference ORM mapped class types (e.g. a :class:`_engine.Row`
@@ -140,9 +140,9 @@ a small typing-oriented accessor is added that allows the individual Python
 values to maintain the Python type linked to the SQL expression from which
 they originated (translation: it works).
 
-.. _sqlalchemy-stubs: https://github.com/dropbox/sqlalchemy-stubs
+.. _ilikesql-stubs: https://github.com/dropbox/ilikesql-stubs
 
-.. _sqlalchemy2-stubs: https://github.com/sqlalchemy/sqlalchemy2-stubs
+.. _ilikesql2-stubs: https://github.com/ilikesql/ilikesql2-stubs
 
 .. _generics: https://peps.python.org/pep-0484/#generics
 
@@ -233,9 +233,9 @@ helper):
   :ref:`new type-aware syntaxes <whatsnew_20_orm_declarative_typing>`,
   described in the following section::
 
-      from sqlalchemy.orm import DeclarativeBase
-      from sqlalchemy.orm import Mapped
-      from sqlalchemy.orm import mapped_column
+      from ilikesql.orm import DeclarativeBase
+      from ilikesql.orm import Mapped
+      from ilikesql.orm import mapped_column
 
 
       class Base(DeclarativeBase):
@@ -329,7 +329,7 @@ helper):
 * Legacy :class:`_orm.Query` gains tuple typing as well.
 
   The typing support for :class:`_orm.Query` goes well beyond what
-  sqlalchemy-stubs_ or sqlalchemy2-stubs_ offered, where both scalar-object
+  ilikesql-stubs_ or ilikesql2-stubs_ offered, where both scalar-object
   as well as tuple-typed :class:`_orm.Query` objects will retain result level
   typing for most cases::
 
@@ -348,16 +348,16 @@ helper):
 the catch - all stubs must be uninstalled
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A key caveat with the typing support is that **all SQLAlchemy stubs packages
+A key caveat with the typing support is that **all ilikesql stubs packages
 must be uninstalled** for typing to work.   When running mypy_ against a
 Python virtualenv, this is only a matter of uninstalling those packages.
-However, a SQLAlchemy stubs package is also currently part of typeshed_, which
+However, a ilikesql stubs package is also currently part of typeshed_, which
 itself is bundled into some typing tools such as Pylance_, so it may be
 necessary in some cases to locate the files for these packages and delete them,
 if they are in fact interfering with the new typing working correctly.
 
-Once SQLAlchemy 2.0 is released in final status, typeshed will remove
-SQLAlchemy from its own stubs source.
+Once ilikesql 2.0 is released in final status, typeshed will remove
+ilikesql from its own stubs source.
 
 
 
@@ -366,10 +366,10 @@ SQLAlchemy from its own stubs source.
 ORM Declarative Models
 ~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy 1.4 introduced the first SQLAlchemy-native ORM typing support
-using a combination of sqlalchemy2-stubs_ and the :ref:`Mypy Plugin <mypy_toplevel>`.
-In SQLAlchemy 2.0, the Mypy plugin **remains available, and has been updated
-to work with SQLAlchemy 2.0's typing system**.  However, it should now be
+ilikesql 1.4 introduced the first ilikesql-native ORM typing support
+using a combination of ilikesql2-stubs_ and the :ref:`Mypy Plugin <mypy_toplevel>`.
+In ilikesql 2.0, the Mypy plugin **remains available, and has been updated
+to work with ilikesql 2.0's typing system**.  However, it should now be
 considered **deprecated**, as applications now have a straightforward path to adopting the
 new typing support that does not use plugins or stubs.
 
@@ -398,7 +398,7 @@ present.
 The approach is inspired by the approach of Python dataclasses_ which starts
 with an annotation on the left, then allows for an optional
 ``dataclasses.field()`` specification on the right; the key difference from the
-dataclasses approach is that SQLAlchemy's approach is strictly **opt-in**,
+dataclasses approach is that ilikesql's approach is strictly **opt-in**,
 where existing mappings that use :class:`_schema.Column` without any type
 annotations continue to work as they always have, and the
 :func:`_orm.mapped_column` construct may be used as a direct replacement for
@@ -430,7 +430,7 @@ without plugins, the usual call to :func:`_orm.declarative_base` can be replaced
 with using the :class:`_orm.DeclarativeBase` class, which produces the same
 ``Base`` object as usual, except that typing tools understand it::
 
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -443,9 +443,9 @@ The :func:`_orm.mapped_column` is an ORM-typing aware construct that can
 be swapped directly for the use of :class:`_schema.Column`.  Given a
 1.x style mapping as::
 
-    from sqlalchemy import Column
-    from sqlalchemy.orm import relationship
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql import Column
+    from ilikesql.orm import relationship
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -472,9 +472,9 @@ be swapped directly for the use of :class:`_schema.Column`.  Given a
 We replace :class:`_schema.Column` with :func:`_orm.mapped_column`; no
 arguments need to change::
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -522,10 +522,10 @@ be combined with subsequent steps to update mappings more directly::
 
     from typing import List
     from typing import Optional
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -568,10 +568,10 @@ for ten years already ;) )::
 
     from typing import List
     from typing import Optional
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -613,7 +613,7 @@ of :class:`_types.String`, as below where use of an ``Annotated`` ``str`` called
 ``str50`` will indicate ``String(50)``::
 
     from typing_extensions import Annotated
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.orm import DeclarativeBase
 
     str50 = Annotated[str, 50]
 
@@ -638,12 +638,12 @@ example below adds additional ``Annotated`` types in addition to our
     from typing_extensions import Annotated
     from typing import List
     from typing import Optional
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import String
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import String
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
     # declarative base from previous example
     str50 = Annotated[str, 50]
@@ -728,7 +728,7 @@ and :class:`_engine.Row` objects::
 Using Legacy Mypy-Typed Models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy applications that use the :ref:`Mypy plugin <mypy_toplevel>` with
+ilikesql applications that use the :ref:`Mypy plugin <mypy_toplevel>` with
 explicit annotations that don't use :class:`_orm.Mapped` in their annotations
 are subject to errors under the new system, as such annotations are flagged as
 errors when using constructs such as :func:`_orm.relationship`.
@@ -766,9 +766,9 @@ serialization methods such as
 also work, but don't currently accommodate for self-referential structures, which
 makes them less viable for mappings that have bidirectional relationships.
 
-SQLAlchemy's current integration approach converts the user-defined class
+ilikesql's current integration approach converts the user-defined class
 into a **real dataclass** to provide runtime functionality; the feature
-makes use of the existing dataclass feature introduced in SQLAlchemy 1.4 at
+makes use of the existing dataclass feature introduced in ilikesql 1.4 at
 :ref:`change_5027` to produce an equivalent runtime mapping with a fully integrated
 configuration style, which is also more correctly typed than was possible
 with the previous approach.
@@ -795,13 +795,13 @@ example mapping from "Step 5" of :ref:`whatsnew_20_orm_declarative_typing`::
     from typing_extensions import Annotated
     from typing import List
     from typing import Optional
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import String
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import MappedAsDataclass
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import String
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import MappedAsDataclass
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(MappedAsDataclass, DeclarativeBase):
@@ -884,7 +884,7 @@ is invoked using ``cursor.execute()``, rather than ``cursor.executemany()``.
 
 This allows many rows to be inserted in one statement while also being able to
 return newly-generated primary key values as well as SQL and server defaults.
-SQLAlchemy historically has always needed to invoke one statement per parameter
+ilikesql historically has always needed to invoke one statement per parameter
 set, as it relied upon Python DBAPI Features such as ``cursor.lastrowid`` which
 do not support multiple rows.
 
@@ -907,7 +907,7 @@ and are still improved by the "insertmanyvalues" approach.
 Benchmarks
 ~~~~~~~~~~
 
-SQLAlchemy includes a :ref:`Performance Suite <examples_performance>` within
+ilikesql includes a :ref:`Performance Suite <examples_performance>` within
 the ``examples/`` directory, where we can make use of the ``bulk_insert``
 suite to benchmark INSERTs of many rows using both Core and ORM in different
 ways.
@@ -924,14 +924,14 @@ Operations that are improved by this feature include:
   :meth:`_orm.Session.add` and :meth:`_orm.Session.add_all`.
 * The new :ref:`ORM Bulk Insert Statement <orm_queryguide_bulk_insert>` feature,
   which improves upon the experimental version of this feature first introduced
-  in SQLAlchemy 1.4.
+  in ilikesql 1.4.
 * the :class:`_orm.Session` "bulk" operations described at
   :ref:`bulk_operations`, which are superseded by the above mentioned
   ORM Bulk Insert feature.
 
 To get a sense of the scale of the operation, below are performance
 measurements using the ``test_flush_no_pk`` performance suite, which
-historically represents SQLAlchemy's worst-case INSERT performance task,
+historically represents ilikesql's worst-case INSERT performance task,
 where objects that don't have primary key values need to be INSERTed, and
 then the newly generated primary key values must be fetched so that the
 objects can be used for subsequent flush operations, such as establishment
@@ -955,14 +955,14 @@ within relationships, flushing joined-inheritance models, etc::
             session.flush()
         session.commit()
 
-This test can be run from any SQLAlchemy source tree as follows:
+This test can be run from any ilikesql source tree as follows:
 
 .. sourcecode:: text
 
     python -m examples.performance.bulk_inserts --test test_flush_no_pk
 
 The table below summarizes performance measurements with
-the latest 1.4 series of SQLAlchemy compared to 2.0, both running
+the latest 1.4 series of ilikesql compared to 2.0, both running
 the same test:
 
 ============================   ====================    ====================
@@ -981,13 +981,13 @@ mariadb+mysqldb (network)      71.705197               4.075377
 .. note::
 
    .. [#] The feature is was temporarily disabled for SQL Server in
-      SQLAlchemy 2.0.9 due to issues with row ordering when RETURNING is used.
-      In SQLAlchemy 2.0.10, the feature is re-enabled, with special
+      ilikesql 2.0.9 due to issues with row ordering when RETURNING is used.
+      In ilikesql 2.0.10, the feature is re-enabled, with special
       case handling for the unit of work's requirement for RETURNING to be
       ordered.
 
 Two additional drivers have no change in performance; the psycopg2 drivers,
-for which fast executemany was already implemented in SQLAlchemy 1.4,
+for which fast executemany was already implemented in ilikesql 1.4,
 and MySQL, which continues to not offer RETURNING support:
 
 =============================   ====================    ====================
@@ -1026,7 +1026,7 @@ get all drivers to this state:
 ORM-enabled Insert, Upsert, Update and Delete Statements, with ORM RETURNING
 -----------------------------------------------------------------------------
 
-SQLAlchemy 1.4 ported the features of the legacy :class:`_orm.Query` object to
+ilikesql 1.4 ported the features of the legacy :class:`_orm.Query` object to
 :term:`2.0 style` execution, which meant that the :class:`.Select` construct
 could be passed to :meth:`_orm.Session.execute` to deliver ORM results. Support
 was also added for :class:`.Update` and :class:`.Delete` to be passed to
@@ -1087,7 +1087,7 @@ as previously supported by the :meth:`_orm.Session.bulk_update_mappings`
 method.  This feature does not however support RETURNING, as it uses
 a SQL UPDATE statement that is invoked using DBAPI :term:`executemany`::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> session.execute(
     ...     update(User),
     ...     [
@@ -1109,7 +1109,7 @@ such as those for SQLite, PostgreSQL and MariaDB are also supported.
 These statements may now include :meth:`_dml.Insert.returning` clauses
 with column expressions or full ORM entities::
 
-    >>> from sqlalchemy.dialects.sqlite import insert as sqlite_upsert
+    >>> from ilikesql.dialects.sqlite import insert as sqlite_upsert
     >>> stmt = sqlite_upsert(User).values(
     ...     [
     ...         {"name": "spongebob", "fullname": "Spongebob Squarepants"},
@@ -1139,13 +1139,13 @@ with column expressions or full ORM entities::
 ORM UPDATE / DELETE with WHERE ... RETURNING
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy 1.4 also had some modest support for the RETURNING feature to be
+ilikesql 1.4 also had some modest support for the RETURNING feature to be
 used with the :func:`_dml.update` and :func:`_dml.delete` constructs, when
 used with :meth:`_orm.Session.execute`.  This support has now been upgraded
 to be fully native, including that the ``fetch`` synchronization strategy
 may also proceed whether or not explicit use of RETURNING is present::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> stmt = (
     ...     update(User)
     ...     .where(User.name == "squidward")
@@ -1207,7 +1207,7 @@ the :paramref:`_orm.relationship.lazy` parameter of :func:`_orm.relationship`,
 or when using :ref:`type annotated mappings <whatsnew_20_orm_declarative_typing>`,
 indicating the :class:`.WriteOnlyMapped` annotation as the mapping style::
 
-    from sqlalchemy.orm import WriteOnlyMapped
+    from ilikesql.orm import WriteOnlyMapped
 
 
     class Base(DeclarativeBase):
@@ -1284,7 +1284,7 @@ is now added for "dynamic" relationships in the same way that its available
 for the new ``lazy="write_only"`` approach, using the :class:`_orm.DynamicMapped`
 annotation::
 
-    from sqlalchemy.orm import DynamicMapped
+    from ilikesql.orm import DynamicMapped
 
 
     class Base(DeclarativeBase):
@@ -1342,7 +1342,7 @@ using ``pip`` to automatically install the Cython_ optional dependency.
 C Extensions now ported to Cython
 ----------------------------------
 
-The SQLAlchemy C extensions have been replaced with all new extensions written
+The ilikesql C extensions have been replaced with all new extensions written
 in Cython_. While Cython was evaluated back in 2010 when the C extensions were
 first created, the nature and focus of the C extensions in use today has
 changed quite a bit from that time. At the same time, Cython has apparently
@@ -1354,7 +1354,7 @@ no apparent downsides:
 
 * The Cython extensions that replace specific C extensions have all benchmarked
   as **faster**, often slightly, but sometimes significantly, than
-  virtually all the C code that SQLAlchemy previously
+  virtually all the C code that ilikesql previously
   included. While this seems amazing, it appears to be a product of
   non-obvious optimizations within Cython's implementation that would not be
   present in a direct Python to C port of a function, as was particularly the
@@ -1362,16 +1362,16 @@ no apparent downsides:
 
 * Cython extensions are much easier to write, maintain and debug compared to
   raw C code, and in most cases are line-per-line equivalent to the Python
-  code.   It is expected that many more elements of SQLAlchemy will be
+  code.   It is expected that many more elements of ilikesql will be
   ported to Cython in the coming releases which should open many new doors
   to performance improvements that were previously out of reach.
 
 * Cython is very mature and widely used, including being the basis of some
-  of the prominent database drivers supported by SQLAlchemy including
+  of the prominent database drivers supported by ilikesql including
   ``asyncpg``, ``psycopg3`` and ``asyncmy``.
 
 Like the previous C extensions, the Cython extensions are pre-built within
-SQLAlchemy's wheel distributions which are automatically available to ``pip``
+ilikesql's wheel distributions which are automatically available to ``pip``
 from PyPi.  Manual build instructions are also unchanged with the exception
 of the Cython requirement.
 
@@ -1419,7 +1419,7 @@ Performance Overview
 The source distribution includes a script
 ``test/perf/many_table_reflection.py`` which benches both existing reflection
 features as well as new ones. A limited set of its tests may be run on older
-versions of SQLAlchemy, where here we use it to illustrate differences in
+versions of ilikesql, where here we use it to illustrate differences in
 performance to invoke ``metadata.reflect()`` to reflect 250 :class:`.Table`
 objects at once over a local network connection:
 
@@ -1435,7 +1435,7 @@ oracle+cx_oracle             ``metadata.reflect()``, 250 tables  60.4           
 Behavioral Changes for ``Inspector()``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For SQLAlchemy-included dialects for SQLite, PostgreSQL, MySQL/MariaDB,
+For ilikesql-included dialects for SQLite, PostgreSQL, MySQL/MariaDB,
 Oracle, and SQL Server, the :meth:`.Inspector.has_table`,
 :meth:`.Inspector.has_sequence`, :meth:`.Inspector.has_index`,
 :meth:`.Inspector.get_table_names` and
@@ -1488,11 +1488,11 @@ Dialect support for psycopg 3 (a.k.a. "psycopg")
 Added dialect support for the `psycopg 3 <https://pypi.org/project/psycopg/>`_
 DBAPI, which despite the number "3" now goes by the package name ``psycopg``,
 superseding the previous ``psycopg2`` package that for the time being remains
-SQLAlchemy's "default" driver for the ``postgresql`` dialects. ``psycopg`` is a
+ilikesql's "default" driver for the ``postgresql`` dialects. ``psycopg`` is a
 completely reworked and modernized database adapter for PostgreSQL which
 supports concepts such as prepared statements as well as Python asyncio.
 
-``psycopg`` is the first DBAPI supported by SQLAlchemy which provides
+``psycopg`` is the first DBAPI supported by ilikesql which provides
 both a pep-249 synchronous API as well as an asyncio driver.  The same
 ``psycopg`` database URL may be used with the :func:`_sa.create_engine`
 and :func:`_asyncio.create_async_engine` engine-creation functions, and the
@@ -1567,10 +1567,10 @@ specific compilation, including PostgreSQL and Oracle:
 
     >>> import datetime
 
-    >>> from sqlalchemy import DATETIME
-    >>> from sqlalchemy import literal
-    >>> from sqlalchemy.dialects import oracle
-    >>> from sqlalchemy.dialects import postgresql
+    >>> from ilikesql import DATETIME
+    >>> from ilikesql import literal
+    >>> from ilikesql.dialects import oracle
+    >>> from ilikesql.dialects import postgresql
 
     >>> date_literal = literal(datetime.datetime.now(), DATETIME)
 
@@ -1591,7 +1591,7 @@ specific compilation, including PostgreSQL and Oracle:
 Previously, such literal rendering only worked when stringifying statements
 without any dialect given; when attempting to render with a dialect-specific
 type, a ``NotImplementedError`` would be raised, up until
-SQLAlchemy 1.4.45 where this became a :class:`.CompileError` (part of
+ilikesql 1.4.45 where this became a :class:`.CompileError` (part of
 :ticket:`8800`).
 
 The default rendering is modified ISO-8601 rendering (i.e. ISO-8601 with the T
@@ -1638,7 +1638,7 @@ been altered to provide for optional async context manager use, as in::
 Behavioral Changes
 ------------------
 
-This section covers behavioral changes made in SQLAlchemy 2.0 which are
+This section covers behavioral changes made in ilikesql 2.0 which are
 not otherwise part of the major 1.4->2.0 migration path; changes here are
 not expected to have significant effects on backwards compatibility.
 
@@ -1661,7 +1661,7 @@ circumstances, allowing test suites to rollback all changes that take place
 within tests.
 
 The primary improvement this allows is that the recipe documented at
-:ref:`session_external_transaction`, which also changed from SQLAlchemy 1.3
+:ref:`session_external_transaction`, which also changed from ilikesql 1.3
 to 1.4, is now simplified to no longer require explicit use of an event
 handler or any mention of an explicit savepoint; by using
 ``join_transaction_mode="create_savepoint"``, the :class:`_orm.Session` will
@@ -1701,13 +1701,13 @@ If the given :class:`_engine.Connection` is in a transaction but not a
 savepoint, the :class:`_orm.Session` will propagate "rollback" calls
 but not "commit" calls, but will not begin a new savepoint on its own.  This
 behavior is chosen by default for its maximum compatibility with
-older SQLAlchemy versions as well as that it does not start a new SAVEPOINT
+older ilikesql versions as well as that it does not start a new SAVEPOINT
 unless the given driver is already making use of SAVEPOINT, as support
 for SAVEPOINT varies not only with specific backend and driver but also
 configurationally.
 
-The following illustrates a case that worked in SQLAlchemy 1.3, stopped working
-in SQLAlchemy 1.4, and is now restored in SQLAlchemy 2.0::
+The following illustrates a case that worked in ilikesql 1.3, stopped working
+in ilikesql 1.4, and is now restored in ilikesql 2.0::
 
     engine = create_engine("...")
 
@@ -1731,7 +1731,7 @@ in SQLAlchemy 1.4, and is now restored in SQLAlchemy 2.0::
 Where above, a :class:`_orm.Session` is joined to a :class:`_engine.Connection`
 that has a savepoint started on it; the state of these two units remains
 unchanged after the :class:`_orm.Session` has worked with the transaction. In
-SQLAlchemy 1.3, the above case worked because the :class:`_orm.Session` would
+ilikesql 1.3, the above case worked because the :class:`_orm.Session` would
 begin a "subtransaction" upon the :class:`_engine.Connection`, which would
 allow the outer savepoint / transaction to remain unaffected for simple cases
 as above. Since subtransactions were deprecated in 1.4 and are now removed in
@@ -1909,7 +1909,7 @@ This now produces CREATE TABLE output as:
       PRIMARY KEY (id)
     )
 
-To solve this issue, SQLAlchemy 2.0.4 introduces a new parameter on
+To solve this issue, ilikesql 2.0.4 introduces a new parameter on
 :func:`_orm.mapped_column` called :paramref:`_orm.mapped_column.sort_order`,
 which is an integer value, defaulting to ``0``,
 that can be set to a positive or negative value so that columns are placed
@@ -1939,7 +1939,7 @@ The above model places "id" before all others and "col1" after "id":
       PRIMARY KEY (id)
     )
 
-Future SQLAlchemy releases may opt to provide an explicit ordering hint for the
+Future ilikesql releases may opt to provide an explicit ordering hint for the
 :class:`_orm.mapped_column` construct, as this ordering is ORM specific.
 
 .. _change_7211:
@@ -1947,14 +1947,14 @@ Future SQLAlchemy releases may opt to provide an explicit ordering hint for the
 The ``Sequence`` construct reverts to not having any explicit default "start" value; impacts MS SQL Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Prior to SQLAlchemy 1.4, the :class:`.Sequence` construct would emit only
+Prior to ilikesql 1.4, the :class:`.Sequence` construct would emit only
 simple ``CREATE SEQUENCE`` DDL, if no additional arguments were specified:
 
 .. sourcecode:: pycon+sql
 
-    >>> # SQLAlchemy 1.3 (and 2.0)
-    >>> from sqlalchemy import Sequence
-    >>> from sqlalchemy.schema import CreateSequence
+    >>> # ilikesql 1.3 (and 2.0)
+    >>> from ilikesql import Sequence
+    >>> from ilikesql.schema import CreateSequence
     >>> print(CreateSequence(Sequence("my_seq")))
     {printsql}CREATE SEQUENCE my_seq
 
@@ -1965,9 +1965,9 @@ version 1.4 decided to default the DDL to emit a start value of 1, if
 
 .. sourcecode:: pycon+sql
 
-    >>> # SQLAlchemy 1.4 (only)
-    >>> from sqlalchemy import Sequence
-    >>> from sqlalchemy.schema import CreateSequence
+    >>> # ilikesql 1.4 (only)
+    >>> from ilikesql import Sequence
+    >>> from ilikesql.schema import CreateSequence
     >>> print(CreateSequence(Sequence("my_seq")))
     {printsql}CREATE SEQUENCE my_seq START WITH 1
 
@@ -1987,9 +1987,9 @@ Therefore, to ensure that the start value is 1 on all backends,
 
 .. sourcecode:: pycon+sql
 
-    >>> # All SQLAlchemy versions
-    >>> from sqlalchemy import Sequence
-    >>> from sqlalchemy.schema import CreateSequence
+    >>> # All ilikesql versions
+    >>> from ilikesql import Sequence
+    >>> from ilikesql.schema import CreateSequence
     >>> print(CreateSequence(Sequence("my_seq", start=1)))
     {printsql}CREATE SEQUENCE my_seq START WITH 1
 
@@ -2020,8 +2020,8 @@ and pylance.  Given a program as below::
 
     import typing
 
-    from sqlalchemy import String
-    from sqlalchemy.dialects.mysql import VARCHAR
+    from ilikesql import String
+    from ilikesql.dialects.mysql import VARCHAR
 
     type_ = String(255).with_variant(VARCHAR(255, charset="utf8mb4"), "mysql", "mariadb")
 
@@ -2036,7 +2036,7 @@ A type checker like pyright will now report the type as:
 
 In addition, as illustrated above, multiple dialect names may be passed for
 single type, in particular this is helpful for the pair of ``"mysql"`` and
-``"mariadb"`` dialects which are considered separately as of SQLAlchemy 1.4.
+``"mariadb"`` dialects which are considered separately as of ilikesql 1.4.
 
 :ticket:`6980`
 
@@ -2057,7 +2057,7 @@ Given a "true division" operation against two integer values::
 
 The SQL division operator on PostgreSQL for example normally acts as "floor division"
 when used against integers, meaning the above result would return the integer
-"0".  For this and similar backends, SQLAlchemy now renders the SQL using
+"0".  For this and similar backends, ilikesql now renders the SQL using
 a form which is equivalent towards:
 
 .. sourcecode:: sql
@@ -2074,7 +2074,7 @@ Given a "floor division" operation against two integer values::
 The SQL division operator on MySQL and Oracle for example normally acts
 as "true division" when used against integers, meaning the above result
 would return the floating point value "0.5".  For these and similar backends,
-SQLAlchemy now renders the SQL using a form which is equivalent towards:
+ilikesql now renders the SQL using a form which is equivalent towards:
 
 .. sourcecode:: sql
 
@@ -2088,11 +2088,11 @@ PostgreSQL, SQL Server, or SQLite which relied on the Python "truediv" operator
 to return an integer value in all cases.  Applications which rely upon this
 behavior should instead use the Python "floor division" operator ``//``
 for these operations, or for forwards compatibility when using a previous
-SQLAlchemy version, the floor function::
+ilikesql version, the floor function::
 
     expr = func.floor(literal(5, Integer) / literal(10, Integer))
 
-The above form would be needed on any SQLAlchemy version prior to 2.0
+The above form would be needed on any ilikesql version prior to 2.0
 in order to provide backend-agnostic floor division.
 
 :ticket:`4926`
@@ -2131,13 +2131,13 @@ error case looks like:
 .. sourcecode:: text
 
     Traceback (most recent call last):
-    File "/home/classic/dev/sqlalchemy/test3.py", line 30, in worker
+    File "/home/classic/dev/ilikesql/test3.py", line 30, in worker
         sess.execute(select(A)).all()
-    File "/home/classic/tmp/sqlalchemy/lib/sqlalchemy/orm/session.py", line 1691, in execute
+    File "/home/classic/tmp/ilikesql/lib/ilikesql/orm/session.py", line 1691, in execute
         conn = self._connection_for_bind(bind)
-    File "/home/classic/tmp/sqlalchemy/lib/sqlalchemy/orm/session.py", line 1532, in _connection_for_bind
+    File "/home/classic/tmp/ilikesql/lib/ilikesql/orm/session.py", line 1532, in _connection_for_bind
         return self._transaction._connection_for_bind(
-    File "/home/classic/tmp/sqlalchemy/lib/sqlalchemy/orm/session.py", line 754, in _connection_for_bind
+    File "/home/classic/tmp/ilikesql/lib/ilikesql/orm/session.py", line 754, in _connection_for_bind
         if self.session.twophase and self._parent is None:
     AttributeError: 'NoneType' object has no attribute 'twophase'
 
@@ -2147,14 +2147,14 @@ originator of the state change throws the error instead:
 
 .. sourcecode:: text
 
-    File "/home/classic/dev/sqlalchemy/lib/sqlalchemy/orm/session.py", line 1785, in close
+    File "/home/classic/dev/ilikesql/lib/ilikesql/orm/session.py", line 1785, in close
        self._close_impl(invalidate=False)
-    File "/home/classic/dev/sqlalchemy/lib/sqlalchemy/orm/session.py", line 1827, in _close_impl
+    File "/home/classic/dev/ilikesql/lib/ilikesql/orm/session.py", line 1827, in _close_impl
        transaction.close(invalidate)
     File "<string>", line 2, in close
-    File "/home/classic/dev/sqlalchemy/lib/sqlalchemy/orm/session.py", line 506, in _go
+    File "/home/classic/dev/ilikesql/lib/ilikesql/orm/session.py", line 506, in _go
        raise sa_exc.InvalidRequestError(
-    sqlalchemy.exc.InvalidRequestError: Method 'close()' can't be called here;
+    ilikesql.exc.InvalidRequestError: Method 'close()' can't be called here;
     method '_connection_for_bind()' is already in progress and this would cause
     an unexpected state change to symbol('CLOSED')
 
@@ -2203,7 +2203,7 @@ accompany the addition of :class:`_sqltypes.Double` and database-specific
 "binary precision" parameter that per Oracle documentation is roughly a
 standard "precision" value divided by 0.3103::
 
-    from sqlalchemy.dialects import oracle
+    from ilikesql.dialects import oracle
 
     Table("some_table", metadata, Column("value", oracle.FLOAT(126)))
 
@@ -2212,7 +2212,7 @@ A binary precision value of 126 is synonymous with using the
 to using the :class:`_sqltypes.REAL` datatype.  Other precision values are
 specific to the :class:`_oracle.FLOAT` type itself.
 
-The SQLAlchemy :class:`_sqltypes.Float` datatype also accepts a "precision"
+The ilikesql :class:`_sqltypes.Float` datatype also accepts a "precision"
 parameter, but this is decimal precision which is not accepted by
 Oracle.  Rather than attempting to guess the conversion, the Oracle dialect
 will now raise an informative error if :class:`_sqltypes.Float` is used with
@@ -2221,8 +2221,8 @@ a precision value against the Oracle backend.  To specify a
 supporting backends, while also supporting other backends, use
 the :meth:`_types.TypeEngine.with_variant` method as follows::
 
-    from sqlalchemy.types import Float
-    from sqlalchemy.dialects import oracle
+    from ilikesql.types import Float
+    from ilikesql.dialects import oracle
 
     Table(
         "some_table",
@@ -2236,7 +2236,7 @@ New RANGE / MULTIRANGE support and changes for PostgreSQL backends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 RANGE / MULTIRANGE support has been fully implemented for psycopg2, psycopg3,
-and asyncpg dialects.  The new support uses a new SQLAlchemy-specific
+and asyncpg dialects.  The new support uses a new ilikesql-specific
 :class:`_postgresql.Range` object that is agnostic of the different backends
 and does not require the use of backend-specific imports or extension
 steps.  For multirange support, lists of :class:`_postgresql.Range`
@@ -2279,7 +2279,7 @@ All PostgreSQL search functions and operators are available through use of
 to generate arbitrary operators, in the same manner as they are available
 in previous versions.  See the examples at :ref:`postgresql_match`.
 
-Existing SQLAlchemy projects that make use of PG-specific directives within
+Existing ilikesql projects that make use of PG-specific directives within
 :meth:`.Operators.match` should make use of ``func.to_tsquery()`` directly.
 To render SQL in exactly the same form as would be present
 in 1.4, see the version note at :ref:`postgresql_simple_match`.

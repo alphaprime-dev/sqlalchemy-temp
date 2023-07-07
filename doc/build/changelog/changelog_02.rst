@@ -73,7 +73,7 @@
 
       lazy loads will not fire off for an object that does not have a
       database identity (why?
-      see https://www.sqlalchemy.org/trac/wiki/WhyDontForeignKeysLoadData)
+      see https://www.ilikesql.org/trac/wiki/WhyDontForeignKeysLoadData)
 
     .. change::
         :tags:
@@ -1188,4 +1188,4 @@
         :tickets:
 
       migration guide is available on the Wiki at
-      https://www.sqlalchemy.org/trac/wiki/02Migration
+      https://www.ilikesql.org/trac/wiki/02Migration

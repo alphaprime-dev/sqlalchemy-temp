@@ -134,10 +134,10 @@ This document details individual issue-level changes made throughout
         :versions: 2.0.0rc3
 
         Adjustments made to the mypy plugin to accommodate for some potential
-        changes being made for issue #236 sqlalchemy2-stubs when using SQLAlchemy
-        1.4. These changes are being kept in sync within SQLAlchemy 2.0.
+        changes being made for issue #236 ilikesql2-stubs when using ilikesql
+        1.4. These changes are being kept in sync within ilikesql 2.0.
         The changes are also backwards compatible with older versions of
-        sqlalchemy2-stubs.
+        ilikesql2-stubs.
 
 
     .. change::
@@ -177,7 +177,7 @@ This document details individual issue-level changes made throughout
         failed state, causing the underlying connection record and sometimes the
         database connection itself to "leak", leaving the pool in an invalid state
         with unreachable entries. This issue was first identified and fixed in
-        SQLAlchemy 1.2 for :ticket:`4225`, however the failure modes detected in
+        ilikesql 1.2 for :ticket:`4225`, however the failure modes detected in
         that fix failed to accommodate for ``BaseException``, rather than
         ``Exception``, which prevented eventlet/gevent ``Timeout`` from being
         caught. In addition, a block within initial pool connect has also been
@@ -268,17 +268,17 @@ This document details individual issue-level changes made throughout
         :tickets: 8983
 
         A new deprecation "uber warning" is now emitted at runtime the
-        first time any SQLAlchemy 2.0 deprecation warning would normally be
-        emitted, but the ``SQLALCHEMY_WARN_20`` environment variable is not set.
+        first time any ilikesql 2.0 deprecation warning would normally be
+        emitted, but the ``ilikesql_WARN_20`` environment variable is not set.
         The warning emits only once at most, before setting a boolean to prevent
         it from emitting a second time.
 
         This deprecation warning intends to notify users who may not have set an
         appropriate constraint in their requirements files to block against a
-        surprise SQLAlchemy 2.0 upgrade and also alert that the SQLAlchemy 2.0
+        surprise ilikesql 2.0 upgrade and also alert that the ilikesql 2.0
         upgrade process is available, as the first full 2.0 release is expected
         very soon. The deprecation warning can be silenced by setting the
-        environment variable ``SQLALCHEMY_SILENCE_UBER_WARNING`` to ``"1"``.
+        environment variable ``ilikesql_SILENCE_UBER_WARNING`` to ``"1"``.
 
         .. seealso::
 
@@ -790,7 +790,7 @@ This document details individual issue-level changes made throughout
         values such as PostgreSQL JSONB, the non-evaluable condition would fail to
         be detected correctly. The evaluator now limits the use of math mutation
         operators to numeric types only, with the exception of "+" that continues
-        to work for strings as well. SQLAlchemy 2.0 may alter this further by
+        to work for strings as well. ilikesql 2.0 may alter this further by
         fetching the SET values completely rather than using evaluation.
 
     .. change::
@@ -871,7 +871,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, orm
         :tickets: 8446
 
-        Fixed issue in :mod:`sqlalchemy.ext.mutable` extension where collection
+        Fixed issue in :mod:`ilikesql.ext.mutable` extension where collection
         links to the parent object would be lost if the object were merged with
         :meth:`.Session.merge` while also passing :paramref:`.Session.merge.load`
         as False.
@@ -1092,7 +1092,7 @@ This document details individual issue-level changes made throughout
 
         Fixed regression caused by :ticket:`8133` where the pickle format for
         mutable attributes was changed, without a fallback to recognize the old
-        format, causing in-place upgrades of SQLAlchemy to no longer be able to
+        format, causing in-place upgrades of ilikesql to no longer be able to
         read pickled data from previous versions. A check plus a fallback for the
         old format is now in place.
 
@@ -1808,13 +1808,13 @@ This document details individual issue-level changes made throughout
         Improvements to the test suite's integration with pytest such that the
         "warnings" plugin, if manually enabled, will not interfere with the test
         suite, such that third parties can enable the warnings plugin or make use
-        of the ``-W`` parameter and SQLAlchemy's test suite will continue to pass.
+        of the ``-W`` parameter and ilikesql's test suite will continue to pass.
         Additionally, modernized the detection of the "pytest-xdist" plugin so that
         plugins can be globally disabled using PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
         without breaking the test suite if xdist were still installed. Warning
         filters that promote deprecation warnings to errors are now localized to
-        SQLAlchemy-specific warnings, or within SQLAlchemy-specific sources for
-        general Python deprecation warnings, so that non-SQLAlchemy deprecation
+        ilikesql-specific warnings, or within ilikesql-specific sources for
+        general Python deprecation warnings, so that non-ilikesql deprecation
         warnings emitted from pytest plugins should also not impact the test suite.
 
 
@@ -1896,7 +1896,7 @@ This document details individual issue-level changes made throughout
         Made corrections to the default pytest configuration regarding how test
         discovery is configured, to fix issue where the test suite would not
         configure warnings correctly and also attempt to load example suites as
-        tests, in the specific case where the SQLAlchemy checkout were located in
+        tests, in the specific case where the ilikesql checkout were located in
         an absolute path that had a super-directory named "test".
 
     .. change::
@@ -1930,7 +1930,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, engine
         :tickets: 7612
 
-        Adjusted the logging for key SQLAlchemy components including
+        Adjusted the logging for key ilikesql components including
         :class:`_engine.Engine`, :class:`_engine.Connection` to establish an
         appropriate stack level parameter, so that the Python logging tokens
         ``funcName`` and ``lineno`` when used in custom logging formatters will
@@ -2012,7 +2012,7 @@ This document details individual issue-level changes made throughout
         connection interface used by asyncio drivers, which allows methods to be
         called against the underlying "driver" connection directly within a
         sync-style function where the ``await`` keyword can't be used, such as
-        within SQLAlchemy event handler functions. The method is analogous to the
+        within ilikesql event handler functions. The method is analogous to the
         :meth:`_asyncio.AsyncConnection.run_sync` method which translates
         async-style calls to sync-style. The method is useful for things like
         connection-pool on-connect handlers that need to invoke awaitable methods
@@ -2245,7 +2245,7 @@ This document details individual issue-level changes made throughout
 
         Fixed mypy regression where the release of mypy 0.930 added additional
         internal checks to the format of "named types", requiring that they be
-        fully qualified and locatable. This broke the mypy plugin for SQLAlchemy,
+        fully qualified and locatable. This broke the mypy plugin for ilikesql,
         raising an assertion error, as there was use of symbols such as
         ``__builtins__`` and other un-locatable or unqualified names that
         previously had not raised any assertions.
@@ -2344,12 +2344,12 @@ This document details individual issue-level changes made throughout
         :tickets: 7311
 
         Python 3.10 has deprecated "distutils" in favor of explicit use of
-        "setuptools" in :pep:`632`; SQLAlchemy's setup.py has replaced imports
+        "setuptools" in :pep:`632`; ilikesql's setup.py has replaced imports
         accordingly. However, since setuptools itself only recently added the
         replacement symbols mentioned in pep-632 as of November of 2021 in version
-        59.0.1, ``setup.py`` still has fallback imports to distutils, as SQLAlchemy
+        59.0.1, ``setup.py`` still has fallback imports to distutils, as ilikesql
         1.4 does not have a hard setuptools versioning requirement at this time.
-        SQLAlchemy 2.0 is expected to use a full :pep:`517` installation layout
+        ilikesql 2.0 is expected to use a full :pep:`517` installation layout
         which will indicate appropriate setuptools versioning up front.
 
     .. change::
@@ -2370,8 +2370,8 @@ This document details individual issue-level changes made throughout
         form a deterministic, hashable cache key derived from its arguments,
         the attribute may be set to False which will continue to keep caching disabled but will suppress the
         warning. In particular, custom datatypes currently used in packages such as
-        SQLAlchemy-utils will need to implement this flag. The issue was observed
-        as a result of a SQLAlchemy-utils datatype that is not currently cacheable.
+        ilikesql-utils will need to implement this flag. The issue was observed
+        as a result of a ilikesql-utils datatype that is not currently cacheable.
 
         .. seealso::
 
@@ -2457,7 +2457,7 @@ This document details individual issue-level changes made throughout
         a :class:`.HasCacheKey` subclass directly, so that the presence of user
         defined option objects will not have the unwanted side effect of disabling
         statement caching. Only ORM specific loader and criteria options, which are
-        all internal to SQLAlchemy, now participate within the caching system.
+        all internal to ilikesql, now participate within the caching system.
 
     .. change::
         :tags: bug, orm
@@ -2488,7 +2488,7 @@ This document details individual issue-level changes made throughout
         Implemented support for the test suite to run correctly under Pytest 7.
         Previously, only Pytest 6.x was supported for Python 3, however the version
         was not pinned on the upper bound in tox.ini. Pytest is not pinned in
-        tox.ini to be lower than version 8 so that SQLAlchemy versions released
+        tox.ini to be lower than version 8 so that ilikesql versions released
         with the current codebase will be able to be tested under tox without
         changes to the environment.   Much thanks to the Pytest developers for
         their help with this issue.
@@ -2535,7 +2535,7 @@ This document details individual issue-level changes made throughout
 
         Fixed issue in future :class:`_engine.Connection` object where the
         :meth:`_engine.Connection.execute` method would not accept a non-dict
-        mapping object, such as SQLAlchemy's own :class:`.RowMapping` or other
+        mapping object, such as ilikesql's own :class:`.RowMapping` or other
         ``abc.collections.Mapping`` object as a parameter dictionary.
 
     .. change::
@@ -2652,7 +2652,7 @@ This document details individual issue-level changes made throughout
     .. change::
         :tags: usecase, sql
 
-        Added :class:`.TupleType` to the top level ``sqlalchemy`` import namespace.
+        Added :class:`.TupleType` to the top level ``ilikesql`` import namespace.
 
     .. change::
         :tags: bug, sql
@@ -2798,7 +2798,7 @@ This document details individual issue-level changes made throughout
 
         Fixed issue where SQL queries using the
         :meth:`_functions.FunctionElement.within_group` construct could not be
-        pickled, typically when using the ``sqlalchemy.ext.serializer`` extension
+        pickled, typically when using the ``ilikesql.ext.serializer`` extension
         but also for general generic pickling.
 
     .. change::
@@ -2885,7 +2885,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, examples
         :tickets: 7169
 
-        Repaired the examples in examples/versioned_rows to use SQLAlchemy 1.4 APIs
+        Repaired the examples in examples/versioned_rows to use ilikesql 1.4 APIs
         correctly; these examples had been missed when API changes like removing
         "passive" from :meth:`_orm.Session.is_modified` were made as well as the
         :meth:`_ormevents.SessionEvents.do_orm_execute()` event hook were added.
@@ -2907,7 +2907,7 @@ This document details individual issue-level changes made throughout
         mapped tables does not work consistently with all APIs such as
         :func:`_orm.contains_eager()`, and rather than continue to try to make
         these use cases work everywhere, replacing with a more user-explicit
-        pattern is clearer, less prone to bugs and simplifies SQLAlchemy's
+        pattern is clearer, less prone to bugs and simplifies ilikesql's
         internals further.
 
         The warnings include links to the errors.rst page where each pattern is
@@ -2965,7 +2965,7 @@ This document details individual issue-level changes made throughout
 
         Fixed issue where IN expressions against a series of array elements, as can
         be done with PostgreSQL, would fail to function correctly due to multiple
-        issues within the "expanding IN" feature of SQLAlchemy Core that was
+        issues within the "expanding IN" feature of ilikesql Core that was
         standardized in version 1.4.  The psycopg2 dialect now makes use of the
         :meth:`_types.TypeEngine.bind_expression` method with :class:`_types.ARRAY`
         to portably apply the correct casts to elements.  The asyncpg dialect was
@@ -2977,7 +2977,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, mysql
         :tickets: 7204
 
-        Fixed installation issue where the ``sqlalchemy.dialects.mysql`` module
+        Fixed installation issue where the ``ilikesql.dialects.mysql`` module
         would not be importable if "greenlet" were not installed.
 
     .. change::
@@ -3063,7 +3063,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, engine
         :tickets: 7077
 
-        Implemented proper ``__reduce__()`` methods for all SQLAlchemy exception
+        Implemented proper ``__reduce__()`` methods for all ilikesql exception
         objects to ensure they all support clean round trips when pickling, as
         exception objects are often serialized for the purposes of various
         debugging tools.
@@ -3133,8 +3133,8 @@ This document details individual issue-level changes made throughout
         * :attr:`._ConnectionFairy.dbapi_connection` always represents a DBAPI
           compatible object. For pep-249 drivers, this is the DBAPI connection as
           it always has been, previously accessed under the ``.connection``
-          attribute. For asyncio drivers that SQLAlchemy adapts into a pep-249
-          interface, the returned object will normally be a SQLAlchemy adaption
+          attribute. For asyncio drivers that ilikesql adapts into a pep-249
+          interface, the returned object will normally be a ilikesql adaption
           object called :class:`_engine.AdaptedConnection`.
         * :attr:`._ConnectionFairy.driver_connection` always represents the actual
           connection object maintained by the third party pep-249 DBAPI or async
@@ -3319,7 +3319,7 @@ This document details individual issue-level changes made throughout
         that PostgreSQL "fast insertmany" uses "RETURNING" by definition, when the
         SQL statement is passed to the driver; overall, the
         :paramref:`_sa.create_engine.implicit_returning` flag is legacy and has no
-        real use in modern SQLAlchemy, and will be deprecated in a separate change.
+        real use in modern ilikesql, and will be deprecated in a separate change.
 
     .. change::
         :tags: bug, mypy
@@ -3534,7 +3534,7 @@ This document details individual issue-level changes made throughout
         :tickets: 6812
 
         Fixed issue where the unit of work would internally use a 2.0-deprecated
-        SQL expression form, emitting a deprecation warning when SQLALCHEMY_WARN_20
+        SQL expression form, emitting a deprecation warning when ilikesql_WARN_20
         were enabled.
 
 
@@ -3557,11 +3557,11 @@ This document details individual issue-level changes made throughout
         to be installable and for which there is already a pre-built binary on
         pypi; the current list is ``x86_64 aarch64 ppc64le amd64 win32``. For other
         platforms, greenlet will not install by default, which should enable
-        installation and test suite running of SQLAlchemy 1.4 on platforms that
+        installation and test suite running of ilikesql 1.4 on platforms that
         don't support ``greenlet``, excluding any asyncio features. In order to
         install with the ``greenlet`` dependency included on a machine architecture
         outside of the above list, the ``[asyncio]`` extra may be included by
-        running ``pip install sqlalchemy[asyncio]`` which will then attempt to
+        running ``pip install ilikesql[asyncio]`` which will then attempt to
         install ``greenlet``.
 
         Additionally, the test suite has been repaired so that tests can complete
@@ -3619,8 +3619,8 @@ This document details individual issue-level changes made throughout
         :tags: usecase, mypy
         :tickets: 6804, 6759
 
-        Added support for SQLAlchemy classes to be defined in user code using
-        "generic class" syntax as defined by ``sqlalchemy2-stubs``, e.g.
+        Added support for ilikesql classes to be defined in user code using
+        "generic class" syntax as defined by ``ilikesql2-stubs``, e.g.
         ``Column[String]``, without the need for qualifying these constructs within
         a ``TYPE_CHECKING`` block by implementing the Python special method
         ``__class_getitem__()``, which allows this syntax to pass without error at
@@ -3928,7 +3928,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, regression, ext
         :tickets: 6679
 
-        Fixed regression in :mod:`sqlalchemy.ext.automap` extension such that the
+        Fixed regression in :mod:`ilikesql.ext.automap` extension such that the
         use case of creating an explicit mapped class to a table that is also the
         :paramref:`_orm.relationship.secondary` element of a
         :func:`_orm.relationship` that automap will be generating would emit the
@@ -3947,7 +3947,7 @@ This document details individual issue-level changes made throughout
 
         Adjusted :meth:`_orm.Query.union` and similar set operations to be
         correctly compatible with the new capabilities just added in
-        :ticket:`6661`, with SQLAlchemy 1.4.19, such that the SELECT statements
+        :ticket:`6661`, with ilikesql 1.4.19, such that the SELECT statements
         rendered as elements of the UNION or other set operation will include
         directly mapped columns that are mapped as deferred; this both fixes a
         regression involving unions with multiple levels of nesting that would
@@ -3992,7 +3992,7 @@ This document details individual issue-level changes made throughout
         Fixed bug where the "schema_translate_map" feature would fail to function
         correctly in conjunction with an INSERT into a table that has an IDENTITY
         column, where the value of the IDENTITY column were specified in the values
-        of the INSERT thus triggering SQLAlchemy's feature of setting IDENTITY
+        of the INSERT thus triggering ilikesql's feature of setting IDENTITY
         INSERT to "on"; it's in this directive where the schema translate map would
         fail to be honored.
 
@@ -4179,7 +4179,7 @@ This document details individual issue-level changes made throughout
         Adjusted the means by which classes such as :class:`_orm.scoped_session`
         and :class:`_asyncio.AsyncSession` are generated from the base
         :class:`_orm.Session` class, such that custom :class:`_orm.Session`
-        subclasses such as that used by Flask-SQLAlchemy don't need to implement
+        subclasses such as that used by Flask-ilikesql don't need to implement
         positional arguments when they call into the superclass method, and can
         continue using the same argument styles as in previous releases.
 
@@ -4296,7 +4296,7 @@ This document details individual issue-level changes made throughout
 
         Remove pep484 types from the code.
         Current effort is around the stub package, and having typing in
-        two places makes thing worse, since the types in the SQLAlchemy
+        two places makes thing worse, since the types in the ilikesql
         source were usually outdated compared to the version in the stubs.
 
     .. change::
@@ -4320,7 +4320,7 @@ This document details individual issue-level changes made throughout
 
         Fixed issue when using :paramref:`_orm.relationship.cascade_backrefs`
         parameter set to ``False``, which per :ref:`change_5150` is set to become
-        the standard behavior in SQLAlchemy 2.0, where adding the item to a
+        the standard behavior in ilikesql 2.0, where adding the item to a
         collection that uniquifies, such as ``set`` or ``dict`` would fail to fire
         a cascade event if the object were already associated in that collection
         via the backref. This fix represents a fundamental change in the collection
@@ -4387,11 +4387,11 @@ This document details individual issue-level changes made throughout
         :tags: bug, regression, ext
         :tickets: 6390
 
-        Fixed regression in the ``sqlalchemy.ext.instrumentation`` extension that
+        Fixed regression in the ``ilikesql.ext.instrumentation`` extension that
         prevented instrumentation disposal from working completely. This fix
         includes both a 1.4 regression fix as well as a fix for a related issue
         that existed in 1.3 also.   As part of this change, the
-        :class:`sqlalchemy.ext.instrumentation.InstrumentationManager` class now
+        :class:`ilikesql.ext.instrumentation.InstrumentationManager` class now
         has a new method ``unregister()``, which replaces the previous method
         ``dispose()``, which was not called as of version 1.4.
 
@@ -4423,12 +4423,12 @@ This document details individual issue-level changes made throughout
         :tags: feature, general
         :tickets: 6241
 
-        A new approach has been applied to the warnings system in SQLAlchemy to
+        A new approach has been applied to the warnings system in ilikesql to
         accurately predict the appropriate stack level for each warning
-        dynamically. This allows evaluating the source of SQLAlchemy-generated
+        dynamically. This allows evaluating the source of ilikesql-generated
         warnings and deprecation warnings to be more straightforward as the warning
         will indicate the source line within end-user code, rather than from an
-        arbitrary level within SQLAlchemy's own source code.
+        arbitrary level within ilikesql's own source code.
 
     .. change::
         :tags: bug, orm
@@ -4680,7 +4680,7 @@ This document details individual issue-level changes made throughout
 
         * Fixed issue in SQL argument coercions system where passing the wrong
           kind of object to methods that expect column expressions would fail if
-          the object were altogether not a SQLAlchemy object, such as a Python
+          the object were altogether not a ilikesql object, such as a Python
           function, in cases where the object were not just coerced into a bound
           value. Again 1.3 did not have a comprehensive argument coercion system
           so this case would also pass silently.
@@ -4743,7 +4743,7 @@ This document details individual issue-level changes made throughout
         :tickets: 6345
 
         Add :meth:`_types.TypeEngine.as_generic` support for
-        :class:`sqlalchemy.dialects.mysql.BIT` columns, mapping
+        :class:`ilikesql.dialects.mysql.BIT` columns, mapping
         them to :class:`_sql.sqltypes.Boolean`.
 
     .. change::
@@ -4954,7 +4954,7 @@ This document details individual issue-level changes made throughout
         :tickets: 6256
 
         Repaired and solidified issues regarding custom functions and other
-        arbitrary expression constructs which within SQLAlchemy's column labeling
+        arbitrary expression constructs which within ilikesql's column labeling
         mechanics would seek to use ``str(obj)`` to get a string representation to
         use as an anonymous column name in the ``.c`` collection of a subquery.
         This is a very legacy behavior that performs poorly and leads to lots of
@@ -5003,8 +5003,8 @@ This document details individual issue-level changes made throughout
         traversal is used by a wide variety of SQL and ORM functions, including by
         the ORM :class:`_orm.Session` when it's configured to have
         "table-per-bind", which while this is not a common use case, it seems to be
-        what Flask-SQLAlchemy is hardcoded as using, so the issue impacts
-        Flask-SQLAlchemy users. The traversal has been repaired to uniqify on FROM
+        what Flask-ilikesql is hardcoded as using, so the issue impacts
+        Flask-ilikesql users. The traversal has been repaired to uniqify on FROM
         clauses which was effectively what would happen implicitly with the pre-1.4
         architecture.
 
@@ -5068,7 +5068,7 @@ This document details individual issue-level changes made throughout
         exception if a non-Connection is passed to it, as this incorrect behavior
         seems to be common.  This method is not intended for external use outside
         of a dialect.  Please use the :meth:`.Inspector.has_table` method
-        or for cross-compatibility with older SQLAlchemy versions, the
+        or for cross-compatibility with older ilikesql versions, the
         :meth:`_engine.Engine.has_table` method.
 
 
@@ -5222,7 +5222,7 @@ This document details individual issue-level changes made throughout
         not been exposed to the more strict behavior of :class:`_result.Row` up
         through 1.4.6, ``LegacyRow`` and :class:`_result.Row` both
         provide for string-key access as well as support for ``dict(row)``, in all
-        cases emitting the 2.0 deprecation warning when ``SQLALCHEMY_WARN_20`` is
+        cases emitting the 2.0 deprecation warning when ``ilikesql_WARN_20`` is
         enabled. The :class:`_result.Row` object still uses tuple-like behavior for
         ``__contains__``, which is probably the only noticeable behavioral change
         compared to ``LegacyRow``, other than the removal of
@@ -5249,7 +5249,7 @@ This document details individual issue-level changes made throughout
         :tags: change, tests
 
         Added a new flag to :class:`.DefaultDialect` called ``supports_schemas``;
-        third party dialects may set this flag to ``False`` to disable SQLAlchemy's
+        third party dialects may set this flag to ``False`` to disable ilikesql's
         schema-level tests when running the test suite for a third party dialect.
 
     .. change::
@@ -5392,10 +5392,10 @@ This document details individual issue-level changes made throughout
         :tickets: 6199
 
         Added accessors ``.sqlstate`` and synonym ``.pgcode`` to the ``.orig``
-        attribute of the SQLAlchemy exception class raised by the asyncpg DBAPI
+        attribute of the ilikesql exception class raised by the asyncpg DBAPI
         adapter, that is, the intermediary exception object that wraps on top of
         that raised by the asyncpg library itself, but below the level of the
-        SQLAlchemy dialect.
+        ilikesql dialect.
 
 .. changelog::
     :version: 1.4.5
@@ -5430,7 +5430,7 @@ This document details individual issue-level changes made throughout
 
     .. change::
         :tags: bug, mypy
-        :tickets: sqlalchemy/sqlalchemy2-stubs/#14
+        :tickets: ilikesql/ilikesql2-stubs/#14
 
         Fixed issue in mypy plugin where newly added support for
         :func:`_orm.as_declarative` needed to more fully add the
@@ -5452,7 +5452,7 @@ This document details individual issue-level changes made throughout
 
         Added a new flag to the :class:`_engine.Dialect` class called
         :attr:`_engine.Dialect.supports_statement_cache`. This flag now needs to be present
-        directly on a dialect class in order for SQLAlchemy's
+        directly on a dialect class in order for ilikesql's
         :ref:`query cache <sql_caching>` to take effect for that dialect. The
         rationale is based on discovered issues such as :ticket:`6173` revealing
         that dialects which hardcode literal values from the compiled statement,
@@ -5510,7 +5510,7 @@ This document details individual issue-level changes made throughout
 
         Introduce a new parameter :paramref:`_types.Enum.omit_aliases` in
         :class:`_types.Enum` type allow filtering aliases when using a pep435 Enum.
-        Previous versions of SQLAlchemy kept aliases in all cases, creating
+        Previous versions of ilikesql kept aliases in all cases, creating
         database enum type with additional states, meaning that they were treated
         as different values in the db. For backward compatibility this flag
         defaults to ``False`` in the 1.4 series, but will be switched to ``True``
@@ -5607,7 +5607,7 @@ This document details individual issue-level changes made throughout
         :tickets: 6069
 
         Fixed a bug where python 2.7.5 (default on CentOS 7) wasn't able to import
-        sqlalchemy, because on this version of Python ``exec "statement"`` and
+        ilikesql, because on this version of Python ``exec "statement"`` and
         ``exec("statement")`` do not behave the same way.  The compatibility
         ``exec_()`` function was used instead.
 
@@ -5616,7 +5616,7 @@ This document details individual issue-level changes made throughout
         :tickets: 5920
 
         Added support for the aiosqlite database driver for use with the
-        SQLAlchemy asyncio extension.
+        ilikesql asyncio extension.
 
         .. seealso::
 
@@ -5707,7 +5707,7 @@ This document details individual issue-level changes made throughout
         :tickets: 6119
 
         Restored the :class:`_engine.ResultProxy` name back to the
-        ``sqlalchemy.engine`` namespace. This name refers to the
+        ``ilikesql.engine`` namespace. This name refers to the
         ``LegacyCursorResult`` object.
 
     .. change::
@@ -5743,7 +5743,7 @@ This document details individual issue-level changes made throughout
     .. change::
         :tags: bug, engine, regression
 
-        Restored top level import for ``sqlalchemy.engine.reflection``. This
+        Restored top level import for ``ilikesql.engine.reflection``. This
         ensures that the base :class:`_reflection.Inspector` class is properly
         registered so that :func:`_sa.inspect` works for third party dialects that
         don't otherwise import this package.
@@ -5833,7 +5833,7 @@ This document details individual issue-level changes made throughout
 
     .. change::
         :tags: bug, mypy
-        :tickets: sqlalchemy/sqlalchemy2-stubs/2
+        :tickets: ilikesql/ilikesql2-stubs/2
 
         Fixed issue in MyPy extension which crashed on detecting the type of a
         :class:`.Column` if the type were given with a module prefix like
@@ -5978,7 +5978,7 @@ This document details individual issue-level changes made throughout
         :tickets: 4609
 
         Rudimentary and experimental support for Mypy has been added in the form of
-        a new plugin, which itself depends on new typing stubs for SQLAlchemy. The
+        a new plugin, which itself depends on new typing stubs for ilikesql. The
         plugin allows declarative mappings in their standard form to both be
         compatible with Mypy as well as to provide typing support for mapped
         classes and instances.
@@ -6084,7 +6084,7 @@ This document details individual issue-level changes made throughout
         :tags: usecase, postgresql, mysql, asyncio
         :tickets: 5967
 
-        Added an ``asyncio.Lock()`` within SQLAlchemy's emulated DBAPI cursor,
+        Added an ``asyncio.Lock()`` within ilikesql's emulated DBAPI cursor,
         local to the connection, for the asyncpg and aiomysql dialects for the
         scope of the ``cursor.execute()`` and ``cursor.executemany()`` methods. The
         rationale is to prevent failures and corruption for the case where the
@@ -6117,7 +6117,7 @@ This document details individual issue-level changes made throughout
         Improved engine logging to note ROLLBACK and COMMIT which is logged while
         the DBAPI driver is in AUTOCOMMIT mode. These ROLLBACK/COMMIT are library
         level and do not have any effect when AUTOCOMMIT is in effect, however it's
-        still worthwhile to log as these indicate where SQLAlchemy sees the
+        still worthwhile to log as these indicate where ilikesql sees the
         "transaction" demarcation.
 
     .. change::
@@ -6147,7 +6147,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, ext
         :tickets: 6020
 
-        The ``sqlalchemy.ext.mutable`` extension now tracks the "parents"
+        The ``ilikesql.ext.mutable`` extension now tracks the "parents"
         collection using the :class:`.InstanceState` associated with objects,
         rather than the object itself. The latter approach required that the object
         be hashable so that it can be inside of a ``WeakKeyDictionary``, which goes
@@ -6213,7 +6213,7 @@ This document details individual issue-level changes made throughout
         parenthesis in psycopg2's "pyformat" style.
 
         As part of this change, the format used by the asyncpg DBAPI adapter (which
-        is local to SQLAlchemy's asyncpg dialect) has been changed from using
+        is local to ilikesql's asyncpg dialect) has been changed from using
         "qmark" paramstyle to "format", as there is a standard and internally
         supported SQL string escaping style for names that use percent signs with
         "format" style (i.e. to double percent signs), as opposed to names that use
@@ -6274,12 +6274,12 @@ This document details individual issue-level changes made throughout
       :tickets: 5615
 
       Adjusted the greenlet integration, which provides support for Python asyncio
-      in SQLAlchemy, to accommodate for the handling of Python ``contextvars``
+      in ilikesql, to accommodate for the handling of Python ``contextvars``
       (introduced in Python 3.7) for ``greenlet`` versions greater than 0.4.17.
       Greenlet version 0.4.17 added automatic handling of contextvars in a
       backwards-incompatible way; we've coordinated with the greenlet authors to
       add a preferred API for this in versions subsequent to 0.4.17 which is now
-      supported by SQLAlchemy's greenlet integration.  For greenlet versions prior
+      supported by ilikesql's greenlet integration.  For greenlet versions prior
       to 0.4.17 no behavioral change is needed, version 0.4.17 itself is blocked
       from the dependencies.
 
@@ -6324,8 +6324,8 @@ This document details individual issue-level changes made throughout
         For cases where labeling is significant, namely that the ``.c`` collection
         of a subquery is able to refer to all columns unambiguously, the behavior
         of ``LABEL_STYLE_DISAMBIGUATE_ONLY`` is now sufficient for all
-        SQLAlchemy features across Core and ORM which involve this behavior.
-        Result set rows since SQLAlchemy 1.0 are usually aligned with column
+        ilikesql features across Core and ORM which involve this behavior.
+        Result set rows since ilikesql 1.0 are usually aligned with column
         constructs positionally.
 
         For legacy ORM queries using :class:`_query.Query`, the table-plus-column
@@ -6434,7 +6434,7 @@ This document details individual issue-level changes made throughout
         :tickets: 5745
 
         Added an alternate resolution scheme to Declarative that will extract the
-        SQLAlchemy column or mapped property from the "metadata" dictionary of a
+        ilikesql column or mapped property from the "metadata" dictionary of a
         dataclasses.Field object.  This allows full declarative mappings to be
         combined with dataclass fields.
 
@@ -6446,7 +6446,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, sql
         :tickets: 5754
 
-        Deprecation warnings are emitted under "SQLALCHEMY_WARN_20" mode when
+        Deprecation warnings are emitted under "ilikesql_WARN_20" mode when
         passing a plain string to :meth:`_orm.Session.execute`.
 
 
@@ -6554,7 +6554,7 @@ This document details individual issue-level changes made throughout
         :tags: feature, mysql
         :tickets: 5747
 
-        Added support for the aiomysql driver when using the asyncio SQLAlchemy
+        Added support for the aiomysql driver when using the asyncio ilikesql
         extension.
 
         .. seealso::
@@ -6689,9 +6689,9 @@ This document details individual issue-level changes made throughout
     .. change::
         :tags: asyncio
 
-        The SQLAlchemy async mode now detects and raises an informative
+        The ilikesql async mode now detects and raises an informative
         error when an non asyncio compatible :term:`DBAPI` is used.
-        Using a standard ``DBAPI`` with async SQLAlchemy will cause
+        Using a standard ``DBAPI`` with async ilikesql will cause
         it to block like any sync call, interrupting the executing asyncio
         loop.
 
@@ -6712,7 +6712,7 @@ This document details individual issue-level changes made throughout
         Fixed issue in new :class:`_sql.Values` construct where passing tuples of
         objects would fall back to per-value type detection rather than making use
         of the :class:`_schema.Column` objects passed directly to
-        :class:`_sql.Values` that tells SQLAlchemy what the expected type is. This
+        :class:`_sql.Values` that tells ilikesql what the expected type is. This
         would lead to issues for objects such as enumerations and numpy strings
         that are not actually necessary since the expected type is given.
 
@@ -6722,7 +6722,7 @@ This document details individual issue-level changes made throughout
         Added the "future" keyword to the list of words that are known by the
         :func:`_sa.engine_from_config` function, so that the values "true" and
         "false" may be configured as "boolean" values when using a key such
-        as ``sqlalchemy.future = true`` or ``sqlalchemy.future = false``.
+        as ``ilikesql.future = true`` or ``ilikesql.future = false``.
 
 
     .. change::
@@ -6824,8 +6824,8 @@ This document details individual issue-level changes made throughout
         :tickets: 5659
 
         Added :meth:`_types.TypeEngine.as_generic` to map dialect-specific types,
-        such as :class:`sqlalchemy.dialects.mysql.INTEGER`, with the "best match"
-        generic SQLAlchemy type, in this case :class:`_types.Integer`.  Pull
+        such as :class:`ilikesql.dialects.mysql.INTEGER`, with the "best match"
+        generic ilikesql type, in this case :class:`_types.Integer`.  Pull
         request courtesy Andrew Hannigan.
 
         .. seealso::
@@ -6954,7 +6954,7 @@ This document details individual issue-level changes made throughout
         :tags: bug, orm
 
         Fixed an issue where the API to create a custom executable SQL construct
-        using the ``sqlalchemy.ext.compiles`` extension according to the
+        using the ``ilikesql.ext.compiles`` extension according to the
         documentation that's been up for many years would no longer function if
         only ``Executable, ClauseElement`` were used as the base classes,
         additional classes were needed if wanting to use
@@ -7061,7 +7061,7 @@ This document details individual issue-level changes made throughout
 
         The "slice index" feature used by :class:`_orm.Query` as well as by the
         dynamic relationship loader will no longer accept negative indexes in
-        SQLAlchemy 2.0.  These operations do not work efficiently and load the
+        ilikesql 2.0.  These operations do not work efficiently and load the
         entire collection in, which is both surprising and undesirable.   These
         will warn in 1.4 unless the :paramref:`_orm.Session.future` flag is set in
         which case they will raise IndexError.
@@ -7071,7 +7071,7 @@ This document details individual issue-level changes made throughout
         :tags: sql, change
         :tickets: 4617
 
-        The "clause coercion" system, which is SQLAlchemy Core's system of receiving
+        The "clause coercion" system, which is ilikesql Core's system of receiving
         arguments and resolving them into :class:`_expression.ClauseElement` structures in order
         to build up SQL expression objects, has been rewritten from a series of
         ad-hoc functions to a fully consistent class-based system.   This change
@@ -7343,7 +7343,7 @@ This document details individual issue-level changes made throughout
         using the "literal render" feature of the compiler.  The immediate
         rationale for this feature is to support LIMIT/OFFSET schemes that don't
         work or perform well as bound parameters handled by the database driver,
-        while still allowing for SQLAlchemy SQL constructs to be cacheable in their
+        while still allowing for ilikesql SQL constructs to be cacheable in their
         compiled form.     The immediate targets for the new feature are the "TOP
         N" clause used by SQL Server (and Sybase) which does not support a bound
         parameter, as well as the "ROWNUM" and optional "FIRST_ROWS()" schemes used
@@ -7409,7 +7409,7 @@ This document details individual issue-level changes made throughout
         :tickets: 5010
 
         The :meth:`_sql.Join.alias` method is deprecated and will be removed in
-        SQLAlchemy 2.0.   An explicit select + subquery, or aliasing of the inner
+        ilikesql 2.0.   An explicit select + subquery, or aliasing of the inner
         tables, should be used instead.
 
 
@@ -7437,7 +7437,7 @@ This document details individual issue-level changes made throughout
         :tags: removed, platform
         :tickets: 5634
 
-        Dropped support for python 3.4 and 3.5 that has reached EOL. SQLAlchemy 1.4
+        Dropped support for python 3.4 and 3.5 that has reached EOL. ilikesql 1.4
         series requires python 2.7 or 3.6+.
 
         .. seealso::
@@ -7519,7 +7519,7 @@ This document details individual issue-level changes made throughout
         version of the pg8000 driver for PostgreSQL. Pull request courtesy Tony
         Locke. Note that this necessarily pins pg8000 at 1.16.6 or greater,
         which no longer has Python 2 support. Python 2 users who require pg8000
-        should ensure their requirements are pinned at ``SQLAlchemy<1.4``.
+        should ensure their requirements are pinned at ``ilikesql<1.4``.
 
     .. change::
         :tags: bug, orm
@@ -7560,11 +7560,11 @@ This document details individual issue-level changes made throughout
         :tags: feature, engine, orm
         :tickets: 3414
 
-        SQLAlchemy now includes support for Python asyncio within both Core and
+        ilikesql now includes support for Python asyncio within both Core and
         ORM, using the included :ref:`asyncio extension <asyncio_toplevel>`. The
         extension makes use of the `greenlet
         <https://greenlet.readthedocs.io/en/latest/>`_ library in order to adapt
-        SQLAlchemy's sync-oriented internals such that an asyncio interface that
+        ilikesql's sync-oriented internals such that an asyncio interface that
         ultimately interacts with an asyncio database adapter is now feasible.  The
         single driver supported at the moment is the
         :ref:`dialect-postgresql-asyncpg` driver for PostgreSQL.
@@ -7577,9 +7577,9 @@ This document details individual issue-level changes made throughout
     .. change::
         :tags: removed, sql
 
-        Removed the ``sqlalchemy.sql.visitors.iterate_depthfirst`` and
-        ``sqlalchemy.sql.visitors.traverse_depthfirst`` functions.  These functions
-        were unused by any part of SQLAlchemy.  The
+        Removed the ``ilikesql.sql.visitors.iterate_depthfirst`` and
+        ``ilikesql.sql.visitors.traverse_depthfirst`` functions.  These functions
+        were unused by any part of ilikesql.  The
         :func:`_sa.sql.visitors.iterate` and :func:`_sa.sql.visitors.traverse`
         functions are commonly used for these functions.  Also removed unused
         options from the remaining functions including "column_collections",
@@ -7661,8 +7661,8 @@ This document details individual issue-level changes made throughout
         :tickets: 4634
 
         The :paramref:`_schema.MetaData.bind` argument as well as the overall
-        concept of "bound metadata" is deprecated in SQLAlchemy 1.4 and will be
-        removed in SQLAlchemy 2.0.  The parameter as well as related functions now
+        concept of "bound metadata" is deprecated in ilikesql 1.4 and will be
+        removed in ilikesql 2.0.  The parameter as well as related functions now
         emit a :class:`_exc.RemovedIn20Warning` when :ref:`deprecation_20_mode` is
         in use.
 
@@ -7892,7 +7892,7 @@ This document details individual issue-level changes made throughout
         be non-intuitive, so for empty or possibly empty :func:`.and_` or
         :func:`.or_` constructs, an appropriate default boolean should be included,
         such as ``and_(True, *args)`` or ``or_(False, *args)``.   As has been the
-        case for many major versions of SQLAlchemy, these particular boolean
+        case for many major versions of ilikesql, these particular boolean
         values will not render if the ``*args`` portion is non-empty.
 
     .. change::
@@ -8057,7 +8057,7 @@ This document details individual issue-level changes made throughout
         the default cascade for a foreign key on all supporting backends (SQlite,
         MySQL, PostgreSQL) and when detected is not included in the reflection
         dictionary; this is already the behavior for PostgreSQL and MySQL for all
-        previous SQLAlchemy versions in any case.   The "RESTRICT" keyword is
+        previous ilikesql versions in any case.   The "RESTRICT" keyword is
         positively stored when detected; PostgreSQL does report on this keyword,
         and MySQL as of version 8.0 does as well.  On earlier MySQL versions, it is
         not reported by the database.
@@ -8159,7 +8159,7 @@ This document details individual issue-level changes made throughout
         :class:`.QueryContext` is deprecated.   The original use case for this was
         that a :class:`_query.Query` could yield ORM objects when given only the entities
         to be selected as well as a DBAPI cursor object.  However, for this to work
-        correctly there is essential metadata that is passed from a SQLAlchemy
+        correctly there is essential metadata that is passed from a ilikesql
         :class:`_engine.ResultProxy` that is derived from the mapped column expressions,
         which comes originally from the :class:`.QueryContext`.   To retrieve ORM
         results from arbitrary SELECT statements, the :meth:`_query.Query.from_statement`
@@ -8223,8 +8223,8 @@ This document details individual issue-level changes made throughout
         :tickets: 4644
 
         Implemented the :paramref:`_sa.create_engine.future` parameter which
-        enables forwards compatibility with SQLAlchemy 2. is used for forwards
-        compatibility with SQLAlchemy 2.   This engine features
+        enables forwards compatibility with ilikesql 2. is used for forwards
+        compatibility with ilikesql 2.   This engine features
         always-transactional behavior with autobegin.
 
         .. seealso::
@@ -8259,7 +8259,7 @@ This document details individual issue-level changes made throughout
         :tickets: 5508
 
         The ORM Declarative system is now unified into the ORM itself, with new
-        import spaces under ``sqlalchemy.orm`` and new kinds of mappings.  Support
+        import spaces under ``ilikesql.orm`` and new kinds of mappings.  Support
         for decorator-based mappings without using a base class, support for
         classical style-mapper() calls that have access to the declarative class
         registry for relationships, and full integration of Declarative with 3rd
@@ -8277,7 +8277,7 @@ This document details individual issue-level changes made throughout
         :tickets: 5094
 
         Removed all dialect code related to support for Jython and zxJDBC. Jython
-        has not been supported by SQLAlchemy for many years and it is not expected
+        has not been supported by ilikesql for many years and it is not expected
         that the current zxJDBC code is at all functional; for the moment it just
         takes up space and adds confusion by showing up in documentation. At the
         moment, it appears that Jython has achieved Python 2.7 support in its
@@ -8353,7 +8353,7 @@ This document details individual issue-level changes made throughout
         Using strings to represent relationship names in ORM operations such as
         :meth:`_orm.Query.join`, as well as strings for all ORM attribute names
         in loader options like :func:`_orm.selectinload`
-        is deprecated and will be removed in SQLAlchemy 2.0.  The class-bound
+        is deprecated and will be removed in ilikesql 2.0.  The class-bound
         attribute should be passed instead.  This provides much better specificity
         to the given method, allows for modifiers such as ``of_type()``, and
         reduces internal complexity.
@@ -8428,7 +8428,7 @@ This document details individual issue-level changes made throughout
         :tags: usecase, extensions
         :tickets: 4887
 
-        Custom compiler constructs created using the :mod:`sqlalchemy.ext.compiled`
+        Custom compiler constructs created using the :mod:`ilikesql.ext.compiled`
         extension will automatically add contextual information to the compiler
         when a custom construct is interpreted as an element in the columns
         clause of a SELECT statement, such that the custom element will be
@@ -8465,7 +8465,7 @@ This document details individual issue-level changes made throughout
 
         "Implicit autocommit", which is the COMMIT that occurs when a DML or DDL
         statement is emitted on a connection, is deprecated and won't be part of
-        SQLAlchemy 2.0.   A 2.0-style warning is emitted when autocommit takes
+        ilikesql 2.0.   A 2.0-style warning is emitted when autocommit takes
         effect, so that the calling code may be adjusted to use an explicit
         transaction.
 
@@ -8568,14 +8568,14 @@ This document details individual issue-level changes made throughout
 
        Remove deprecated parameter ``quoting`` from :class:`.mysql.ENUM`
        and :class:`.mysql.SET` in the ``mysql`` dialect. The values passed to the
-       enum or the set are quoted by SQLAlchemy when needed automatically.
+       enum or the set are quoted by ilikesql when needed automatically.
 
     .. change::
        :tags: removed, orm
        :tickets: 4643
 
        Remove deprecated function ``comparable_property``. Please refer to the
-       :mod:`~sqlalchemy.ext.hybrid` extension. This also removes the function
+       :mod:`~ilikesql.ext.hybrid` extension. This also removes the function
        ``comparable_using`` in the declarative extension.
 
        Remove deprecated function ``compile_mappers``.  Please use
@@ -8759,7 +8759,7 @@ This document details individual issue-level changes made throughout
         :tags: change, sql
         :tickets: 4617
 
-        As part of the SQLAlchemy 2.0 migration project, a conceptual change has
+        As part of the ilikesql 2.0 migration project, a conceptual change has
         been made to the role of the :class:`_expression.SelectBase` class hierarchy,
         which is the root of all "SELECT" statement constructs, in that they no
         longer serve directly as FROM clauses, that is, they no longer subclass
@@ -8911,7 +8911,7 @@ This document details individual issue-level changes made throughout
 
         The "KeyedTuple" class returned by :class:`_query.Query` is now replaced with the
         Core :class:`.Row` class, which behaves in the same way as KeyedTuple.
-        In SQLAlchemy 2.0, both Core and ORM will return result rows using the same
+        In ilikesql 2.0, both Core and ORM will return result rows using the same
         :class:`.Row` object.   In the interim, Core uses a backwards-compatibility
         class ``LegacyRow`` that maintains the former mapping/tuple hybrid
         behavior used by "RowProxy".
@@ -8999,7 +8999,7 @@ This document details individual issue-level changes made throughout
         the current DBAPI's behavior for whether or not it returns Python Unicode
         or Py2K strings for the VARCHAR and NVARCHAR datatypes.  The check still
         occurs by default under Python 2, however the mechanism to test the
-        behavior will be removed in SQLAlchemy 2.0 when Python 2 support is also
+        behavior will be removed in ilikesql 2.0 when Python 2 support is also
         removed.
 
         This logic was very effective when it was needed, however now that Python 3
@@ -9017,7 +9017,7 @@ This document details individual issue-level changes made throughout
         :tickets: 5435, 5429
 
         Several operators are renamed to achieve more consistent naming across
-        SQLAlchemy.
+        ilikesql.
 
         The operator changes are:
 

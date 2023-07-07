@@ -1,4 +1,4 @@
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 Relationships API
 -----------------

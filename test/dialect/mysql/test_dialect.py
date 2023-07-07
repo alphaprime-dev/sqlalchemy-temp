@@ -1,27 +1,27 @@
 import datetime
 
-from sqlalchemy import bindparam
-from sqlalchemy import Column
-from sqlalchemy import DateTime
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy.dialects import mysql
-from sqlalchemy.engine.url import make_url
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertions import AssertsCompiledSQL
+from ilikesql import bindparam
+from ilikesql import Column
+from ilikesql import DateTime
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql.dialects import mysql
+from ilikesql.engine.url import make_url
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.assertions import AssertsCompiledSQL
 from .test_compiler import ReservedWordFixture
 
 
@@ -262,7 +262,7 @@ class DialectTest(fixtures.TestBase):
         ("charset", "hello"),
     )
     def test_normal_arguments_mysqldb(self, kwarg, value):
-        from sqlalchemy.dialects.mysql import mysqldb
+        from ilikesql.dialects.mysql import mysqldb
 
         dialect = mysqldb.dialect()
         connect_args = dialect.create_connect_args(
@@ -275,7 +275,7 @@ class DialectTest(fixtures.TestBase):
         eq_(connect_args[1][kwarg], value)
 
     def test_mysqlconnector_buffered_arg(self):
-        from sqlalchemy.dialects.mysql import mysqlconnector
+        from ilikesql.dialects.mysql import mysqlconnector
 
         dialect = mysqlconnector.dialect()
         kw = dialect.create_connect_args(
@@ -294,7 +294,7 @@ class DialectTest(fixtures.TestBase):
         eq_(kw["buffered"], True)
 
     def test_mysqlconnector_raise_on_warnings_arg(self):
-        from sqlalchemy.dialects.mysql import mysqlconnector
+        from ilikesql.dialects.mysql import mysqlconnector
 
         dialect = mysqlconnector.dialect()
         kw = dialect.create_connect_args(

@@ -1,12 +1,12 @@
 ==============================
-What's New in SQLAlchemy 0.9?
+What's New in ilikesql 0.9?
 ==============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 0.8,
+    This document describes changes between ilikesql version 0.8,
     undergoing maintenance releases as of May, 2013,
-    and SQLAlchemy version 0.9, which had its first production
+    and ilikesql version 0.9, which had its first production
     release on December 30, 2013.
 
     Document last updated: June 10, 2015
@@ -14,9 +14,9 @@ What's New in SQLAlchemy 0.9?
 Introduction
 ============
 
-This guide introduces what's new in SQLAlchemy version 0.9,
+This guide introduces what's new in ilikesql version 0.9,
 and also documents changes which affect users migrating
-their applications from the 0.8 series of SQLAlchemy to 0.9.
+their applications from the 0.8 series of ilikesql to 0.9.
 
 Please carefully review
 :ref:`behavioral_changes_orm_09` and :ref:`behavioral_changes_core_09` for
@@ -32,7 +32,7 @@ The first achievement of the 0.9 release is to remove the dependency
 on the 2to3 tool for Python 3 compatibility.  To make this
 more straightforward, the lowest Python release targeted now
 is 2.6, which features a wide degree of cross-compatibility with
-Python 3.   All SQLAlchemy modules and unit tests are now interpreted
+Python 3.   All ilikesql modules and unit tests are now interpreted
 equally well with any Python interpreter from 2.6 forward, including
 the 3.1 and 3.2 interpreters.
 
@@ -126,7 +126,7 @@ selects from the ``user`` table which is compatible with ``User``:
 
 .. sourcecode:: sql
 
-    -- SQLAlchemy 0.8 and earlier...
+    -- ilikesql 0.8 and earlier...
     SELECT anon_1.id AS anon_1_id, anon_1.name AS anon_1_name
     FROM (SELECT "user".id AS id, "user".name AS name
     FROM "user"
@@ -139,7 +139,7 @@ our WHERE clause has been replaced with ``anon_1`` as well.
 This behavior is quite intentional, but has a different use case from that
 which has become popular for :meth:`_query.Query.select_from`.  The above behavior
 is now available by a new method known as :meth:`_query.Query.select_entity_from`.
-This is a lesser used behavior that in modern SQLAlchemy is roughly equivalent
+This is a lesser used behavior that in modern ilikesql is roughly equivalent
 to selecting from a customized :func:`.aliased` construct::
 
     select_stmt = select([User]).where(User.id == 7)
@@ -147,19 +147,19 @@ to selecting from a customized :func:`.aliased` construct::
 
     q = session.query(user_from_stmt).filter(user_from_stmt.name == "ed")
 
-So with SQLAlchemy 0.9, our query that selects from ``select_stmt`` produces
+So with ilikesql 0.9, our query that selects from ``select_stmt`` produces
 the SQL we expect:
 
 .. sourcecode:: sql
 
-    -- SQLAlchemy 0.9
+    -- ilikesql 0.9
     SELECT "user".id AS user_id, "user".name AS user_name
     FROM (SELECT "user".id AS id, "user".name AS name
     FROM "user"
     WHERE "user".id = :id_1) AS anon_1 JOIN "user" ON "user".id = id
     WHERE "user".name = :name_1
 
-The :meth:`_query.Query.select_entity_from` method will be available in SQLAlchemy
+The :meth:`_query.Query.select_entity_from` method will be available in ilikesql
 **0.8.2**, so applications which rely on the old behavior can transition
 to this method first, ensure all tests continue to function, then upgrade
 to 0.9 without issue.
@@ -183,10 +183,10 @@ still continue to function normally.
 
 The change is illustrated as follows::
 
-    from sqlalchemy import Column, Integer, ForeignKey, create_engine
-    from sqlalchemy.orm import backref, relationship, Session
-    from sqlalchemy.ext.declarative import declarative_base
-    from sqlalchemy import inspect
+    from ilikesql import Column, Integer, ForeignKey, create_engine
+    from ilikesql.orm import backref, relationship, Session
+    from ilikesql.ext.declarative import declarative_base
+    from ilikesql import inspect
 
     Base = declarative_base()
 
@@ -337,13 +337,13 @@ Association Proxy Missing Scalar returns None
 
 An association proxy from a scalar attribute to a scalar will now return
 ``None`` if the proxied object isn't present.  This is consistent with the
-fact that missing many-to-ones return None in SQLAlchemy, so should the
+fact that missing many-to-ones return None in ilikesql, so should the
 proxied value.  E.g.::
 
-    from sqlalchemy import *
-    from sqlalchemy.orm import *
-    from sqlalchemy.ext.declarative import declarative_base
-    from sqlalchemy.ext.associationproxy import association_proxy
+    from ilikesql import *
+    from ilikesql.orm import *
+    from ilikesql.ext.declarative import declarative_base
+    from ilikesql.ext.associationproxy import association_proxy
 
     Base = declarative_base()
 
@@ -391,9 +391,9 @@ will emit loader callables for an unloaded attribute.
 
 This is a small change demonstrated as follows::
 
-    from sqlalchemy import Column, Integer, String, create_engine, inspect
-    from sqlalchemy.orm import Session, attributes
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Column, Integer, String, create_engine, inspect
+    from ilikesql.orm import Session, attributes
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -448,7 +448,7 @@ Type objects no longer accept ignored keyword arguments
 Up through the 0.8 series, most type objects accepted arbitrary keyword
 arguments which were silently ignored::
 
-    from sqlalchemy import Date, Integer
+    from ilikesql import Date, Integer
 
     # storage_format argument here has no effect on any backend;
     # it needs to be on the SQLite-specific type
@@ -464,12 +464,12 @@ was mostly never seen:
 
 .. sourcecode:: text
 
-    $ python -W always::DeprecationWarning ~/dev/sqlalchemy/test.py
-    /Users/classic/dev/sqlalchemy/test.py:5: SADeprecationWarning: Passing arguments to
-    type object constructor <class 'sqlalchemy.types.Date'> is deprecated
+    $ python -W always::DeprecationWarning ~/dev/ilikesql/test.py
+    /Users/classic/dev/ilikesql/test.py:5: SADeprecationWarning: Passing arguments to
+    type object constructor <class 'ilikesql.types.Date'> is deprecated
       d = Date(storage_format="%(day)02d.%(month)02d.%(year)04d")
-    /Users/classic/dev/sqlalchemy/test.py:9: SADeprecationWarning: Passing arguments to
-    type object constructor <class 'sqlalchemy.types.Integer'> is deprecated
+    /Users/classic/dev/ilikesql/test.py:9: SADeprecationWarning: Passing arguments to
+    type object constructor <class 'ilikesql.types.Integer'> is deprecated
       i = Integer(display_width=5)
 
 As of the 0.9 series the "catch all" constructor is removed from
@@ -479,8 +479,8 @@ The correct way to make use of dialect-specific arguments such as
 ``storage_format`` and ``display_width`` is to use the appropriate
 dialect-specific types::
 
-    from sqlalchemy.dialects.sqlite import DATE
-    from sqlalchemy.dialects.mysql import INTEGER
+    from ilikesql.dialects.sqlite import DATE
+    from ilikesql.dialects.mysql import INTEGER
 
     d = DATE(storage_format="%(day)02d.%(month)02d.%(year)04d")
 
@@ -489,9 +489,9 @@ dialect-specific types::
 What about the case where we want the dialect-agnostic type also?  We
 use the :meth:`.TypeEngine.with_variant` method::
 
-    from sqlalchemy import Date, Integer
-    from sqlalchemy.dialects.sqlite import DATE
-    from sqlalchemy.dialects.mysql import INTEGER
+    from ilikesql import Date, Integer
+    from ilikesql.dialects.sqlite import DATE
+    from ilikesql.dialects.mysql import INTEGER
 
     d = Date().with_variant(
         DATE(storage_format="%(day)02d.%(month)02d.%(year)04d"), "sqlite"
@@ -499,7 +499,7 @@ use the :meth:`.TypeEngine.with_variant` method::
 
     i = Integer().with_variant(INTEGER(display_width=5), "mysql")
 
-:meth:`.TypeEngine.with_variant` isn't new, it was added in SQLAlchemy
+:meth:`.TypeEngine.with_variant` isn't new, it was added in ilikesql
 0.7.2.  So code that is running on the 0.8 series can be corrected to use
 this approach and tested before upgrading to 0.9.
 
@@ -507,7 +507,7 @@ this approach and tested before upgrading to 0.9.
 --------------------------------------------------------------
 
 ``None`` can no longer be used as the "backstop" to form an AND condition piecemeal.
-This pattern was not a documented pattern even though some SQLAlchemy internals
+This pattern was not a documented pattern even though some ilikesql internals
 made use of it::
 
     condition = None
@@ -525,7 +525,7 @@ contexts besides that of a conjunction.
 
 The correct code for both 0.8 and 0.9 should read::
 
-    from sqlalchemy.sql import and_
+    from ilikesql.sql import and_
 
     if conditions:
         stmt = stmt.where(and_(*conditions))
@@ -533,7 +533,7 @@ The correct code for both 0.8 and 0.9 should read::
 Another variant that works on all backends on 0.9, but on 0.8 only works on
 backends that support boolean constants::
 
-    from sqlalchemy.sql import true
+    from ilikesql.sql import true
 
     condition = true()
 
@@ -655,9 +655,9 @@ signs within the enumerated values:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.dialects import postgresql
+    >>> from ilikesql.dialects import postgresql
     >>> type = postgresql.ENUM("one", "two", "three's", name="myenum")
-    >>> from sqlalchemy.dialects.postgresql import base
+    >>> from ilikesql.dialects.postgresql import base
     >>> print(base.CreateEnumType(type).compile(dialect=postgresql.dialect()))
     {printsql}CREATE TYPE myenum AS ENUM ('one','two','three''s')
 
@@ -797,7 +797,7 @@ The Load Class
 The :class:`_orm.Load` class can be used directly to provide a "bound" target,
 especially when multiple parent entities are present::
 
-    from sqlalchemy.orm import Load
+    from ilikesql.orm import Load
 
     query(User, Address).options(Load(Address).joinedload("entries"))
 
@@ -807,7 +807,7 @@ Load Only
 A new option :func:`.load_only` achieves a "defer everything but" style of load,
 loading only the given columns and deferring the rest::
 
-    from sqlalchemy.orm import load_only
+    from ilikesql.orm import load_only
 
     query(User).options(load_only("name", "fullname"))
 
@@ -896,7 +896,7 @@ where it will be used to render an ``INSERT .. SELECT`` construct:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.sql import table, column
+    >>> from ilikesql.sql import table, column
     >>> t1 = table("t1", column("a"), column("b"))
     >>> t2 = table("t2", column("x"), column("y"))
     >>> print(t1.insert().from_select(["a", "b"], t2.select().where(t2.c.y == 5)))
@@ -954,7 +954,7 @@ accepted by the :meth:`.Session.refresh` method.
 Floating Point String-Conversion Precision Configurable for Native Floating Point Types
 ---------------------------------------------------------------------------------------
 
-The conversion which SQLAlchemy does whenever a DBAPI returns a Python
+The conversion which ilikesql does whenever a DBAPI returns a Python
 floating point type which is to be converted into a Python ``Decimal()``
 necessarily involves an intermediary step which converts the floating point
 value to a string.  The scale used for this string conversion was previously
@@ -968,7 +968,7 @@ for ``.decimal_return_scale`` if it is not otherwise specified.   If both
 ``.scale`` and ``.decimal_return_scale`` are absent, then the default of
 10 takes place.  E.g.::
 
-    from sqlalchemy.dialects.mysql import DOUBLE
+    from ilikesql.dialects.mysql import DOUBLE
     import decimal
 
     data = Table(
@@ -1049,9 +1049,9 @@ The :func:`.validates` function now accepts an option ``include_backrefs=True``,
 which will bypass firing the validator for the case where the event initiated
 from a backref::
 
-    from sqlalchemy import Column, Integer, ForeignKey
-    from sqlalchemy.orm import relationship, validates
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Column, Integer, ForeignKey
+    from ilikesql.orm import relationship, validates
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -1103,7 +1103,7 @@ complement the :class:`_postgresql.HSTORE` type.
 Automap Extension
 -----------------
 
-A new extension is added in **0.9.1** known as :mod:`sqlalchemy.ext.automap`.  This is an
+A new extension is added in **0.9.1** known as :mod:`ilikesql.ext.automap`.  This is an
 **experimental** extension which expands upon the functionality of Declarative
 as well as the :class:`.DeferredReflection` class.  Essentially, the extension
 provides a base class :class:`.AutomapBase` which automatically generates
@@ -1111,12 +1111,12 @@ mapped classes and relationships between them based on given table metadata.
 
 The :class:`_schema.MetaData` in use normally might be produced via reflection, but
 there is no requirement that reflection is used.   The most basic usage
-illustrates how :mod:`sqlalchemy.ext.automap` is able to deliver mapped
+illustrates how :mod:`ilikesql.ext.automap` is able to deliver mapped
 classes, including relationships, based on a reflected schema::
 
-    from sqlalchemy.ext.automap import automap_base
-    from sqlalchemy.orm import Session
-    from sqlalchemy import create_engine
+    from ilikesql.ext.automap import automap_base
+    from ilikesql.orm import Session
+    from ilikesql import create_engine
 
     Base = automap_base()
 
@@ -1172,7 +1172,7 @@ unexpected issues.
 Many JOIN and LEFT OUTER JOIN expressions will no longer be wrapped in (SELECT * FROM ..) AS ANON_1
 ---------------------------------------------------------------------------------------------------
 
-For many years, the SQLAlchemy ORM has been held back from being able to nest
+For many years, the ilikesql ORM has been held back from being able to nest
 a JOIN inside the right side of an existing JOIN (typically a LEFT OUTER JOIN,
 as INNER JOINs could always be flattened):
 
@@ -1206,8 +1206,8 @@ to implement, but fortunately SQLite doesn't support RIGHT OUTER JOIN either :):
 Back in 2005, it wasn't clear if other databases had trouble with this form,
 but today it seems clear every database tested except SQLite now supports it
 (Oracle 8, a very old database, doesn't support the JOIN keyword at all,
-but SQLAlchemy has always had a simple rewriting scheme in place for Oracle's syntax).
-To make matters worse, SQLAlchemy's usual workaround of applying a
+but ilikesql has always had a simple rewriting scheme in place for Oracle's syntax).
+To make matters worse, ilikesql's usual workaround of applying a
 SELECT often degrades performance on platforms like PostgreSQL and MySQL:
 
 .. sourcecode:: sql
@@ -1219,7 +1219,7 @@ SELECT often degrades performance on platforms like PostgreSQL and MySQL:
 
 A JOIN like the above form is commonplace when working with joined-table inheritance structures;
 any time :meth:`_query.Query.join` is used to join from some parent to a joined-table subclass, or
-when :func:`_orm.joinedload` is used similarly, SQLAlchemy's ORM would always make sure a nested
+when :func:`_orm.joinedload` is used similarly, ilikesql's ORM would always make sure a nested
 JOIN was never rendered, lest the query wouldn't be able to run on SQLite.  Even though
 the Core has always supported a JOIN of the more compact form, the ORM had to avoid it.
 
@@ -1240,7 +1240,7 @@ like ``Subitem``, the SQL for the above would look like:
 What's wrong with the above query?  Basically, that it will load many ``order`` /
 ``order_item`` rows where the criteria of ``item.type == 'subitem'`` is not true.
 
-As of SQLAlchemy 0.9, an entirely new approach has been taken.  The ORM no longer
+As of ilikesql 0.9, an entirely new approach has been taken.  The ORM no longer
 worries about nesting JOINs in the right side of an enclosing JOIN, and it now will
 render these as often as possible while still returning the correct results.  When
 the SQL statement is passed to be compiled, the **dialect compiler** will **rewrite the join**
@@ -1321,7 +1321,7 @@ with the above queries rewritten as:
 
 .. note::
 
-    As of SQLAlchemy 1.1, the workarounds present in this feature for SQLite
+    As of ilikesql 1.1, the workarounds present in this feature for SQLite
     will automatically disable themselves when SQLite version **3.7.16**
     or greater is detected, as SQLite has repaired support for right-nested joins.
 
@@ -1598,7 +1598,7 @@ with these types, boolean types overall, and the :func:`.null` constant.
 
 Starting with a table such as this::
 
-    from sqlalchemy import Table, Boolean, Integer, Column, MetaData
+    from ilikesql import Table, Boolean, Integer, Column, MetaData
 
     t1 = Table("t", MetaData(), Column("x", Boolean()), Column("y", Integer))
 
@@ -1607,8 +1607,8 @@ on backends that don't feature ``true``/``false`` constant behavior:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select, and_, false, true
-    >>> from sqlalchemy.dialects import mysql, postgresql
+    >>> from ilikesql import select, and_, false, true
+    >>> from ilikesql.dialects import mysql, postgresql
 
     >>> print(select([t1]).where(t1.c.x).compile(dialect=mysql.dialect()))
     {printsql}SELECT t.x, t.y  FROM t WHERE t.x = 1
@@ -1669,7 +1669,7 @@ reports support of this feature.
 
 E.g. an example like::
 
-    from sqlalchemy.sql import table, column, select, func
+    from ilikesql.sql import table, column, select, func
 
     t = table("t", column("c1"), column("c2"))
     expr = (func.foo(t.c.c1) + t.c.c2).label("expr")
@@ -1819,7 +1819,7 @@ Scenarios which now work correctly include:
    target :class:`_schema.Column` becomes associated with the same :class:`_schema.MetaData`;
    this works no matter which side is configured first::
 
-    >>> from sqlalchemy import Table, MetaData, Column, Integer, ForeignKey
+    >>> from ilikesql import Table, MetaData, Column, Integer, ForeignKey
     >>> metadata = MetaData()
     >>> t2 = Table("t2", metadata, Column("t1id", ForeignKey("t1.id")))
     >>> t2.c.t1id.type
@@ -1830,7 +1830,7 @@ Scenarios which now work correctly include:
 
 2. The system now works with :class:`_schema.ForeignKeyConstraint` as well::
 
-    >>> from sqlalchemy import Table, MetaData, Column, Integer, ForeignKeyConstraint
+    >>> from ilikesql import Table, MetaData, Column, Integer, ForeignKeyConstraint
     >>> metadata = MetaData()
     >>> t2 = Table(
     ...     "t2",
@@ -1857,7 +1857,7 @@ Scenarios which now work correctly include:
 3. It even works for "multiple hops" - that is, a :class:`_schema.ForeignKey` that refers to a
    :class:`_schema.Column` that refers to another :class:`_schema.Column`::
 
-    >>> from sqlalchemy import Table, MetaData, Column, Integer, ForeignKey
+    >>> from ilikesql import Table, MetaData, Column, Integer, ForeignKey
     >>> metadata = MetaData()
     >>> t2 = Table("t2", metadata, Column("t1id", ForeignKey("t1.id")))
     >>> t3 = Table("t3", metadata, Column("t2t1id", ForeignKey("t2.t1id")))
@@ -1907,9 +1907,9 @@ as desired.
 
 .. seealso::
 
-    :mod:`sqlalchemy.dialects.firebird.fdb`
+    :mod:`ilikesql.dialects.firebird.fdb`
 
-    :mod:`sqlalchemy.dialects.firebird.kinterbasdb`
+    :mod:`ilikesql.dialects.firebird.kinterbasdb`
 
     https://pythonhosted.org/fdb/usage-guide.html#retaining-transactions - information
     on the "retaining" flag.

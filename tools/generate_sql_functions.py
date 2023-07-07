@@ -10,9 +10,9 @@ import re
 from tempfile import NamedTemporaryFile
 import textwrap
 
-from sqlalchemy.sql.functions import _registry
-from sqlalchemy.types import TypeEngine
-from sqlalchemy.util.tool_support import code_writer_cmd
+from ilikesql.sql.functions import _registry
+from ilikesql.types import TypeEngine
+from ilikesql.util.tool_support import code_writer_cmd
 
 
 def _fns_in_deterministic_order():
@@ -135,7 +135,7 @@ def main(cmd: code_writer_cmd) -> None:
         cmd.write_output_file_from_tempfile(tempfile, destination_path)
 
 
-functions_py = "lib/sqlalchemy/sql/functions.py"
+functions_py = "lib/ilikesql/sql/functions.py"
 test_functions_py = "test/typing/plain_files/sql/functions.py"
 
 

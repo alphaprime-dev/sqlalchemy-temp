@@ -3,18 +3,18 @@ from __future__ import annotations
 
 from typing import Annotated
 
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import or_
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import ConcreteBase
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import with_polymorphic
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import or_
+from ilikesql import select
+from ilikesql import String
+from ilikesql.ext.declarative import ConcreteBase
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import with_polymorphic
 
 
 intpk = Annotated[int, mapped_column(primary_key=True)]

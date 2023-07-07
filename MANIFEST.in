@@ -8,8 +8,8 @@ recursive-include tools *.py
 
 # for some reason in some environments stale Cython .c files
 # are being pulled in, these should never be in a dist
-exclude lib/sqlalchemy/cyextension/*.c
-exclude lib/sqlalchemy/cyextension/*.so
+exclude lib/ilikesql/cyextension/*.c
+exclude lib/ilikesql/cyextension/*.so
 
 # include the pyx and pxd extensions, which otherwise
 # don't come in if --with-cextensions isn't specified.

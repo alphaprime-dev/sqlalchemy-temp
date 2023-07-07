@@ -1,5 +1,5 @@
 """Represent functions and classes
-which allow the usage of Dogpile caching with SQLAlchemy.
+which allow the usage of Dogpile caching with ilikesql.
 Introduces a query option called FromCache.
 
 .. versionchanged:: 1.4  the caching approach has been altered to work
@@ -15,15 +15,15 @@ The three new concepts introduced here are:
  * RelationshipCache - a variant of FromCache which is specific
    to a query invoked during a lazy load.
 
-The rest of what's here are standard SQLAlchemy and
+The rest of what's here are standard ilikesql and
 dogpile.cache constructs.
 
 """
 from dogpile.cache.api import NO_VALUE
 
-from sqlalchemy import event
-from sqlalchemy.orm import loading
-from sqlalchemy.orm.interfaces import UserDefinedOption
+from ilikesql import event
+from ilikesql.orm import loading
+from ilikesql.orm.interfaces import UserDefinedOption
 
 
 class ORMCache:
@@ -129,7 +129,7 @@ class FromCache(UserDefinedOption):
         self.expiration_time = expiration_time
         self.ignore_expiration = ignore_expiration
 
-    # this is not needed as of SQLAlchemy 1.4.28;
+    # this is not needed as of ilikesql 1.4.28;
     # UserDefinedOption classes no longer participate in the SQL
     # compilation cache key
     def _gen_cache_key(self, anon_map, bindparams):

@@ -1,6 +1,6 @@
 :orphan:
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 .. _mapping_constructors:
 

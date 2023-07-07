@@ -4,11 +4,11 @@
 Working with Engines and Connections
 ====================================
 
-.. module:: sqlalchemy.engine
+.. module:: ilikesql.engine
 
 This section details direct usage of the :class:`_engine.Engine`,
 :class:`_engine.Connection`, and related objects. Its important to note that when
-using the SQLAlchemy ORM, these objects are not generally accessed; instead,
+using the ilikesql ORM, these objects are not generally accessed; instead,
 the :class:`.Session` object is used as the interface to the database.
 However, for applications that are built around direct usage of textual SQL
 statements and/or SQL expression constructs without involvement by the ORM's
@@ -43,7 +43,7 @@ The most basic function of the :class:`_engine.Engine` is to provide access to a
 :class:`_engine.Connection`, which can then invoke SQL statements.   To emit
 a textual statement to the database looks like::
 
-    from sqlalchemy import text
+    from ilikesql import text
 
     with engine.connect() as connection:
         result = connection.execute(text("select username from users"))
@@ -88,7 +88,7 @@ Using Transactions
 
   This section describes how to use transactions when working directly
   with :class:`_engine.Engine` and :class:`_engine.Connection` objects. When using the
-  SQLAlchemy ORM, the public API for transaction control is via the
+  ilikesql ORM, the public API for transaction control is via the
   :class:`.Session` object, which makes usage of the :class:`.Transaction`
   object internally. See :ref:`unitofwork_transaction` for further
   information.
@@ -96,7 +96,7 @@ Using Transactions
 Commit As You Go
 ~~~~~~~~~~~~~~~~
 
-The :class:`~sqlalchemy.engine.Connection` object always emits SQL statements
+The :class:`~ilikesql.engine.Connection` object always emits SQL statements
 within the context of a transaction block.   The first time the
 :meth:`_engine.Connection.execute` method is called to execute a SQL
 statement, this transaction is begun automatically, using a behavior known
@@ -122,7 +122,7 @@ illustrated in the example below::
 
     The design of "commit as you go" is intended to be complementary to the
     design of the :term:`DBAPI`, which is the underlying database interface
-    that SQLAlchemy interacts with. In the DBAPI, the ``connection`` object does
+    that ilikesql interacts with. In the DBAPI, the ``connection`` object does
     not assume changes to the database will be automatically committed, instead
     requiring in the default case that the ``connection.commit()`` method is
     called in order to commit changes to the database. It should be noted that
@@ -130,7 +130,7 @@ illustrated in the example below::
     Python DBAPIs implement "autobegin" as the primary means of managing
     transactions, and handle the job of emitting a statement like BEGIN on the
     connection when SQL statements are first emitted.
-    SQLAlchemy's API is basically re-stating this behavior in terms of higher
+    ilikesql's API is basically re-stating this behavior in terms of higher
     level Python objects.
 
 In "commit as you go" style, we can call upon :meth:`_engine.Connection.commit`
@@ -152,7 +152,7 @@ emitted, a new transaction begins implicitly::
         connection.commit()  # commits "a third statement"
 
 .. versionadded:: 2.0 "commit as you go" style is a new feature of
-   SQLAlchemy 2.0.  It is also available in SQLAlchemy 1.4's "transitional"
+   ilikesql 2.0.  It is also available in ilikesql 1.4's "transitional"
    mode when using a "future" style engine.
 
 Begin Once
@@ -212,16 +212,16 @@ returned by the :meth:`_engine.Connection.begin` method::
     ahead of time.  However, if we do so, no further SQL operations may be
     emitted on the :class:`_engine.Connection` until the block ends::
 
-        >>> from sqlalchemy import create_engine
+        >>> from ilikesql import create_engine
         >>> e = create_engine("sqlite://", echo=True)
         >>> with e.begin() as conn:
         ...     conn.commit()
         ...     conn.begin()
-        2021-11-08 09:49:07,517 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-        2021-11-08 09:49:07,517 INFO sqlalchemy.engine.Engine COMMIT
+        2021-11-08 09:49:07,517 INFO ilikesql.engine.Engine BEGIN (implicit)
+        2021-11-08 09:49:07,517 INFO ilikesql.engine.Engine COMMIT
         Traceback (most recent call last):
         ...
-        sqlalchemy.exc.InvalidRequestError: Can't operate on closed transaction inside
+        ilikesql.exc.InvalidRequestError: Can't operate on closed transaction inside
         context manager.  Please complete the context manager before emitting
         further commands.
 
@@ -275,7 +275,7 @@ DBAPIs that support isolation levels also usually support the concept of true
 "autocommit", which means that the DBAPI connection itself will be placed into
 a non-transactional autocommit mode. This usually means that the typical DBAPI
 behavior of emitting "BEGIN" to the database automatically no longer occurs,
-but it may also include other directives. SQLAlchemy treats the concept of
+but it may also include other directives. ilikesql treats the concept of
 "autocommit" like any other isolation level; in that it is an isolation level
 that loses not only "read committed" but also loses atomicity.
 
@@ -287,10 +287,10 @@ that loses not only "read committed" but also loses atomicity.
   the :class:`_engine.Connection` object, which continues to call upon DBAPI
   ``.commit()`` and ``.rollback()`` methods (they just have no effect under
   autocommit), and for which the ``.begin()`` method assumes the DBAPI will
-  start a transaction implicitly (which means that SQLAlchemy's "begin" **does
+  start a transaction implicitly (which means that ilikesql's "begin" **does
   not change autocommit mode**).
 
-SQLAlchemy dialects should support these isolation levels as well as autocommit
+ilikesql dialects should support these isolation levels as well as autocommit
 to as great a degree as possible.
 
 Setting Isolation Level or DBAPI Autocommit for a Connection
@@ -327,7 +327,7 @@ begin a transaction::
    the :meth:`_engine.Connection.execution_options` method is the same
    :class:`_engine.Connection` object upon which the method was called,
    meaning, it modifies the state of the :class:`_engine.Connection`
-   object in place.  This is a new behavior as of SQLAlchemy 2.0.
+   object in place.  This is a new behavior as of ilikesql 2.0.
    This behavior does not apply to the :meth:`_engine.Engine.execution_options`
    method; that method still returns a copy of the :class:`.Engine` and
    as described below may be used to construct multiple :class:`.Engine`
@@ -348,7 +348,7 @@ also be set engine wide, as is often preferable.  This may be
 achieved by passing the :paramref:`_sa.create_engine.isolation_level`
 parameter to :func:`.sa.create_engine`::
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     eng = create_engine(
         "postgresql://scott:tiger@localhost/test", isolation_level="REPEATABLE READ"
@@ -371,7 +371,7 @@ method, the latter of which will create a copy of the :class:`.Engine` that
 shares the dialect and connection pool of the original engine, but has its own
 per-connection isolation level setting::
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     eng = create_engine(
         "postgresql+psycopg2://scott:tiger@localhost/test",
@@ -393,7 +393,7 @@ break into "transactional" and "read-only" operations, a separate
 :class:`_engine.Engine` that makes use of ``"AUTOCOMMIT"`` may be separated off
 from the main engine::
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     eng = create_engine("postgresql+psycopg2://scott:tiger@localhost/test")
 
@@ -434,7 +434,7 @@ Understanding the DBAPI-Level Autocommit Isolation Level
 In the parent section, we introduced the concept of the
 :paramref:`_engine.Connection.execution_options.isolation_level`
 parameter and how it can be used to set database isolation levels, including
-DBAPI-level "autocommit" which is treated by SQLAlchemy as another transaction
+DBAPI-level "autocommit" which is treated by ilikesql as another transaction
 isolation level.   In this section we will attempt to clarify the implications
 of this approach.
 
@@ -465,7 +465,7 @@ the "isolation level" is, after all, a configurational detail of the transaction
 itself just like any other isolation level.
 
 In the example below, statements remain
-**autocommitting** regardless of SQLAlchemy-level transaction blocks::
+**autocommitting** regardless of ilikesql-level transaction blocks::
 
     with engine.connect() as connection:
         connection = connection.execution_options(isolation_level="AUTOCOMMIT")
@@ -481,11 +481,11 @@ it probably will have no effect due to autocommit mode:
 
 .. sourcecode:: text
 
-    INFO sqlalchemy.engine.Engine BEGIN (implicit)
+    INFO ilikesql.engine.Engine BEGIN (implicit)
     ...
-    INFO sqlalchemy.engine.Engine COMMIT using DBAPI connection.commit(), DBAPI should ignore due to autocommit mode
+    INFO ilikesql.engine.Engine COMMIT using DBAPI connection.commit(), DBAPI should ignore due to autocommit mode
 
-At the same time, even though we are using "DBAPI autocommit", SQLAlchemy's
+At the same time, even though we are using "DBAPI autocommit", ilikesql's
 transactional semantics, that is, the in-Python behavior of :meth:`_engine.Connection.begin`
 as well as the behavior of "autobegin", **remain in place, even though these
 don't impact the DBAPI connection itself**.  To illustrate, the code
@@ -504,7 +504,7 @@ called after autobegin has already occurred::
 
 The above example also demonstrates the same theme that the "autocommit"
 isolation level is a configurational detail of the underlying database
-transaction, and is independent of the begin/commit behavior of the SQLAlchemy
+transaction, and is independent of the begin/commit behavior of the ilikesql
 Connection object. The "autocommit" mode will not interact with
 :meth:`_engine.Connection.begin` in any way and the :class:`_engine.Connection`
 does not consult this status when performing its own state changes with regards
@@ -604,8 +604,8 @@ leave result rows outside of process memory before they are consumed.
 
   Server side cursors also imply a wider set of features with relational
   databases, such as the ability to "scroll" a cursor forwards and backwards.
-  SQLAlchemy does not include any explicit support for these behaviors; within
-  SQLAlchemy itself, the general term "server side cursors" should be considered
+  ilikesql does not include any explicit support for these behaviors; within
+  ilikesql itself, the general term "server side cursors" should be considered
   to mean "unbuffered results" and "client side cursors" means "result rows
   are buffered into memory before the first row is returned".   To work with
   a richer "server side cursor" featureset specific to a certain DBAPI driver,
@@ -624,7 +624,7 @@ When using MySQL drivers with a server side cursor, the DBAPI connection is in
 a more fragile state and does not recover as gracefully from error conditions
 nor will it allow a rollback to proceed until the cursor is fully closed.
 
-For this reason, SQLAlchemy's dialects will always default to the less error
+For this reason, ilikesql's dialects will always default to the less error
 prone version of a cursor, which means for PostgreSQL and MySQL dialects
 it defaults to a buffered, "client side" cursor where the full set of results
 is pulled into memory before any fetch methods are called from the cursor.
@@ -656,7 +656,7 @@ they are consumed. This parameter may be to a positive integer value using the
 :meth:`.Executable.execution_options` method.
 
 .. versionadded:: 1.4.40 :paramref:`_engine.Connection.execution_options.yield_per` as a
-   Core-only option is new as of SQLAlchemy 1.4.40; for prior 1.4 versions,
+   Core-only option is new as of ilikesql 1.4.40; for prior 1.4 versions,
    use :paramref:`_engine.Connection.execution_options.stream_results`
    directly in combination with :meth:`_engine.Result.yield_per`.
 
@@ -858,12 +858,12 @@ as the schema name is passed to these methods explicitly.
 SQL Compilation Caching
 -----------------------
 
-.. versionadded:: 1.4  SQLAlchemy now has a transparent query caching system
+.. versionadded:: 1.4  ilikesql now has a transparent query caching system
    that substantially lowers the Python computational overhead involved in
    converting SQL statement constructs into SQL strings across both
    Core and ORM.   See the introduction at :ref:`change_4639`.
 
-SQLAlchemy includes a comprehensive caching system for the SQL compiler as well
+ilikesql includes a comprehensive caching system for the SQL compiler as well
 as its ORM variants.   This caching system is transparent within the
 :class:`.Engine` and provides that the SQL compilation process for a given Core
 or ORM SQL statement, as well as related computations which assemble
@@ -894,7 +894,7 @@ within the scope of the ``connection.execute()`` call for enhanced performance.
    impact the results returned for a particular SQL statement nor does it
    imply any memory use linked to fetching of result rows.
 
-While SQLAlchemy has had a rudimentary statement cache since the early 1.x
+While ilikesql has had a rudimentary statement cache since the early 1.x
 series, and additionally has featured the "Baked Query" extension for the ORM,
 both of these systems required a high degree of special API use in order for
 the cache to be effective.  The new cache as of 1.4 is instead completely
@@ -909,7 +909,7 @@ Configuration
 ~~~~~~~~~~~~~
 
 The cache itself is a dictionary-like object called an ``LRUCache``, which is
-an internal SQLAlchemy dictionary subclass that tracks the usage of particular
+an internal ilikesql dictionary subclass that tracks the usage of particular
 keys and features a periodic "pruning" step which removes the least recently
 used items when the size of the cache reaches a certain threshold.  The size
 of this cache defaults to 500 and may be configured using the
@@ -946,15 +946,15 @@ section :ref:`dbengine_logging` for background on logging configuration.
 
 As an example, we will examine the logging produced by the following program::
 
-    from sqlalchemy import Column
-    from sqlalchemy import create_engine
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy import select
-    from sqlalchemy import String
-    from sqlalchemy.ext.declarative import declarative_base
-    from sqlalchemy.orm import relationship
-    from sqlalchemy.orm import Session
+    from ilikesql import Column
+    from ilikesql import create_engine
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql import select
+    from ilikesql import String
+    from ilikesql.ext.declarative import declarative_base
+    from ilikesql.orm import relationship
+    from ilikesql.orm import Session
 
     Base = declarative_base()
 
@@ -1013,31 +1013,31 @@ checking for the existence of the "a" and "b" tables:
 
 .. sourcecode:: text
 
-  INFO sqlalchemy.engine.Engine PRAGMA temp.table_info("a")
-  INFO sqlalchemy.engine.Engine [raw sql] ()
-  INFO sqlalchemy.engine.Engine PRAGMA main.table_info("b")
-  INFO sqlalchemy.engine.Engine [raw sql] ()
+  INFO ilikesql.engine.Engine PRAGMA temp.table_info("a")
+  INFO ilikesql.engine.Engine [raw sql] ()
+  INFO ilikesql.engine.Engine PRAGMA main.table_info("b")
+  INFO ilikesql.engine.Engine [raw sql] ()
 
 For the above two SQLite PRAGMA statements, the badge reads ``[raw sql]``,
 which indicates the driver is sending a Python string directly to the
 database using :meth:`.Connection.exec_driver_sql`.  Caching does not apply
 to such statements because they already exist in string form, and there
 is nothing known about what kinds of result rows will be returned since
-SQLAlchemy does not parse SQL strings ahead of time.
+ilikesql does not parse SQL strings ahead of time.
 
 The next statements we see are the CREATE TABLE statements:
 
 .. sourcecode:: sql
 
-  INFO sqlalchemy.engine.Engine
+  INFO ilikesql.engine.Engine
   CREATE TABLE a (
     id INTEGER NOT NULL,
     data VARCHAR,
     PRIMARY KEY (id)
   )
 
-  INFO sqlalchemy.engine.Engine [no key 0.00007s] ()
-  INFO sqlalchemy.engine.Engine
+  INFO ilikesql.engine.Engine [no key 0.00007s] ()
+  INFO ilikesql.engine.Engine
   CREATE TABLE b (
     id INTEGER NOT NULL,
     a_id INTEGER,
@@ -1046,7 +1046,7 @@ The next statements we see are the CREATE TABLE statements:
     FOREIGN KEY(a_id) REFERENCES a (id)
   )
 
-  INFO sqlalchemy.engine.Engine [no key 0.00006s] ()
+  INFO ilikesql.engine.Engine [no key 0.00006s] ()
 
 For each of these statements, the badge reads ``[no key 0.00006s]``.  This
 indicates that these two particular statements, caching did not occur because
@@ -1068,21 +1068,21 @@ a segment looks like:
 
 .. sourcecode:: sql
 
-  INFO sqlalchemy.engine.Engine INSERT INTO a (data) VALUES (?)
-  INFO sqlalchemy.engine.Engine [generated in 0.00011s] (None,)
-  INFO sqlalchemy.engine.Engine INSERT INTO a (data) VALUES (?)
-  INFO sqlalchemy.engine.Engine [cached since 0.0003533s ago] (None,)
-  INFO sqlalchemy.engine.Engine INSERT INTO a (data) VALUES (?)
-  INFO sqlalchemy.engine.Engine [cached since 0.0005326s ago] (None,)
-  INFO sqlalchemy.engine.Engine INSERT INTO b (a_id, data) VALUES (?, ?)
-  INFO sqlalchemy.engine.Engine [generated in 0.00010s] (1, None)
-  INFO sqlalchemy.engine.Engine INSERT INTO b (a_id, data) VALUES (?, ?)
-  INFO sqlalchemy.engine.Engine [cached since 0.0003232s ago] (1, None)
-  INFO sqlalchemy.engine.Engine INSERT INTO b (a_id, data) VALUES (?, ?)
-  INFO sqlalchemy.engine.Engine [cached since 0.0004887s ago] (1, None)
+  INFO ilikesql.engine.Engine INSERT INTO a (data) VALUES (?)
+  INFO ilikesql.engine.Engine [generated in 0.00011s] (None,)
+  INFO ilikesql.engine.Engine INSERT INTO a (data) VALUES (?)
+  INFO ilikesql.engine.Engine [cached since 0.0003533s ago] (None,)
+  INFO ilikesql.engine.Engine INSERT INTO a (data) VALUES (?)
+  INFO ilikesql.engine.Engine [cached since 0.0005326s ago] (None,)
+  INFO ilikesql.engine.Engine INSERT INTO b (a_id, data) VALUES (?, ?)
+  INFO ilikesql.engine.Engine [generated in 0.00010s] (1, None)
+  INFO ilikesql.engine.Engine INSERT INTO b (a_id, data) VALUES (?, ?)
+  INFO ilikesql.engine.Engine [cached since 0.0003232s ago] (1, None)
+  INFO ilikesql.engine.Engine INSERT INTO b (a_id, data) VALUES (?, ?)
+  INFO ilikesql.engine.Engine [cached since 0.0004887s ago] (1, None)
 
 Above, we see essentially two unique SQL strings; ``"INSERT INTO a (data) VALUES (?)"``
-and ``"INSERT INTO b (a_id, data) VALUES (?, ?)"``.  Since SQLAlchemy uses
+and ``"INSERT INTO b (a_id, data) VALUES (?, ?)"``.  Since ilikesql uses
 bound parameters for all literal values, even though these statements are
 repeated many times for different objects, because the parameters are separate,
 the actual SQL string stays the same.
@@ -1130,18 +1130,18 @@ as for subsequent lazy loads of the "b" table:
 
 .. sourcecode:: text
 
-  INFO sqlalchemy.engine.Engine SELECT a.id AS a_id, a.data AS a_data
+  INFO ilikesql.engine.Engine SELECT a.id AS a_id, a.data AS a_data
   FROM a
-  INFO sqlalchemy.engine.Engine [generated in 0.00009s] ()
-  INFO sqlalchemy.engine.Engine SELECT b.id AS b_id, b.a_id AS b_a_id, b.data AS b_data
+  INFO ilikesql.engine.Engine [generated in 0.00009s] ()
+  INFO ilikesql.engine.Engine SELECT b.id AS b_id, b.a_id AS b_a_id, b.data AS b_data
   FROM b
   WHERE ? = b.a_id
-  INFO sqlalchemy.engine.Engine [generated in 0.00010s] (1,)
-  INFO sqlalchemy.engine.Engine SELECT b.id AS b_id, b.a_id AS b_a_id, b.data AS b_data
+  INFO ilikesql.engine.Engine [generated in 0.00010s] (1,)
+  INFO ilikesql.engine.Engine SELECT b.id AS b_id, b.a_id AS b_a_id, b.data AS b_data
   FROM b
   WHERE ? = b.a_id
-  INFO sqlalchemy.engine.Engine [cached since 0.0005922s ago] (2,)
-  INFO sqlalchemy.engine.Engine SELECT b.id AS b_id, b.a_id AS b_a_id, b.data AS b_data
+  INFO ilikesql.engine.Engine [cached since 0.0005922s ago] (2,)
+  INFO ilikesql.engine.Engine SELECT b.id AS b_id, b.a_id AS b_a_id, b.data AS b_data
   FROM b
   WHERE ? = b.a_id
 
@@ -1180,7 +1180,7 @@ a dictionary.  Any dictionary may be used as a cache for any series of
 statements by using the :paramref:`.Connection.execution_options.compiled_cache`
 option as an execution option.  Execution options may be set on a statement,
 on an :class:`_engine.Engine` or :class:`_engine.Connection`, as well as
-when using the ORM :meth:`_orm.Session.execute` method for SQLAlchemy-2.0
+when using the ORM :meth:`_orm.Session.execute` method for ilikesql-2.0
 style invocations.   For example, to run a series of SQL statements and have
 them cached in a particular dictionary::
 
@@ -1188,7 +1188,7 @@ them cached in a particular dictionary::
     with engine.connect().execution_options(compiled_cache=my_cache) as conn:
         conn.execute(table.select())
 
-The SQLAlchemy ORM uses the above technique to hold onto per-mapper caches
+The ilikesql ORM uses the above technique to hold onto per-mapper caches
 within the unit of work "flush" process that are separate from the default
 cache configured on the :class:`_engine.Engine`, as well as for some
 relationship loader queries.
@@ -1210,7 +1210,7 @@ strings that are safe to reuse for many statement invocations, given
 a particular cache key that is keyed to that SQL string.  This means
 that any literal values in a statement, such as the LIMIT/OFFSET values for
 a SELECT, can not be hardcoded in the dialect's compilation scheme, as
-the compiled string will not be re-usable.   SQLAlchemy supports rendered
+the compiled string will not be re-usable.   ilikesql supports rendered
 bound parameters using the :meth:`_sql.BindParameter.render_literal_execute`
 method which can be applied to the existing ``Select._limit_clause`` and
 ``Select._offset_clause`` attributes by a custom compiler, which
@@ -1218,12 +1218,12 @@ are illustrated later in this section.
 
 As there are many third party dialects, many of which may be generating literal
 values from SQL statements without the benefit of the newer "literal execute"
-feature, SQLAlchemy as of version 1.4.5 has added an attribute to dialects
+feature, ilikesql as of version 1.4.5 has added an attribute to dialects
 known as :attr:`_engine.Dialect.supports_statement_cache`. This attribute is
 checked at runtime for its presence directly on a particular dialect's class,
 even if it's already present on a superclass, so that even a third party
-dialect that subclasses an existing cacheable SQLAlchemy dialect such as
-``sqlalchemy.dialects.postgresql.PGDialect`` must still explicitly include this
+dialect that subclasses an existing cacheable ilikesql dialect such as
+``ilikesql.dialects.postgresql.PGDialect`` must still explicitly include this
 attribute for caching to be enabled. The attribute should **only** be enabled
 once the dialect has been altered as needed and tested for reusability of
 compiled SQL statements with differing parameters.
@@ -1235,7 +1235,7 @@ When a dialect has been tested against caching, and in particular the SQL
 compiler has been updated to not render any literal LIMIT / OFFSET within
 a SQL string directly, dialect authors can apply the attribute as follows::
 
-    from sqlalchemy.engine.default import DefaultDialect
+    from ilikesql.engine.default import DefaultDialect
 
 
     class MyDialect(DefaultDialect):
@@ -1279,7 +1279,7 @@ of a :class:`.Select` object are not part of the cache key, so that many
 with the correct value.
 
 The correction for the above code is to move the literal integer into
-SQLAlchemy's :ref:`post-compile <change_4808>` facility, which will render the
+ilikesql's :ref:`post-compile <change_4808>` facility, which will render the
 literal integer outside of the initial compilation stage, but instead at
 execution time before the statement is sent to the DBAPI.  This is accessed
 within the compilation stage using the :meth:`_sql.BindParameter.render_literal_execute`
@@ -1333,7 +1333,7 @@ cache.
 After changes like the above have been made as appropriate, the
 :attr:`.Dialect.supports_statement_cache` flag should be set to ``True``.
 It is strongly recommended that third party dialects make use of the
-`dialect third party test suite <https://github.com/sqlalchemy/sqlalchemy/blob/main/README.dialects.rst>`_
+`dialect third party test suite <https://github.com/ilikesql/ilikesql/blob/main/README.dialects.rst>`_
 which will assert that operations like
 SELECTs with LIMIT/OFFSET are correctly rendered and cached.
 
@@ -1357,7 +1357,7 @@ Python functions, typically expressed as lambdas, may be used to generate
 SQL expressions which are cacheable based on the Python code location of
 the lambda function itself as well as the closure variables within the
 lambda.   The rationale is to allow caching of not only the SQL string-compiled
-form of a SQL expression construct as is SQLAlchemy's normal behavior when
+form of a SQL expression construct as is ilikesql's normal behavior when
 the lambda system isn't used, but also the in-Python composition
 of the SQL expression construct itself, which also has some degree of
 Python overhead.
@@ -1384,7 +1384,7 @@ constructed inside of an enclosing function in Python it is then subject
 to also having closure variables, which are significant to the whole
 approach::
 
-    from sqlalchemy import lambda_stmt
+    from ilikesql import lambda_stmt
 
 
     def run_my_statement(connection, parameter):
@@ -1452,7 +1452,7 @@ Basic guidelines include:
 
   ..
 
-* **Bound parameters are automatically accommodated** - in contrast to SQLAlchemy's
+* **Bound parameters are automatically accommodated** - in contrast to ilikesql's
   previous "baked query" system, the lambda SQL system accommodates for
   Python literal values which become SQL bound parameters automatically.
   This means that even though a given lambda runs only once, the values that
@@ -1533,7 +1533,7 @@ Basic guidelines include:
     ...     print(conn.scalar(my_stmt(5, 10)))
     Traceback (most recent call last):
       # ...
-    sqlalchemy.exc.InvalidRequestError: Can't invoke Python callable get_x()
+    ilikesql.exc.InvalidRequestError: Can't invoke Python callable get_x()
     inside of lambda expression argument at
     <code object <lambda> at 0x7fed15f350e0, file "<stdin>", line 6>;
     lambda SQL constructs should not invoke functions from closure variables
@@ -1575,7 +1575,7 @@ Basic guidelines include:
     ...     print(conn.scalar(my_stmt(Foo(5, 10))))
     Traceback (most recent call last):
       # ...
-    sqlalchemy.exc.InvalidRequestError: Closure variable named 'foo' inside of
+    ilikesql.exc.InvalidRequestError: Closure variable named 'foo' inside of
     lambda callable <code object <lambda> at 0x7fed15f35450, file
     "<stdin>", line 2> does not refer to a cacheable SQL element, and also
     does not appear to be serving as a SQL literal bound value based on the
@@ -1645,27 +1645,27 @@ In order to understand some of the options and behaviors which occur
 with lambda SQL constructs, an understanding of the caching system
 is helpful.
 
-SQLAlchemy's caching system normally generates a cache key from a given
+ilikesql's caching system normally generates a cache key from a given
 SQL expression construct by producing a structure that represents all the
 state within the construct::
 
-    >>> from sqlalchemy import select, column
+    >>> from ilikesql import select, column
     >>> stmt = select(column("q"))
     >>> cache_key = stmt._generate_cache_key()
     >>> print(cache_key)  # somewhat paraphrased
     CacheKey(key=(
       '0',
-      <class 'sqlalchemy.sql.selectable.Select'>,
+      <class 'ilikesql.sql.selectable.Select'>,
       '_raw_columns',
       (
         (
           '1',
-          <class 'sqlalchemy.sql.elements.ColumnClause'>,
+          <class 'ilikesql.sql.elements.ColumnClause'>,
           'name',
           'q',
           'type',
           (
-            <class 'sqlalchemy.sql.sqltypes.NullType'>,
+            <class 'ilikesql.sql.sqltypes.NullType'>,
           ),
         ),
       ),
@@ -1683,13 +1683,13 @@ everything that may vary about what's being rendered and potentially executed.
 The lambda construction system by contrast creates a different kind of cache
 key::
 
-    >>> from sqlalchemy import lambda_stmt
+    >>> from ilikesql import lambda_stmt
     >>> stmt = lambda_stmt(lambda: select(column("q")))
     >>> cache_key = stmt._generate_cache_key()
     >>> print(cache_key)
     CacheKey(key=(
       <code object <lambda> at 0x7fed1617c710, file "<stdin>", line 1>,
-      <class 'sqlalchemy.sql.lambdas.StatementLambdaElement'>,
+      <class 'ilikesql.sql.lambdas.StatementLambdaElement'>,
     ),)
 
 Above, we see a cache key that is vastly shorter than that of the non-lambda
@@ -1720,34 +1720,34 @@ represent both of these segments as well as the ``column()`` object::
       <code object <lambda> at 0x7f07323c50e0, file "<stdin>", line 3>,
       (
         '0',
-        <class 'sqlalchemy.sql.elements.ColumnClause'>,
+        <class 'ilikesql.sql.elements.ColumnClause'>,
         'name',
         'q',
         'type',
         (
-          <class 'sqlalchemy.sql.sqltypes.NullType'>,
+          <class 'ilikesql.sql.sqltypes.NullType'>,
         ),
       ),
       <code object <lambda> at 0x7f07323c5190, file "<stdin>", line 4>,
-      <class 'sqlalchemy.sql.lambdas.LinkedLambdaElement'>,
+      <class 'ilikesql.sql.lambdas.LinkedLambdaElement'>,
       (
         '0',
-        <class 'sqlalchemy.sql.elements.ColumnClause'>,
+        <class 'ilikesql.sql.elements.ColumnClause'>,
         'name',
         'q',
         'type',
         (
-          <class 'sqlalchemy.sql.sqltypes.NullType'>,
+          <class 'ilikesql.sql.sqltypes.NullType'>,
         ),
       ),
       (
         '0',
-        <class 'sqlalchemy.sql.elements.ColumnClause'>,
+        <class 'ilikesql.sql.elements.ColumnClause'>,
         'name',
         'q',
         'type',
         (
-          <class 'sqlalchemy.sql.sqltypes.NullType'>,
+          <class 'ilikesql.sql.sqltypes.NullType'>,
         ),
       ),
     ),)
@@ -1779,7 +1779,7 @@ performance example.
    behavior in order to optimize the speed of bulk INSERT statements,
    particularly as used by the ORM.
 
-As more databases have added support for INSERT..RETURNING, SQLAlchemy has
+As more databases have added support for INSERT..RETURNING, ilikesql has
 undergone a major change in how it approaches the subject of INSERT statements
 where there's a need to acquire server-generated values, most importantly
 server-generated primary key values which allow the new row to be referenced in
@@ -1788,11 +1788,11 @@ performance issue in the ORM, which relies on being able to retrieve
 server-generated primary key values in order to correctly populate the
 :term:`identity map`.
 
-With recent support for RETURNING added to SQLite and MariaDB, SQLAlchemy no
+With recent support for RETURNING added to SQLite and MariaDB, ilikesql no
 longer needs to rely upon the single-row-only
 `cursor.lastrowid <https://peps.python.org/pep-0249/#lastrowid>`_ attribute
 provided by the :term:`DBAPI` for most backends; RETURNING may now be used for
-all :ref:`SQLAlchemy-included <included_dialects>` backends with the exception
+all :ref:`ilikesql-included <included_dialects>` backends with the exception
 of MySQL. The remaining performance
 limitation, that the
 `cursor.executemany() <https://peps.python.org/pep-0249/#executemany>`_ DBAPI
@@ -1802,13 +1802,13 @@ INSERT statements to each accommodate a large number of rows in a single
 statement that is invoked using ``cursor.execute()``. This approach originates
 from the
 `psycopg2 fast execution helpers <https://www.psycopg.org/docs/extras.html#fast-execution-helpers>`_
-feature of the ``psycopg2`` DBAPI, which SQLAlchemy incrementally added more
+feature of the ``psycopg2`` DBAPI, which ilikesql incrementally added more
 and more support towards in recent release series.
 
 Current Support
 ~~~~~~~~~~~~~~~
 
-The feature is enabled for all backend included in SQLAlchemy that support
+The feature is enabled for all backend included in ilikesql that support
 RETURNING, with the exception of Oracle for which both the cx_Oracle and
 OracleDB drivers offer their own equivalent feature. The feature normally takes
 place when making use of the :meth:`_dml.Insert.returning` method of an
@@ -1821,7 +1821,7 @@ shorthand methods like :meth:`_orm.Session.scalars`). It also takes place
 within the ORM :term:`unit of work` process when using methods such as
 :meth:`_orm.Session.add` and :meth:`_orm.Session.add_all` to add rows.
 
-For SQLAlchemy's included dialects, support or equivalent support is currently
+For ilikesql's included dialects, support or equivalent support is currently
 as follows:
 
 * SQLite - supported for SQLite versions 3.35 and above
@@ -1912,7 +1912,7 @@ Correlating RETURNING rows to parameter sets
 
 The "batch" mode query illustrated in the previous section does not guarantee
 the order of records returned would correspond with that of the input data.
-When used by the SQLAlchemy ORM :term:`unit of work` process, as well as for
+When used by the ilikesql ORM :term:`unit of work` process, as well as for
 applications which correlate returned server-generated values with input data,
 the :meth:`_dml.Insert.returning` and :meth:`_dml.UpdateBase.return_defaults`
 methods include an option
@@ -2024,7 +2024,7 @@ feature when tasked with satisfying the
 In this mode, the original SQL form of INSERT is maintained, and the
 "insertmanyvalues" feature will instead run the statement as given for each
 parameter set individually, organizing the returned rows into a full result
-set. Unlike previous SQLAlchemy versions, it does so in a tight loop that
+set. Unlike previous ilikesql versions, it does so in a tight loop that
 minimizes Python overhead. In some cases, such as on SQLite, "non-batched" mode
 performs exactly as well as "batched" mode.
 
@@ -2069,12 +2069,12 @@ unique column with a client side default, such as a UUID column as follows::
 
     import uuid
 
-    from sqlalchemy import Column
-    from sqlalchemy import FetchedValue
-    from sqlalchemy import Integer
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy import Uuid
+    from ilikesql import Column
+    from ilikesql import FetchedValue
+    from ilikesql import Integer
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql import Uuid
 
     my_table = Table(
         "some_table",
@@ -2098,9 +2098,9 @@ the :class:`_orm.mapped_column` construct::
 
     import uuid
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -2129,12 +2129,12 @@ mostly transparent manner.  It does need to be physically present within
 the actual database table, however.  This style of :class:`_schema.Column`
 may be constructed using the function :func:`_schema.insert_sentinel`::
 
-    from sqlalchemy import Column
-    from sqlalchemy import Integer
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy import Uuid
-    from sqlalchemy import insert_sentinel
+    from ilikesql import Column
+    from ilikesql import Integer
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql import Uuid
+    from ilikesql import insert_sentinel
 
     Table(
         "some_table",
@@ -2152,11 +2152,11 @@ apply itself to all table-bound subclasses including within joined inheritance
 hierarchies::
 
 
-    from sqlalchemy.orm import declared_attr
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import orm_insert_sentinel
+    from ilikesql.orm import declared_attr
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import orm_insert_sentinel
 
 
     class Base(DeclarativeBase):
@@ -2258,12 +2258,12 @@ Or configured on the statement itself::
 Logging and Events
 ~~~~~~~~~~~~~~~~~~
 
-The "insertmanyvalues" feature integrates fully with SQLAlchemy's :ref:`statement
+The "insertmanyvalues" feature integrates fully with ilikesql's :ref:`statement
 logging <dbengine_logging>` as well as cursor events such as :meth:`.ConnectionEvents.before_cursor_execute`.
 When the list of parameters is broken into separate batches, **each INSERT
 statement is logged and passed to event handlers individually**.   This is a major change
 compared to how the psycopg2-only feature worked in previous 1.x series of
-SQLAlchemy, where the production of multiple INSERT statements was hidden from
+ilikesql, where the production of multiple INSERT statements was hidden from
 logging and events.  Logging display will truncate the long lists of parameters for readability,
 and will also indicate the specific batch of each statement. The example below illustrates
 an excerpt of this logging:
@@ -2398,7 +2398,7 @@ Working with Driver SQL and Raw DBAPI Connections
 
 The introduction on using :meth:`_engine.Connection.execute` made use of the
 :func:`_expression.text` construct in order to illustrate how textual SQL statements
-may be invoked.  When working with SQLAlchemy, textual SQL is actually more
+may be invoked.  When working with ilikesql, textual SQL is actually more
 of the exception rather than the norm, as the Core expression language
 and the ORM both abstract away the textual representation of SQL.  However, the
 :func:`_expression.text` construct itself also provides some abstraction of textual
@@ -2423,7 +2423,7 @@ method may be used::
 Working with the DBAPI cursor directly
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are some cases where SQLAlchemy does not provide a genericized way
+There are some cases where ilikesql does not provide a genericized way
 at accessing some :term:`DBAPI` functions, such as calling stored procedures as well
 as dealing with multiple result sets.  In these cases, it's just as expedient
 to deal with the raw DBAPI connection directly.
@@ -2460,7 +2460,7 @@ engine's connection pool::
 
     dbapi_conn.close()
 
-While SQLAlchemy may in the future add built-in patterns for more DBAPI
+While ilikesql may in the future add built-in patterns for more DBAPI
 use cases, there are diminishing returns as these cases tend to be rarely
 needed and they also vary highly dependent on the type of DBAPI in use,
 so in any case the direct DBAPI calling pattern is always there for those
@@ -2479,7 +2479,7 @@ Some recipes for DBAPI connection use follow.
 Calling Stored Procedures and User Defined Functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy supports calling stored procedures and user defined functions
+ilikesql supports calling stored procedures and user defined functions
 several ways. Please note that all DBAPIs have different practices, so you must
 consult your underlying DBAPI's documentation for specifics in relation to your
 particular usage. The following examples are hypothetical and may not work with
@@ -2507,7 +2507,7 @@ may potentially be used with your DBAPI. An example of this pattern is::
 
 Your DBAPI may not have a ``callproc`` requirement *or* may require a stored
 procedure or user defined function to be invoked with another pattern, such as
-normal SQLAlchemy connection usage. One example of this usage pattern is,
+normal ilikesql connection usage. One example of this usage pattern is,
 *at the time of this documentation's writing*, executing a stored procedure in
 the PostgreSQL database with the psycopg2 DBAPI, which should be invoked
 with normal connection usage::
@@ -2548,7 +2548,7 @@ to create a new dialect "foodialect://", the steps are as follows:
 
 1. Create a package called ``foodialect``.
 2. The package should have a module containing the dialect class,
-   which is typically a subclass of :class:`sqlalchemy.engine.default.DefaultDialect`.
+   which is typically a subclass of :class:`ilikesql.engine.default.DefaultDialect`.
    In this example let's say it's called ``FooDialect`` and its module is accessed
    via ``foodialect.dialect``.
 3. The entry point can be established in ``setup.cfg`` as follows:
@@ -2556,18 +2556,18 @@ to create a new dialect "foodialect://", the steps are as follows:
    .. sourcecode:: ini
 
           [options.entry_points]
-          sqlalchemy.dialects =
+          ilikesql.dialects =
               foodialect = foodialect.dialect:FooDialect
 
 If the dialect is providing support for a particular DBAPI on top of
-an existing SQLAlchemy-supported database, the name can be given
+an existing ilikesql-supported database, the name can be given
 including a database-qualification.  For example, if ``FooDialect``
 were in fact a MySQL dialect, the entry point could be established like this:
 
 .. sourcecode:: ini
 
       [options.entry_points]
-      sqlalchemy.dialects
+      ilikesql.dialects
           mysql.foodialect = foodialect.dialect:FooDialect
 
 The above entrypoint would then be accessed as ``create_engine("mysql+foodialect://")``.
@@ -2576,10 +2576,10 @@ The above entrypoint would then be accessed as ``create_engine("mysql+foodialect
 Registering Dialects In-Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy also allows a dialect to be registered within the current process, bypassing
+ilikesql also allows a dialect to be registered within the current process, bypassing
 the need for separate installation.   Use the ``register()`` function as follows::
 
-    from sqlalchemy.dialects import registry
+    from ilikesql.dialects import registry
 
 
     registry.register("mysql.foodialect", "myapp.dialect", "MyMySQLDialect")

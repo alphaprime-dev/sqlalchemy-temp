@@ -4,56 +4,56 @@ Mypy  / Pep-484 Support for ORM Mappings
 ========================================
 
 Support for :pep:`484` typing annotations as well as the
-MyPy_ type checking tool when using SQLAlchemy
+MyPy_ type checking tool when using ilikesql
 :ref:`declarative <orm_declarative_mapper_config_toplevel>` mappings
 that refer to the :class:`_schema.Column` object directly, rather than
-the :func:`_orm.mapped_column` construct introduced in SQLAlchemy 2.0.
+the :func:`_orm.mapped_column` construct introduced in ilikesql 2.0.
 
-.. topic:: SQLAlchemy Mypy Plugin Status Update
+.. topic:: ilikesql Mypy Plugin Status Update
 
    **Updated December 2022**
 
-   For SQLAlchemy 2.0, the Mypy plugin continues to work at the level at which
-   it reached in the SQLAlchemy 1.4 release.  However, SQLAlchemy 2.0,
+   For ilikesql 2.0, the Mypy plugin continues to work at the level at which
+   it reached in the ilikesql 1.4 release.  However, ilikesql 2.0,
    when released, will feature an
    :ref:`all new typing system <whatsnew_20_orm_declarative_typing>`
    for ORM Declarative models that removes the need for the Mypy plugin and
    delivers much more consistent behavior with generally superior capabilities.
    Note that this new capability is **not
-   part of SQLAlchemy 1.4, it is only in SQLAlchemy 2.0, which is out with beta
+   part of ilikesql 1.4, it is only in ilikesql 2.0, which is out with beta
    releases as of December 2022**.
 
-   The SQLAlchemy Mypy plugin, while it has technically never left the "alpha"
-   stage, should **now be considered as deprecated in SQLAlchemy 2.0, even
+   The ilikesql Mypy plugin, while it has technically never left the "alpha"
+   stage, should **now be considered as deprecated in ilikesql 2.0, even
    though it is still necessary for full Mypy support when using
-   SQLAlchemy 1.4**.
+   ilikesql 1.4**.
 
    The Mypy plugin itself does not solve the issue of supplying correct typing
    with other typing tools such as Pylance/Pyright, Pytype, Pycharm, etc, which
    cannot make use of Mypy plugins. Additionally, Mypy plugins are extremely
    difficult to develop, maintain and test, as a Mypy plugin must be deeply
    integrated with Mypy's internal datastructures and processes, which itself
-   are not stable within the Mypy project itself. The SQLAlchemy Mypy plugin
+   are not stable within the Mypy project itself. The ilikesql Mypy plugin
    has lots of limitations when used with code that deviates from very basic
    patterns which are reported regularly.
 
    For these reasons, new non-regression issues reported against the Mypy
-   plugin are unlikely to be fixed. When SQLAlchemy 2.0 is released, it will
+   plugin are unlikely to be fixed. When ilikesql 2.0 is released, it will
    continue to include the plugin, which will have been updated to continue to
-   function as well as it does in SQLAlchemy 1.4, when running under SQLAlchemy
+   function as well as it does in ilikesql 1.4, when running under ilikesql
    2.0. **Existing code that passes Mypy checks using the plugin with
-   SQLAlchemy 1.4 installed will continue to pass all checks in SQLAlchemy 2.0
+   ilikesql 1.4 installed will continue to pass all checks in ilikesql 2.0
    without any changes required, provided the plugin is still used. The
-   upcoming API to be released with SQLAlchemy 2.0 is fully backwards
-   compatible with the SQLAlchemy 1.4 API and Mypy plugin behavior.**
+   upcoming API to be released with ilikesql 2.0 is fully backwards
+   compatible with the ilikesql 1.4 API and Mypy plugin behavior.**
 
-   End-user code that passes all checks under SQLAlchemy 1.4 with the Mypy
+   End-user code that passes all checks under ilikesql 1.4 with the Mypy
    plugin will be able to incrementally migrate to the new structures, once
-   that code is running exclusively on SQLAlchemy 2.0.  See the section
+   that code is running exclusively on ilikesql 2.0.  See the section
    :ref:`whatsnew_20_orm_declarative_typing` for background on how this
    migration may proceed.
 
-   Code that is running exclusively on SQLAlchemy version
+   Code that is running exclusively on ilikesql version
    2.0 and has fully migrated to the new declarative constructs will enjoy full
    compliance with pep-484 as well as working correctly within IDEs and other
    typing tools, without the need for plugins.
@@ -62,8 +62,8 @@ the :func:`_orm.mapped_column` construct introduced in SQLAlchemy 2.0.
 Installation
 ------------
 
-For **SQLAlchemy 2.0 only**: No stubs should be installed and packages
-like sqlalchemy-stubs_ and sqlalchemy2-stubs_ should be fully uninstalled.
+For **ilikesql 2.0 only**: No stubs should be installed and packages
+like ilikesql-stubs_ and ilikesql2-stubs_ should be fully uninstalled.
 
 The Mypy_ package itself is a dependency.
 
@@ -71,25 +71,25 @@ Mypy may be installed using the "mypy" extras hook using pip:
 
 .. sourcecode:: text
 
-    pip install sqlalchemy[mypy]
+    pip install ilikesql[mypy]
 
 The plugin itself is configured as described in
 `Configuring mypy to use Plugins <https://mypy.readthedocs.io/en/latest/extending_mypy.html#configuring-mypy-to-use-plugins>`_,
-using the ``sqlalchemy.ext.mypy.plugin`` module name, such as within
+using the ``ilikesql.ext.mypy.plugin`` module name, such as within
 ``setup.cfg``::
 
     [mypy]
-    plugins = sqlalchemy.ext.mypy.plugin
+    plugins = ilikesql.ext.mypy.plugin
 
-.. _sqlalchemy-stubs: https://github.com/dropbox/sqlalchemy-stubs
+.. _ilikesql-stubs: https://github.com/dropbox/ilikesql-stubs
 
-.. _sqlalchemy2-stubs: https://github.com/sqlalchemy/sqlalchemy2-stubs
+.. _ilikesql2-stubs: https://github.com/ilikesql/ilikesql2-stubs
 
 What the Plugin Does
 --------------------
 
 The primary purpose of the Mypy plugin is to intercept and alter the static
-definition of SQLAlchemy
+definition of ilikesql
 :ref:`declarative mappings <orm_declarative_mapper_config_toplevel>` so that
 they match up to how they are structured after they have been
 :term:`instrumented` by their :class:`_orm.Mapper` objects. This allows both
@@ -103,8 +103,8 @@ alter classes dynamically at runtime.
 To cover the major areas where this occurs, consider the following ORM
 mapping, using the typical example of the ``User`` class::
 
-    from sqlalchemy import Column, Integer, String, select
-    from sqlalchemy.orm import declarative_base
+    from ilikesql import Column, Integer, String, select
+    from ilikesql.orm import declarative_base
 
     # "Base" is a class that is created dynamically from the
     # declarative_base() function
@@ -153,9 +153,9 @@ When the Mypy plugin processes the above file, the resulting static class
 definition and Python code passed to the Mypy tool is equivalent to the
 following::
 
-    from sqlalchemy import Column, Integer, String, select
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm.decl_api import DeclarativeMeta
+    from ilikesql import Column, Integer, String, select
+    from ilikesql.orm import Mapped
+    from ilikesql.orm.decl_api import DeclarativeMeta
 
 
     class Base(metaclass=DeclarativeMeta):
@@ -255,7 +255,7 @@ The Mypy plugin will accept the above ``int``, ``str`` and ``Optional[str]``
 and convert them to include the ``Mapped[]`` type surrounding them.  The
 ``Mapped[]`` construct may also be used explicitly::
 
-    from sqlalchemy.orm import Mapped
+    from ilikesql.orm import Mapped
 
 
     class MyClass(Base):
@@ -283,7 +283,7 @@ or otherwise be ``Optional``::
 
 Whether or not the mapped attribute is typed as ``Optional``, the
 generation of the ``__init__()`` method will **still consider all keywords
-to be optional**.  This is again matching what the SQLAlchemy ORM actually
+to be optional**.  This is again matching what the ilikesql ORM actually
 does when it creates the constructor, and should not be confused with the
 behavior of a validating system such as Python ``dataclasses`` which will
 generate a constructor that matches the annotations in terms of optional
@@ -294,12 +294,12 @@ Columns that Don't have an Explicit Type
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Columns that include a :class:`_schema.ForeignKey` modifier do not need
-to specify a datatype in a SQLAlchemy declarative mapping.  For
+to specify a datatype in a ilikesql declarative mapping.  For
 this type of attribute, the Mypy plugin will inform the user that it
 needs an explicit type to be sent::
 
     # .. other imports
-    from sqlalchemy.sql.schema import ForeignKey
+    from ilikesql.sql.schema import ForeignKey
 
     Base = declarative_base()
 
@@ -322,7 +322,7 @@ The plugin will deliver the message as follows:
 .. sourcecode:: text
 
     $ mypy test3.py --strict
-    test3.py:20: error: [SQLAlchemy Mypy plugin] Can't infer type from
+    test3.py:20: error: [ilikesql Mypy plugin] Can't infer type from
     ORM mapped expression assigned to attribute 'user_id'; please specify a
     Python type or Mapped[<python type>] on the left hand side.
     Found 1 error in 1 file (checked 1 source file)
@@ -397,7 +397,7 @@ The above mapping will produce the following error:
 
 .. sourcecode:: text
 
-    test3.py:22: error: [SQLAlchemy Mypy plugin] Can't infer scalar or
+    test3.py:22: error: [ilikesql Mypy plugin] Can't infer scalar or
     collection for ORM mapped expression assigned to attribute 'user'
     if both 'uselist' and 'collection_class' arguments are absent from the
     relationship(); please specify a type annotation on the left hand side.
@@ -475,7 +475,7 @@ such as :meth:`_orm.registry.mapped`) should be decorated with the
 :func:`_orm.declarative_mixin` decorator, which provides a hint to the Mypy
 plugin that a particular class intends to serve as a declarative mixin::
 
-    from sqlalchemy.orm import declarative_mixin, declared_attr
+    from ilikesql.orm import declarative_mixin, declared_attr
 
 
     @declarative_mixin
@@ -587,7 +587,7 @@ This attribute can be conditional within the ``TYPE_CHECKING`` variable::
 
 With the above recipe, the attributes listed in ``_mypy_mapped_attrs``
 will be applied with the :class:`_orm.Mapped` typing information so that the
-``User`` class will behave as a SQLAlchemy mapped class when used in a
+``User`` class will behave as a ilikesql mapped class when used in a
 class-bound context.
 
 .. _Mypy: https://mypy.readthedocs.io/

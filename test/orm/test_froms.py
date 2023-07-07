@@ -1,49 +1,49 @@
-from sqlalchemy import and_
-from sqlalchemy import asc
-from sqlalchemy import desc
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import exists
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import text
-from sqlalchemy import true
-from sqlalchemy import union
-from sqlalchemy import util
-from sqlalchemy.engine import default
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import contains_eager
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.context import ORMSelectCompileState
-from sqlalchemy.sql import column
-from sqlalchemy.sql import table
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
+from ilikesql import and_
+from ilikesql import asc
+from ilikesql import desc
+from ilikesql import exc as sa_exc
+from ilikesql import exists
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import text
+from ilikesql import true
+from ilikesql import union
+from ilikesql import util
+from ilikesql.engine import default
+from ilikesql.orm import aliased
+from ilikesql.orm import backref
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import column_property
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import contains_eager
+from ilikesql.orm import declarative_base
+from ilikesql.orm import joinedload
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm.context import ORMSelectCompileState
+from ilikesql.sql import column
+from ilikesql.sql import table
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import is_
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
 from test.orm import _fixtures
 
 
@@ -499,9 +499,9 @@ class EntityFromSubqueryTest(QueryTest, AssertsCompiledSQL):
         assert_raises_message(
             sa_exc.ArgumentError,
             "Column expression, FROM clause, or other .* expected, got "
-            "<sqlalchemy.sql.selectable.Select .*> object resolved from "
+            "<ilikesql.sql.selectable.Select .*> object resolved from "
             "<AliasedClass .* User> object. To create a FROM clause from "
-            "a <class 'sqlalchemy.sql.selectable.Select'> object",
+            "a <class 'ilikesql.sql.selectable.Select'> object",
             s.query,
             aliased(User, stmt),
         )
@@ -875,7 +875,7 @@ class ColumnAccessTest(QueryTest, AssertsCompiledSQL):
 
     def test_anonymous_expression_oldstyle(self):
         # relies upon _orm_only_from_obj_alias setting
-        from sqlalchemy.sql import column
+        from ilikesql.sql import column
 
         sess = fixture_session()
         c1, c2 = column("c1"), column("c2")
@@ -891,7 +891,7 @@ class ColumnAccessTest(QueryTest, AssertsCompiledSQL):
         )
 
     def test_anonymous_expression_newstyle(self):
-        from sqlalchemy.sql import column
+        from ilikesql.sql import column
 
         c1, c2 = column("c1"), column("c2")
         q1 = select(c1, c2).where(c1 == "dog")
@@ -908,7 +908,7 @@ class ColumnAccessTest(QueryTest, AssertsCompiledSQL):
         )
 
     def test_table_anonymous_expression_from_self_twice_newstyle(self):
-        from sqlalchemy.sql import column
+        from ilikesql.sql import column
 
         t1 = table("t1", column("c1"), column("c2"))
         stmt = (
@@ -948,7 +948,7 @@ class ColumnAccessTest(QueryTest, AssertsCompiledSQL):
         )
 
     def test_anonymous_expression_from_self_twice_newstyle_wlabels(self):
-        from sqlalchemy.sql import column
+        from ilikesql.sql import column
 
         c1, c2 = column("c1"), column("c2")
         subq = select(c1, c2).where(c1 == "dog").subquery()
@@ -973,7 +973,7 @@ class ColumnAccessTest(QueryTest, AssertsCompiledSQL):
         )
 
     def test_anonymous_expression_from_self_twice_newstyle_wolabels(self):
-        from sqlalchemy.sql import column
+        from ilikesql.sql import column
 
         c1, c2 = column("c1"), column("c2")
         subq = select(c1, c2).where(c1 == "dog").subquery()

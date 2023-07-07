@@ -11,16 +11,16 @@ has no dependency on the system.
 
 
 """
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy.ext.declarative import as_declarative
-from sqlalchemy.ext.declarative import declared_attr
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import Table
+from ilikesql.ext.declarative import as_declarative
+from ilikesql.ext.declarative import declared_attr
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
 
 
 @as_declarative()

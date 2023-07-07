@@ -1,11 +1,11 @@
-from sqlalchemy import testing
-from sqlalchemy.exc import SADeprecationWarning
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_deprecated
-from sqlalchemy.testing import fixtures
-from sqlalchemy.util.deprecations import _decorate_cls_with_warning
-from sqlalchemy.util.deprecations import warn_deprecated_limited
-from sqlalchemy.util.langhelpers import _hash_limit_string
+from ilikesql import testing
+from ilikesql.exc import SADeprecationWarning
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_deprecated
+from ilikesql.testing import fixtures
+from ilikesql.util.deprecations import _decorate_cls_with_warning
+from ilikesql.util.deprecations import warn_deprecated_limited
+from ilikesql.util.langhelpers import _hash_limit_string
 
 
 class WarnDeprecatedLimitedTest(fixtures.TestBase):

@@ -14,7 +14,7 @@
       Adjusted the "importlater" mechanism, which is
       used internally to resolve import cycles,
       such that the usage of __import__ is completed
-      when the import of sqlalchemy or sqlalchemy.orm
+      when the import of ilikesql or ilikesql.orm
       is done, thereby avoiding any usage of __import__
       after the application starts new threads,
       fixes.
@@ -1306,7 +1306,7 @@
         :tickets: 1915
 
       @classproperty 's official name/location for usage
-      with declarative is sqlalchemy.ext.declarative.declared_attr.
+      with declarative is ilikesql.ext.declarative.declared_attr.
       Same thing, but moving there since it is more of a
       "marker" that's specific to declarative,
       not just an attribute technique.
@@ -1436,12 +1436,12 @@
         :tags: tests
         :tickets:
 
-      the NoseSQLAlchemyPlugin has been moved to a
-      new package "sqlalchemy_nose" which installs
-      along with "sqlalchemy".  This so that the "nosetests"
+      the NoseilikesqlPlugin has been moved to a
+      new package "ilikesql_nose" which installs
+      along with "ilikesql".  This so that the "nosetests"
       script works as always but also allows the
       --with-coverage option to turn on coverage before
-      SQLAlchemy modules are imported, allowing coverage
+      ilikesql modules are imported, allowing coverage
       to work correctly.
 
     .. change::
@@ -1483,7 +1483,7 @@
         :tags: orm
         :tickets:
 
-      The Session class is now present in sqlalchemy.orm.*.
+      The Session class is now present in ilikesql.orm.*.
       We're moving away from the usage of create_session(),
       which has non-standard defaults, for those situations
       where a one-step Session constructor is desired. Most
@@ -1956,8 +1956,8 @@
       Reference" section is gone - all the docstrings from
       there which were public API are moved into the
       context of the main doc section that talks about it.
-      Main docs divided into "SQLAlchemy Core" and
-      "SQLAlchemy ORM" sections, mapper/relationship docs
+      Main docs divided into "ilikesql Core" and
+      "ilikesql ORM" sections, mapper/relationship docs
       have been broken out. Lots of sections rewritten
       and/or reorganized.
 
@@ -2896,7 +2896,7 @@
         :tickets:
 
       STRING/FIXED_CHAR now convert to unicode natively.
-      SQLAlchemy's String types then don't need to
+      ilikesql's String types then don't need to
       apply any kind of conversions.
 
     .. change::
@@ -3045,7 +3045,7 @@
         :tickets: 877
 
       The psycopg2 dialect will log NOTICE messages via the
-      "sqlalchemy.dialects.postgresql" logger name.
+      "ilikesql.dialects.postgresql" logger name.
 
     .. change::
         :tags: postgresql
@@ -3106,8 +3106,8 @@
         :tags: ext
         :tickets:
 
-      The sqlalchemy.orm.shard module now becomes an extension,
-      sqlalchemy.ext.horizontal_shard.   The old import
+      The ilikesql.orm.shard module now becomes an extension,
+      ilikesql.ext.horizontal_shard.   The old import
       works with a deprecation warning.
 
 .. changelog::
@@ -3279,7 +3279,7 @@
         :tags: orm
         :tickets:
 
-      Now uses sqlalchemy.orm.exc.DetachedInstanceError when an
+      Now uses ilikesql.orm.exc.DetachedInstanceError when an
       attribute load or refresh action fails due to object
       being detached from any Session.   UnboundExecutionError
       is specific to engines bound to sessions and statements.
@@ -3413,7 +3413,7 @@
       Behaves like the 'errors' keyword argument to
       the standard library's string.decode() functions.   This flag
       requires that `convert_unicode` is set to `"force"` - otherwise,
-      SQLAlchemy is not guaranteed to handle the task of unicode
+      ilikesql is not guaranteed to handle the task of unicode
       conversion.   Note that this flag adds significant performance
       overhead to row-fetching operations for backends that already
       return unicode objects natively (which most DBAPIs do).  This
@@ -3481,7 +3481,7 @@
         :tags: sql
         :tickets:
 
-      Made sqlalchemy.sql.expressions.Executable part of public
+      Made ilikesql.sql.expressions.Executable part of public
       API, used for any expression construct that can be sent to
       execute().  FunctionElement now inherits Executable so that
       it gains execution_options(), which are also propagated
@@ -3564,7 +3564,7 @@
         :tags: engines
         :tickets:
 
-      The assert_unicode flag is deprecated.  SQLAlchemy will raise
+      The assert_unicode flag is deprecated.  ilikesql will raise
       a warning in all cases where it is asked to encode a non-unicode
       Python string, as well as when a Unicode or UnicodeType type
       is explicitly passed a bytestring.  The String type will do nothing
@@ -3844,7 +3844,7 @@
         :tickets:
 
       For the full set of feature descriptions, see
-      https://docs.sqlalchemy.org/en/latest/changelog/migration_06.html .
+      https://docs.ilikesql.org/en/latest/changelog/migration_06.html .
       This document is a work in progress.
 
     .. change::
@@ -3969,7 +3969,7 @@
         :tickets:
 
       The all new merge() is showcased in a new comprehensive
-      example of how to integrate Beaker with SQLAlchemy.  See
+      example of how to integrate Beaker with ilikesql.  See
       the notes in the "examples" note below.
 
     .. change::
@@ -4195,7 +4195,7 @@
          instead of multiple positional \*args is deprecated.
        * query.iterate_instances() is removed.  Use query.instances().
        * Query.query_from_parent() is removed.  Use the
-         sqlalchemy.orm.with_parent() function to produce a
+         ilikesql.orm.with_parent() function to produce a
          "parent" clause, or alternatively query.with_parent().
        * query._from_self() is removed, use query.from_self()
          instead.
@@ -4203,7 +4203,7 @@
          Use "comparator_factory".
        * RelationProperty._get_join() is removed.
        * the 'echo_uow' flag on Session is removed.  Use
-         logging on the "sqlalchemy.orm.unitofwork" name.
+         logging on the "ilikesql.orm.unitofwork" name.
        * session.clear() is removed.  use session.expunge_all().
        * session.save(), session.update(), session.save_or_update()
          are removed.  Use session.add() and session.add_all().
@@ -4212,8 +4212,8 @@
          in favor of "load=False".
        * ScopedSession.mapper remains deprecated.  See the
          usage recipe at
-         https://www.sqlalchemy.org/trac/wiki/UsageRecipes/SessionAwareMapper
-       * passing an InstanceState (internal SQLAlchemy state object) to
+         https://www.ilikesql.org/trac/wiki/UsageRecipes/SessionAwareMapper
+       * passing an InstanceState (internal ilikesql state object) to
          attributes.init_collection() or attributes.get_history() is
          deprecated.  These functions are public API and normally
          expect a regular mapped object instance.
@@ -4474,7 +4474,7 @@
       setting echo=False on create_engine() now sets the loglevel
       to WARN instead of NOTSET.  This so that logging can be
       disabled for a particular engine even if logging
-      for "sqlalchemy.engine" is enabled overall.  Note that the
+      for "ilikesql.engine" is enabled overall.  Note that the
       default setting of "echo" is `None`.
 
     .. change::
@@ -4631,7 +4631,7 @@
         :tickets:
 
       Table reflection has been expanded and generalized into
-      a new API called "sqlalchemy.engine.reflection.Inspector".
+      a new API called "ilikesql.engine.reflection.Inspector".
       The Inspector object provides fine-grained information about
       a wide variety of schema information, with room for expansion,
       including table names, column names, view definitions, sequences,
@@ -4674,7 +4674,7 @@
 
        These support "on" and "execute-at()" just like plain DDL()
        does.  User-defined DDLElement subclasses can be created and
-       linked to a compiler using the sqlalchemy.ext.compiler extension.
+       linked to a compiler using the ilikesql.ext.compiler extension.
 
     .. change::
         :tags: ddl
@@ -4716,7 +4716,7 @@
         :tickets:
 
       the setuptools entrypoint for external dialects is now
-      called "sqlalchemy.dialects".
+      called "ilikesql.dialects".
 
     .. change::
         :tags: dialect, refactor
@@ -4836,8 +4836,8 @@
 
            - The "postgres" name can be imported from the old
              "databases" module, i.e. "from
-             sqlalchemy.databases import postgres" as well as
-             "dialects", "from sqlalchemy.dialects.postgres
+             ilikesql.databases import postgres" as well as
+             "dialects", "from ilikesql.dialects.postgres
              import base as pg", will send a deprecation
              warning.
 
@@ -5075,11 +5075,11 @@
         :tickets:
 
       the keys() method of RowProxy() now returns the result
-      column names *normalized* to be SQLAlchemy case
+      column names *normalized* to be ilikesql case
       insensitive names. This means they will be lower case for
       case insensitive names, whereas the DBAPI would normally
       return them as UPPERCASE names. This allows row keys() to
-      be compatible with further SQLAlchemy operations.
+      be compatible with further ilikesql operations.
 
     .. change::
         :tags: oracle
@@ -5109,11 +5109,11 @@
         :tickets:
 
       the keys() method of RowProxy() now returns the result
-      column names *normalized* to be SQLAlchemy case
+      column names *normalized* to be ilikesql case
       insensitive names. This means they will be lower case for
       case insensitive names, whereas the DBAPI would normally
       return them as UPPERCASE names. This allows row keys() to
-      be compatible with further SQLAlchemy operations.
+      be compatible with further ilikesql operations.
 
     .. change::
         :tags: firebird
@@ -5234,7 +5234,7 @@
       effect that there are much fewer type objects within
       most dialects. A detailed document on this architecture
       for dialect authors is in
-      lib/sqlalchemy/dialects/type_migration_guidelines.txt .
+      lib/ilikesql/dialects/type_migration_guidelines.txt .
 
     .. change::
         :tags: types

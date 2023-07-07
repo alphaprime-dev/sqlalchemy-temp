@@ -4,7 +4,7 @@
 Using the Session
 =================
 
-.. module:: sqlalchemy.orm.session
+.. module:: ilikesql.orm.session
 
 The declarative base and ORM mapping functions described at
 :ref:`mapper_config_toplevel` are the primary configurational interface for the

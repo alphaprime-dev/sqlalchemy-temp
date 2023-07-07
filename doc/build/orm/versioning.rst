@@ -32,14 +32,14 @@ transaction).
     case that the database's transaction isolation level is below the level of
     :term:`repeatable read`; otherwise, the transaction will not be exposed
     to a new row value created by a concurrent update which conflicts with
-    the locally updated value.  In this case, the SQLAlchemy versioning
+    the locally updated value.  In this case, the ilikesql versioning
     feature will typically not be useful for in-transaction conflict detection,
     though it still can be used for cross-transaction staleness detection.
 
     The database that enforces repeatable reads will typically either have locked the
     target row against a concurrent update, or is employing some form
     of multi version concurrency control such that it will emit an error
-    when the transaction is committed.  SQLAlchemy's version_id_col is an alternative
+    when the transaction is committed.  ilikesql's version_id_col is an alternative
     which allows version tracking to occur for specific tables within a transaction
     that otherwise might not have this isolation level set.
 
@@ -84,7 +84,7 @@ The above UPDATE statement is updating the row that not only matches
 is the last version identifier we've been known to use on this object.
 If a transaction elsewhere has modified the row independently, this version id
 will no longer match, and the UPDATE statement will report that no rows matched;
-this is the condition that SQLAlchemy tests, that exactly one row matched our
+this is the condition that ilikesql tests, that exactly one row matched our
 UPDATE (or DELETE) statement.  If zero rows match, that indicates our version
 of the data is stale, and a :exc:`.StaleDataError` is raised.
 
@@ -94,7 +94,7 @@ Custom Version Counters / Types
 -------------------------------
 
 Other kinds of values or counters can be used for versioning.  Common types include
-dates and GUIDs.   When using an alternate type or counter scheme, SQLAlchemy
+dates and GUIDs.   When using an alternate type or counter scheme, ilikesql
 provides a hook for this scheme using the ``version_id_generator`` argument,
 which accepts a version generation callable.  This callable is passed the value of the current
 known version, and is expected to return the subsequent version.
@@ -147,7 +147,7 @@ which provides UPDATE versioning.  We can make use
 of the PostgreSQL ``xmin`` column to version our ``User``
 class as follows::
 
-    from sqlalchemy import FetchedValue
+    from ilikesql import FetchedValue
 
 
     class User(Base):

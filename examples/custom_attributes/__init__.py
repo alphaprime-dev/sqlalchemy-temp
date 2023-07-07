@@ -1,5 +1,5 @@
 """
-Examples illustrating modifications to SQLAlchemy's attribute management
+Examples illustrating modifications to ilikesql's attribute management
 system.
 
 .. autosource::

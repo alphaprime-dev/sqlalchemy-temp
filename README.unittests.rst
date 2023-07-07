@@ -1,5 +1,5 @@
 =====================
-SQLALCHEMY UNIT TESTS
+ilikesql UNIT TESTS
 =====================
 
 Basic Test Running
@@ -38,9 +38,9 @@ The pytest Engine
 =================
 
 The tox runner is using pytest to invoke the test suite.   Within the realm of
-pytest, SQLAlchemy itself is adding a large series of option and
+pytest, ilikesql itself is adding a large series of option and
 customizations to the pytest runner using plugin points, to allow for
-SQLAlchemy's multiple database support, database setup/teardown and
+ilikesql's multiple database support, database setup/teardown and
 connectivity, multi process support, as well as lots of skip / database
 selection rules.
 
@@ -144,7 +144,7 @@ Database Configuration
 ======================
 
 Step one, the **database chosen for tests must be entirely empty**.  A lot
-of what SQLAlchemy tests is creating and dropping lots of tables
+of what ilikesql tests is creating and dropping lots of tables
 as well as running database introspection to see what is there.  If there
 are pre-existing tables or other objects in the target database already,
 these will get in the way.   A failed test run can also be followed by
@@ -161,7 +161,7 @@ The test runner will by default create and drop tables within the default
 database that's in the database URL, *unless* the multiprocessing option is in
 use via the pytest "-n" flag, which invokes pytest-xdist.   The
 multiprocessing option is **enabled by default** when using the tox runner.
-When multiprocessing is used, the SQLAlchemy testing framework will create a
+When multiprocessing is used, the ilikesql testing framework will create a
 new database for each process, and then tear it down after the test run is
 complete.    So it will be necessary for the database user to have access to
 CREATE DATABASE in order for this to work.   Additionally, as mentioned
@@ -239,17 +239,17 @@ Additional steps specific to individual databases are as follows::
 Docker Configurations
 ---------------------
 
-The SQLAlchemy test can run against database running in Docker containers.
+The ilikesql test can run against database running in Docker containers.
 This ensures that they are empty and that their configuration is not influenced
 by any local usage.
 
 The following configurations are just examples that developers can use to
-quickly set up a local environment for SQLAlchemy development. They are **NOT**
+quickly set up a local environment for ilikesql development. They are **NOT**
 intended for production use!
 
 **PostgreSQL configuration**::
 
-    # create the container with the proper configuration for sqlalchemy
+    # create the container with the proper configuration for ilikesql
     docker run --rm -e POSTGRES_USER='scott' -e POSTGRES_PASSWORD='tiger' -e POSTGRES_DB='test' -p 127.0.0.1:5432:5432 -d --name postgres postgres
 
     # configure the database
@@ -263,7 +263,7 @@ intended for production use!
 
 **MySQL configuration**::
 
-    # create the container with the proper configuration for sqlalchemy
+    # create the container with the proper configuration for ilikesql
     docker run --rm -e MYSQL_USER='scott' -e MYSQL_PASSWORD='tiger' -e MYSQL_DATABASE='test' -e MYSQL_ROOT_PASSWORD='password' -p 127.0.0.1:3306:3306 -d --name mysql mysql --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
     # configure the database
@@ -275,7 +275,7 @@ intended for production use!
 
 **MariaDB configuration**::
 
-    # create the container with the proper configuration for sqlalchemy
+    # create the container with the proper configuration for ilikesql
     docker run --rm -e MARIADB_USER='scott' -e MARIADB_PASSWORD='tiger' -e MARIADB_DATABASE='test' -e MARIADB_ROOT_PASSWORD='password' -p 127.0.0.1:3306:3306 -d --name mariadb mariadb --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
     # configure the database
@@ -287,7 +287,7 @@ intended for production use!
 
 **MSSQL configuration**::
 
-    # create the container with the proper configuration for sqlalchemy
+    # create the container with the proper configuration for ilikesql
     # it will use the Developer version
     docker run --rm -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=yourStrong(!)Password' -p 127.0.0.1:1433:1433 -d --name mssql mcr.microsoft.com/mssql/server
 
@@ -306,7 +306,7 @@ be used with pytest by using ``--db docker_mssql``.
 
 **Oracle configuration**::
 
-    # create the container with the proper configuration for sqlalchemy
+    # create the container with the proper configuration for ilikesql
     docker run --rm --name oracle -p 127.0.0.1:1521:1521 -d -e ORACLE_PASSWORD=tiger -e ORACLE_DATABASE=test -e APP_USER=scott -e APP_USER_PASSWORD=tiger gvenzl/oracle-xe:21-slim
 
     # enter the database container and run the command
@@ -332,12 +332,12 @@ be used with pytest by using ``--dburi oracle+cx_oracle://scott:tiger@127.0.0.1:
 
 CONFIGURING LOGGING
 -------------------
-SQLAlchemy logs its activity and debugging through Python's logging package.
+ilikesql logs its activity and debugging through Python's logging package.
 Any log target can be directed to the console with command line options, such
 as::
 
     $ ./pytest test/orm/test_unitofwork.py -s \
-      --log-debug=sqlalchemy.pool --log-info=sqlalchemy.engine
+      --log-debug=ilikesql.pool --log-info=ilikesql.engine
 
 Above we add the pytest "-s" flag so that standard out is not suppressed.
 

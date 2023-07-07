@@ -4,13 +4,13 @@
 ORM Examples
 ============
 
-The SQLAlchemy distribution includes a variety of code examples illustrating
+The ilikesql distribution includes a variety of code examples illustrating
 a select set of patterns, some typical and some not so typical.   All are
 runnable and can be found in the ``/examples`` directory of the
 distribution.   Descriptions and source code for all can be found here.
 
-Additional SQLAlchemy examples, some user contributed, are available on the
-wiki at `<https://www.sqlalchemy.org/trac/wiki/UsageRecipes>`_.
+Additional ilikesql examples, some user contributed, are available on the
+wiki at `<https://www.ilikesql.org/trac/wiki/UsageRecipes>`_.
 
 
 Mapping Recipes

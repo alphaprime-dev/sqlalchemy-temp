@@ -19,7 +19,7 @@ to the ``pip install`` command:
 
 .. sourcecode:: text
 
-    pip install sqlalchemy[asyncio]
+    pip install ilikesql[asyncio]
 
 For more background, see :ref:`asyncio_install`.
 

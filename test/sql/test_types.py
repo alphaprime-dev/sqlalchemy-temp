@@ -4,101 +4,101 @@ import importlib
 import operator
 import os
 
-import sqlalchemy as sa
-from sqlalchemy import and_
-from sqlalchemy import ARRAY
-from sqlalchemy import BigInteger
-from sqlalchemy import bindparam
-from sqlalchemy import BLOB
-from sqlalchemy import BOOLEAN
-from sqlalchemy import Boolean
-from sqlalchemy import cast
-from sqlalchemy import CHAR
-from sqlalchemy import CLOB
-from sqlalchemy import DATE
-from sqlalchemy import Date
-from sqlalchemy import DATETIME
-from sqlalchemy import DateTime
-from sqlalchemy import DECIMAL
-from sqlalchemy import dialects
-from sqlalchemy import distinct
-from sqlalchemy import Double
-from sqlalchemy import Enum
-from sqlalchemy import exc
-from sqlalchemy import FLOAT
-from sqlalchemy import Float
-from sqlalchemy import func
-from sqlalchemy import inspection
-from sqlalchemy import INTEGER
-from sqlalchemy import Integer
-from sqlalchemy import Interval
-from sqlalchemy import JSON
-from sqlalchemy import LargeBinary
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import NCHAR
-from sqlalchemy import NUMERIC
-from sqlalchemy import Numeric
-from sqlalchemy import NVARCHAR
-from sqlalchemy import PickleType
-from sqlalchemy import REAL
-from sqlalchemy import select
-from sqlalchemy import SMALLINT
-from sqlalchemy import SmallInteger
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import text
-from sqlalchemy import TIME
-from sqlalchemy import Time
-from sqlalchemy import TIMESTAMP
-from sqlalchemy import type_coerce
-from sqlalchemy import TypeDecorator
-from sqlalchemy import types
-from sqlalchemy import Unicode
-from sqlalchemy import util
-from sqlalchemy import VARCHAR
-import sqlalchemy.dialects.mysql as mysql
-import sqlalchemy.dialects.oracle as oracle
-import sqlalchemy.dialects.postgresql as pg
-from sqlalchemy.engine import default
-from sqlalchemy.schema import AddConstraint
-from sqlalchemy.schema import CheckConstraint
-from sqlalchemy.sql import column
-from sqlalchemy.sql import ddl
-from sqlalchemy.sql import elements
-from sqlalchemy.sql import null
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import sqltypes
-from sqlalchemy.sql import table
-from sqlalchemy.sql import type_api
-from sqlalchemy.sql import visitors
-from sqlalchemy.sql.compiler import TypeCompiler
-from sqlalchemy.sql.sqltypes import TypeEngine
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import pickleable
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import pep435_enum
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import picklers
-from sqlalchemy.types import UserDefinedType
+import ilikesql as sa
+from ilikesql import and_
+from ilikesql import ARRAY
+from ilikesql import BigInteger
+from ilikesql import bindparam
+from ilikesql import BLOB
+from ilikesql import BOOLEAN
+from ilikesql import Boolean
+from ilikesql import cast
+from ilikesql import CHAR
+from ilikesql import CLOB
+from ilikesql import DATE
+from ilikesql import Date
+from ilikesql import DATETIME
+from ilikesql import DateTime
+from ilikesql import DECIMAL
+from ilikesql import dialects
+from ilikesql import distinct
+from ilikesql import Double
+from ilikesql import Enum
+from ilikesql import exc
+from ilikesql import FLOAT
+from ilikesql import Float
+from ilikesql import func
+from ilikesql import inspection
+from ilikesql import INTEGER
+from ilikesql import Integer
+from ilikesql import Interval
+from ilikesql import JSON
+from ilikesql import LargeBinary
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import NCHAR
+from ilikesql import NUMERIC
+from ilikesql import Numeric
+from ilikesql import NVARCHAR
+from ilikesql import PickleType
+from ilikesql import REAL
+from ilikesql import select
+from ilikesql import SMALLINT
+from ilikesql import SmallInteger
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import text
+from ilikesql import TIME
+from ilikesql import Time
+from ilikesql import TIMESTAMP
+from ilikesql import type_coerce
+from ilikesql import TypeDecorator
+from ilikesql import types
+from ilikesql import Unicode
+from ilikesql import util
+from ilikesql import VARCHAR
+import ilikesql.dialects.mysql as mysql
+import ilikesql.dialects.oracle as oracle
+import ilikesql.dialects.postgresql as pg
+from ilikesql.engine import default
+from ilikesql.schema import AddConstraint
+from ilikesql.schema import CheckConstraint
+from ilikesql.sql import column
+from ilikesql.sql import ddl
+from ilikesql.sql import elements
+from ilikesql.sql import null
+from ilikesql.sql import operators
+from ilikesql.sql import sqltypes
+from ilikesql.sql import table
+from ilikesql.sql import type_api
+from ilikesql.sql import visitors
+from ilikesql.sql.compiler import TypeCompiler
+from ilikesql.sql.sqltypes import TypeEngine
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import pickleable
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import pep435_enum
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import picklers
+from ilikesql.types import UserDefinedType
 
 
 def _all_dialect_modules():
     return [
-        importlib.import_module("sqlalchemy.dialects.%s" % d)
+        importlib.import_module("ilikesql.dialects.%s" % d)
         for d in dialects.__all__
         if not d.startswith("_")
     ]
@@ -244,7 +244,7 @@ class AdaptTest(fixtures.TestBase):
                 if (
                     subcl is not typ
                     and typ is not TypeDecorator
-                    and "sqlalchemy" in subcl.__module__
+                    and "ilikesql" in subcl.__module__
                 ):
                     yield "%s.%s" % (
                         subcl.__module__,
@@ -422,7 +422,7 @@ class TypeAffinityTest(fixtures.TestBase):
         eq_(t1._compare_type_affinity(t2), comp, "%s %s" % (t1, t2))
 
     def test_decorator_doesnt_cache(self):
-        from sqlalchemy.dialects import postgresql
+        from ilikesql.dialects import postgresql
 
         class MyType(TypeDecorator):
             impl = CHAR
@@ -2534,7 +2534,7 @@ class EnumTest(AssertsCompiledSQL, fixtures.TablesTest):
         )
 
     def test_adapt(self):
-        from sqlalchemy.dialects.postgresql import ENUM
+        from ilikesql.dialects.postgresql import ENUM
 
         e1 = Enum("one", "two", "three", native_enum=False)
 
@@ -2576,7 +2576,7 @@ class EnumTest(AssertsCompiledSQL, fixtures.TablesTest):
 
     @testing.combinations(True, False, argnames="native_enum")
     def test_adapt_length(self, native_enum):
-        from sqlalchemy.dialects.postgresql import ENUM
+        from ilikesql.dialects.postgresql import ENUM
 
         e1 = Enum("one", "two", "three", length=50, native_enum=native_enum)
 
@@ -3564,7 +3564,7 @@ class ExpressionTest(
         is_(expr.right.type, my_datetime_variant)
 
     def test_bind_typing(self):
-        from sqlalchemy.sql import column
+        from ilikesql.sql import column
 
         class MyFoobarType(types.UserDefinedType):
             pass
@@ -3801,7 +3801,7 @@ class CompileTest(fixtures.TestBase, AssertsCompiledSQL):
         self.assert_compile(types.DECIMAL(2, 4), "DECIMAL(2, 4)")
 
     def test_kwarg_legacy_typecompiler(self):
-        from sqlalchemy.sql import compiler
+        from ilikesql.sql import compiler
 
         class SomeTypeCompiler(compiler.GenericTypeCompiler):
             # transparently decorated w/ kw decorator

@@ -1,35 +1,35 @@
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import desc
-from sqlalchemy import exc
-from sqlalchemy import Integer
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import Numeric
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.ext.compiler import deregister
-from sqlalchemy.orm import Session
-from sqlalchemy.schema import CreateColumn
-from sqlalchemy.schema import CreateTable
-from sqlalchemy.schema import ExecutableDDLElement
-from sqlalchemy.sql.elements import ColumnElement
-from sqlalchemy.sql.expression import BindParameter
-from sqlalchemy.sql.expression import ClauseElement
-from sqlalchemy.sql.expression import ColumnClause
-from sqlalchemy.sql.expression import Executable
-from sqlalchemy.sql.expression import FunctionElement
-from sqlalchemy.sql.expression import Select
-from sqlalchemy.sql.sqltypes import NULLTYPE
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.types import TypeEngine
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import desc
+from ilikesql import exc
+from ilikesql import Integer
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import Numeric
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import table
+from ilikesql import testing
+from ilikesql.ext.compiler import compiles
+from ilikesql.ext.compiler import deregister
+from ilikesql.orm import Session
+from ilikesql.schema import CreateColumn
+from ilikesql.schema import CreateTable
+from ilikesql.schema import ExecutableDDLElement
+from ilikesql.sql.elements import ColumnElement
+from ilikesql.sql.expression import BindParameter
+from ilikesql.sql.expression import ClauseElement
+from ilikesql.sql.expression import ColumnClause
+from ilikesql.sql.expression import Executable
+from ilikesql.sql.expression import FunctionElement
+from ilikesql.sql.expression import Select
+from ilikesql.sql.sqltypes import NULLTYPE
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.types import TypeEngine
 
 
 class UserDefinedTest(fixtures.TestBase, AssertsCompiledSQL):
@@ -87,8 +87,8 @@ class UserDefinedTest(fixtures.TestBase, AssertsCompiledSQL):
         def visit_pg_type(type_, compiler, **kw):
             return "POSTGRES_FOO"
 
-        from sqlalchemy.dialects.sqlite import base as sqlite
-        from sqlalchemy.dialects.postgresql import base as postgresql
+        from ilikesql.dialects.sqlite import base as sqlite
+        from ilikesql.dialects.postgresql import base as postgresql
 
         self.assert_compile(MyType(), "SQLITE_FOO", dialect=sqlite.dialect())
 
@@ -238,7 +238,7 @@ class UserDefinedTest(fixtures.TestBase, AssertsCompiledSQL):
         )
 
     def test_default_subclass(self):
-        from sqlalchemy.types import ARRAY
+        from ilikesql.types import ARRAY
 
         class MyArray(ARRAY):
             pass
@@ -297,7 +297,7 @@ class UserDefinedTest(fixtures.TestBase, AssertsCompiledSQL):
 
         self.assert_compile(DropThingy(), "DROP THINGY")
 
-        from sqlalchemy.dialects.sqlite import base
+        from ilikesql.dialects.sqlite import base
 
         self.assert_compile(
             AddThingy(), "ADD SPECIAL SL THINGY", dialect=base.dialect()
@@ -318,7 +318,7 @@ class UserDefinedTest(fixtures.TestBase, AssertsCompiledSQL):
         self.assert_compile(DropThingy(), "DROP THINGY")
 
     def test_functions(self):
-        from sqlalchemy.dialects import postgresql
+        from ilikesql.dialects import postgresql
 
         class MyUtcFunction(FunctionElement):
             inherit_cache = True
@@ -353,7 +353,7 @@ class UserDefinedTest(fixtures.TestBase, AssertsCompiledSQL):
         self.assert_compile(myfunc(column("x"), column("y")), "myfunc(x, y)")
 
     def test_function_calls_base(self):
-        from sqlalchemy.dialects import mssql
+        from ilikesql.dialects import mssql
 
         class greatest(FunctionElement):
             type = Numeric()
@@ -510,7 +510,7 @@ class DefaultOnExistingTest(fixtures.TestBase, AssertsCompiledSQL):
         s1 = select(t1)
         self.assert_compile(s1, "SELECT t1.c1, t1.c2 FROM t1")
 
-        from sqlalchemy.dialects.sqlite import base as sqlite
+        from ilikesql.dialects.sqlite import base as sqlite
 
         self.assert_compile(s1, "OVERRIDE", dialect=sqlite.dialect())
 

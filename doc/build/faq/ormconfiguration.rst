@@ -11,7 +11,7 @@ ORM Configuration
 How do I map a table that has no primary key?
 ---------------------------------------------
 
-The SQLAlchemy ORM, in order to map to a particular table, needs there to be
+The ilikesql ORM, in order to map to a particular table, needs there to be
 at least one column denoted as a primary key column; multiple-column,
 i.e. composite, primary keys are of course entirely feasible as well.  These
 columns do **not** need to be actually known to the database as primary key
@@ -24,16 +24,16 @@ because the object in memory must correspond to a uniquely identifiable
 row in the database table; at the very least, this allows the
 object can be targeted for UPDATE and DELETE statements which will affect only
 that object's row and no other.   However, the importance of the primary key
-goes far beyond that.  In SQLAlchemy, all ORM-mapped objects are at all times
+goes far beyond that.  In ilikesql, all ORM-mapped objects are at all times
 linked uniquely within a :class:`.Session`
 to their specific database row using a pattern called the :term:`identity map`,
-a pattern that's central to the unit of work system employed by SQLAlchemy,
+a pattern that's central to the unit of work system employed by ilikesql,
 and is also key to the most common (and not-so-common) patterns of ORM usage.
 
 
 .. note::
 
-    It's important to note that we're only talking about the SQLAlchemy ORM; an
+    It's important to note that we're only talking about the ilikesql ORM; an
     application which builds on Core and deals only with :class:`_schema.Table` objects,
     :func:`_expression.select` constructs and the like, **does not** need any primary key
     to be present on or associated with a table in any way (though again, in SQL, all tables
@@ -87,7 +87,7 @@ This information is all available from the :class:`_orm.Mapper` object.
 To get at the :class:`_orm.Mapper` for a particular mapped class, call the
 :func:`_sa.inspect` function on it::
 
-    from sqlalchemy import inspect
+    from ilikesql import inspect
 
     mapper = inspect(MyClass)
 
@@ -139,8 +139,8 @@ attributes, or if combining them together is desired, by using
 
 Given the example as follows::
 
-    from sqlalchemy import Integer, Column, ForeignKey
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Integer, Column, ForeignKey
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -157,7 +157,7 @@ Given the example as follows::
         id = Column(Integer, primary_key=True)
         a_id = Column(Integer, ForeignKey("a.id"))
 
-As of SQLAlchemy version 0.9.5, the above condition is detected, and will
+As of ilikesql version 0.9.5, the above condition is detected, and will
 warn that the ``id`` column of ``A`` and ``B`` is being combined under
 the same-named attribute ``id``, which above is a serious issue since it means
 that a ``B`` object's primary key will always mirror that of its ``A``.
@@ -205,7 +205,7 @@ Are you doing this?::
             "Dest", primaryjoin=and_("MyClass.id==Dest.foo_id", "MyClass.foo==Dest.bar")
         )
 
-That's an ``and_()`` of two string expressions, which SQLAlchemy cannot apply any mapping towards.  Declarative allows :func:`_orm.relationship` arguments to be specified as strings, which are converted into expression objects using ``eval()``.   But this doesn't occur inside of an ``and_()`` expression - it's a special operation declarative applies only to the *entirety* of what's passed to primaryjoin or other arguments as a string::
+That's an ``and_()`` of two string expressions, which ilikesql cannot apply any mapping towards.  Declarative allows :func:`_orm.relationship` arguments to be specified as strings, which are converted into expression objects using ``eval()``.   But this doesn't occur inside of an ``and_()`` expression - it's a special operation declarative applies only to the *entirety* of what's passed to primaryjoin or other arguments as a string::
 
     class MyClass(Base):
         # ....
@@ -262,7 +262,7 @@ returns rows in their natural order, it becomes more of an issue if we
 also use :func:`_orm.subqueryload` to load related collections, and we may not
 be loading the collections as intended.
 
-SQLAlchemy implements :func:`_orm.subqueryload` by issuing a separate query,
+ilikesql implements :func:`_orm.subqueryload` by issuing a separate query,
 the results of which are matched up to the results from the first query.
 We see two queries emitted like this:
 

@@ -37,7 +37,7 @@ the current file listing for greenlet can be seen at
 `Greenlet - Download Files <https://pypi.org/project/greenlet/#files>`_.
 Note that **there are many architectures omitted, including Apple M1**.
 
-To install SQLAlchemy while ensuring the ``greenlet`` dependency is present
+To install ilikesql while ensuring the ``greenlet`` dependency is present
 regardless of what platform is in use, the
 ``[asyncio]`` `setuptools extra <https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-setuptools-extras>`_
 may be installed
@@ -45,7 +45,7 @@ as follows, which will include also instruct ``pip`` to install ``greenlet``:
 
 .. sourcecode:: text
 
-  pip install sqlalchemy[asyncio]
+  pip install ilikesql[asyncio]
 
 Note that installation of ``greenlet`` on platforms that do not have a pre-built
 wheel file means that ``greenlet`` will be built from source, which requires
@@ -68,12 +68,12 @@ to deliver a streaming server-side :class:`_asyncio.AsyncResult`::
 
     import asyncio
 
-    from sqlalchemy import Column
-    from sqlalchemy import MetaData
-    from sqlalchemy import select
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy.ext.asyncio import create_async_engine
+    from ilikesql import Column
+    from ilikesql import MetaData
+    from ilikesql import select
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql.ext.asyncio import create_async_engine
 
     meta = MetaData()
     t1 = Table("t1", meta, Column("name", String(50), primary_key=True))
@@ -115,7 +115,7 @@ don't include an awaitable hook.
    scope that will go out of context and be garbage collected, as illustrated in the
    ``async_main`` function in the above example.  This ensures that any
    connections held open by the connection pool will be properly disposed
-   within an awaitable context.   Unlike when using blocking IO, SQLAlchemy
+   within an awaitable context.   Unlike when using blocking IO, ilikesql
    cannot properly dispose of these connections within methods like ``__del__``
    or weakref finalizers as there is no opportunity to invoke ``await``.
    Failing to explicitly dispose of the engine when it falls out of scope
@@ -162,18 +162,18 @@ configuration::
     import datetime
     from typing import List
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import func
-    from sqlalchemy import select
-    from sqlalchemy.ext.asyncio import AsyncAttrs
-    from sqlalchemy.ext.asyncio import async_sessionmaker
-    from sqlalchemy.ext.asyncio import AsyncSession
-    from sqlalchemy.ext.asyncio import create_async_engine
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
-    from sqlalchemy.orm import selectinload
+    from ilikesql import ForeignKey
+    from ilikesql import func
+    from ilikesql import select
+    from ilikesql.ext.asyncio import AsyncAttrs
+    from ilikesql.ext.asyncio import async_sessionmaker
+    from ilikesql.ext.asyncio import AsyncSession
+    from ilikesql.ext.asyncio import create_async_engine
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
+    from ilikesql.orm import selectinload
 
 
     class Base(AsyncAttrs, DeclarativeBase):
@@ -309,10 +309,10 @@ this are below, many of which are illustrated in the preceding example.
 
     from typing import List
 
-    from sqlalchemy.ext.asyncio import AsyncAttrs
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import relationship
+    from ilikesql.ext.asyncio import AsyncAttrs
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import relationship
 
 
     class Base(AsyncAttrs, DeclarativeBase):
@@ -358,7 +358,7 @@ this are below, many of which are illustrated in the preceding example.
 
 * Collections can be replaced with **write only collections** that will never
   emit IO implicitly, by using the :ref:`write_only_relationship` feature in
-  SQLAlchemy 2.0. Using this feature, collections are never read from, only
+  ilikesql 2.0. Using this feature, collections are never read from, only
   queried using explicit SQL calls.  See the example
   ``async_orm_writeonly.py`` in the :ref:`examples_asyncio` section for
   an example of write-only collections used with asyncio.
@@ -476,7 +476,7 @@ Other guidelines include:
       addresses_filter = (await session.scalars(stmt)).all()
 
   The :ref:`write only <write_only_relationship>` technique, introduced in
-  version 2.0 of SQLAlchemy, is fully compatible with asyncio and should be
+  version 2.0 of ilikesql, is fully compatible with asyncio and should be
   preferred.
 
   .. seealso::
@@ -486,7 +486,7 @@ Other guidelines include:
 * If using asyncio with a database that does not support RETURNING, such as
   MySQL 8, server default values such as generated timestamps will not be
   available on newly flushed objects unless the
-  :paramref:`_orm.Mapper.eager_defaults` option is used. In SQLAlchemy 2.0,
+  :paramref:`_orm.Mapper.eager_defaults` option is used. In ilikesql 2.0,
   this behavior is applied automatically to backends like PostgreSQL, SQLite
   and MariaDB which use RETURNING to fetch new values when rows are
   INSERTed.
@@ -497,7 +497,7 @@ Running Synchronous Methods and Functions under asyncio
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. deepalchemy::  This approach is essentially exposing publicly the
-   mechanism by which SQLAlchemy is able to provide the asyncio interface
+   mechanism by which ilikesql is able to provide the asyncio interface
    in the first place.   While there is no technical issue with doing so, overall
    the approach can probably be considered "controversial" as it works against
    some of the central philosophies of the asyncio programming model, which
@@ -509,7 +509,7 @@ Running Synchronous Methods and Functions under asyncio
    within the scope of a function call, essentially bundled up into a single
    awaitable.
 
-As an alternative means of integrating traditional SQLAlchemy "lazy loading"
+As an alternative means of integrating traditional ilikesql "lazy loading"
 within an asyncio event loop, an **optional** method known as
 :meth:`_asyncio.AsyncSession.run_sync` is provided which will run any
 Python function inside of a greenlet, where traditional synchronous
@@ -524,8 +524,8 @@ attribute accesses within a separate function::
 
     import asyncio
 
-    from sqlalchemy import select
-    from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+    from ilikesql import select
+    from ilikesql.ext.asyncio import AsyncSession, create_async_engine
 
 
     def fetch_and_update_objects(session):
@@ -584,7 +584,7 @@ attribute accesses within a separate function::
     asyncio.run(async_main())
 
 The above approach of running certain functions within a "sync" runner
-has some parallels to an application that runs a SQLAlchemy application
+has some parallels to an application that runs a ilikesql application
 on top of an event-based programming library such as ``gevent``.  The
 differences are as follows:
 
@@ -593,7 +593,7 @@ differences are as follows:
    into the ``gevent`` event loop.
 
 2. There is no "monkeypatching" whatsoever.   The above example makes use of
-   a real asyncio driver and the underlying SQLAlchemy connection pool is also
+   a real asyncio driver and the underlying ilikesql connection pool is also
    using the Python built-in ``asyncio.Queue`` for pooling connections.
 
 3. The program can freely switch between async/await code and contained
@@ -609,11 +609,11 @@ differences are as follows:
 Using events with the asyncio extension
 ---------------------------------------
 
-The SQLAlchemy :ref:`event system <event_toplevel>` is not directly exposed
+The ilikesql :ref:`event system <event_toplevel>` is not directly exposed
 by the asyncio extension, meaning there is not yet an "async" version of a
-SQLAlchemy event handler.
+ilikesql event handler.
 
-However, as the asyncio extension surrounds the usual synchronous SQLAlchemy
+However, as the asyncio extension surrounds the usual synchronous ilikesql
 API, regular "synchronous" style event handlers are freely available as they
 would be if asyncio were not used.
 
@@ -671,10 +671,10 @@ constructs are illustrated below:
 
     import asyncio
 
-    from sqlalchemy import event
-    from sqlalchemy import text
-    from sqlalchemy.engine import Engine
-    from sqlalchemy.ext.asyncio import create_async_engine
+    from ilikesql import event
+    from ilikesql import text
+    from ilikesql.engine import Engine
+    from ilikesql.ext.asyncio import create_async_engine
 
     engine = create_async_engine("postgresql+asyncpg://scott:tiger@localhost:5432/test")
 
@@ -726,11 +726,11 @@ constructs are illustrated below:
 
     import asyncio
 
-    from sqlalchemy import event
-    from sqlalchemy import text
-    from sqlalchemy.ext.asyncio import AsyncSession
-    from sqlalchemy.ext.asyncio import create_async_engine
-    from sqlalchemy.orm import Session
+    from ilikesql import event
+    from ilikesql import text
+    from ilikesql.ext.asyncio import AsyncSession
+    from ilikesql.ext.asyncio import create_async_engine
+    from ilikesql.orm import Session
 
     engine = create_async_engine("postgresql+asyncpg://scott:tiger@localhost:5432/test")
 
@@ -783,9 +783,9 @@ constructs are illustrated below:
 
     import asyncio
 
-    from sqlalchemy import event
-    from sqlalchemy.ext.asyncio import async_sessionmaker
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql import event
+    from ilikesql.ext.asyncio import async_sessionmaker
+    from ilikesql.orm import sessionmaker
 
     sync_maker = sessionmaker()
     maker = async_sessionmaker(sync_session_class=sync_maker)
@@ -813,20 +813,20 @@ constructs are illustrated below:
 
 .. topic:: asyncio and events, two opposites
 
-    SQLAlchemy events by their nature take place within the **interior** of a
-    particular SQLAlchemy process; that is, an event always occurs *after* some
-    particular SQLAlchemy API has been invoked by end-user code, and *before*
+    ilikesql events by their nature take place within the **interior** of a
+    particular ilikesql process; that is, an event always occurs *after* some
+    particular ilikesql API has been invoked by end-user code, and *before*
     some other internal aspect of that API occurs.
 
     Contrast this to the architecture of the asyncio extension, which takes
-    place on the **exterior** of SQLAlchemy's usual flow from end-user API to
+    place on the **exterior** of ilikesql's usual flow from end-user API to
     DBAPI function.
 
     The flow of messaging may be visualized as follows:
 
     .. sourcecode:: text
 
-         SQLAlchemy    SQLAlchemy        SQLAlchemy          SQLAlchemy   plain
+         ilikesql    ilikesql        ilikesql          ilikesql   plain
           asyncio      asyncio           ORM/Core            asyncio      asyncio
           (public      (internal)                            (internal)
           facing)
@@ -862,18 +862,18 @@ Using awaitable-only driver methods in connection pool and other events
 
 As discussed in the above section, event handlers such as those oriented
 around the :class:`.PoolEvents` event handlers receive a sync-style "DBAPI" connection,
-which is a wrapper object supplied by SQLAlchemy asyncio dialects to adapt
+which is a wrapper object supplied by ilikesql asyncio dialects to adapt
 the underlying asyncio "driver" connection into one that can be used by
-SQLAlchemy's internals.    A special use case arises when the user-defined
+ilikesql's internals.    A special use case arises when the user-defined
 implementation for such an event handler needs to make use of the
 ultimate "driver" connection directly, using awaitable only methods on that
 driver connection.  One such example is the ``.set_type_codec()`` method
 supplied by the asyncpg driver.
 
-To accommodate this use case, SQLAlchemy's :class:`.AdaptedConnection`
+To accommodate this use case, ilikesql's :class:`.AdaptedConnection`
 class provides a method :meth:`.AdaptedConnection.run_async` that allows
 an awaitable function to be invoked within the "synchronous" context of
-an event handler or other SQLAlchemy internal.  This method is directly
+an event handler or other ilikesql internal.  This method is directly
 analogous to the :meth:`_asyncio.AsyncConnection.run_sync` method that
 allows a sync-style method to run under async.
 
@@ -884,8 +884,8 @@ method.  The given function itself does not need to be declared as ``async``;
 it's perfectly fine for it to be a Python ``lambda:``, as the return awaitable
 value will be invoked after being returned::
 
-    from sqlalchemy import event
-    from sqlalchemy.ext.asyncio import create_async_engine
+    from ilikesql import event
+    from ilikesql.ext.asyncio import create_async_engine
 
     engine = create_async_engine(...)
 
@@ -925,11 +925,11 @@ along the lines of
 ``Task <Task pending ...> got Future attached to a different loop``
 
 If the same engine must be shared between different loop, it should be configured
-to disable pooling using :class:`~sqlalchemy.pool.NullPool`, preventing the Engine
+to disable pooling using :class:`~ilikesql.pool.NullPool`, preventing the Engine
 from using any connection more than once::
 
-    from sqlalchemy.ext.asyncio import create_async_engine
-    from sqlalchemy.pool import NullPool
+    from ilikesql.ext.asyncio import create_async_engine
+    from ilikesql.pool import NullPool
 
     engine = create_async_engine(
         "postgresql+asyncpg://user:pass@host/dbname",
@@ -941,11 +941,11 @@ from using any connection more than once::
 Using asyncio scoped session
 ----------------------------
 
-The "scoped session" pattern used in threaded SQLAlchemy with the
+The "scoped session" pattern used in threaded ilikesql with the
 :class:`.scoped_session` object is also available in asyncio, using
 an adapted version called :class:`_asyncio.async_scoped_session`.
 
-.. tip::  SQLAlchemy generally does not recommend the "scoped" pattern
+.. tip::  ilikesql generally does not recommend the "scoped" pattern
    for new development as it relies upon mutable global state that must also be
    explicitly torn down when work within the thread or task is complete.
    Particularly when using asyncio, it's likely a better idea to pass the
@@ -959,7 +959,7 @@ the constructor. The example below illustrates using the
 
     from asyncio import current_task
 
-    from sqlalchemy.ext.asyncio import (
+    from ilikesql.ext.asyncio import (
         async_scoped_session,
         async_sessionmaker,
     )
@@ -1006,7 +1006,7 @@ the usual ``await`` keywords are necessary, including for the
 
 .. versionadded:: 1.4.19
 
-.. currentmodule:: sqlalchemy.ext.asyncio
+.. currentmodule:: ilikesql.ext.asyncio
 
 
 .. _asyncio_inspector:
@@ -1014,7 +1014,7 @@ the usual ``await`` keywords are necessary, including for the
 Using the Inspector to inspect schema objects
 ---------------------------------------------------
 
-SQLAlchemy does not yet offer an asyncio version of the
+ilikesql does not yet offer an asyncio version of the
 :class:`_reflection.Inspector` (introduced at :ref:`metadata_reflection_inspector`),
 however the existing interface may be used in an asyncio context by
 leveraging the :meth:`_asyncio.AsyncConnection.run_sync` method of
@@ -1022,8 +1022,8 @@ leveraging the :meth:`_asyncio.AsyncConnection.run_sync` method of
 
     import asyncio
 
-    from sqlalchemy import inspect
-    from sqlalchemy.ext.asyncio import create_async_engine
+    from ilikesql import inspect
+    from ilikesql.ext.asyncio import create_async_engine
 
     engine = create_async_engine("postgresql+asyncpg://scott:tiger@localhost/test")
 

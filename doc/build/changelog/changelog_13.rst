@@ -170,7 +170,7 @@
         Fixed issue where the stringification that is sometimes called when
         attempting to generate the "key" for the ``.c`` collection on a selectable
         would fail if the column were an unlabeled custom SQL construct using the
-        ``sqlalchemy.ext.compiler`` extension, and did not provide a default
+        ``ilikesql.ext.compiler`` extension, and did not provide a default
         compilation form; while this seems like an unusual case, it can get invoked
         for some ORM scenarios such as when the expression is used in an "order by"
         in combination with joined eager loading.  The issue is that the lack of a
@@ -181,8 +181,8 @@
         :tags: bug, postgresql
         :tickets: 5645
 
-        For SQLAlchemy 1.3 only, setup.py pins pg8000 to a version lower than
-        1.16.6. Version 1.16.6 and above is supported by SQLAlchemy 1.4. Pull
+        For ilikesql 1.3 only, setup.py pins pg8000 to a version lower than
+        1.16.6. Version 1.16.6 and above is supported by ilikesql 1.4. Pull
         request courtesy Giuseppe Lumia.
 
     .. change::
@@ -218,7 +218,7 @@
         :tickets: 5813
 
         Fixed regression in Oracle dialect introduced by :ticket:`4894` in
-        SQLAlchemy 1.3.11 where use of a SQL expression in RETURNING for an UPDATE
+        ilikesql 1.3.11 where use of a SQL expression in RETURNING for an UPDATE
         would fail to compile, due to a check for "server_default" when an
         arbitrary SQL expression is not a column.
 
@@ -262,7 +262,7 @@
         :tags: bug, mysql
         :tickets: 5800
 
-        Fixed regression from SQLAlchemy 1.3.20 caused by the fix for
+        Fixed regression from ilikesql 1.3.20 caused by the fix for
         :ticket:`5462` which adds double-parenthesis for MySQL functional
         expressions in indexes, as is required by the backend, this inadvertently
         extended to include arbitrary :func:`_sql.text` expressions as well as
@@ -285,7 +285,7 @@
         accounts don't actually have permission to query the ``v$transaction``
         view so this feature has been altered to gracefully fallback when it fails
         upon database connect, where the dialect will assume "READ COMMITTED" is
-        the default isolation level as was the case prior to SQLAlchemy 1.3.21.
+        the default isolation level as was the case prior to ilikesql 1.3.21.
         However, explicit use of the :meth:`_engine.Connection.get_isolation_level`
         method must now necessarily raise an exception, as Oracle databases with
         this restriction explicitly disallow the user from reading the current
@@ -458,7 +458,7 @@
 
         The "skip_locked" keyword used with ``with_for_update()`` will emit a
         warning when used on MariaDB backends, and will then be ignored.   This is
-        a deprecated behavior that will raise in SQLAlchemy 1.4, as an application
+        a deprecated behavior that will raise in ilikesql 1.4, as an application
         that requests "skip locked" is looking for a non-blocking operation which
         is not available on those backends.
 
@@ -469,7 +469,7 @@
         :tickets: 5599
 
         Fixed issue where a non-string object sent to
-        :class:`_exc.SQLAlchemyError` or a subclass, as occurs with some third
+        :class:`_exc.ilikesqlError` or a subclass, as occurs with some third
         party dialects, would fail to stringify correctly. Pull request
         courtesy Andrzej Bartosiński.
 
@@ -563,8 +563,8 @@
         :tags: bug, engine
         :tickets: 5632
 
-        Repaired a function-level import that was not using SQLAlchemy's standard
-        late-import system within the sqlalchemy.exc module.
+        Repaired a function-level import that was not using ilikesql's standard
+        late-import system within the ilikesql.exc module.
 
 
     .. change::
@@ -579,7 +579,7 @@
         :tags: bug, mssql
         :tickets: 5592
 
-        Fixed issue where a SQLAlchemy connection URI for Azure DW with
+        Fixed issue where a ilikesql connection URI for Azure DW with
         ``authentication=ActiveDirectoryIntegrated`` (and no username+password)
         was not constructing the ODBC connection string in a way that was
         acceptable to the Azure DW instance.
@@ -822,7 +822,7 @@
         :tickets: 5297
 
         SQLite 3.31 added support for computed column. This change
-        enables their support in SQLAlchemy when targeting SQLite.
+        enables their support in ilikesql when targeting SQLite.
 
     .. change::
         :tags: bug, schema
@@ -1021,7 +1021,7 @@
         :tickets: 5278
 
         Adjusted dialect loading for ``firebird://`` URIs so the external
-        sqlalchemy-firebird dialect will be used if it has been installed,
+        ilikesql-firebird dialect will be used if it has been installed,
         otherwise fall back to the (now deprecated) internal Firebird dialect.
 
     .. change::
@@ -1218,7 +1218,7 @@
         presence of this file indicates to pip that a pep-517 installation process
         should be used.  As this mode of operation appears to be not well supported
         by current tools / distros, these problems are avoided within the scope
-        of SQLAlchemy installation by omitting the file.
+        of ilikesql installation by omitting the file.
 
 
     .. change::
@@ -1331,7 +1331,7 @@
 
         Revised an internal change to the test system added as a result of
         :ticket:`5085` where a testing-related module per dialect would be loaded
-        unconditionally upon making use of that dialect, pulling in SQLAlchemy's
+        unconditionally upon making use of that dialect, pulling in ilikesql's
         testing framework as well as the ORM into the module import space.   This
         would only impact initial startup time and memory to a modest extent,
         however it's best that these additional modules aren't reverse-dependent on
@@ -1342,7 +1342,7 @@
         :tickets: 5138
 
         Vendored the ``inspect.formatannotation`` function inside of
-        ``sqlalchemy.util.compat``, which is needed for the vendored version of
+        ``ilikesql.util.compat``, which is needed for the vendored version of
         ``inspect.formatargspec``.  The function is not documented in cPython and
         is not guaranteed to be available in future Python versions.
 
@@ -1470,7 +1470,7 @@
         :tags: bug, ext
         :tickets: 5086
 
-        Fixed bug in sqlalchemy.ext.serializer where a unique
+        Fixed bug in ilikesql.ext.serializer where a unique
         :class:`.BindParameter` object could conflict with itself if it were
         present in the mapping itself, as well as the filter condition of the
         query, as one side would be used against the non-deserialized version and
@@ -1638,7 +1638,7 @@
         treat a string value as a "label reference" in the same way that the
         :meth:`_expression.select.distinct` does; it would instead raise unconditionally. This
         keyword argument and the others passed to :func:`_expression.select` will ultimately
-        be deprecated for SQLAlchemy 2.0.
+        be deprecated for ilikesql 2.0.
 
 
     .. change::
@@ -1679,7 +1679,7 @@
         by adding PyODBC-level result handlers as it does not include native
         support for this datatype.  This includes usage of the Python 3 "timezone"
         tzinfo subclass in order to set up a timezone, which on Python 2 makes
-        use of a minimal backport of "timezone" in sqlalchemy.util.
+        use of a minimal backport of "timezone" in ilikesql.util.
 
 
     .. change::
@@ -1758,7 +1758,7 @@
         Added accessor :meth:`_query.Query.is_single_entity` to :class:`_query.Query`, which
         will indicate if the results returned by this :class:`_query.Query` will be a
         list of ORM entities, or a tuple of entities or column expressions.
-        SQLAlchemy hopes to improve upon the behavior of single entity / tuples in
+        ilikesql hopes to improve upon the behavior of single entity / tuples in
         future releases such that the behavior would be explicit up front, however
         this attribute should be helpful with the current behavior.  Pull request
         courtesy Patrick Hayes.
@@ -1850,7 +1850,7 @@
 
         Modified the approach of "name normalization" for the Oracle and Firebird
         dialects, which converts from the UPPERCASE-as-case-insensitive convention
-        of these dialects into lowercase-as-case-insensitive for SQLAlchemy, to not
+        of these dialects into lowercase-as-case-insensitive for ilikesql, to not
         automatically apply the :class:`.quoted_name` construct to a name that
         matches itself under upper or lower case conversion, as is the case for
         many non-european characters.   All names used within metadata structures
@@ -1887,7 +1887,7 @@
         structure could also indicate a single parameter list where the first
         parameter itself is a list, such as for an array parameter.   The
         engine/connection now passes in an additional boolean indicating how the
-        parameters should be considered.  The only SQLAlchemy backend that expects
+        parameters should be considered.  The only ilikesql backend that expects
         arrays as parameters is that of  psycopg2 which uses pyformat parameters,
         so this issue has not been too apparent, however as other drivers that use
         positional gain more features it is important that this be supported. It
@@ -1980,7 +1980,7 @@
 
         Added dialect-level flag ``encoding_errors`` to the cx_Oracle dialect,
         which can be specified as part of :func:`_sa.create_engine`.   This is passed
-        to SQLAlchemy's unicode decoding converter under Python 2, and to
+        to ilikesql's unicode decoding converter under Python 2, and to
         cx_Oracle's ``cursor.var()`` object as the ``encodingErrors`` parameter
         under Python 3, for the very unusual case that broken encodings are present
         in the target database which cannot be fetched unless error handling is
@@ -2040,7 +2040,7 @@
         Fixed regression in Oracle dialect that was inadvertently using max
         identifier length of 128 characters on Oracle server 12.2 and greater even
         though the stated contract for the remainder of the 1.3 series is  that
-        this value stays at 30 until version SQLAlchemy 1.4.  Also repaired issues
+        this value stays at 30 until version ilikesql 1.4.  Also repaired issues
         with the retrieval of the "compatibility" version, and removed the warning
         emitted when the "v$parameter" view was not accessible as this was  causing
         user confusion.
@@ -2056,7 +2056,7 @@
         Added new :func:`_sa.create_engine` parameter
         :paramref:`_sa.create_engine.max_identifier_length`. This overrides the
         dialect-coded "max identifier length" in order to accommodate for databases
-        that have recently changed this length and the SQLAlchemy dialect has
+        that have recently changed this length and the ilikesql dialect has
         not yet been adjusted to detect for that version.  This parameter interacts
         with the existing :paramref:`_sa.create_engine.label_length` parameter in that
         it establishes the maximum (and default) value for anonymously generated
@@ -2118,7 +2118,7 @@
         :tickets: 4886
 
         Restored adding cx_Oracle.DATETIME to the setinputsizes() call when a
-        SQLAlchemy :class:`.Date`, :class:`.DateTime` or :class:`.Time` datatype is
+        ilikesql :class:`.Date`, :class:`.DateTime` or :class:`.Time` datatype is
         used, as some complex queries require this to be present.  This was removed
         in the 1.2 series for arbitrary reasons.
 
@@ -2184,7 +2184,7 @@
         :func:`.bindparam` that is using an anonymized name, which is typically
         generated automatically from a named column which itself includes these
         characters in its name and does not use a ``.key``, so that they do not
-        interfere either with the SQLAlchemy compiler's use of string formatting or
+        interfere either with the ilikesql compiler's use of string formatting or
         with the driver-level parsing of the parameter, both of which could be
         demonstrated before the fix.  The change only applies to anonymized
         parameter names that are generated and consumed internally, not end-user
@@ -2334,12 +2334,12 @@
         charset is given to the MySQL driver, to appease an apparent behavior
         observed in MySQL 8.0 that raises a collation error when a UNION includes
         string columns unioned against columns of the form CAST(NULL AS CHAR(..)),
-        which is what SQLAlchemy's polymorphic_union function does.   The issue
+        which is what ilikesql's polymorphic_union function does.   The issue
         seems to have affected PyMySQL for at least a year, however has recently
         appeared as of mysqlclient 1.4.4 based on changes in how this DBAPI creates
         a connection.  As the presence of this directive impacts three separate
         MySQL charset settings which each have intricate effects based on their
-        presence,  SQLAlchemy will now emit the directive on new connections to
+        presence,  ilikesql will now emit the directive on new connections to
         ensure correct behavior.
 
     .. change::
@@ -2708,7 +2708,7 @@
         change was reverted, it was observed that Python 3 implementations for
         ``getfullargspec()`` are an order of magnitude slower as of the 3.4 series
         where it was rewritten against ``Signature``.  While Python plans to
-        improve upon this situation, SQLAlchemy projects for now are using a simple
+        improve upon this situation, ilikesql projects for now are using a simple
         replacement to avoid any future issues.
 
     .. change::
@@ -2834,7 +2834,7 @@
         mappers for related classes.  This does not guard against all possible race
         conditions, such as if the concurrent import has not yet encountered the
         dependent classes as of yet, however it guards against as much as possible
-        within the SQLAlchemy declarative process.
+        within the ilikesql declarative process.
 
     .. change::
         :tags: bug, mssql
@@ -3006,7 +3006,7 @@
        Thanks to :ref:`change_3981`, we no longer need to rely on recipes that
        subclass dialect-specific types directly, :class:`.TypeDecorator` can now
        handle all cases.   Additionally, the above change made it slightly less
-       likely that a direct subclass of a base SQLAlchemy type would work as
+       likely that a direct subclass of a base ilikesql type would work as
        expected, which could be misleading.  Documentation has been updated to use
        :class:`.TypeDecorator` for these examples including the PostgreSQL
        "ArrayOfEnum" example datatype and direct support for the "subclass a type
@@ -3430,7 +3430,7 @@
        :tickets: 4393
 
        The "threadlocal" engine strategy which has been a legacy feature of
-       SQLAlchemy since around version 0.2 is now deprecated, along with the
+       ilikesql since around version 0.2 is now deprecated, along with the
        :paramref:`_pool.Pool.threadlocal` parameter of :class:`_pool.Pool` which has no
        effect in most modern use cases.
 
@@ -3445,14 +3445,14 @@
        The :paramref:`_sa.create_engine.convert_unicode` and
        :paramref:`.String.convert_unicode` parameters have been deprecated.  These
        parameters were built back when most Python DBAPIs had little to no support
-       for Python Unicode objects, and SQLAlchemy needed to take on the very
+       for Python Unicode objects, and ilikesql needed to take on the very
        complex task of marshalling data and SQL strings between Unicode and
        bytestrings throughout the system in a performant way.  Thanks to Python 3,
        DBAPIs were compelled to adapt to Unicode-aware APIs and today all DBAPIs
-       supported by SQLAlchemy support Unicode natively, including on Python 2,
+       supported by ilikesql support Unicode natively, including on Python 2,
        allowing this long-lived and very complicated feature to finally be (mostly)
        removed.  There are still of course a few Python 2 edge cases where
-       SQLAlchemy has to deal with Unicode however these are handled automatically;
+       ilikesql has to deal with Unicode however these are handled automatically;
        in modern use, there should be no need for end-user interaction with these
        flags.
 
@@ -3534,7 +3534,7 @@
         bound parameters.   On the read side, automatic Unicode conversion under
         Python 2 has been added to CHAR/VARCHAR/CLOB result rows, to match the
         behavior of cx_Oracle under Python 3.  In order to mitigate the performance
-        hit under Python 2, SQLAlchemy's very performant (when C extensions
+        hit under Python 2, ilikesql's very performant (when C extensions
         are built) native Unicode handlers are used under Python 2.
 
         .. seealso::
@@ -3968,7 +3968,7 @@
     .. change::
         :tags: feature, sql
 
-        The Python builtin ``dir()`` is now supported for a SQLAlchemy "properties"
+        The Python builtin ``dir()`` is now supported for a ilikesql "properties"
         object, such as that of a Core columns collection (e.g. ``.c``),
         ``mapper.attrs``, etc.  Allows iPython autocompletion to work as well.
         Pull request courtesy Uwe Korn.

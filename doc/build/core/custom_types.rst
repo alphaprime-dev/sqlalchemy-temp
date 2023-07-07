@@ -1,4 +1,4 @@
-.. currentmodule:: sqlalchemy.types
+.. currentmodule:: ilikesql.types
 
 .. _types_custom:
 
@@ -21,8 +21,8 @@ preferred for most use cases.  But to control
 types more accurately, a compilation directive that is per-dialect
 can be associated with any type::
 
-    from sqlalchemy.ext.compiler import compiles
-    from sqlalchemy.types import BINARY
+    from ilikesql.ext.compiler import compiles
+    from ilikesql.types import BINARY
 
 
     @compiles(BINARY, "sqlite")
@@ -34,7 +34,7 @@ will produce the string ``BINARY`` against all backends except SQLite,
 in which case it will produce ``BLOB``.
 
 See the section :ref:`type_compilation_extension`, a subsection of
-:ref:`sqlalchemy.ext.compiler_toplevel`, for additional examples.
+:ref:`ilikesql.ext.compiler_toplevel`, for additional examples.
 
 .. _types_typedecorator:
 
@@ -50,10 +50,10 @@ to and/or from the database is required.
 
   The bind- and result-processing of :class:`.TypeDecorator`
   is **in addition** to the processing already performed by the hosted
-  type, which is customized by SQLAlchemy on a per-DBAPI basis to perform
+  type, which is customized by ilikesql on a per-DBAPI basis to perform
   processing specific to that DBAPI.  While it is possible to replace this
   handling for a given type through direct subclassing, it is never needed in
-  practice and SQLAlchemy no longer supports this as a public use case.
+  practice and ilikesql no longer supports this as a public use case.
 
 .. topic:: ORM Tip
 
@@ -92,7 +92,7 @@ that is strings that contain non-ASCII characters and are not ``u''``
 objects in Python 2, can be achieved using a :class:`.TypeDecorator`
 which coerces as needed::
 
-    from sqlalchemy.types import TypeDecorator, Unicode
+    from ilikesql.types import TypeDecorator, Unicode
 
 
     class CoerceUTF8(TypeDecorator):
@@ -112,7 +112,7 @@ Rounding Numerics
 Some database connectors like those of SQL Server choke if a Decimal is passed with too
 many decimal places.   Here's a recipe that rounds them down::
 
-    from sqlalchemy.types import TypeDecorator, Numeric
+    from ilikesql.types import TypeDecorator, Numeric
     from decimal import Decimal
 
 
@@ -176,8 +176,8 @@ when using PostgreSQL, CHAR(32) on other backends, storing them
 in stringified hex format.   Can be modified to store
 binary in CHAR(16) if desired::
 
-    from sqlalchemy.types import TypeDecorator, CHAR
-    from sqlalchemy.dialects.postgresql import UUID
+    from ilikesql.types import TypeDecorator, CHAR
+    from ilikesql.dialects.postgresql import UUID
     import uuid
 
 
@@ -228,7 +228,7 @@ the Python ``uuid.UUID`` datatype by adding it to the
 which is typically defined on the :class:`_orm.DeclarativeBase` class::
 
     import uuid
-    from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+    from ilikesql.orm import DeclarativeBase, Mapped, mapped_column
 
 
     class Base(DeclarativeBase):
@@ -255,7 +255,7 @@ Marshal JSON Strings
 This type uses ``simplejson`` to marshal Python data structures
 to/from JSON.   Can be modified to use Python's builtin json encoder::
 
-    from sqlalchemy.types import TypeDecorator, VARCHAR
+    from ilikesql.types import TypeDecorator, VARCHAR
     import json
 
 
@@ -298,7 +298,7 @@ value with a new one on each parent object to detect changes::
 The above limitation may be
 fine, as many applications may not require that the values are ever mutated
 once created.  For those which do have this requirement, support for mutability
-is best applied using the ``sqlalchemy.ext.mutable`` extension.  For a
+is best applied using the ``ilikesql.ext.mutable`` extension.  For a
 dictionary-oriented JSON structure, we can apply this as::
 
     json_type = MutableDict.as_mutable(JSONEncodedDict)
@@ -327,7 +327,7 @@ get at this with a type like ``JSONEncodedDict``, we need to
 **coerce** the column to a textual form using :func:`.cast` or
 :func:`.type_coerce` before attempting to use this operator::
 
-    from sqlalchemy import type_coerce, String
+    from ilikesql import type_coerce, String
 
     stmt = select(my_table).where(type_coerce(my_table.c.json_data, String).like("%foo%"))
 
@@ -337,8 +337,8 @@ LIKE operator with our JSON object interpreted as a string, we can build it
 into the type by overriding the :meth:`.TypeDecorator.coerce_compared_value`
 method::
 
-    from sqlalchemy.sql import operators
-    from sqlalchemy import String
+    from ilikesql.sql import operators
+    from ilikesql import String
 
 
     class JSONEncodedDict(TypeDecorator):
@@ -375,7 +375,7 @@ Applying SQL-level Bind/Result Processing
 -----------------------------------------
 
 As seen in the section :ref:`types_typedecorator`,
-SQLAlchemy allows Python functions to be invoked both when parameters are sent
+ilikesql allows Python functions to be invoked both when parameters are sent
 to a statement, as well as when result rows are loaded from the database, to apply
 transformations to the values as they are sent to or from the database.   It is also
 possible to define SQL-level transformations as well.  The rationale here is when
@@ -393,10 +393,10 @@ bound parameters or a column expression.  For example, to build a ``Geometry``
 type which will apply the PostGIS function ``ST_GeomFromText`` to all outgoing
 values and the function ``ST_AsText`` to all incoming data, we can create
 our own subclass of :class:`.UserDefinedType` which provides these methods
-in conjunction with :data:`~.sqlalchemy.sql.expression.func`::
+in conjunction with :data:`~.ilikesql.sql.expression.func`::
 
-    from sqlalchemy import func
-    from sqlalchemy.types import UserDefinedType
+    from ilikesql import func
+    from ilikesql.types import UserDefinedType
 
 
     class Geometry(UserDefinedType):
@@ -456,7 +456,7 @@ Another example is we decorate
 PostgreSQL ``pgcrypto`` extension to encrypt/decrypt values
 transparently::
 
-    from sqlalchemy import (
+    from ilikesql import (
         create_engine,
         String,
         select,
@@ -468,7 +468,7 @@ transparently::
         TypeDecorator,
     )
 
-    from sqlalchemy.dialects.postgresql import BYTEA
+    from ilikesql.dialects.postgresql import BYTEA
 
 
     class PGPString(TypeDecorator):
@@ -532,7 +532,7 @@ to the INSERT and SELECT statements:
 Redefining and Creating New Operators
 -------------------------------------
 
-SQLAlchemy Core defines a fixed set of expression operators available to all column expressions.
+ilikesql Core defines a fixed set of expression operators available to all column expressions.
 Some of these operations have the effect of overloading Python's built-in operators;
 examples of such operators include
 :meth:`.ColumnOperators.__eq__` (``table.c.somecolumn == 'foo'``),
@@ -550,7 +550,7 @@ is a Python callable that accepts any arbitrary right-hand side expression:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import column
+    >>> from ilikesql import column
     >>> expr = column("x").op(">>")(column("y"))
     >>> print(expr)
     {printsql}x >> y
@@ -574,7 +574,7 @@ type in order to override or define new operations. Below, we create a
 operator, which in turn uses :meth:`_sql.Operators.op` to produce the custom
 SQL itself::
 
-    from sqlalchemy import Integer
+    from ilikesql import Integer
 
 
     class MyInt(Integer):
@@ -601,7 +601,7 @@ itself as the ``expr`` attribute.  This attribute may be used when the
 implementation needs to refer to the originating :class:`_sql.ColumnElement`
 object directly::
 
-    from sqlalchemy import Integer
+    from ilikesql import Integer
 
 
     class MyInt(Integer):
@@ -615,7 +615,7 @@ owning SQL expression object using a dynamic lookup scheme, which exposes method
 expression construct.  For example, to add a ``log()`` function
 to integers::
 
-    from sqlalchemy import Integer, func
+    from ilikesql import Integer, func
 
 
     class MyInt(Integer):
@@ -644,9 +644,9 @@ are also possible.  For example, to add an implementation of the
 PostgreSQL factorial operator, we combine the :class:`.UnaryExpression` construct
 along with a :class:`.custom_op` to produce the factorial expression::
 
-    from sqlalchemy import Integer
-    from sqlalchemy.sql.expression import UnaryExpression
-    from sqlalchemy.sql import operators
+    from ilikesql import Integer
+    from ilikesql.sql.expression import UnaryExpression
+    from ilikesql.sql import operators
 
 
     class MyInteger(Integer):
@@ -660,7 +660,7 @@ Using the above type:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.sql import column
+    >>> from ilikesql.sql import column
     >>> print(column("x", MyInteger).factorial())
     {printsql}x !
 
@@ -677,7 +677,7 @@ Creating New Types
 
 The :class:`.UserDefinedType` class is provided as a simple base class
 for defining entirely new database types.   Use this to represent native
-database types not known by SQLAlchemy.   If only Python translation behavior
+database types not known by ilikesql.   If only Python translation behavior
 is needed, use :class:`.TypeDecorator` instead.
 
 .. autoclass:: UserDefinedType
@@ -694,13 +694,13 @@ It is important to note that database types which are modified to have
 additional in-Python behaviors, including types based on
 :class:`.TypeDecorator` as well as other user-defined subclasses of datatypes,
 do not have any representation within a database schema.    When using database
-the introspection features described at :ref:`metadata_reflection`, SQLAlchemy
+the introspection features described at :ref:`metadata_reflection`, ilikesql
 makes use of a fixed mapping which links the datatype information reported by a
-database server to a SQLAlchemy datatype object.   For example, if we look
+database server to a ilikesql datatype object.   For example, if we look
 inside of a PostgreSQL schema at the definition for a particular database
-column, we might receive back the string ``"VARCHAR"``.  SQLAlchemy's
+column, we might receive back the string ``"VARCHAR"``.  ilikesql's
 PostgreSQL dialect has a hardcoded mapping which links the string name
-``"VARCHAR"`` to the SQLAlchemy :class:`.VARCHAR` class, and that's how when we
+``"VARCHAR"`` to the ilikesql :class:`.VARCHAR` class, and that's how when we
 emit a statement like ``Table('my_table', m, autoload_with=engine)``, the
 :class:`_schema.Column` object within it would have an instance of :class:`.VARCHAR`
 present inside of it.
@@ -713,7 +713,7 @@ datatype. For example:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import (
+    >>> from ilikesql import (
     ...     Table,
     ...     Column,
     ...     MetaData,
@@ -727,7 +727,7 @@ datatype. For example:
     ... )
     >>> engine = create_engine("sqlite://", echo="debug")
     >>> my_table.create(engine)
-    {execsql}INFO sqlalchemy.engine.base.Engine
+    {execsql}INFO ilikesql.engine.base.Engine
     CREATE TABLE my_table (
         id INTEGER,
         data BLOB
@@ -753,11 +753,11 @@ created; we instead get back :class:`.BLOB`:
 
     >>> metadata_two = MetaData()
     >>> my_reflected_table = Table("my_table", metadata_two, autoload_with=engine)
-    {execsql}INFO sqlalchemy.engine.base.Engine PRAGMA main.table_info("my_table")
-    INFO sqlalchemy.engine.base.Engine ()
-    DEBUG sqlalchemy.engine.base.Engine Col ('cid', 'name', 'type', 'notnull', 'dflt_value', 'pk')
-    DEBUG sqlalchemy.engine.base.Engine Row (0, 'id', 'INTEGER', 0, None, 0)
-    DEBUG sqlalchemy.engine.base.Engine Row (1, 'data', 'BLOB', 0, None, 0)
+    {execsql}INFO ilikesql.engine.base.Engine PRAGMA main.table_info("my_table")
+    INFO ilikesql.engine.base.Engine ()
+    DEBUG ilikesql.engine.base.Engine Col ('cid', 'name', 'type', 'notnull', 'dflt_value', 'pk')
+    DEBUG ilikesql.engine.base.Engine Row (0, 'id', 'INTEGER', 0, None, 0)
+    DEBUG ilikesql.engine.base.Engine Row (1, 'data', 'BLOB', 0, None, 0)
 
     >>> my_reflected_table.c.data.type
     BLOB()
@@ -801,10 +801,10 @@ for example we knew that we wanted all :class:`.BLOB` datatypes to in fact be
 :class:`.PickleType`, we could set up a rule across the board::
 
 
-    from sqlalchemy import BLOB
-    from sqlalchemy import event
-    from sqlalchemy import PickleType
-    from sqlalchemy import Table
+    from ilikesql import BLOB
+    from ilikesql import event
+    from ilikesql import PickleType
+    from ilikesql import Table
 
 
     @event.listens_for(Table, "column_reflect")

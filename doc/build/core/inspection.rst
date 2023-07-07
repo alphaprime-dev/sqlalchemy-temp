@@ -4,9 +4,9 @@
 Runtime Inspection API
 ======================
 
-.. automodule:: sqlalchemy.inspection
+.. automodule:: ilikesql.inspection
 
-.. autofunction:: sqlalchemy.inspect
+.. autofunction:: ilikesql.inspect
 
 
 Available Inspection Targets

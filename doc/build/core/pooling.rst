@@ -3,7 +3,7 @@
 Connection Pooling
 ==================
 
-.. module:: sqlalchemy.pool
+.. module:: ilikesql.pool
 
 A connection pool is a standard technique used to maintain
 long running connections in memory for efficient re-use,
@@ -16,7 +16,7 @@ server-side web applications, a connection pool is the standard way to
 maintain a "pool" of active database connections in memory which are
 reused across requests.
 
-SQLAlchemy includes several connection pool implementations
+ilikesql includes several connection pool implementations
 which integrate with the :class:`_engine.Engine`.  They can also be used
 directly for applications that want to add pooling to an otherwise
 plain DBAPI approach.
@@ -25,13 +25,13 @@ Connection Pool Configuration
 -----------------------------
 
 The :class:`_engine.Engine` returned by the
-:func:`~sqlalchemy.create_engine` function in most cases has a :class:`.QueuePool`
+:func:`~ilikesql.create_engine` function in most cases has a :class:`.QueuePool`
 integrated, pre-configured with reasonable pooling defaults.  If
 you're reading this section only to learn how to enable pooling - congratulations!
 You're already done.
 
 The most common :class:`.QueuePool` tuning parameters can be passed
-directly to :func:`~sqlalchemy.create_engine` as keyword arguments:
+directly to :func:`~ilikesql.create_engine` as keyword arguments:
 ``pool_size``, ``max_overflow``, ``pool_recycle`` and
 ``pool_timeout``.  For example::
 
@@ -39,7 +39,7 @@ directly to :func:`~sqlalchemy.create_engine` as keyword arguments:
         "postgresql+psycopg2://me@localhost/mydb", pool_size=20, max_overflow=0
     )
 
-All SQLAlchemy pool implementations have in common
+All ilikesql pool implementations have in common
 that none of them "pre create" connections - all implementations wait
 until first use before creating a connection.   At that point, if
 no additional concurrent checkout requests for more connections
@@ -57,12 +57,12 @@ Switching Pool Implementations
 
 The usual way to use a different kind of pool with :func:`_sa.create_engine`
 is to use the ``poolclass`` argument.   This argument accepts a class
-imported from the ``sqlalchemy.pool`` module, and handles the details
+imported from the ``ilikesql.pool`` module, and handles the details
 of building the pool for you.   A common use case here is when
 connection pooling is to be disabled, which can be achieved by using
 the :class:`.NullPool` implementation::
 
-    from sqlalchemy.pool import NullPool
+    from ilikesql.pool import NullPool
 
     engine = create_engine(
         "postgresql+psycopg2://scott:tiger@localhost/test", poolclass=NullPool
@@ -83,7 +83,7 @@ To use a :class:`_pool.Pool` by itself, the ``creator`` function is
 the only argument that's required and is passed first, followed
 by any additional options::
 
-    import sqlalchemy.pool as pool
+    import ilikesql.pool as pool
     import psycopg2
 
 
@@ -170,7 +170,7 @@ behavior for connection pool reset. Other server resources such as prepared
 statement handles and server-side statement caches may persist beyond the
 checkin process, which may or may not be desirable, depending on specifics.
 Again, some (but again not all) backends may provide for a means of resetting
-this state.  The two SQLAlchemy included dialects which are known to have
+this state.  The two ilikesql included dialects which are known to have
 such reset schemes include Microsoft SQL Server, where an undocumented but
 widely known stored procedure called ``sp_reset_connection`` is often used,
 and PostgreSQL, which has a well-documented series of commands including
@@ -187,8 +187,8 @@ custom hook implementation calls ``.rollback()`` in any case, as it's usually
 important that the DBAPI's own tracking of commit/rollback will remain
 consistent with the state of the transaction::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy import event
+    from ilikesql import create_engine
+    from ilikesql import event
 
     mssql_engine = create_engine(
         "mssql+pyodbc://scott:tiger^5HHH@mssql2017:1433/test?driver=ODBC+Driver+17+for+SQL+Server",
@@ -225,21 +225,21 @@ Logging reset-on-return events
 
 Logging for pool events including reset on return can be set
 ``logging.DEBUG``
-log level along with the ``sqlalchemy.pool`` logger, or by setting
+log level along with the ``ilikesql.pool`` logger, or by setting
 :paramref:`_sa.create_engine.echo_pool` to ``"debug"`` when using
 :func:`_sa.create_engine`::
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> engine = create_engine("postgresql://scott:tiger@localhost/test", echo_pool="debug")
 
 The above pool will show verbose logging including reset on return::
 
     >>> c1 = engine.connect()
-    DEBUG sqlalchemy.pool.impl.QueuePool Created new connection <connection object ...>
-    DEBUG sqlalchemy.pool.impl.QueuePool Connection <connection object ...> checked out from pool
+    DEBUG ilikesql.pool.impl.QueuePool Created new connection <connection object ...>
+    DEBUG ilikesql.pool.impl.QueuePool Connection <connection object ...> checked out from pool
     >>> c1.close()
-    DEBUG sqlalchemy.pool.impl.QueuePool Connection <connection object ...> being returned to pool
-    DEBUG sqlalchemy.pool.impl.QueuePool Connection <connection object ...> rollback-on-return
+    DEBUG ilikesql.pool.impl.QueuePool Connection <connection object ...> being returned to pool
+    DEBUG ilikesql.pool.impl.QueuePool Connection <connection object ...> rollback-on-return
 
 
 Pool Events
@@ -328,9 +328,9 @@ The most common recipe for this is below, for reference
 purposes in case an application is already using such a recipe, or special
 behaviors are needed::
 
-    from sqlalchemy import exc
-    from sqlalchemy import event
-    from sqlalchemy import select
+    from ilikesql import exc
+    from ilikesql import event
+    from ilikesql import select
 
     some_engine = create_engine(...)
 
@@ -338,9 +338,9 @@ behaviors are needed::
     @event.listens_for(some_engine, "engine_connect")
     def ping_connection(connection, branch):
         if branch:
-            # this parameter is always False as of SQLAlchemy 2.0,
+            # this parameter is always False as of ilikesql 2.0,
             # but is still accepted by the event hook.  In 1.x versions
-            # of SQLAlchemy, "branched" connections should be skipped.
+            # of ilikesql, "branched" connections should be skipped.
             return
 
         try:
@@ -349,7 +349,7 @@ behaviors are needed::
             # appropriately formatted for the backend
             connection.scalar(select(1))
         except exc.DBAPIError as err:
-            # catch SQLAlchemy's DBAPIError, which is a wrapper
+            # catch ilikesql's DBAPIError, which is a wrapper
             # for the DBAPI's exception.  It includes a .connection_invalidated
             # attribute which specifies if this connection is a "disconnect"
             # condition, which is based on inspection of the original exception
@@ -363,7 +363,7 @@ behaviors are needed::
             else:
                 raise
 
-The above recipe has the advantage that we are making use of SQLAlchemy's
+The above recipe has the advantage that we are making use of ilikesql's
 facilities for detecting those DBAPI exceptions that are known to indicate
 a "disconnect" situation, as well as the :class:`_engine.Engine` object's ability
 to correctly invalidate the current connection pool when this condition
@@ -377,7 +377,7 @@ Disconnect Handling - Optimistic
 When pessimistic handling is not employed, as well as when the database is
 shutdown and/or restarted in the middle of a connection's period of use within
 a transaction, the other approach to dealing with stale / closed connections is
-to let SQLAlchemy handle disconnects as  they occur, at which point all
+to let ilikesql handle disconnects as  they occur, at which point all
 connections in the pool are invalidated, meaning they are assumed to be
 stale and will be refreshed upon next checkout.  This behavior assumes the
 :class:`_pool.Pool` is used in conjunction with a :class:`_engine.Engine`.
@@ -391,7 +391,7 @@ method, effectively invalidating all connections not currently checked out so
 that they are replaced with new ones upon next checkout.  This flow is
 illustrated by the code example below::
 
-    from sqlalchemy import create_engine, exc
+    from ilikesql import create_engine, exc
 
     e = create_engine(...)
     c = e.connect()
@@ -431,7 +431,7 @@ connection that has passed a certain age, and is appropriate for database backen
 such as MySQL that automatically close connections that have been stale after a particular
 period of time::
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     e = create_engine("mysql+mysqldb://scott:tiger@localhost/test", pool_recycle=3600)
 
@@ -462,7 +462,7 @@ a DBAPI connection might be invalidated include:
 * a DBAPI exception such as :class:`.OperationalError`, raised when a
   method like ``connection.execute()`` is called, is detected as indicating
   a so-called "disconnect" condition.   As the Python DBAPI provides no
-  standard system for determining the nature of an exception, all SQLAlchemy
+  standard system for determining the nature of an exception, all ilikesql
   dialects include a system called ``is_disconnect()`` which will examine
   the contents of an exception object, including the string message and
   any potential error codes included with it, in order to determine if this
@@ -477,7 +477,7 @@ a DBAPI connection might be invalidated include:
   and it is then discarded.
 
 * When a listener implementing :meth:`_events.PoolEvents.checkout` raises the
-  :class:`~sqlalchemy.exc.DisconnectionError` exception, indicating that the connection
+  :class:`~ilikesql.exc.DisconnectionError` exception, indicating that the connection
   won't be usable and a new connection attempt needs to be made.
 
 All invalidations which occur will invoke the :meth:`_events.PoolEvents.invalidate`
@@ -488,7 +488,7 @@ event.
 Supporting new database error codes for disconnect scenarios
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-SQLAlchemy dialects each include a routine called ``is_disconnect()`` that is
+ilikesql dialects each include a routine called ``is_disconnect()`` that is
 invoked whenever a DBAPI exception is encountered. The DBAPI exception object
 is passed to this method, where dialect-specific heuristics will then determine
 if the error code received indicates that the database connection has been
@@ -508,7 +508,7 @@ event handler to the engine after creation::
 
     import re
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     engine = create_engine("oracle://scott:tiger@dnsname")
 
@@ -581,7 +581,7 @@ from non-working connections to socket connections that are used by multiple
 processes concurrently, leading to broken messaging (the latter case is
 typically the most common).
 
-The SQLAlchemy :class:`_engine.Engine` object refers to a connection pool of existing
+The ilikesql :class:`_engine.Engine` object refers to a connection pool of existing
 database connections.  So when this object is replicated to a child process,
 the goal is to ensure that no database connections are carried over.  There
 are three general approaches to this:
@@ -590,7 +590,7 @@ are three general approaches to this:
    one shot system that prevents the :class:`_engine.Engine` from using any connection
    more than once::
 
-    from sqlalchemy.pool import NullPool
+    from ilikesql.pool import NullPool
 
     engine = create_engine("mysql+mysqldb://user:pass@host/dbname", poolclass=NullPool)
 
@@ -646,8 +646,8 @@ are three general approaches to this:
 4. An event handler can be applied to the connection pool that tests for
    connections being shared across process boundaries, and invalidates them::
 
-    from sqlalchemy import event
-    from sqlalchemy import exc
+    from ilikesql import event
+    from ilikesql import exc
     import os
 
     engine = create_engine("...")
@@ -688,11 +688,11 @@ Using a pool instance directly
 
 A pool implementation can be used directly without an engine. This could be used
 in applications that just whish to use the pool behavior without all other
-SQLAlchemy features.
+ilikesql features.
 In the example below the default pool for the ``MySQLdb`` dialect is obtained using
 :func:`_sa.create_pool_from_url`::
 
-    from sqlalchemy import create_pool_from_url
+    from ilikesql import create_pool_from_url
 
     my_pool = create_pool_from_url(
         "mysql+mysqldb://", max_overflow=5, pool_size=5, pre_ping=True
@@ -708,18 +708,18 @@ If the type of pool to create is not specified, the default one for the dialect
 will be used. To specify it directly the ``poolclass`` argument can be used,
 like in the following example::
 
-    from sqlalchemy import create_pool_from_url
-    from sqlalchemy import NullPool
+    from ilikesql import create_pool_from_url
+    from ilikesql import NullPool
 
     my_pool = create_pool_from_url("mysql+mysqldb://", poolclass=NullPool)
 
 API Documentation - Available Pool Implementations
 --------------------------------------------------
 
-.. autoclass:: sqlalchemy.pool.Pool
+.. autoclass:: ilikesql.pool.Pool
     :members:
 
-.. autoclass:: sqlalchemy.pool.QueuePool
+.. autoclass:: ilikesql.pool.QueuePool
     :members:
 
 .. autoclass:: SingletonThreadPool

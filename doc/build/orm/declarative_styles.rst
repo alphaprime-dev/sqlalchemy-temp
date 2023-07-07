@@ -5,7 +5,7 @@ Declarative Mapping Styles
 ==========================
 
 As introduced at :ref:`orm_declarative_mapping`, the **Declarative Mapping** is
-the typical way that mappings are constructed in modern SQLAlchemy.   This
+the typical way that mappings are constructed in modern ilikesql.   This
 section will provide an overview of forms that may be used for Declarative
 mapper configuration.
 
@@ -20,7 +20,7 @@ Using a Declarative Base Class
 The most common approach is to generate a "Declarative Base" class by
 subclassing the :class:`_orm.DeclarativeBase` superclass::
 
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.orm import DeclarativeBase
 
 
     # declarative base class
@@ -31,8 +31,8 @@ The Declarative Base class may also be created given an existing
 :class:`_orm.registry` by assigning it as a class variable named
 ``registry``::
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import registry
 
     reg = registry()
 
@@ -53,14 +53,14 @@ of the base::
     from datetime import datetime
     from typing import Optional
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import func
-    from sqlalchemy import Integer
-    from sqlalchemy import String
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import func
+    from ilikesql import Integer
+    from ilikesql import String
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -130,14 +130,14 @@ decorator rather than using the :class:`_orm.DeclarativeBase` superclass::
     from typing import List
     from typing import Optional
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import func
-    from sqlalchemy import Integer
-    from sqlalchemy import String
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import func
+    from ilikesql import Integer
+    from ilikesql import String
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
+    from ilikesql.orm import relationship
 
     mapper_registry = registry()
 
@@ -170,7 +170,7 @@ proceed if the decorator is applied to that class directly. For inheritance
 mappings (described in detail at :ref:`inheritance_toplevel`), the decorator
 should be applied to each subclass that is to be mapped::
 
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import registry
 
     mapper_registry = registry()
 
@@ -204,8 +204,8 @@ table configuration styles may be used with either the Declarative Base
 or decorator styles of Declarative mapping.
 
 The decorator form of mapping is useful when combining a
-SQLAlchemy declarative mapping with other class instrumentation systems
-such as dataclasses_ and attrs_, though note that SQLAlchemy 2.0 now features
+ilikesql declarative mapping with other class instrumentation systems
+such as dataclasses_ and attrs_, though note that ilikesql 2.0 now features
 dataclasses integration with Declarative Base classes as well.
 
 

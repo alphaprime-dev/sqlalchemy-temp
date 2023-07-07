@@ -1,7 +1,7 @@
 import os
 import sys
 
-from sqlalchemy.testing import fixtures
+from ilikesql.testing import fixtures
 
 
 here = os.path.dirname(__file__)

@@ -40,15 +40,15 @@ objects but also relationships and SQL expressions::
     from typing import List
     from typing import Optional
 
-    from sqlalchemy import Column
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import String
-    from sqlalchemy import Text
-    from sqlalchemy.orm import column_property
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import Column
+    from ilikesql import ForeignKey
+    from ilikesql import String
+    from ilikesql import Text
+    from ilikesql.orm import column_property
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -98,11 +98,11 @@ hybrid table style::
     # mapping attributes using declarative with imperative table
     # i.e. __table__
 
-    from sqlalchemy import Column, ForeignKey, Integer, String, Table, Text
-    from sqlalchemy.orm import column_property
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import deferred
-    from sqlalchemy.orm import relationship
+    from ilikesql import Column, ForeignKey, Integer, String, Table, Text
+    from ilikesql.orm import column_property
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import deferred
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -266,12 +266,12 @@ can use a ``__mapper_args__`` method that scans for these columns from the
 ``cls.__table__`` attribute and passes them to the :paramref:`_orm.Mapper.exclude_properties`
 collection::
 
-    from sqlalchemy import Column
-    from sqlalchemy import Integer
-    from sqlalchemy import select
-    from sqlalchemy import String
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import declared_attr
+    from ilikesql import Column
+    from ilikesql import Integer
+    from ilikesql import select
+    from ilikesql import String
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import declared_attr
 
 
     class ExcludeColsWFlag:

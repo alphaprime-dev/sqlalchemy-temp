@@ -2,51 +2,51 @@ import pickle
 import re
 from unittest import mock
 
-from sqlalchemy import and_
-from sqlalchemy import bindparam
-from sqlalchemy import case
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import extract
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import join
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import null
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import true
-from sqlalchemy import tuple_
-from sqlalchemy import union
-from sqlalchemy.sql import ClauseElement
-from sqlalchemy.sql import column
-from sqlalchemy.sql import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import table
-from sqlalchemy.sql import util as sql_util
-from sqlalchemy.sql import visitors
-from sqlalchemy.sql.elements import _clone
-from sqlalchemy.sql.expression import _from_objects
-from sqlalchemy.sql.util import _deep_annotate
-from sqlalchemy.sql.visitors import ClauseVisitor
-from sqlalchemy.sql.visitors import cloned_traverse
-from sqlalchemy.sql.visitors import CloningVisitor
-from sqlalchemy.sql.visitors import ReplacingCloningVisitor
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing.schema import eq_clause_element
+from ilikesql import and_
+from ilikesql import bindparam
+from ilikesql import case
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import extract
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import join
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import null
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import true
+from ilikesql import tuple_
+from ilikesql import union
+from ilikesql.sql import ClauseElement
+from ilikesql.sql import column
+from ilikesql.sql import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.sql import operators
+from ilikesql.sql import table
+from ilikesql.sql import util as sql_util
+from ilikesql.sql import visitors
+from ilikesql.sql.elements import _clone
+from ilikesql.sql.expression import _from_objects
+from ilikesql.sql.util import _deep_annotate
+from ilikesql.sql.visitors import ClauseVisitor
+from ilikesql.sql.visitors import cloned_traverse
+from ilikesql.sql.visitors import CloningVisitor
+from ilikesql.sql.visitors import ReplacingCloningVisitor
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_not
+from ilikesql.testing.schema import eq_clause_element
 
 A = B = t1 = t2 = t3 = table1 = table2 = table3 = table4 = None
 
@@ -173,7 +173,7 @@ class TraversalTest(
         assert struct.is_other(s2)
 
     def test_clone_anon_label(self):
-        from sqlalchemy.sql.elements import Grouping
+        from ilikesql.sql.elements import Grouping
 
         c1 = Grouping(literal_column("q"))
         s1 = select(c1)
@@ -348,7 +348,7 @@ class TraversalTest(
 
     def test_visit_name(self):
         # override fns in testlib/schema.py
-        from sqlalchemy import Column
+        from ilikesql import Column
 
         class CustomObj(Column):
             pass
@@ -756,7 +756,7 @@ class ClauseTest(fixtures.TestBase, AssertsCompiledSQL):
         t = t.union_all(select(t.c.n + 1).where(t.c.n < 100))
         s = select(func.sum(t.c.n))
 
-        from sqlalchemy.sql.visitors import cloned_traverse
+        from ilikesql.sql.visitors import cloned_traverse
 
         cloned = cloned_traverse(s, {}, {})
 
@@ -779,7 +779,7 @@ class ClauseTest(fixtures.TestBase, AssertsCompiledSQL):
         t = t.union_all(select(t.c.n + 1).where(t.c.n < 100))
         s = select(func.sum(t.c.n))
 
-        from sqlalchemy.sql.visitors import cloned_traverse
+        from ilikesql.sql.visitors import cloned_traverse
 
         cloned = cloned_traverse(s, {}, {})
 
@@ -2941,7 +2941,7 @@ class ValuesBaseTest(fixtures.TestBase, AssertsCompiledSQL):
         if list(a) != list(b):
             return False
 
-        from sqlalchemy.types import NullType
+        from ilikesql.types import NullType
 
         for a_k, a_i in a.items():
             b_i = b[a_k]

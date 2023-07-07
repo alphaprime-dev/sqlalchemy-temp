@@ -7,13 +7,13 @@ when an un-set attribute is accessed.
 
 import datetime
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import DateTime
-from sqlalchemy import event
-from sqlalchemy import Integer
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import DateTime
+from ilikesql import event
+from ilikesql import Integer
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import Session
 
 
 def configure_listener(mapper, class_):

@@ -12,58 +12,58 @@ from tempfile import mkstemp
 from unittest.mock import Mock
 from unittest.mock import patch
 
-from sqlalchemy import CHAR
-from sqlalchemy import column
-from sqlalchemy import exc
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import INT
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import true
-from sqlalchemy import tuple_
-from sqlalchemy import type_coerce
-from sqlalchemy import TypeDecorator
-from sqlalchemy import VARCHAR
-from sqlalchemy.engine import cursor as _cursor
-from sqlalchemy.engine import default
-from sqlalchemy.engine import Row
-from sqlalchemy.engine.result import SimpleResultMetaData
-from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.sql import ColumnElement
-from sqlalchemy.sql import expression
-from sqlalchemy.sql import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.sql.selectable import LABEL_STYLE_NONE
-from sqlalchemy.sql.selectable import TextualSelect
-from sqlalchemy.sql.sqltypes import NULLTYPE
-from sqlalchemy.sql.util import ClauseAdapter
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assertions
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import le_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing import not_in
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import CHAR
+from ilikesql import column
+from ilikesql import exc
+from ilikesql import exc as sa_exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import INT
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import true
+from ilikesql import tuple_
+from ilikesql import type_coerce
+from ilikesql import TypeDecorator
+from ilikesql import VARCHAR
+from ilikesql.engine import cursor as _cursor
+from ilikesql.engine import default
+from ilikesql.engine import Row
+from ilikesql.engine.result import SimpleResultMetaData
+from ilikesql.ext.compiler import compiles
+from ilikesql.sql import ColumnElement
+from ilikesql.sql import expression
+from ilikesql.sql import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.sql.selectable import LABEL_STYLE_NONE
+from ilikesql.sql.selectable import TextualSelect
+from ilikesql.sql.sqltypes import NULLTYPE
+from ilikesql.sql.util import ClauseAdapter
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assertions
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import le_
+from ilikesql.testing import mock
+from ilikesql.testing import ne_
+from ilikesql.testing import not_in
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class CursorResultTest(fixtures.TablesTest):
@@ -512,7 +512,7 @@ class CursorResultTest(fixtures.TablesTest):
             pickle.dump(result, f)
         name = name.replace(os.sep, "/")
         code = (
-            "import sqlalchemy; import pickle; print(["
+            "import ilikesql; import pickle; print(["
             f"r[0] for r in pickle.load(open('''{name}''', 'rb'))])"
         )
         proc = subprocess.run(

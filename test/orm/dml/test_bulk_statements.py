@@ -7,39 +7,39 @@ from typing import Optional
 from typing import Set
 import uuid
 
-from sqlalchemy import bindparam
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import insert
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import update
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import load_only
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import orm_insert_sentinel
-from sqlalchemy.orm import Session
-from sqlalchemy.testing import config
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import provision
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.assertsql import Conditional
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
+from ilikesql import bindparam
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import insert
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import update
+from ilikesql.orm import aliased
+from ilikesql.orm import column_property
+from ilikesql.orm import load_only
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import orm_insert_sentinel
+from ilikesql.orm import Session
+from ilikesql.testing import config
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import mock
+from ilikesql.testing import provision
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.assertsql import Conditional
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
 
 
 class InsertStmtTest(testing.AssertsExecutionResults, fixtures.TestBase):
@@ -1489,7 +1489,7 @@ class BulkDMLReturningInhTest:
                 result = s.scalars(stmt, upsert_data)
         elif insert_strategy.bulk_w_embedded_bindparam:
             # test related to #9583, specific user case in
-            # https://github.com/sqlalchemy/sqlalchemy/discussions/9581#discussioncomment-5504077  # noqa: E501
+            # https://github.com/ilikesql/ilikesql/discussions/9581#discussioncomment-5504077  # noqa: E501
             stmt = stmt.values(
                 y=select(bindparam("qq1", type_=Integer)).scalar_subquery()
             )

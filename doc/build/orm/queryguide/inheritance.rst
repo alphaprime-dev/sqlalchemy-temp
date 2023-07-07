@@ -9,7 +9,7 @@
 .. _inheritance_loading_toplevel:
 
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 .. _loading_joined_inheritance:
 
@@ -38,7 +38,7 @@ to determine the correct type. The query below is established against the ``Mana
 subclass of ``Employee``, which then returns a result that will contain only
 objects of type ``Manager``::
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> stmt = select(Manager).order_by(Manager.id)
     >>> managers = session.scalars(stmt).all()
     {execsql}BEGIN (implicit)
@@ -69,7 +69,7 @@ The example below creates a query against the ``Employee`` superclass.
 This indicates that objects of any type, including ``Manager``, ``Engineer``,
 and ``Employee``, may be within the result set::
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> stmt = select(Employee).order_by(Employee.id)
     >>> objects = session.scalars(stmt).all()
     {execsql}BEGIN (implicit)
@@ -132,7 +132,7 @@ using ``IN`` to query for additional rows based on primary key.
 being queried, followed by a sequence of subclasses of that entity for which
 their specific attributes should be loaded for incoming rows::
 
-    >>> from sqlalchemy.orm import selectin_polymorphic
+    >>> from ilikesql.orm import selectin_polymorphic
     >>> loader_opt = selectin_polymorphic(Employee, [Manager, Engineer])
 
 The :func:`_orm.selectin_polymorphic` construct is then used as a loader
@@ -140,7 +140,7 @@ option, passing it to the :meth:`.Select.options` method of :class:`.Select`.
 The example illustrates the use of :func:`_orm.selectin_polymorphic` to eagerly
 load columns local to both the ``Manager`` and ``Engineer`` subclasses::
 
-    >>> from sqlalchemy.orm import selectin_polymorphic
+    >>> from ilikesql.orm import selectin_polymorphic
     >>> loader_opt = selectin_polymorphic(Employee, [Manager, Engineer])
     >>> stmt = select(Employee).order_by(Employee.id).options(loader_opt)
     >>> objects = session.scalars(stmt).all()
@@ -199,8 +199,8 @@ called ``Paperwork``, we could combine the use of
 this collection on all ``Manager`` objects, where the sub-attributes of
 ``Manager`` objects were also themselves eagerly loaded::
 
-    >>> from sqlalchemy.orm import selectinload
-    >>> from sqlalchemy.orm import selectin_polymorphic
+    >>> from ilikesql.orm import selectinload
+    >>> from ilikesql.orm import selectin_polymorphic
     >>> stmt = (
     ...     select(Employee)
     ...     .order_by(Employee.id)
@@ -355,7 +355,7 @@ that of :func:`_orm.selectin_polymorphic`, which is the base entity that is
 being queried, followed by a sequence of subclasses of that entity for which
 their specific attributes should be loaded for incoming rows::
 
-    >>> from sqlalchemy.orm import with_polymorphic
+    >>> from ilikesql.orm import with_polymorphic
     >>> employee_poly = with_polymorphic(Employee, [Engineer, Manager])
 
 In order to indicate that all subclasses should be part of the entity,
@@ -405,7 +405,7 @@ which provide the namespace for ``Engineer`` and ``Manager`` in terms of
 the polymorphic SELECT.   In the example below, we can use the :func:`_sql.or_`
 construct to create criteria against both classes at once::
 
-    >>> from sqlalchemy import or_
+    >>> from ilikesql import or_
     >>> employee_poly = with_polymorphic(Employee, [Engineer, Manager])
     >>> stmt = (
     ...     select(employee_poly)
@@ -973,9 +973,9 @@ entity automatically::
 Inheritance Loading API
 -----------------------
 
-.. autofunction:: sqlalchemy.orm.with_polymorphic
+.. autofunction:: ilikesql.orm.with_polymorphic
 
-.. autofunction:: sqlalchemy.orm.selectin_polymorphic
+.. autofunction:: ilikesql.orm.selectin_polymorphic
 
 
 ..  Setup code, not for display

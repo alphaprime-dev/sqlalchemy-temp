@@ -1,68 +1,68 @@
 import random
 import uuid
 
-import sqlalchemy as sa
-from sqlalchemy import CheckConstraint
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import Index
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import UniqueConstraint
-from sqlalchemy import Uuid
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import as_declarative
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import close_all_sessions
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import decl_base
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import descriptor_props
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import MappedColumn
-from sqlalchemy.orm import Mapper
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import synonym
-from sqlalchemy.orm import synonym_for
-from sqlalchemy.orm.decl_api import add_mapped_attribute
-from sqlalchemy.orm.decl_api import DeclarativeBaseNoMeta
-from sqlalchemy.orm.decl_api import DeclarativeMeta
-from sqlalchemy.orm.decl_base import _DeferredMapperConfig
-from sqlalchemy.orm.events import InstrumentationEvents
-from sqlalchemy.orm.events import MapperEvents
-from sqlalchemy.schema import PrimaryKeyConstraint
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assertions
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import CheckConstraint
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import Index
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import UniqueConstraint
+from ilikesql import Uuid
+from ilikesql.ext.hybrid import hybrid_property
+from ilikesql.orm import as_declarative
+from ilikesql.orm import backref
+from ilikesql.orm import class_mapper
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import close_all_sessions
+from ilikesql.orm import column_property
+from ilikesql.orm import composite
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import decl_base
+from ilikesql.orm import declarative_base
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import declared_attr
+from ilikesql.orm import deferred
+from ilikesql.orm import descriptor_props
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import joinedload
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import MappedColumn
+from ilikesql.orm import Mapper
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import synonym
+from ilikesql.orm import synonym_for
+from ilikesql.orm.decl_api import add_mapped_attribute
+from ilikesql.orm.decl_api import DeclarativeBaseNoMeta
+from ilikesql.orm.decl_api import DeclarativeMeta
+from ilikesql.orm.decl_base import _DeferredMapperConfig
+from ilikesql.orm.events import InstrumentationEvents
+from ilikesql.orm.events import MapperEvents
+from ilikesql.schema import PrimaryKeyConstraint
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assertions
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 Base = None
@@ -495,7 +495,7 @@ class DeclarativeBaseSetupsTest(fixtures.TestBase):
         assert not hasattr(Foo, "__mapper__")
         assert not hasattr(Foo, "__table__")
 
-        from sqlalchemy.orm import clsregistry
+        from ilikesql.orm import clsregistry
 
         assert clsregistry._key_is_empty(
             "Foo", reg._class_registry, lambda cls: cls is Foo
@@ -675,7 +675,7 @@ class DeclarativeBaseSetupsTest(fixtures.TestBase):
         with assertions.expect_raises_message(
             exc.InvalidRequestError,
             r"Declarative base class has no 'registry' attribute, or "
-            r"registry is not a sqlalchemy.orm.registry\(\) object",
+            r"registry is not a ilikesql.orm.registry\(\) object",
         ):
 
             class Base(metaclass=DeclarativeMeta):
@@ -1367,7 +1367,7 @@ class DeclarativeMultiBaseTest(
     def test_non_sql_expression_warning_one(self):
         with assertions.expect_warnings(
             r"Attribute 'x' on class <class .*Foo.* appears to be a "
-            r"non-schema SQLAlchemy expression object; "
+            r"non-schema ilikesql expression object; "
         ):
 
             class Foo(Base):
@@ -1384,7 +1384,7 @@ class DeclarativeMultiBaseTest(
 
         with assertions.expect_warnings(
             r"Attribute 'x' on class <class .*MyMixin.* appears to be a "
-            r"non-schema SQLAlchemy expression object; "
+            r"non-schema ilikesql expression object; "
         ):
 
             class Foo2(MyMixin, Base):
@@ -1395,7 +1395,7 @@ class DeclarativeMultiBaseTest(
     def test_non_sql_expression_warning_three(self):
         with assertions.expect_warnings(
             r"Attribute 'x' on class <class .*Foo3.* appears to be a "
-            r"non-schema SQLAlchemy expression object; "
+            r"non-schema ilikesql expression object; "
         ):
 
             class Foo3(Base):
@@ -1412,7 +1412,7 @@ class DeclarativeMultiBaseTest(
     def test_non_sql_expression_warning_four(self):
         with assertions.expect_warnings(
             r"Attribute 'x' on class <class .*Foo4.* appears to be a "
-            r"non-schema SQLAlchemy expression object; "
+            r"non-schema ilikesql expression object; "
         ):
 
             class MyMixin2:
@@ -1431,9 +1431,9 @@ class DeclarativeMultiBaseTest(
         # test for #9537
         with assertions.expect_warnings(
             r"Attribute 'x' on class <class .*Foo5.* appears to be a "
-            r"non-schema SQLAlchemy expression object; ",
+            r"non-schema ilikesql expression object; ",
             r"Attribute 'y' on class <class .*Foo5.* appears to be a "
-            r"non-schema SQLAlchemy expression object; ",
+            r"non-schema ilikesql expression object; ",
         ):
 
             class Foo5(Base):
@@ -1442,7 +1442,7 @@ class DeclarativeMultiBaseTest(
                 id = Column(Integer, primary_key=True)
                 x = Column("x", String()).collate("some collation")
                 y = Column("y", Integer) + 5
-                z = "im not a sqlalchemy thing"
+                z = "im not a ilikesql thing"
 
     @testing.variation(
         "attr_type",
@@ -1829,7 +1829,7 @@ class DeclarativeMultiBaseTest(
         assert foo.rel == u1
 
     def test_string_dependency_resolution_orm_descriptor(self):
-        from sqlalchemy.ext.hybrid import hybrid_property
+        from ilikesql.ext.hybrid import hybrid_property
 
         class User(Base):
             __tablename__ = "user"
@@ -2548,7 +2548,7 @@ class DeclarativeMultiBaseTest(
     def test_table_cls_attribute_return_none(self):
         # this is separate from the "fixture" version of Column used in the
         # rest of this suite
-        from sqlalchemy.schema import Column
+        from ilikesql.schema import Column
 
         class AutoTable:
             @declared_attr
@@ -2932,7 +2932,7 @@ class DeclarativeMultiBaseTest(
         )
 
     def test_synonym_no_descriptor(self):
-        from sqlalchemy.orm.properties import ColumnProperty
+        from ilikesql.orm.properties import ColumnProperty
 
         class CustomCompare(ColumnProperty.Comparator):
             __hash__ = None

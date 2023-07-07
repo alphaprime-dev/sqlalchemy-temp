@@ -21,7 +21,7 @@
         :versions: 1.0.9
 
         Fixed support for cx_Oracle version 5.2, which was tripping
-        up SQLAlchemy's version detection under Python 3 and inadvertently
+        up ilikesql's version detection under Python 3 and inadvertently
         not using the correct unicode mode for Python 3.  This would cause
         issues such as bound variables mis-interpreted as NULL and rows
         silently not being returned.
@@ -148,7 +148,7 @@
         :versions: 1.0.0b4
 
         Fixed unicode support for PyMySQL when using an "executemany"
-        operation with unicode parameters.  SQLAlchemy now passes both
+        operation with unicode parameters.  ilikesql now passes both
         the statement as well as the bound parameters as unicode
         objects, as PyMySQL generally uses string interpolation
         internally to produce the final statement, and in the case of
@@ -167,7 +167,7 @@
         :tickets: 3324
 
         Fixed regression from 0.9.9 where the :func:`.as_declarative`
-        symbol was removed from the ``sqlalchemy.ext.declarative``
+        symbol was removed from the ``ilikesql.ext.declarative``
         namespace.
 
     .. change::
@@ -288,7 +288,7 @@
 
         A warning is emitted if the ``isolation_level`` parameter is used
         with :meth:`_engine.Connection.execution_options` when a :class:`.Transaction`
-        is in play; DBAPIs and/or SQLAlchemy dialects such as psycopg2,
+        is in play; DBAPIs and/or ilikesql dialects such as psycopg2,
         MySQLdb may implicitly rollback or commit the transaction, or
         not change the setting til next transaction, so this is never safe.
 
@@ -322,7 +322,7 @@
 
         Added support for the :class:`postgresql.JSONB` datatype when
         using psycopg2 2.5.4 or greater, which features native conversion
-        of JSONB data so that SQLAlchemy's converters must be disabled;
+        of JSONB data so that ilikesql's converters must be disabled;
         additionally, the newly added psycopg2 extension
         ``extras.register_default_jsonb`` is used to establish a JSON
         deserializer passed to the dialect via the ``json_deserializer``
@@ -518,7 +518,7 @@
 
         .. seealso::
 
-            :mod:`~sqlalchemy.dialects.sqlite.pysqlcipher`
+            :mod:`~ilikesql.dialects.sqlite.pysqlcipher`
 
     .. change::
         :tags: bug, orm
@@ -792,8 +792,8 @@
         The exception wrapping system for DBAPI errors can now accommodate
         non-standard DBAPI exceptions, such as the psycopg2
         TransactionRollbackError.  These exceptions will now be raised
-        using the closest available subclass in ``sqlalchemy.exc``, in the
-        case of TransactionRollbackError, ``sqlalchemy.exc.OperationalError``.
+        using the closest available subclass in ``ilikesql.exc``, in the
+        case of TransactionRollbackError, ``ilikesql.exc.OperationalError``.
 
     .. change::
         :tags: bug, sql
@@ -1175,7 +1175,7 @@
         .. note::
 
             This change has been **REVERTED** in 0.9.6.   The full fix
-            will be in version 1.0 of SQLAlchemy.
+            will be in version 1.0 of ilikesql.
 
 
     .. change::
@@ -1332,7 +1332,7 @@
         :tags: bug, sql
         :versions: 1.0.0b1
 
-        Restored the import for :class:`.Function` to the ``sqlalchemy.sql.expression``
+        Restored the import for :class:`.Function` to the ``ilikesql.sql.expression``
         import namespace, which was removed at the beginning of 0.9.
 
     .. change::
@@ -1419,7 +1419,7 @@
         :tags: bug, mysql
 
         Tweaked the settings for mysql-connector-python; in Py2K, the
-        "supports unicode statements" flag is now False, so that SQLAlchemy
+        "supports unicode statements" flag is now False, so that ilikesql
         will encode the *SQL string* (note: *not* the parameters)
         to bytes before sending to the database.  This seems to allow
         all unicode-related tests to pass for mysql-connector, including those
@@ -1602,7 +1602,7 @@
         Support has been added for pytest to run tests.   This runner
         is currently being supported in addition to nose, and will likely
         be preferred to nose going forward.   The nose plugin system used
-        by SQLAlchemy has been split out so that it works under pytest as
+        by ilikesql has been split out so that it works under pytest as
         well.  There are no plans to drop support for nose at the moment
         and we hope that the test suite itself can continue to remain as
         agnostic of testing platform as possible.  See the file
@@ -1621,8 +1621,8 @@
         migration operation tests against multiple backends in one run, including
         third-party backends not included within Alembic itself.
         Third party dialects and extensions are also encouraged to standardize
-        on SQLAlchemy's test suite as a basis; see the file README.dialects.rst
-        for background on building out from SQLAlchemy's test platform.
+        on ilikesql's test suite as a basis; see the file README.dialects.rst
+        for background on building out from ilikesql's test platform.
 
     .. change::
         :tags: feature, orm
@@ -2046,7 +2046,7 @@
         :tickets: 2927
 
         Fixed regression whereby the "annotation" system used by the ORM was leaking
-        into the names used by standard functions in :mod:`sqlalchemy.sql.functions`,
+        into the names used by standard functions in :mod:`ilikesql.sql.functions`,
         such as ``func.coalesce()`` and ``func.max()``.  Using these functions
         in ORM attributes and thus producing annotated versions of them could
         corrupt the actual function name rendered in the SQL.
@@ -2200,15 +2200,15 @@
         when running in Python 3, all strings are also unconditionally coerced
         to unicode but it does *not* incur this overhead,
         meaning that cx_Oracle is failing to use performant techniques in Py2K.
-        As SQLAlchemy cannot easily select for this style of type handler on a
+        As ilikesql cannot easily select for this style of type handler on a
         per-column basis, the handler was assembled unconditionally thereby
         adding the overhead to all string access.
 
-        So this logic has been replaced with SQLAlchemy's own unicode
+        So this logic has been replaced with ilikesql's own unicode
         conversion system, which now
         only takes effect in Py2K for columns that are requested as unicode.
-        When C extensions are used, SQLAlchemy's system appears to be 2-3x faster than
-        cx_Oracle's.  Additionally, SQLAlchemy's unicode conversion has been
+        When C extensions are used, ilikesql's system appears to be 2-3x faster than
+        cx_Oracle's.  Additionally, ilikesql's unicode conversion has been
         enhanced such that when the "conditional" converter is required
         (now needed for the Oracle backend), the check for "already unicode" is now
         performed in C and no longer introduces significant overhead.
@@ -2320,7 +2320,7 @@
     .. change::
         :tags: bug, schema
 
-        Restored :class:`sqlalchemy.schema.SchemaVisitor` to the ``.schema``
+        Restored :class:`ilikesql.schema.SchemaVisitor` to the ``.schema``
         module.  Pullreq courtesy Sean Dague.
 
 .. changelog::
@@ -2343,7 +2343,7 @@
     .. change::
         :tags: feature, orm, extensions
 
-        A new, **experimental** extension :mod:`sqlalchemy.ext.automap` is added.
+        A new, **experimental** extension :mod:`ilikesql.ext.automap` is added.
         This extension expands upon the functionality of Declarative as well as
         the :class:`.DeferredReflection` class to produce a base class which
         automatically generates mapped classes *and relationships* based on
@@ -3068,12 +3068,12 @@
 
         A large refactoring of packages has reorganized
         the import structure of many Core modules as well as some aspects
-        of the ORM modules.  In particular ``sqlalchemy.sql`` has been broken
+        of the ORM modules.  In particular ``ilikesql.sql`` has been broken
         out into several more modules than before so that the very large size
-        of ``sqlalchemy.sql.expression`` is now pared down.   The effort
+        of ``ilikesql.sql.expression`` is now pared down.   The effort
         has focused on a large reduction in import cycles.   Additionally,
-        the system of API functions in ``sqlalchemy.sql.expression`` and
-        ``sqlalchemy.orm`` has been reorganized to eliminate redundancy
+        the system of API functions in ``ilikesql.sql.expression`` and
+        ``ilikesql.orm`` has been reorganized to eliminate redundancy
         in documentation between the functions vs. the objects they produce.
 
     .. change::
@@ -3287,7 +3287,7 @@
         :tags: feature, sql
         :tickets: 1068
 
-        A :func:`~sqlalchemy.sql.expression.label` construct will now render as its name alone
+        A :func:`~ilikesql.sql.expression.label` construct will now render as its name alone
         in an ``ORDER BY`` clause, if that label is also referred to
         in the columns clause of the select, instead of rewriting the
         full expression.  This gives the database a better chance to

@@ -3,37 +3,37 @@ import datetime
 from unittest.mock import patch
 import uuid
 
-import sqlalchemy as sa
-from sqlalchemy import Date
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import orm
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import TypeDecorator
-from sqlalchemy import util
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import Date
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import orm
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import TypeDecorator
+from ilikesql import util
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 def make_uuid():
@@ -431,7 +431,7 @@ class VersioningTest(fixtures.MappedTest):
 
         with patch.object(
             config.db.dialect, "supports_sane_multi_rowcount", False
-        ), patch("sqlalchemy.engine.cursor.CursorResult.rowcount", rowcount):
+        ), patch("ilikesql.engine.cursor.CursorResult.rowcount", rowcount):
             Foo = self.classes.Foo
             s1 = self._fixture()
             f1s1 = Foo(value="f1 value")
@@ -1287,8 +1287,8 @@ class ServerVersioningTest(fixtures.MappedTest):
 
     @classmethod
     def define_tables(cls, metadata):
-        from sqlalchemy.sql import ColumnElement
-        from sqlalchemy.ext.compiler import compiles
+        from ilikesql.sql import ColumnElement
+        from ilikesql.ext.compiler import compiles
         import itertools
 
         counter = itertools.count(1)

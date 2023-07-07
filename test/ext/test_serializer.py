@@ -1,28 +1,28 @@
-from sqlalchemy import desc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import join
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.ext import serializer
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import desc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import join
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.ext import serializer
+from ilikesql.orm import aliased
+from ilikesql.orm import class_mapper
+from ilikesql.orm import column_property
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import joinedload
+from ilikesql.orm import relationship
+from ilikesql.orm import scoped_session
+from ilikesql.orm import sessionmaker
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 def pickle_protocols():
@@ -229,7 +229,7 @@ class SerializeTest(AssertsCompiledSQL, fixtures.MappedTest):
             serializer.loads(pickled_failing, users.metadata, None)
 
     def test_orm_join(self):
-        from sqlalchemy.orm import join
+        from ilikesql.orm import join
 
         j = join(User, Address, User.addresses)
 

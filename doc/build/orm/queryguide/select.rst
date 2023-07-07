@@ -22,7 +22,7 @@ to return (i.e. the "columns" clause) are passed positionally to the
 function.  From there, additional methods are used to generate the complete
 statement, such as the :meth:`_sql.Select.where` method illustrated below::
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> stmt = select(User).where(User.name == "spongebob")
 
 Given a completed :class:`_sql.Select` object, in order to execute it within
@@ -127,17 +127,17 @@ refer to them under the names ``User`` and ``Address``::
     FROM user_account JOIN address ON user_account.id = address.user_id
     ORDER BY user_account.id, address.id
     [...] (){stop}
-    spongebob spongebob@sqlalchemy.org
-    sandy sandy@sqlalchemy.org
+    spongebob spongebob@ilikesql.org
+    sandy sandy@ilikesql.org
     sandy squirrel@squirrelpower.org
     patrick pat999@aol.com
-    squidward stentcl@sqlalchemy.org
+    squidward stentcl@ilikesql.org
 
 If we wanted to assign different names to these entities in the rows, we would
 use the :func:`_orm.aliased` construct using the :paramref:`_orm.aliased.name`
 parameter to alias them with an explicit name::
 
-    >>> from sqlalchemy.orm import aliased
+    >>> from ilikesql.orm import aliased
     >>> user_cls = aliased(User, name="user_cls")
     >>> email_cls = aliased(Address, name="email")
     >>> stmt = (
@@ -152,7 +152,7 @@ parameter to alias them with an explicit name::
     ON user_cls.id = email.user_id ORDER BY user_cls.id, email.id
     [...] ()
     {stop}>>> print(f"{row.user_cls.name} {row.email.email_address}")
-    spongebob spongebob@sqlalchemy.org
+    spongebob spongebob@ilikesql.org
 
 The aliased form above is discussed further at
 :ref:`orm_queryguide_joining_relationships_aliased`.
@@ -197,11 +197,11 @@ The above statement returns :class:`.Row` objects with ``name`` and
 
     >>> for row in result:
     ...     print(f"{row.name}  {row.email_address}")
-    spongebob  spongebob@sqlalchemy.org
-    sandy  sandy@sqlalchemy.org
+    spongebob  spongebob@ilikesql.org
+    sandy  sandy@ilikesql.org
     sandy  squirrel@squirrelpower.org
     patrick  pat999@aol.com
-    squidward  stentcl@sqlalchemy.org
+    squidward  stentcl@ilikesql.org
 
 .. _bundles:
 
@@ -211,7 +211,7 @@ Grouping Selected Attributes with Bundles
 The :class:`_orm.Bundle` construct is an extensible ORM-only construct that
 allows sets of column expressions to be grouped in result rows::
 
-    >>> from sqlalchemy.orm import Bundle
+    >>> from ilikesql.orm import Bundle
     >>> stmt = select(
     ...     Bundle("user", User.name, User.fullname),
     ...     Bundle("email", Address.email_address),
@@ -221,11 +221,11 @@ allows sets of column expressions to be grouped in result rows::
     {execsql}SELECT user_account.name, user_account.fullname, address.email_address
     FROM user_account JOIN address ON user_account.id = address.user_id
     [...] (){stop}
-    spongebob Spongebob Squarepants spongebob@sqlalchemy.org
-    sandy Sandy Cheeks sandy@sqlalchemy.org
+    spongebob Spongebob Squarepants spongebob@ilikesql.org
+    sandy Sandy Cheeks sandy@ilikesql.org
     sandy Sandy Cheeks squirrel@squirrelpower.org
     patrick Patrick Star pat999@aol.com
-    squidward Squidward Tentacles stentcl@sqlalchemy.org
+    squidward Squidward Tentacles stentcl@ilikesql.org
 
 The :class:`_orm.Bundle` is potentially useful for creating lightweight views
 and custom column groupings. :class:`_orm.Bundle` may also be subclassed in
@@ -248,7 +248,7 @@ As discussed in the tutorial at :ref:`tutorial_using_aliases`, to create a
 SQL alias of an ORM entity is achieved using the :func:`_orm.aliased`
 construct against a mapped class::
 
-    >>> from sqlalchemy.orm import aliased
+    >>> from ilikesql.orm import aliased
     >>> u1 = aliased(User)
     >>> print(select(u1).order_by(u1.id))
     {printsql}SELECT user_account_1.id, user_account_1.name, user_account_1.fullname
@@ -259,7 +259,7 @@ is anonymously named.   For the case of selecting the entity from a row
 with an explicit name, the :paramref:`_orm.aliased.name` parameter may be
 passed as well::
 
-    >>> from sqlalchemy.orm import aliased
+    >>> from ilikesql.orm import aliased
     >>> u1 = aliased(User, name="u1")
     >>> stmt = select(u1).order_by(u1.id)
     >>> row = session.execute(stmt).first()
@@ -290,7 +290,7 @@ Getting ORM Results from Textual Statements
 
 The ORM supports loading of entities from SELECT statements that come from
 other sources. The typical use case is that of a textual SELECT statement,
-which in SQLAlchemy is represented using the :func:`_sql.text` construct. A
+which in ilikesql is represented using the :func:`_sql.text` construct. A
 :func:`_sql.text` construct can be augmented with information about the
 ORM-mapped columns that the statement would load; this can then be associated
 with the ORM entity itself so that ORM objects can be loaded based on this
@@ -298,7 +298,7 @@ statement.
 
 Given a textual SQL statement we'd like to load from::
 
-    >>> from sqlalchemy import text
+    >>> from ilikesql import text
     >>> textual_sql = text("SELECT id, name, fullname FROM user_account ORDER BY id")
 
 We can add column information to the statement by using the
@@ -406,7 +406,7 @@ this method, the UNION statement is the complete statement that will be
 rendered, no additional criteria can be added after :meth:`_sql.Select.from_statement`
 is used::
 
-    >>> from sqlalchemy import union_all
+    >>> from ilikesql import union_all
     >>> u = union_all(
     ...     select(User).where(User.id < 2), select(User).where(User.id == 3)
     ... ).order_by(User.id)
@@ -892,7 +892,7 @@ be used::
     ``.join(Address.user)`` method call, the statement is ultimately equivalent
     to the following::
 
-        >>> from sqlalchemy.sql import join
+        >>> from ilikesql.sql import join
         >>>
         >>> user_table = User.__table__
         >>> address_table = Address.__table__
@@ -992,7 +992,7 @@ which belonged to "sandy":
     FROM user_account
     WHERE user_account.id = address.user_id AND user_account.name = ?)
     [...] ('sandy',){stop}
-    [('sandy@sqlalchemy.org',), ('squirrel@squirrelpower.org',)]
+    [('sandy@ilikesql.org',), ('squirrel@squirrelpower.org',)]
 
 .. _orm_queryguide_relationship_common_operators:
 
@@ -1052,7 +1052,7 @@ in terms of the target :func:`_orm.relationship`.
   which are referred towards by a given parent, this is essentially the
   same as using the ``==`` operator with the many-to-one side::
 
-      >>> from sqlalchemy.orm import with_parent
+      >>> from ilikesql.orm import with_parent
       >>> print(select(Address).where(with_parent(user_obj, User.addresses)))
       {printsql}SELECT address.id, address.user_id, address.email_address
       FROM address

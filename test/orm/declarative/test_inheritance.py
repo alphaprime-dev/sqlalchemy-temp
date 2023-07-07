@@ -1,37 +1,37 @@
 import contextlib
 
-import sqlalchemy as sa
-from sqlalchemy import ForeignKey
-from sqlalchemy import Identity
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import close_all_sessions
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import with_polymorphic
-from sqlalchemy.orm.decl_api import registry
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import ForeignKey
+from ilikesql import Identity
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import class_mapper
+from ilikesql.orm import close_all_sessions
+from ilikesql.orm import column_property
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import declared_attr
+from ilikesql.orm import deferred
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import with_polymorphic
+from ilikesql.orm.decl_api import registry
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 Base = None
 
@@ -387,7 +387,7 @@ class DeclarativeInheritanceTest(
             id = Column(Integer, ForeignKey(Person.id), primary_key=True)
             __mapper_args__ = {"polymorphic_identity": "manager"}
 
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         assert inspect(Manager).inherits is inspect(Person)
 
@@ -420,7 +420,7 @@ class DeclarativeInheritanceTest(
             id = Column(Integer, ForeignKey(Person.id), primary_key=True)
             __mapper_args__ = {"polymorphic_identity": "manager"}
 
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         assert inspect(Manager).inherits is inspect(Person)
 

@@ -1,6 +1,6 @@
 :orphan:
 
-.. automodule:: sqlalchemy.ext.declarative
+.. automodule:: ilikesql.ext.declarative
 
 ===============
 Declarative API
@@ -10,7 +10,7 @@ API Reference
 =============
 
 .. versionchanged:: 1.4  The fundamental structures of the declarative
-   system are now part of SQLAlchemy ORM directly.   For these components
+   system are now part of ilikesql ORM directly.   For these components
    see:
 
    * :func:`_orm.declarative_base`

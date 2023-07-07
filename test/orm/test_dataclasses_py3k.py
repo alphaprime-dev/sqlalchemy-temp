@@ -1,23 +1,23 @@
 from typing import List
 from typing import Optional
 
-from sqlalchemy import Boolean
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import registry as declarative_registry
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import Boolean
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import declared_attr
+from ilikesql.orm import registry as declarative_registry
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 try:
     import dataclasses

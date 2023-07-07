@@ -1,31 +1,31 @@
 import decimal
 
-from sqlalchemy import and_
-from sqlalchemy import Column
-from sqlalchemy import DDL
-from sqlalchemy import desc
-from sqlalchemy import event
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import Numeric
-from sqlalchemy import or_
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy.dialects.mssql import base as mssql
-from sqlalchemy.dialects.mssql import pyodbc as mssql_pyodbc
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertsql import CursorSQL
-from sqlalchemy.testing.assertsql import DialectSQL
+from ilikesql import and_
+from ilikesql import Column
+from ilikesql import DDL
+from ilikesql import desc
+from ilikesql import event
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import Numeric
+from ilikesql import or_
+from ilikesql import PrimaryKeyConstraint
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql.dialects.mssql import base as mssql
+from ilikesql.dialects.mssql import pyodbc as mssql_pyodbc
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertsql import CursorSQL
+from ilikesql.testing.assertsql import DialectSQL
 
 
 class IdentityInsertTest(fixtures.TablesTest, AssertsCompiledSQL):
@@ -169,7 +169,7 @@ class QueryTest(testing.AssertsExecutionResults, fixtures.TestBase):
         to fire upon each insert and subsequently perform an
         insert into a different table.
 
-        SQLALchemy's MSSQL dialect by default will attempt to
+        ilikesql's MSSQL dialect by default will attempt to
         use an OUTPUT_INSERTED clause, which in this case will
         raise the following error:
 

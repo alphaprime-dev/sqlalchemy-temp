@@ -40,7 +40,7 @@ The insert() SQL Expression Construct
 A simple example of :class:`_sql.Insert` illustrating the target table
 and the VALUES clause at once::
 
-    >>> from sqlalchemy import insert
+    >>> from ilikesql import insert
     >>> stmt = insert(user_table).values(name="spongebob", fullname="Spongebob Squarepants")
 
 The above ``stmt`` variable is an instance of :class:`_sql.Insert`.  Most
@@ -164,7 +164,7 @@ construct automatically.
     as the pointy hat is not sticking upwards.   The Alchemist comes around to
     describe things that are generally **more advanced and/or tricky** and
     additionally **not usually needed**, but for whatever reason they feel you
-    should know about this thing that SQLAlchemy can do.
+    should know about this thing that ilikesql can do.
 
     In this edition, towards the goal of having some interesting data in the
     ``address_table`` as well, below is a more advanced example illustrating
@@ -182,7 +182,7 @@ construct automatically.
 
     .. sourcecode:: pycon+sql
 
-        >>> from sqlalchemy import select, bindparam
+        >>> from ilikesql import select, bindparam
         >>> scalar_subq = (
         ...     select(user_table.c.id)
         ...     .where(user_table.c.name == bindparam("username"))
@@ -195,9 +195,9 @@ construct automatically.
         ...         [
         ...             {
         ...                 "username": "spongebob",
-        ...                 "email_address": "spongebob@sqlalchemy.org",
+        ...                 "email_address": "spongebob@ilikesql.org",
         ...             },
-        ...             {"username": "sandy", "email_address": "sandy@sqlalchemy.org"},
+        ...             {"username": "sandy", "email_address": "sandy@ilikesql.org"},
         ...             {"username": "sandy", "email_address": "sandy@squirrelpower.org"},
         ...         ],
         ...     )
@@ -206,7 +206,7 @@ construct automatically.
         INSERT INTO address (user_id, email_address) VALUES ((SELECT user_account.id
         FROM user_account
         WHERE user_account.name = ?), ?)
-        [...] [('spongebob', 'spongebob@sqlalchemy.org'), ('sandy', 'sandy@sqlalchemy.org'),
+        [...] [('spongebob', 'spongebob@ilikesql.org'), ('sandy', 'sandy@ilikesql.org'),
         ('sandy', 'sandy@squirrelpower.org')]
         COMMIT{stop}
 
@@ -265,7 +265,7 @@ as in the example below that builds upon the example stated in
     both for single-row statements as well as for statements that INSERT
     multiple rows at once.  Support for multiple-row INSERT with RETURNING
     is dialect specific, however is supported for all the dialects
-    that are included in SQLAlchemy which support RETURNING.  See the section
+    that are included in ilikesql which support RETURNING.  See the section
     :ref:`engine_insertmanyvalues` for background on this feature.
 
 .. seealso::

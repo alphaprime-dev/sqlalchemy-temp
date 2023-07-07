@@ -1,19 +1,19 @@
 import re
 
-from sqlalchemy import Column
-from sqlalchemy import Identity
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import Sequence
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy.engine import URL
-from sqlalchemy.exc import ArgumentError
-from sqlalchemy.schema import CreateTable
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not_
+from ilikesql import Column
+from ilikesql import Identity
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import Sequence
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql.engine import URL
+from ilikesql.exc import ArgumentError
+from ilikesql.schema import CreateTable
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_not_
 
 
 class _IdentityDDLFixture(testing.AssertsCompiledSQL):

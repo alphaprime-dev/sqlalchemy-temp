@@ -1,4 +1,4 @@
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 .. _mapper_sql_expressions:
 
@@ -19,7 +19,7 @@ SQL expression level.  For example, below we map a class ``User``,
 containing attributes ``firstname`` and ``lastname``, and include a hybrid that
 will provide for us the ``fullname``, which is the string concatenation of the two::
 
-    from sqlalchemy.ext.hybrid import hybrid_property
+    from ilikesql.ext.hybrid import hybrid_property
 
 
     class User(Base):
@@ -51,8 +51,8 @@ must be distinguished from the Python expression, which can be achieved using
 needs to be present inside the hybrid, using the ``if`` statement in Python and the
 :func:`_expression.case` construct for SQL expressions::
 
-    from sqlalchemy.ext.hybrid import hybrid_property
-    from sqlalchemy.sql import case
+    from ilikesql.ext.hybrid import hybrid_property
+    from ilikesql.sql import case
 
 
     class User(Base):
@@ -98,7 +98,7 @@ when using :func:`_orm.column_property` from declarative mixins.
 Our "fullname" example can be expressed using :func:`_orm.column_property` as
 follows::
 
-    from sqlalchemy.orm import column_property
+    from ilikesql.orm import column_property
 
 
     class User(Base):
@@ -113,11 +113,11 @@ Correlated subqueries may be used as well. Below we use the
 representing a column-oriented SELECT statement, that links together the count
 of ``Address`` objects available for a particular ``User``::
 
-    from sqlalchemy.orm import column_property
-    from sqlalchemy import select, func
-    from sqlalchemy import Column, Integer, String, ForeignKey
+    from ilikesql.orm import column_property
+    from ilikesql import select, func
+    from ilikesql import Column, Integer, String, ForeignKey
 
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -172,7 +172,7 @@ For a :func:`.column_property` that refers to columns linked from a
 many-to-many relationship, use :func:`.and_` to join the fields of the
 association table to both tables in a relationship::
 
-    from sqlalchemy import and_
+    from ilikesql import and_
 
 
     class Author(Base):
@@ -210,7 +210,7 @@ such as the :meth:`_orm.registry.mapped` decorator, the :meth:`_orm.Mapper.add_p
 method may be invoked explicitly on the underlying :class:`_orm.Mapper` object,
 which can be obtained using :func:`_sa.inspect`::
 
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import registry
 
     reg = registry()
 
@@ -225,7 +225,7 @@ which can be obtained using :func:`_sa.inspect`::
     # later ...
 
     # works for any kind of mapping
-    from sqlalchemy import inspect
+    from ilikesql import inspect
 
     inspect(User).add_property(
         column_property(
@@ -283,7 +283,7 @@ at :ref:`orm_queryguide_column_deferral` may be applied at mapping time
 to a SQL expression mapped by :func:`_orm.column_property` by using the
 :func:`_orm.deferred` function in place of :func:`_orm.column_property`::
 
-    from sqlalchemy.orm import deferred
+    from ilikesql.orm import deferred
 
 
     class User(Base):
@@ -312,8 +312,8 @@ attribute.   Within the function, :func:`.object_session`
 is used to locate the :class:`.Session` corresponding to the current object,
 which is then used to emit a query::
 
-    from sqlalchemy.orm import object_session
-    from sqlalchemy import select, func
+    from ilikesql.orm import object_session
+    from ilikesql import select, func
 
 
     class User(Base):
@@ -338,7 +338,7 @@ Query-time SQL expressions as mapped attributes
 -----------------------------------------------
 
 In addition to being able to configure fixed SQL expressions on mapped classes,
-the SQLAlchemy ORM also includes a feature wherein objects may be loaded
+the ilikesql ORM also includes a feature wherein objects may be loaded
 with the results of arbitrary SQL expressions which are set up at query time as part
 of their state.  This behavior is available by configuring an ORM mapped
 attribute using :func:`_orm.query_expression` and then using the

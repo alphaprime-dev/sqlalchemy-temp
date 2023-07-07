@@ -1,17 +1,17 @@
 from unittest.mock import call
 from unittest.mock import Mock
 
-from sqlalchemy import exc
-from sqlalchemy import testing
-from sqlalchemy.orm import collections
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import validates
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
+from ilikesql import exc
+from ilikesql import testing
+from ilikesql.orm import collections
+from ilikesql.orm import relationship
+from ilikesql.orm import validates
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import ne_
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
 from test.orm import _fixtures
 
 

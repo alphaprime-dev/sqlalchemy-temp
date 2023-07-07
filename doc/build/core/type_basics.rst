@@ -1,9 +1,9 @@
 The Type Hierarchy
 =====================
 
-.. module:: sqlalchemy.types
+.. module:: ilikesql.types
 
-SQLAlchemy provides abstractions for most common database data types,
+ilikesql provides abstractions for most common database data types,
 as well as several techniques for customization of datatypes.
 
 Database types are represented using Python classes, all of which ultimately
@@ -37,8 +37,8 @@ On most backends, using this datatype in a
 ``VARCHAR`` database type being used on the target backend, delivering string
 values to and from the database, as in the example below::
 
-    from sqlalchemy import MetaData
-    from sqlalchemy import Table, Column, Integer, String
+    from ilikesql import MetaData
+    from ilikesql import Table, Column, Integer, String
 
     metadata_obj = MetaData()
 
@@ -67,7 +67,7 @@ MySQL backend and ``SMALLINT`` on Oracle.  As data is sent and received
 from the database using this type, based on the dialect in use it may be
 interpreting Python numeric or boolean values.
 
-The typical SQLAlchemy application will likely wish to use primarily
+The typical ilikesql application will likely wish to use primarily
 "CamelCase" types in the general case, as they will generally provide the best
 basic behavior and be automatically portable to all backends.
 
@@ -82,7 +82,7 @@ datatypes are always inherited from a particular "CamelCase" datatype, and
 always represent an **exact** datatype.   When using an "UPPERCASE" datatype,
 the name of the type is always rendered exactly as given, without regard for
 whether or not the current backend supports it.   Therefore the use
-of "UPPERCASE" types in a SQLAlchemy application indicates that specific
+of "UPPERCASE" types in a ilikesql application indicates that specific
 datatypes are required, which then implies that the application would normally,
 without additional steps taken,
 be limited to those backends which use the type exactly as given.   Examples
@@ -93,7 +93,7 @@ from the previously mentioned "CamelCase" types
 :class:`_types.Numeric`, :class:`_types.Integer`, and :class:`_types.DateTime`,
 respectively.
 
-The "UPPERCASE" datatypes that are part of ``sqlalchemy.types`` are common
+The "UPPERCASE" datatypes that are part of ``ilikesql.types`` are common
 SQL types that typically expect to be available on at least two backends
 if not more.
 
@@ -110,14 +110,14 @@ Backend-specific "UPPERCASE" datatypes
 Most databases also have their own datatypes that
 are either fully specific to those databases, or add additional arguments
 that are specific to those databases.   For these datatypes, specific
-SQLAlchemy dialects provide **backend-specific** "UPPERCASE" datatypes, for a
+ilikesql dialects provide **backend-specific** "UPPERCASE" datatypes, for a
 SQL type that has no analogue on other backends.  Examples of backend-specific
 uppercase datatypes include PostgreSQL's :class:`_postgresql.JSONB`, SQL Server's
 :class:`_mssql.IMAGE` and MySQL's :class:`_mysql.TINYTEXT`.
 
 Specific backends may also include "UPPERCASE" datatypes that extend the
 arguments available from that same "UPPERCASE" datatype as found in the
-``sqlalchemy.types`` module. An example is when creating a MySQL string
+``ilikesql.types`` module. An example is when creating a MySQL string
 datatype, one might want to specify MySQL-specific arguments such as ``charset``
 or ``national``, which are available from the MySQL version
 of :class:`_mysql.VARCHAR` as the MySQL-only parameters
@@ -144,9 +144,9 @@ to make use of the :paramref:`_mysql.VARCHAR.charset` parameter of
 :class:`_mysql.VARCHAR` when the table is created on MySQL or MariaDB,
 :meth:`_types.TypeEngine.with_variant` may be used as below::
 
-    from sqlalchemy import MetaData
-    from sqlalchemy import Table, Column, Integer, String
-    from sqlalchemy.dialects.mysql import VARCHAR
+    from ilikesql import MetaData
+    from ilikesql import Table, Column, Integer, String
+    from ilikesql.dialects.mysql import VARCHAR
 
     metadata_obj = MetaData()
 
@@ -175,7 +175,7 @@ Generic "CamelCase" Types
 -------------------------
 
 Generic types specify a column that can read, write and store a
-particular type of Python data.  SQLAlchemy will choose the best
+particular type of Python data.  ilikesql will choose the best
 database column type available on the target database when issuing a
 ``CREATE TABLE`` statement.  For complete control over which column
 type is emitted in ``CREATE TABLE``, such as ``VARCHAR`` see
@@ -300,7 +300,7 @@ its exact name in DDL with ``CREATE TABLE`` is issued.
     :members:
 
 
-.. autoclass:: sqlalchemy.types.INTEGER
+.. autoclass:: ilikesql.types.INTEGER
 
 
 .. autoclass:: NCHAR

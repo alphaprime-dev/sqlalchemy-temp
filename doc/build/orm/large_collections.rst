@@ -1,7 +1,7 @@
 .. highlight:: pycon+sql
 .. doctest-enable
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 .. _largecollections:
 
@@ -41,14 +41,14 @@ type-annotated Declarative form is illustrated below:
     >>> from decimal import Decimal
     >>> from datetime import datetime
 
-    >>> from sqlalchemy import ForeignKey
-    >>> from sqlalchemy import func
-    >>> from sqlalchemy.orm import DeclarativeBase
-    >>> from sqlalchemy.orm import Mapped
-    >>> from sqlalchemy.orm import mapped_column
-    >>> from sqlalchemy.orm import relationship
-    >>> from sqlalchemy.orm import Session
-    >>> from sqlalchemy.orm import WriteOnlyMapped
+    >>> from ilikesql import ForeignKey
+    >>> from ilikesql import func
+    >>> from ilikesql.orm import DeclarativeBase
+    >>> from ilikesql.orm import Mapped
+    >>> from ilikesql.orm import mapped_column
+    >>> from ilikesql.orm import relationship
+    >>> from ilikesql.orm import Session
+    >>> from ilikesql.orm import WriteOnlyMapped
 
     >>> class Base(DeclarativeBase):
     ...     pass
@@ -88,8 +88,8 @@ type-annotated Declarative form is illustrated below:
 
 .. setup code not for display
 
-    >>> from sqlalchemy import create_engine
-    >>> from sqlalchemy import event
+    >>> from ilikesql import create_engine
+    >>> from ilikesql import event
     >>> engine = create_engine("sqlite://", echo=True)
     >>> @event.listens_for(engine, "connect")
     ... def set_sqlite_pragma(dbapi_connection, connection_record):
@@ -178,7 +178,7 @@ loaded into memory in order to reconcile the old entries with the new ones::
     ... ]
     Traceback (most recent call last):
     ...
-    sqlalchemy.exc.InvalidRequestError: Collection "Account.account_transactions" does not
+    ilikesql.exc.InvalidRequestError: Collection "Account.account_transactions" does not
     support implicit iteration; collection replacement operations can't be used
 
 Adding New Items to an Existing Collection
@@ -190,7 +190,7 @@ only by using the :meth:`.WriteOnlyCollection.add`,
 :meth:`.WriteOnlyCollection.add_all` and :meth:`.WriteOnlyCollection.remove`
 methods::
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> session = Session(engine, expire_on_commit=False)
     >>> existing_account = session.scalar(select(Account).filter_by(identifier="account_01"))
     {execsql}BEGIN (implicit)
@@ -360,7 +360,7 @@ will proceed to persist them as part of the collection.
 Supposing a class ``BankAudit`` referred to many ``AccountTransaction``
 records using a many-to-many table::
 
-    >>> from sqlalchemy import Table, Column
+    >>> from ilikesql import Table, Column
     >>> audit_to_transaction = Table(
     ...     "audit_transaction",
     ...     Base.metadata,
@@ -513,7 +513,7 @@ The :class:`.WriteOnlyCollection` still helps us here, as we use the
 us, making use of the :meth:`_sql.Select.with_only_columns` method to
 produce a :term:`scalar subquery`::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> subq = bank_audit.account_transactions.select().with_only_columns(AccountTransaction.id)
     >>> session.execute(
     ...     update(AccountTransaction)
@@ -532,11 +532,11 @@ Write Only Collections - API Documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. autoclass:: sqlalchemy.orm.WriteOnlyCollection
+.. autoclass:: ilikesql.orm.WriteOnlyCollection
     :members:
     :inherited-members:
 
-.. autoclass:: sqlalchemy.orm.WriteOnlyMapped
+.. autoclass:: ilikesql.orm.WriteOnlyMapped
     :members:
 
 .. highlight:: python
@@ -579,7 +579,7 @@ The "dynamic" loader strategy may be configured with
 type-annotated Declarative form using the :class:`_orm.DynamicMapped`
 annotation class::
 
-    from sqlalchemy.orm import DynamicMapped
+    from ilikesql.orm import DynamicMapped
 
 
     class User(Base):
@@ -621,11 +621,11 @@ query.
 Dynamic Relationship Loaders - API
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. autoclass:: sqlalchemy.orm.AppenderQuery
+.. autoclass:: ilikesql.orm.AppenderQuery
     :members:
     :inherited-members: Query
 
-.. autoclass:: sqlalchemy.orm.DynamicMapped
+.. autoclass:: ilikesql.orm.DynamicMapped
     :members:
 
 .. _collections_raiseload:
@@ -634,7 +634,7 @@ Setting RaiseLoad
 -----------------
 
 A "raise"-loaded relationship will raise an
-:exc:`~sqlalchemy.exc.InvalidRequestError` where the attribute would normally
+:exc:`~ilikesql.exc.InvalidRequestError` where the attribute would normally
 emit a lazy load::
 
     class MyClass(Base):
@@ -662,8 +662,8 @@ loader option.
 Using Passive Deletes
 ---------------------
 
-An important aspect of collection management in SQLAlchemy is that when an
-object that refers to a collection is deleted, SQLAlchemy needs to consider the
+An important aspect of collection management in ilikesql is that when an
+object that refers to a collection is deleted, ilikesql needs to consider the
 objects that are inside this collection. Those objects will need to be
 de-associated from the parent, which for a one-to-many collection would mean
 that foreign key columns are set to NULL, or based on

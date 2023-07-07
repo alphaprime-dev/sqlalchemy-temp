@@ -1,13 +1,13 @@
-import sqlalchemy as sa
-from sqlalchemy import testing
-from sqlalchemy import util
-from sqlalchemy.orm import defaultload
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.fixtures import fixture_session
+import ilikesql as sa
+from ilikesql import testing
+from ilikesql import util
+from ilikesql.orm import defaultload
+from ilikesql.orm import joinedload
+from ilikesql.orm import relationship
+from ilikesql.orm import subqueryload
+from ilikesql.testing import eq_
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.fixtures import fixture_session
 from test.orm import _fixtures
 
 

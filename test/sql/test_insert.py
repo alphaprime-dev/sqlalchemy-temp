@@ -2,35 +2,35 @@ from __future__ import annotations
 
 from typing import Tuple
 
-from sqlalchemy import bindparam
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import exc
-from sqlalchemy import func
-from sqlalchemy import insert
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy.dialects import mysql
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.dialects import sqlite
-from sqlalchemy.engine import default
-from sqlalchemy.sql import crud
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import config
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.provision import normalize_sequence
+from ilikesql import bindparam
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import exc
+from ilikesql import func
+from ilikesql import insert
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql.dialects import mysql
+from ilikesql.dialects import postgresql
+from ilikesql.dialects import sqlite
+from ilikesql.engine import default
+from ilikesql.sql import crud
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import config
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing.provision import normalize_sequence
 
 
 class ORMExpr:
@@ -942,7 +942,7 @@ class InsertTest(_InsertTestBase, fixtures.TablesTest, AssertsCompiledSQL):
 
     def test_insert_from_select_dont_mutate_raw_columns(self):
         # test [ticket:3603]
-        from sqlalchemy import table
+        from ilikesql import table
 
         table_ = table(
             "mytable",
@@ -1054,7 +1054,7 @@ class InsertTest(_InsertTestBase, fixtures.TablesTest, AssertsCompiledSQL):
 
         with expect_warnings(
             "Column 't.y' is marked as a member.*"
-            "Note that as of SQLAlchemy 1.1,"
+            "Note that as of ilikesql 1.1,"
         ):
             self.assert_compile(
                 t.insert(), "INSERT INTO t (x) VALUES (:x)", params={"x": 5}
@@ -1072,7 +1072,7 @@ class InsertTest(_InsertTestBase, fixtures.TablesTest, AssertsCompiledSQL):
 
         with expect_warnings(
             "Column 't.y' is marked as a member.*"
-            "Note that as of SQLAlchemy 1.1,"
+            "Note that as of ilikesql 1.1,"
         ):
             self.assert_compile(
                 t.insert(),
@@ -1092,7 +1092,7 @@ class InsertTest(_InsertTestBase, fixtures.TablesTest, AssertsCompiledSQL):
         d.implicit_returning = False
         with expect_warnings(
             "Column 't.y' is marked as a member.*"
-            "Note that as of SQLAlchemy 1.1,"
+            "Note that as of ilikesql 1.1,"
         ):
             self.assert_compile(
                 t.insert(),

@@ -29,12 +29,12 @@ real SQL tables that exist, or will exist, in a particular database::
 
     >>> from typing import List
     >>> from typing import Optional
-    >>> from sqlalchemy import ForeignKey
-    >>> from sqlalchemy import String
-    >>> from sqlalchemy.orm import DeclarativeBase
-    >>> from sqlalchemy.orm import Mapped
-    >>> from sqlalchemy.orm import mapped_column
-    >>> from sqlalchemy.orm import relationship
+    >>> from ilikesql import ForeignKey
+    >>> from ilikesql import String
+    >>> from ilikesql.orm import DeclarativeBase
+    >>> from ilikesql.orm import Mapped
+    >>> from ilikesql.orm import mapped_column
+    >>> from ilikesql.orm import relationship
 
     >>> class Base(DeclarativeBase):
     ...     pass
@@ -81,7 +81,7 @@ table. The datatype of each column is taken first from the Python datatype
 that's associated with each :class:`_orm.Mapped` annotation; ``int`` for
 ``INTEGER``, ``str`` for ``VARCHAR``, etc. Nullability derives from whether or
 not the ``Optional[]`` type modifier is used. More specific typing information
-may be indicated using SQLAlchemy type objects in the right side
+may be indicated using ilikesql type objects in the right side
 :func:`_orm.mapped_column` directive, such as the :class:`.String` datatype
 used above in the ``User.name`` column. The association between Python types
 and SQL types can be customized using the
@@ -93,8 +93,8 @@ information, this directive accepts a wide variety of arguments that indicate
 specific details about a database column, including server defaults and
 constraint information, such as membership within the primary key and foreign
 keys. The :func:`_orm.mapped_column` directive accepts a superset of arguments
-that are accepted by the SQLAlchemy :class:`_schema.Column` class, which is
-used by SQLAlchemy Core to represent database columns.
+that are accepted by the ilikesql :class:`_schema.Column` class, which is
+used by ilikesql Core to represent database columns.
 
 All ORM mapped classes require at least one column be declared as part of the
 primary key, typically by using the :paramref:`_schema.Column.primary_key`
@@ -103,7 +103,7 @@ of the key.  In the above example, the ``User.id`` and ``Address.id``
 columns are marked as primary key.
 
 Taken together, the combination of a string table name as well as a list
-of column declarations is referred towards in SQLAlchemy as :term:`table metadata`.
+of column declarations is referred towards in ilikesql as :term:`table metadata`.
 Setting up table metadata using both Core and ORM approaches is introduced
 in the :ref:`unified_tutorial` at :ref:`tutorial_working_with_metadata`.
 The above mapping is an example of what's referred towards as
@@ -134,7 +134,7 @@ of a :ref:`Connection Pool <pooling_toplevel>` for fast reuse.  For learning
 purposes, we normally use a :ref:`SQLite <sqlite_toplevel>` memory-only database
 for convenience::
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> engine = create_engine("sqlite://", echo=True)
 
 .. tip::
@@ -198,19 +198,19 @@ is used:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.orm import Session
+    >>> from ilikesql.orm import Session
 
     >>> with Session(engine) as session:
     ...     spongebob = User(
     ...         name="spongebob",
     ...         fullname="Spongebob Squarepants",
-    ...         addresses=[Address(email_address="spongebob@sqlalchemy.org")],
+    ...         addresses=[Address(email_address="spongebob@ilikesql.org")],
     ...     )
     ...     sandy = User(
     ...         name="sandy",
     ...         fullname="Sandy Cheeks",
     ...         addresses=[
-    ...             Address(email_address="sandy@sqlalchemy.org"),
+    ...             Address(email_address="sandy@ilikesql.org"),
     ...             Address(email_address="sandy@squirrelpower.org"),
     ...         ],
     ...     )
@@ -227,9 +227,9 @@ is used:
     INSERT INTO user_account (name, fullname) VALUES (?, ?) RETURNING id
     [...] ('patrick', 'Patrick Star')
     INSERT INTO address (email_address, user_id) VALUES (?, ?) RETURNING id
-    [...] ('spongebob@sqlalchemy.org', 1)
+    [...] ('spongebob@ilikesql.org', 1)
     INSERT INTO address (email_address, user_id) VALUES (?, ?) RETURNING id
-    [...] ('sandy@sqlalchemy.org', 2)
+    [...] ('sandy@ilikesql.org', 2)
     INSERT INTO address (email_address, user_id) VALUES (?, ?) RETURNING id
     [...] ('sandy@squirrelpower.org', 2)
     COMMIT
@@ -263,7 +263,7 @@ the ORM objects we've selected:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
 
     >>> session = Session(engine)
 
@@ -282,7 +282,7 @@ the ORM objects we've selected:
 
 The above query also made use of the :meth:`_sql.Select.where` method
 to add WHERE criteria, and also used the :meth:`_sql.ColumnOperators.in_`
-method that's part of all SQLAlchemy column-like constructs to use the
+method that's part of all ilikesql column-like constructs to use the
 SQL IN operator.
 
 More detail on how to select objects and individual columns is at
@@ -301,19 +301,19 @@ construct creates joins using the :meth:`_sql.Select.join` method:
     ...     select(Address)
     ...     .join(Address.user)
     ...     .where(User.name == "sandy")
-    ...     .where(Address.email_address == "sandy@sqlalchemy.org")
+    ...     .where(Address.email_address == "sandy@ilikesql.org")
     ... )
     >>> sandy_address = session.scalars(stmt).one()
     {execsql}SELECT address.id, address.email_address, address.user_id
     FROM address JOIN user_account ON user_account.id = address.user_id
     WHERE user_account.name = ? AND address.email_address = ?
-    [...] ('sandy', 'sandy@sqlalchemy.org')
+    [...] ('sandy', 'sandy@ilikesql.org')
     {stop}
     >>> sandy_address
-    Address(id=2, email_address='sandy@sqlalchemy.org')
+    Address(id=2, email_address='sandy@ilikesql.org')
 
 The above query illustrates multiple WHERE criteria which are automatically
-chained together using AND, as well as how to use SQLAlchemy column-like
+chained together using AND, as well as how to use ilikesql column-like
 objects to create "equality" comparisons, which uses the overridden Python
 method :meth:`_sql.ColumnOperators.__eq__` to produce a SQL criteria object.
 
@@ -340,19 +340,19 @@ address associated with "sandy", and also add a new email address to
     [...] ('patrick',)
     {stop}
 
-    >>> patrick.addresses.append(Address(email_address="patrickstar@sqlalchemy.org"))
+    >>> patrick.addresses.append(Address(email_address="patrickstar@ilikesql.org"))
     {execsql}SELECT address.id AS address_id, address.email_address AS address_email_address, address.user_id AS address_user_id
     FROM address
     WHERE ? = address.user_id
     [...] (3,){stop}
 
-    >>> sandy_address.email_address = "sandy_cheeks@sqlalchemy.org"
+    >>> sandy_address.email_address = "sandy_cheeks@ilikesql.org"
 
     >>> session.commit()
     {execsql}UPDATE address SET email_address=? WHERE address.id = ?
-    [...] ('sandy_cheeks@sqlalchemy.org', 2)
+    [...] ('sandy_cheeks@ilikesql.org', 2)
     INSERT INTO address (email_address, user_id) VALUES (?, ?)
-    [...] ('patrickstar@sqlalchemy.org', 3)
+    [...] ('patrickstar@ilikesql.org', 3)
     COMMIT
     {stop}
 

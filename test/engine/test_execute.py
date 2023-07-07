@@ -11,51 +11,51 @@ from unittest.mock import Mock
 from unittest.mock import patch
 import weakref
 
-import sqlalchemy as tsa
-from sqlalchemy import bindparam
-from sqlalchemy import create_engine
-from sqlalchemy import create_mock_engine
-from sqlalchemy import event
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import INT
-from sqlalchemy import Integer
-from sqlalchemy import LargeBinary
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import TypeDecorator
-from sqlalchemy import util
-from sqlalchemy import VARCHAR
-from sqlalchemy.engine import BindTyping
-from sqlalchemy.engine import default
-from sqlalchemy.engine.base import Connection
-from sqlalchemy.engine.base import Engine
-from sqlalchemy.pool import NullPool
-from sqlalchemy.pool import QueuePool
-from sqlalchemy.sql import column
-from sqlalchemy.sql import literal
-from sqlalchemy.sql.elements import literal_column
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.provision import normalize_sequence
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
-from sqlalchemy.testing.util import picklers
+import ilikesql as tsa
+from ilikesql import bindparam
+from ilikesql import create_engine
+from ilikesql import create_mock_engine
+from ilikesql import event
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import INT
+from ilikesql import Integer
+from ilikesql import LargeBinary
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import TypeDecorator
+from ilikesql import util
+from ilikesql import VARCHAR
+from ilikesql.engine import BindTyping
+from ilikesql.engine import default
+from ilikesql.engine.base import Connection
+from ilikesql.engine.base import Engine
+from ilikesql.pool import NullPool
+from ilikesql.pool import QueuePool
+from ilikesql.sql import column
+from ilikesql.sql import literal
+from ilikesql.sql.elements import literal_column
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_not
+from ilikesql.testing import is_true
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.provision import normalize_sequence
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
+from ilikesql.testing.util import picklers
 
 
 class SomeException(Exception):
@@ -507,7 +507,7 @@ class ExecuteTest(fixtures.TablesTest):
         # as the error message
         message = "some message méil".encode()
 
-        err = tsa.exc.SQLAlchemyError(message)
+        err = tsa.exc.ilikesqlError(message)
         eq_(str(err), "some message méil")
 
     def test_stmt_exception_bytestring_latin1(self):
@@ -515,7 +515,7 @@ class ExecuteTest(fixtures.TablesTest):
         # as the error message
         message = "some message méil".encode("latin-1")
 
-        err = tsa.exc.SQLAlchemyError(message)
+        err = tsa.exc.ilikesqlError(message)
         eq_(str(err), "some message m\\xe9il")
 
     def test_stmt_exception_unicode_hook_unicode(self):
@@ -523,27 +523,27 @@ class ExecuteTest(fixtures.TablesTest):
         # as the error message
         message = "some message méil"
 
-        err = tsa.exc.SQLAlchemyError(message)
+        err = tsa.exc.ilikesqlError(message)
         eq_(str(err), "some message méil")
 
     def test_stmt_exception_object_arg(self):
-        err = tsa.exc.SQLAlchemyError(Foo())
+        err = tsa.exc.ilikesqlError(Foo())
         eq_(str(err), "foo")
 
     def test_stmt_exception_str_multi_args(self):
-        err = tsa.exc.SQLAlchemyError("some message", 206)
+        err = tsa.exc.ilikesqlError("some message", 206)
         eq_(str(err), "('some message', 206)")
 
     def test_stmt_exception_str_multi_args_bytestring(self):
         message = "some message méil".encode()
 
-        err = tsa.exc.SQLAlchemyError(message, 206)
+        err = tsa.exc.ilikesqlError(message, 206)
         eq_(str(err), str((message, 206)))
 
     def test_stmt_exception_str_multi_args_unicode(self):
         message = "some message méil"
 
-        err = tsa.exc.SQLAlchemyError(message, 206)
+        err = tsa.exc.ilikesqlError(message, 206)
         eq_(str(err), str((message, 206)))
 
     def test_stmt_exception_pickleable_no_dbapi(self):
@@ -2373,7 +2373,7 @@ class EngineEventsTest(fixtures.TestBase):
 
     @testing.requires.ad_hoc_engines
     def test_cant_listen_to_option_engine(self):
-        from sqlalchemy.engine import base
+        from ilikesql.engine import base
 
         def evt(*arg, **kw):
             pass
@@ -2381,7 +2381,7 @@ class EngineEventsTest(fixtures.TestBase):
         assert_raises_message(
             tsa.exc.InvalidRequestError,
             r"Can't assign an event directly to the "
-            "<class 'sqlalchemy.engine.base.OptionEngine'> class",
+            "<class 'ilikesql.engine.base.OptionEngine'> class",
             event.listen,
             base.OptionEngine,
             "before_cursor_execute",
@@ -2799,7 +2799,7 @@ class HandleErrorTest(fixtures.TestBase):
                 ctx = canary.mock_calls[0][1][0]
 
                 eq_(ctx.original_exception, e.orig)
-                is_(ctx.sqlalchemy_exception, e)
+                is_(ctx.ilikesql_exception, e)
                 eq_(ctx.statement, "SELECT FOO FROM I_DONT_EXIST")
 
     def test_exception_event_reraise(self):
@@ -3171,7 +3171,7 @@ class HandleErrorTest(fixtures.TestBase):
     def test_handle_error_not_on_connection(self, connection):
         with expect_raises_message(
             tsa.exc.InvalidRequestError,
-            r"The handle_error\(\) event hook as of SQLAlchemy 2.0 is "
+            r"The handle_error\(\) event hook as of ilikesql 2.0 is "
             r"established "
             r"on the Dialect, and may only be applied to the Engine as a "
             r"whole or to a specific Dialect as a whole, not on a "
@@ -3197,7 +3197,7 @@ class HandleErrorTest(fixtures.TestBase):
             the_conn.append(connection)
 
         with mock.patch(
-            "sqlalchemy.engine.cursor.CursorResult.__init__",
+            "ilikesql.engine.cursor.CursorResult.__init__",
             Mock(side_effect=tsa.exc.InvalidRequestError("duplicate col")),
         ):
             with engine.connect() as conn:
@@ -3233,7 +3233,7 @@ class HandleErrorTest(fixtures.TestBase):
         conn = engine.connect()
 
         with mock.patch(
-            "sqlalchemy.engine.cursor.CursorResult.__init__",
+            "ilikesql.engine.cursor.CursorResult.__init__",
             Mock(side_effect=tsa.exc.InvalidRequestError("duplicate col")),
         ):
             assert_raises(
@@ -3321,7 +3321,7 @@ class OnConnectTest(fixtures.TestBase):
             assert ctx.engine is eng
             assert ctx.connection is conn
             assert isinstance(
-                ctx.sqlalchemy_exception, tsa.exc.ProgrammingError
+                ctx.ilikesql_exception, tsa.exc.ProgrammingError
             )
             raise MySpecialException("failed operation")
 
@@ -3345,7 +3345,7 @@ class OnConnectTest(fixtures.TestBase):
             assert ctx.engine is eng
             assert ctx.connection is conn
             assert isinstance(
-                ctx.sqlalchemy_exception, tsa.exc.ProgrammingError
+                ctx.ilikesql_exception, tsa.exc.ProgrammingError
             )
             raise MySpecialException("failed operation")
 
@@ -4045,7 +4045,7 @@ class SetInputSizesTest(fixtures.TablesTest):
     def test_set_input_sizes_expanding_tuple_param(self, input_sizes_fixture):
         engine, canary = input_sizes_fixture
 
-        from sqlalchemy import tuple_
+        from ilikesql import tuple_
 
         with engine.connect() as conn:
             conn.execute(
@@ -4150,9 +4150,9 @@ class DialectDoesntSupportCachingTest(fixtures.TestBase):
 
     @testing.fixture()
     def sqlite_no_cache_dialect(self, testing_engine):
-        from sqlalchemy.dialects.sqlite.pysqlite import SQLiteDialect_pysqlite
-        from sqlalchemy.dialects.sqlite.base import SQLiteCompiler
-        from sqlalchemy.sql import visitors
+        from ilikesql.dialects.sqlite.pysqlite import SQLiteDialect_pysqlite
+        from ilikesql.dialects.sqlite.base import SQLiteCompiler
+        from ilikesql.sql import visitors
 
         class MyCompiler(SQLiteCompiler):
             def translate_select_structure(self, select_stmt, **kwargs):
@@ -4175,7 +4175,7 @@ class DialectDoesntSupportCachingTest(fixtures.TestBase):
             statement_compiler = MyCompiler
             supports_statement_cache = False
 
-        from sqlalchemy.dialects import registry
+        from ilikesql.dialects import registry
 
         def go(name):
             return MyDialect

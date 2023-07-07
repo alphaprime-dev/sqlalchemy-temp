@@ -54,7 +54,7 @@ in the result set.
 
 A basic UPDATE looks like::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> stmt = (
     ...     update(user_table)
     ...     .where(user_table.c.name == "patrick")
@@ -82,7 +82,7 @@ that literal values would normally go:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import bindparam
+    >>> from ilikesql import bindparam
     >>> stmt = (
     ...     update(user_table)
     ...     .where(user_table.c.name == bindparam("oldname"))
@@ -100,7 +100,7 @@ that literal values would normally go:
     {execsql}BEGIN (implicit)
     UPDATE user_account SET name=? WHERE user_account.name = ?
     [...] [('ed', 'jack'), ('mary', 'wendy'), ('jake', 'jim')]
-    <sqlalchemy.engine.cursor.CursorResult object at 0x...>
+    <ilikesql.engine.cursor.CursorResult object at 0x...>
     COMMIT{stop}
 
 
@@ -166,7 +166,7 @@ order to refer to additional tables::
   ...         }
   ...     )
   ... )
-  >>> from sqlalchemy.dialects import mysql
+  >>> from ilikesql.dialects import mysql
   >>> print(update_stmt.compile(dialect=mysql.dialect()))
   {printsql}UPDATE user_account, address
   SET address.email_address=%s, user_account.fullname=%s
@@ -212,7 +212,7 @@ allowing for a RETURNING variant on some database backends.
 
 ::
 
-    >>> from sqlalchemy import delete
+    >>> from ilikesql import delete
     >>> stmt = delete(user_table).where(user_table.c.name == "patrick")
     >>> print(stmt)
     {printsql}DELETE FROM user_account WHERE user_account.name = :name_1
@@ -232,7 +232,7 @@ syntaxes, such as ``DELETE FROM..USING`` on MySQL::
   ...     .where(user_table.c.id == address_table.c.user_id)
   ...     .where(address_table.c.email_address == "patrick@aol.com")
   ... )
-  >>> from sqlalchemy.dialects import mysql
+  >>> from ilikesql.dialects import mysql
   >>> print(delete_stmt.compile(dialect=mysql.dialect()))
   {printsql}DELETE FROM user_account USING user_account, address
   WHERE user_account.id = address.user_id AND address.email_address = %s

@@ -1,4 +1,4 @@
-.. currentmodule:: sqlalchemy.types
+.. currentmodule:: ilikesql.types
 
 .. _types_api:
 

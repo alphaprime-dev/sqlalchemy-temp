@@ -1,4 +1,4 @@
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 Session API
 ===========
@@ -34,22 +34,22 @@ Session Utilities
 
 .. autofunction:: object_session
 
-.. autofunction:: sqlalchemy.orm.util.was_deleted
+.. autofunction:: ilikesql.orm.util.was_deleted
 
 Attribute and State Management Utilities
 ----------------------------------------
 
-These functions are provided by the SQLAlchemy attribute
+These functions are provided by the ilikesql attribute
 instrumentation API to provide a detailed interface for dealing
 with instances, attribute values, and history.  Some of them
 are useful when constructing event listener functions, such as
 those described in :doc:`/orm/events`.
 
-.. currentmodule:: sqlalchemy.orm.util
+.. currentmodule:: ilikesql.orm.util
 
 .. autofunction:: object_state
 
-.. currentmodule:: sqlalchemy.orm.attributes
+.. currentmodule:: ilikesql.orm.attributes
 
 .. autofunction:: del_attribute
 
@@ -75,7 +75,7 @@ those described in :doc:`/orm/events`.
     as they each emit an informative exception
     if the given object is not mapped.
 
-.. autofunction:: sqlalchemy.orm.instrumentation.is_instrumented
+.. autofunction:: ilikesql.orm.instrumentation.is_instrumented
 
 .. autofunction:: set_attribute
 

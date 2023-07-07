@@ -1,10 +1,10 @@
-from sqlalchemy import inspect
-from sqlalchemy import text
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm import sessionmaker
+from ilikesql import inspect
+from ilikesql import text
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import scoped_session
+from ilikesql.orm import sessionmaker
 
 
 class Base(DeclarativeBase):

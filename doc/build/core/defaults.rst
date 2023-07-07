@@ -1,4 +1,4 @@
-.. currentmodule:: sqlalchemy.schema
+.. currentmodule:: ilikesql.schema
 
 .. _metadata_defaults_toplevel:
 
@@ -20,8 +20,8 @@ default does *not* take place.
 Column defaults can be server-side functions or constant values which are
 defined in the database along with the schema in :term:`DDL`, or as SQL
 expressions which are rendered directly within an INSERT or UPDATE statement
-emitted by SQLAlchemy; they may also be client-side Python functions or
-constant values which are invoked by SQLAlchemy before data is passed to the
+emitted by ilikesql; they may also be client-side Python functions or
+constant values which are invoked by ilikesql before data is passed to the
 database.
 
 .. note::
@@ -30,7 +30,7 @@ database.
     intercepts and modifies incoming values for INSERT and UPDATE statements
     which *are* provided to the statement as it is invoked.  This is known
     as :term:`data marshalling`, where a column value is modified in some way
-    by the application before being sent to the database.  SQLAlchemy provides
+    by the application before being sent to the database.  ilikesql provides
     a few means of achieving this which include using :ref:`custom datatypes
     <types_typedecorator>`, :ref:`SQL execution events <core_sql_events>` and
     in the ORM :ref:`custom  validators <simple_validators>` as well as
@@ -39,7 +39,7 @@ database.
     :term:`DML` statement.
 
 
-SQLAlchemy provides an array of features regarding default generation
+ilikesql provides an array of features regarding default generation
 functions which take place for non-present values during INSERT and UPDATE
 statements. Options include:
 
@@ -98,10 +98,10 @@ incrementing counter to a primary key column::
 It should be noted that for real "incrementing sequence" behavior, the
 built-in capabilities of the database should normally be used, which may
 include sequence objects or other autoincrementing capabilities. For primary
-key columns, SQLAlchemy will in most cases use these capabilities
+key columns, ilikesql will in most cases use these capabilities
 automatically. See the API documentation for
-:class:`~sqlalchemy.schema.Column` including the :paramref:`_schema.Column.autoincrement` flag, as
-well as the section on :class:`~sqlalchemy.schema.Sequence` later in this
+:class:`~ilikesql.schema.Column` including the :paramref:`_schema.Column.autoincrement` flag, as
+well as the section on :class:`~ilikesql.schema.Sequence` later in this
 chapter for background on standard primary key generation techniques.
 
 To illustrate onupdate, we assign the Python ``datetime`` function ``now`` to
@@ -121,7 +121,7 @@ When an update statement executes and no value is passed for ``last_updated``,
 the ``datetime.datetime.now()`` Python function is executed and its return
 value used as the value for ``last_updated``. Notice that we provide ``now``
 as the function itself without calling it (i.e. there are no parenthesis
-following) - SQLAlchemy will execute the function at the time the statement
+following) - ilikesql will execute the function at the time the statement
 executes.
 
 .. _context_default_functions:
@@ -132,7 +132,7 @@ Context-Sensitive Default Functions
 The Python functions used by :paramref:`_schema.Column.default` and
 :paramref:`_schema.Column.onupdate` may also make use of the current statement's
 context in order to determine a value. The `context` of a statement is an
-internal SQLAlchemy object which contains all information about the statement
+internal ilikesql object which contains all information about the statement
 being executed, including its source expression, the parameters associated with
 it and the cursor. The typical use case for this context with regards to
 default generation is to have access to the other values being inserted or
@@ -223,7 +223,7 @@ emitted for this table.
     "NOW" function into the SQL being emitted.
 
 Default and update SQL expressions specified by :paramref:`_schema.Column.default` and
-:paramref:`_schema.Column.onupdate` are invoked explicitly by SQLAlchemy when an
+:paramref:`_schema.Column.onupdate` are invoked explicitly by ilikesql when an
 INSERT or UPDATE statement occurs, typically rendered inline within the DML
 statement except in certain cases listed below.   This is different than a
 "server side" default, which is part of the table's DDL definition, e.g. as
@@ -231,7 +231,7 @@ part of the "CREATE TABLE" statement, which are likely more common.   For
 server side defaults, see the next section :ref:`server_defaults`.
 
 When a SQL expression indicated by :paramref:`_schema.Column.default` is used with
-primary key columns, there are some cases where SQLAlchemy must "pre-execute"
+primary key columns, there are some cases where ilikesql must "pre-execute"
 the default generation SQL function, meaning it is invoked in a separate SELECT
 statement, and the resulting value is passed as a parameter to the INSERT.
 This only occurs for primary key columns for an INSERT statement that is being
@@ -242,14 +242,14 @@ inline.
 
 When the statement is executed with a single set of parameters (that is, it is
 not an "executemany" style execution), the returned
-:class:`~sqlalchemy.engine.CursorResult` will contain a collection accessible
+:class:`~ilikesql.engine.CursorResult` will contain a collection accessible
 via :meth:`_engine.CursorResult.postfetch_cols` which contains a list of all
-:class:`~sqlalchemy.schema.Column` objects which had an inline-executed
+:class:`~ilikesql.schema.Column` objects which had an inline-executed
 default. Similarly, all parameters which were bound to the statement, including
 all Python and SQL expressions which were pre-executed, are present in the
 :meth:`_engine.CursorResult.last_inserted_params` or
 :meth:`_engine.CursorResult.last_updated_params` collections on
-:class:`~sqlalchemy.engine.CursorResult`. The
+:class:`~ilikesql.engine.CursorResult`. The
 :attr:`_engine.CursorResult.inserted_primary_key` collection contains a list of primary
 key values for the row inserted (a list so that single-column and
 composite-column primary keys are represented in the same format).
@@ -286,7 +286,7 @@ The above example illustrates the two typical use cases for :paramref:`_schema.C
 that of the SQL function (SYSDATE in the above example) as well as a server-side constant
 value (the integer "0" in the above example).  It is advisable to use the
 :func:`_expression.text` construct for any literal SQL values as opposed to passing the
-raw value, as SQLAlchemy does not typically perform any quoting or escaping on
+raw value, as ilikesql does not typically perform any quoting or escaping on
 these values.
 
 Like client-generated expressions, :paramref:`_schema.Column.server_default` can accommodate
@@ -305,7 +305,7 @@ behaviors such as seen with TIMESTAMP columns on some platforms, as well as
 custom triggers that invoke upon INSERT or UPDATE to generate a new value,
 may be called out using :class:`.FetchedValue` as a marker::
 
-    from sqlalchemy.schema import FetchedValue
+    from ilikesql.schema import FetchedValue
 
     t = Table(
         "test",
@@ -320,7 +320,7 @@ CREATE TABLE.  Instead, it marks the column as one that will have a new value
 populated by the database during the process of an INSERT or UPDATE statement,
 and for supporting  databases may be used to indicate that the column should be
 part of a RETURNING or OUTPUT clause for the statement.    Tools such as the
-SQLAlchemy ORM then make use of this marker in order to know how to get at the
+ilikesql ORM then make use of this marker in order to know how to get at the
 value of the column after such an operation.   In particular, the
 :meth:`.ValuesBase.return_defaults` method can be used with an :class:`_expression.Insert`
 or :class:`_expression.Update` construct to indicate that these values should be
@@ -345,12 +345,12 @@ For details on using :class:`.FetchedValue` with the ORM, see
 Defining Sequences
 ------------------
 
-SQLAlchemy represents database sequences using the
-:class:`~sqlalchemy.schema.Sequence` object, which is considered to be a
+ilikesql represents database sequences using the
+:class:`~ilikesql.schema.Sequence` object, which is considered to be a
 special case of "column default". It only has an effect on databases which have
-explicit support for sequences, which among SQLAlchemy's included dialects
+explicit support for sequences, which among ilikesql's included dialects
 includes PostgreSQL, Oracle, MS SQL Server, and MariaDB.  The
-:class:`~sqlalchemy.schema.Sequence` object is otherwise ignored.
+:class:`~ilikesql.schema.Sequence` object is otherwise ignored.
 
 .. tip::
 
@@ -359,7 +359,7 @@ includes PostgreSQL, Oracle, MS SQL Server, and MariaDB.  The
     values. See the section :ref:`identity_ddl` for background on this
     construct.
 
-The :class:`~sqlalchemy.schema.Sequence` may be placed on any column as a
+The :class:`~ilikesql.schema.Sequence` may be placed on any column as a
 "default" generator to be used during INSERT operations, and can also be
 configured to fire off during UPDATE operations if desired. It is most
 commonly used in conjunction with a single integer primary key column::
@@ -423,7 +423,7 @@ newly generated primary key identifiers, including but not limited to those
 generated using :class:`.Sequence`, are available from the :class:`.CursorResult`
 construct using the :attr:`.CursorResult.inserted_primary_key` attribute.
 
-When the :class:`~sqlalchemy.schema.Sequence` is associated with a
+When the :class:`~ilikesql.schema.Sequence` is associated with a
 :class:`_schema.Column` as its **Python-side** default generator, the
 :class:`.Sequence` will also be subject to "CREATE SEQUENCE" and "DROP
 SEQUENCE" DDL when similar DDL is emitted for the owning :class:`_schema.Table`,
@@ -612,9 +612,9 @@ emitted as:
 Placement of the :class:`.Sequence` in both the Python-side and server-side
 default generation contexts ensures that the "primary key fetch" logic
 works in all cases.  Typically, sequence-enabled databases also support
-RETURNING for INSERT statements, which is used automatically by SQLAlchemy
+RETURNING for INSERT statements, which is used automatically by ilikesql
 when emitting this statement.  However if RETURNING is not used for a particular
-insert, then SQLAlchemy would prefer to "pre-execute" the sequence outside
+insert, then ilikesql would prefer to "pre-execute" the sequence outside
 of the INSERT statement itself, which only works if the sequence is
 included as the Python-side default generator function.
 
@@ -646,7 +646,7 @@ column within a row.
 
 Example::
 
-    from sqlalchemy import Table, Column, MetaData, Integer, Computed
+    from ilikesql import Table, Column, MetaData, Integer, Computed
 
     metadata_obj = MetaData()
 
@@ -692,7 +692,7 @@ eagerly fetched.
 
 .. note:: A :class:`_schema.Column` that is defined with the :class:`.Computed`
    construct may not store any value outside of that which the server applies
-   to it;  SQLAlchemy's behavior when a value is passed for such a column
+   to it;  ilikesql's behavior when a value is passed for such a column
    to be written in INSERT or UPDATE is currently that the value will be
    ignored.
 
@@ -739,7 +739,7 @@ shares most of its option to control the database behaviour with
 
 Example::
 
-    from sqlalchemy import Table, Column, MetaData, Integer, Identity, String
+    from ilikesql import Table, Column, MetaData, Integer, Identity, String
 
     metadata_obj = MetaData()
 
@@ -800,7 +800,7 @@ The :class:`.Identity` construct is currently known to be supported by:
   ``start`` and ``increment`` parameters, and ignores all other.
 
 When :class:`.Identity` is used with an unsupported backend, it is ignored,
-and the default SQLAlchemy logic for autoincrementing columns is used.
+and the default ilikesql logic for autoincrementing columns is used.
 
 An error is raised when a :class:`_schema.Column` specifies both an
 :class:`.Identity` and also sets :paramref:`_schema.Column.autoincrement`

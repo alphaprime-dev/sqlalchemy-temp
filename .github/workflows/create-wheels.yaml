@@ -52,7 +52,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Remove tag_build from setup.cfg
-        # sqlalchemy has `tag_build` set to `dev` in setup.cfg. We need to remove it before creating the weel
+        # ilikesql has `tag_build` set to `dev` in setup.cfg. We need to remove it before creating the weel
         # otherwise it gets tagged with `dev0`
         shell: pwsh
         # This is equivalent to the sed commands:
@@ -93,7 +93,7 @@ jobs:
           pip --version
           pip install build
           pip list
-          DISABLE_SQLALCHEMY_CEXT=y python -m build --wheel --outdir ./wheelhouse
+          DISABLE_ilikesql_CEXT=y python -m build --wheel --outdir ./wheelhouse
 
       # - uses: actions/upload-artifact@v3
       #   with:
@@ -101,7 +101,7 @@ jobs:
 
       - name: Upload wheels to release
         # upload the generated wheels to the github release
-        uses: sqlalchemyorg/upload-release-assets@sa
+        uses: ilikesqlorg/upload-release-assets@sa
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           files: './wheelhouse/*.whl'

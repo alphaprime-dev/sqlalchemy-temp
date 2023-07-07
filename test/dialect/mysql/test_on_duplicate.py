@@ -1,14 +1,14 @@
-from sqlalchemy import Boolean
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy.dialects.mysql import insert
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertions import assert_raises
-from sqlalchemy.testing.assertions import eq_
+from ilikesql import Boolean
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import Table
+from ilikesql.dialects.mysql import insert
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertions import assert_raises
+from ilikesql.testing.assertions import eq_
 
 
 class OnDuplicateTest(fixtures.TablesTest):

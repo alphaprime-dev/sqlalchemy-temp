@@ -6,7 +6,7 @@ ORM Mapped Class Overview
 
 Overview of ORM class mapping configuration.
 
-For readers new to the SQLAlchemy ORM and/or new to Python in general,
+For readers new to the ilikesql ORM and/or new to Python in general,
 it's recommended to browse through the
 :ref:`orm_quickstart` and preferably to work through the
 :ref:`unified_tutorial`, where ORM configuration is first introduced at
@@ -17,7 +17,7 @@ it's recommended to browse through the
 ORM Mapping Styles
 ==================
 
-SQLAlchemy features two distinct styles of mapper configuration, which then
+ilikesql features two distinct styles of mapper configuration, which then
 feature further sub-options for how they are set up.   The variability in mapper
 styles is present to suit a varied list of developer preferences, including
 the degree of abstraction of a user-defined class from how it is to be
@@ -26,8 +26,8 @@ are in use, including whether or not custom metaclass schemes are present,
 and finally if there are other class-instrumentation approaches present such
 as if Python dataclasses_ are in use simultaneously.
 
-In modern SQLAlchemy, the difference between these styles is mostly
-superficial; when a particular SQLAlchemy configurational style is used to
+In modern ilikesql, the difference between these styles is mostly
+superficial; when a particular ilikesql configurational style is used to
 express the intent to map a class, the internal process of mapping the class
 proceeds in mostly the same way for each, where the end result is always a
 user-defined class that has a :class:`_orm.Mapper` configured against a
@@ -41,10 +41,10 @@ class when using type checkers such as mypy.
 
 The original mapping API is commonly referred to as "classical" style,
 whereas the more automated style of mapping is known as "declarative" style.
-SQLAlchemy now refers to these two mapping styles as **imperative mapping**
+ilikesql now refers to these two mapping styles as **imperative mapping**
 and **declarative mapping**.
 
-Regardless of what style of mapping used, all ORM mappings as of SQLAlchemy 1.4
+Regardless of what style of mapping used, all ORM mappings as of ilikesql 1.4
 originate from a single object known as :class:`_orm.registry`, which is a
 registry of mapped classes. Using this registry, a set of mapper configurations
 can be finalized as a group, and classes within a particular registry may refer
@@ -61,17 +61,17 @@ Declarative Mapping
 -------------------
 
 The **Declarative Mapping** is the typical way that mappings are constructed in
-modern SQLAlchemy. The most common pattern is to first construct a base class
+modern ilikesql. The most common pattern is to first construct a base class
 using the :class:`_orm.DeclarativeBase` superclass. The resulting base class,
 when subclassed will apply the declarative mapping process to all subclasses
 that derive from it, relative to a particular :class:`_orm.registry` that
 is local to the new base by default. The example below illustrates
 the use of a declarative base which is then used in a declarative table mapping::
 
-    from sqlalchemy import Integer, String, ForeignKey
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql import Integer, String, ForeignKey
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     # declarative base class
@@ -89,7 +89,7 @@ the use of a declarative base which is then used in a declarative table mapping:
         nickname: Mapped[Optional[str]]
 
 Above, the :class:`_orm.DeclarativeBase` class is used to generate a new
-base class (within SQLAlchemy's documentation it's typically referred towards
+base class (within ilikesql's documentation it's typically referred towards
 as ``Base``, however can have any desired name) from
 which new classes to be mapped may inherit from, as above a new mapped
 class ``User`` is constructed.
@@ -150,7 +150,7 @@ mapped class using the :meth:`_orm.registry.map_imperatively` method,
 where the target class does not include any declarative class attributes.
 
 .. tip:: The imperative mapping form is a lesser-used form of mapping that
-   originates from the very first releases of SQLAlchemy in 2006.  It's
+   originates from the very first releases of ilikesql in 2006.  It's
    essentially a means of bypassing the Declarative system to provide a
    more "barebones" system of mapping, and does not offer modern features
    such as :pep:`484` support.  As such, most documentation examples
@@ -159,7 +159,7 @@ where the target class does not include any declarative class attributes.
    configuration.
 
 .. versionchanged:: 2.0  The :meth:`_orm.registry.map_imperatively` method
-   is now used to create classical mappings.  The ``sqlalchemy.orm.mapper()``
+   is now used to create classical mappings.  The ``ilikesql.orm.mapper()``
    standalone function is effectively removed.
 
 In "classical" form, the table metadata is created separately with the
@@ -169,8 +169,8 @@ a :class:`_orm.registry` instance.  Normally, a single instance of
 :class:`_orm.registry`
 shared for all mapped classes that are related to each other::
 
-    from sqlalchemy import Table, Column, Integer, String, ForeignKey
-    from sqlalchemy.orm import registry
+    from ilikesql import Table, Column, Integer, String, ForeignKey
+    from ilikesql.orm import registry
 
     mapper_registry = registry()
 
@@ -342,9 +342,9 @@ method, to all mapped classes that don't explicitly have their own
 a convenient keyword constructor that will accept as optional keyword arguments
 all the attributes that are named.   E.g.::
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -379,7 +379,7 @@ used as the default constructor.
 
 The constructor also applies to imperative mappings::
 
-    from sqlalchemy.orm import registry
+    from ilikesql.orm import registry
 
     mapper_registry = registry()
 
@@ -420,7 +420,7 @@ attributes that are common to all mappings:
   This :class:`_orm.Mapper` is also what's returned when using the
   :func:`_sa.inspect` function against the mapped class::
 
-    from sqlalchemy import inspect
+    from ilikesql import inspect
 
     mapper = inspect(User)
 
@@ -458,13 +458,13 @@ available from any mapped class, regardless of method, using the
 :func:`_sa.inspect` function, one can acquire the :class:`_orm.Mapper` from a
 mapped class::
 
-    >>> from sqlalchemy import inspect
+    >>> from ilikesql import inspect
     >>> insp = inspect(User)
 
 Detailed information is available including :attr:`_orm.Mapper.columns`::
 
     >>> insp.columns
-    <sqlalchemy.util._collections.OrderedProperties object at 0x102f407f8>
+    <ilikesql.util._collections.OrderedProperties object at 0x102f407f8>
 
 This is a namespace that can be viewed in a list format or
 via individual names::
@@ -478,7 +478,7 @@ Other namespaces include :attr:`_orm.Mapper.all_orm_descriptors`, which includes
 attributes as well as hybrids, association proxies::
 
     >>> insp.all_orm_descriptors
-    <sqlalchemy.util._collections.ImmutableProperties object at 0x1040e2c68>
+    <ilikesql.util._collections.ImmutableProperties object at 0x1040e2c68>
     >>> insp.all_orm_descriptors.keys()
     ['fullname', 'nickname', 'name', 'id']
 
@@ -517,7 +517,7 @@ object::
 
   >>> insp = inspect(u1)
   >>> insp
-  <sqlalchemy.orm.state.InstanceState object at 0x7f07e5fec2e0>
+  <ilikesql.orm.state.InstanceState object at 0x7f07e5fec2e0>
 
 With this object we can see elements such as the :class:`.Mapper`::
 
@@ -527,7 +527,7 @@ With this object we can see elements such as the :class:`.Mapper`::
 The :class:`_orm.Session` to which the object is :term:`attached`, if any::
 
   >>> insp.session
-  <sqlalchemy.orm.session.Session object at 0x7f07e614f160>
+  <ilikesql.orm.session.Session object at 0x7f07e614f160>
 
 Information about the current :ref:`persistence state <session_object_states>`
 for the object::
@@ -577,5 +577,5 @@ as well as specific history on modifications to attributes since the last flush:
 .. [2] There is a legacy feature known as a "non primary mapper", where
        additional :class:`_orm.Mapper` objects may be associated with a class
        that's already mapped, however they don't apply instrumentation
-       to the class.  This feature is deprecated as of SQLAlchemy 1.3.
+       to the class.  This feature is deprecated as of ilikesql 1.3.
 

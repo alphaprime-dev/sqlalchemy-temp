@@ -1,5 +1,5 @@
 """
-Examples illustrating the asyncio engine feature of SQLAlchemy.
+Examples illustrating the asyncio engine feature of ilikesql.
 
 .. autosource::
 

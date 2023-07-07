@@ -1,21 +1,21 @@
 =============================
-What's New in SQLAlchemy 1.0?
+What's New in ilikesql 1.0?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 0.9,
+    This document describes changes between ilikesql version 0.9,
     undergoing maintenance releases as of May, 2014,
-    and SQLAlchemy version 1.0, released in April, 2015.
+    and ilikesql version 1.0, released in April, 2015.
 
     Document last updated: June 9, 2015
 
 Introduction
 ============
 
-This guide introduces what's new in SQLAlchemy version 1.0,
+This guide introduces what's new in ilikesql version 1.0,
 and also documents changes which affect users migrating
-their applications from the 0.9 series of SQLAlchemy to 1.0.
+their applications from the 0.9 series of ilikesql to 1.0.
 
 Please carefully review the sections on behavioral changes for
 potentially backwards-incompatible changes in behavior.
@@ -66,8 +66,8 @@ Python function call overhead (over 75%).    By  specifying a
 :class:`_query.Query` object as a series of lambdas which are only invoked
 once, a query as a pre-compiled unit begins to be feasible::
 
-    from sqlalchemy.ext import baked
-    from sqlalchemy import bindparam
+    from ilikesql.ext import baked
+    from ilikesql import bindparam
 
     bakery = baked.bakery()
 
@@ -192,9 +192,9 @@ Finally, the :class:`.AbstractConcreteBase` class has been reworked
 so that a relationship or other mapper property can be set up inline
 on the abstract base::
 
-    from sqlalchemy import Column, Integer, ForeignKey
-    from sqlalchemy.orm import relationship
-    from sqlalchemy.ext.declarative import (
+    from ilikesql import Column, Integer, ForeignKey
+    from ilikesql.orm import relationship
+    from ilikesql.ext.declarative import (
         declarative_base,
         declared_attr,
         AbstractConcreteBase,
@@ -242,9 +242,9 @@ Assuming a 1M row table, a script like the following illustrates the type
 of load that's improved the most::
 
     import time
-    from sqlalchemy import Integer, Column, create_engine, Table
-    from sqlalchemy.orm import Session
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Integer, Column, create_engine, Table
+    from ilikesql.orm import Session
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -346,12 +346,12 @@ loader strategy system.
 
 A bench that makes use of heapy measure the startup size of Nova
 illustrates a difference of about 3.7 fewer megs, or 46%,
-taken up by SQLAlchemy's objects, associated dictionaries, as
-well as weakrefs, within a basic import of "nova.db.sqlalchemy.models":
+taken up by ilikesql's objects, associated dictionaries, as
+well as weakrefs, within a basic import of "nova.db.ilikesql.models":
 
 .. sourcecode:: text
 
-    # reported by heapy, summation of SQLAlchemy objects +
+    # reported by heapy, summation of ilikesql objects +
     # associated dicts + weakref-related objects with core of Nova imported:
 
         Before: total count 26477 total bytes 7975712
@@ -756,7 +756,7 @@ Constraints referring to unattached Columns can auto-attach to the Table when th
 Since at least version 0.8, a :class:`.Constraint` has had the ability to
 "auto-attach" itself to a :class:`_schema.Table` based on being passed table-attached columns::
 
-    from sqlalchemy import Table, Column, MetaData, Integer, UniqueConstraint
+    from ilikesql import Table, Column, MetaData, Integer, UniqueConstraint
 
     m = MetaData()
 
@@ -772,7 +772,7 @@ objects are not yet associated with the :class:`_schema.Table`; additional event
 are established such that when those :class:`_schema.Column` objects are associated,
 the :class:`.Constraint` is also added::
 
-    from sqlalchemy import Table, Column, MetaData, Integer, UniqueConstraint
+    from ilikesql import Table, Column, MetaData, Integer, UniqueConstraint
 
     m = MetaData()
 
@@ -791,7 +791,7 @@ does not occur if the :class:`.Constraint` refers to a mixture of
 :class:`_schema.Column` objects and string column names; as we do not yet have
 tracking for the addition of names to a :class:`_schema.Table`::
 
-    from sqlalchemy import Table, Column, MetaData, Integer, UniqueConstraint
+    from ilikesql import Table, Column, MetaData, Integer, UniqueConstraint
 
     m = MetaData()
 
@@ -816,7 +816,7 @@ The original auto-attach logic of course remains in place, if the :class:`_schem
 already contains all the target :class:`_schema.Column` objects at the time
 the :class:`.Constraint` is constructed::
 
-    from sqlalchemy import Table, Column, MetaData, Integer, UniqueConstraint
+    from ilikesql import Table, Column, MetaData, Integer, UniqueConstraint
 
     m = MetaData()
 
@@ -846,7 +846,7 @@ otherwise unspecified; the limitation where non-server column defaults
 aren't included in an INSERT FROM SELECT is now lifted and these
 expressions are rendered as constants into the SELECT statement::
 
-    from sqlalchemy import Table, Column, MetaData, Integer, select, func
+    from ilikesql import Table, Column, MetaData, Integer, select, func
 
     m = MetaData()
 
@@ -877,10 +877,10 @@ The "literal binds" compiler flag is switched on when a
 is present as a SQL expression to be compiled.  This allows literals
 embedded in SQL to render correctly, such as::
 
-    from sqlalchemy import Table, Column, MetaData, Text
-    from sqlalchemy.schema import CreateTable
-    from sqlalchemy.dialects.postgresql import ARRAY, array
-    from sqlalchemy.dialects import postgresql
+    from ilikesql import Table, Column, MetaData, Text
+    from ilikesql.schema import CreateTable
+    from ilikesql.dialects.postgresql import ARRAY, array
+    from ilikesql.dialects import postgresql
 
     metadata = MetaData()
 
@@ -985,7 +985,7 @@ them as duplicates.
 To illustrate, the following test script will show only ten warnings being
 emitted for ten of the parameter sets, out of a total of 1000::
 
-    from sqlalchemy import create_engine, Unicode, select, cast
+    from ilikesql import create_engine, Unicode, select, cast
     import random
     import warnings
 
@@ -1006,7 +1006,7 @@ The format of the warning here is:
 
 .. sourcecode:: text
 
-    /path/lib/sqlalchemy/sql/sqltypes.py:186: SAWarning: Unicode type received
+    /path/lib/ilikesql/sql/sqltypes.py:186: SAWarning: Unicode type received
       non-unicode bind param value 'foo_4852'. (this warning may be
       suppressed after 10 occurrences)
 
@@ -1083,7 +1083,7 @@ queries that are essentially of this form::
 
     session.query(Address).filter(Address.user == User(id=None))
 
-This pattern is not currently supported in SQLAlchemy.  For all versions,
+This pattern is not currently supported in ilikesql.  For all versions,
 it emits SQL resembling:
 
 .. sourcecode:: sql
@@ -1106,7 +1106,7 @@ generate SQL as follows:
 
 But right now, **it does not**.   Applications which are relying upon the
 fact that "NULL = NULL" produces False in all cases run the risk that
-someday, SQLAlchemy might fix this issue to generate "IS NULL", and the queries
+someday, ilikesql might fix this issue to generate "IS NULL", and the queries
 will then produce different results.  Therefore with this kind of operation,
 you will see a warning:
 
@@ -1213,7 +1213,7 @@ Given an object with no state::
 
     >>> obj = Foo()
 
-It has always been SQLAlchemy's behavior such that if we access a scalar
+It has always been ilikesql's behavior such that if we access a scalar
 or many-to-one attribute that was never set, it is returned as ``None``::
 
     >>> obj.someattr
@@ -1253,7 +1253,7 @@ when the default "getter" is used.
 
 The reason the above behavior hasn't had much impact is because the
 INSERT statement in relational databases considers a missing value to be
-the same as NULL in most cases.   Whether SQLAlchemy received a history
+the same as NULL in most cases.   Whether ilikesql received a history
 event for a particular attribute set to None or not would usually not matter;
 as the difference between sending None/NULL or not wouldn't have an impact.
 However, as :ticket:`3060` (described here in :ref:`migration_3060`)
@@ -1402,9 +1402,9 @@ multiple times to the same target relationship.
 
 Starting with a mapping as::
 
-    from sqlalchemy import Integer, Column, String, ForeignKey
-    from sqlalchemy.orm import Session, relationship
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Integer, Column, String, ForeignKey
+    from ilikesql.orm import Session, relationship
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -1479,9 +1479,9 @@ any aliasing to disambiguate should raise an error in all cases.
 The change also has an impact on single-table inheritance targets.  Using
 a mapping as follows::
 
-    from sqlalchemy import Integer, Column, String, ForeignKey
-    from sqlalchemy.orm import Session, relationship
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Integer, Column, String, ForeignKey
+    from ilikesql.orm import Session, relationship
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -1578,7 +1578,7 @@ Deprecated ORM Event Hooks Removed
 The following ORM event hooks, some of which have been deprecated since
 0.5, have been removed:   ``translate_row``, ``populate_instance``,
 ``append_result``, ``create_instance``.  The use cases for these hooks
-originated in the very early 0.1 / 0.2 series of SQLAlchemy and have long
+originated in the very early 0.1 / 0.2 series of ilikesql and have long
 since been unnecessary.  In particular, the hooks were largely unusable
 as the behavioral contracts within these events was strongly linked to
 the surrounding internals, such as how an instance needs to be created
@@ -1595,7 +1595,7 @@ The new :class:`.Bundle` object of 0.9 has a small change in API,
 when the ``create_row_processor()`` method is overridden on a custom class.
 Previously, the sample code looked like::
 
-    from sqlalchemy.orm import Bundle
+    from ilikesql.orm import Bundle
 
 
     class DictBundle(Bundle):
@@ -1609,7 +1609,7 @@ Previously, the sample code looked like::
 
 The unused ``result`` member is now removed::
 
-    from sqlalchemy.orm import Bundle
+    from ilikesql.orm import Bundle
 
 
     class DictBundle(Bundle):
@@ -1671,7 +1671,7 @@ OUTER joins despite the innerjoin directive:
     FROM users LEFT OUTER JOIN orders ON <onclause> LEFT OUTER JOIN items ON <onclause>
 
 As noted in the 0.9 notes, the only database backend that has difficulty
-with right-nested joins is SQLite; SQLAlchemy as of 0.9 converts a right-nested
+with right-nested joins is SQLite; ilikesql as of 0.9 converts a right-nested
 join into a subquery as a join target on SQLite.
 
 .. seealso::
@@ -1702,7 +1702,7 @@ Given a joined eager load like the following::
     s = Session()
     print(s.query(A).options(joinedload(A.b)).limit(5))
 
-SQLAlchemy considers the relationship ``A.b`` to be a "one to many,
+ilikesql considers the relationship ``A.b`` to be a "one to many,
 loaded as a single value", which is essentially a "one to one"
 relationship.  However, joined eager loading has always treated the
 above as a situation where the main query needs to be inside a
@@ -1737,7 +1737,7 @@ has always emitted a warning here and ignored additional results for
 query.update() / query.delete() raises if used with join(), select_from(), from_self()
 --------------------------------------------------------------------------------------
 
-A warning is emitted in SQLAlchemy 0.9.10 (not yet released as of
+A warning is emitted in ilikesql 0.9.10 (not yet released as of
 June 9, 2015) when the :meth:`_query.Query.update` or :meth:`_query.Query.delete` methods
 are invoked against a query which has also called upon :meth:`_query.Query.join`,
 :meth:`_query.Query.outerjoin`,
@@ -1907,7 +1907,7 @@ Key Behavioral Changes - Core
 Warnings emitted when coercing full SQL fragments into text()
 -------------------------------------------------------------
 
-Since SQLAlchemy's inception, there has always been an emphasis on not getting
+Since ilikesql's inception, there has always been an emphasis on not getting
 in the way of the usage of plain text.   The Core and ORM expression systems
 were intended to allow any number of points at which the user can just
 use plain text SQL expressions, not just in the sense that you can send a
@@ -1977,7 +1977,7 @@ should be used::
 Given the above warnings, our statement works just fine, but
 to get rid of the warnings we would rewrite our statement as follows::
 
-    from sqlalchemy import select, text
+    from ilikesql import select, text
 
     stmt = (
         select([text("a"), text("b")]).where(text("a = b")).select_from(text("sometable"))
@@ -1986,7 +1986,7 @@ to get rid of the warnings we would rewrite our statement as follows::
 and as the warnings suggest, we can give our statement more specificity
 about the text if we use :func:`_expression.column` and :func:`.table`::
 
-    from sqlalchemy import select, text, column, table
+    from ilikesql import select, text, column, table
 
     stmt = (
         select([column("a"), column("b")])
@@ -1995,7 +1995,7 @@ about the text if we use :func:`_expression.column` and :func:`.table`::
     )
 
 Where note also that :func:`.table` and :func:`_expression.column` can now
-be imported from "sqlalchemy" without the "sql" part.
+be imported from "ilikesql" without the "sql" part.
 
 The behavior here applies to :func:`_expression.select` as well as to key methods
 on :class:`_query.Query`, including :meth:`_query.Query.filter`,
@@ -2055,10 +2055,10 @@ We can still specify any arbitrary expression for ORDER BY or others using
 
     stmt = select([users]).order_by(text("some special expression"))
 
-The upshot of the whole change is that SQLAlchemy now would like us
+The upshot of the whole change is that ilikesql now would like us
 to tell it when a string is sent that this string is explicitly
 a :func:`_expression.text` construct, or a column, table, etc., and if we use it as a
-label name in an order by, group by, or other expression, SQLAlchemy expects
+label name in an order by, group by, or other expression, ilikesql expects
 that the string resolves to something known, else it should again
 be qualified with :func:`_expression.text` or similar.
 
@@ -2153,7 +2153,7 @@ will raise:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.CompileError: INSERT value for column my_table.data is
+    ilikesql.exc.CompileError: INSERT value for column my_table.data is
     explicitly rendered as a boundparameter in the VALUES clause; a
     Python-side value or SQL expression is required
 
@@ -2226,7 +2226,7 @@ A :class:`_schema.Table` can be set up for reflection by passing
 DBAPI exception wrapping and handle_error() event improvements
 --------------------------------------------------------------
 
-SQLAlchemy's wrapping of DBAPI exceptions was not taking place in the
+ilikesql's wrapping of DBAPI exceptions was not taking place in the
 case where a :class:`_engine.Connection` object was invalidated, and then tried
 to reconnect and encountered an error; this has been resolved.
 
@@ -2289,7 +2289,7 @@ to not render as expected::
 
 rendering only ``SELECT NULL AS anon_1``, because the two :func:`.null`
 constructs would come out as the same  ``NULL`` object, and
-SQLAlchemy's Core model is based on object identity in order to
+ilikesql's Core model is based on object identity in order to
 determine lexical significance.    The change in 0.9 had no
 importance other than the desire to save on object overhead; in general,
 an unnamed construct needs to stay lexically unique so that it gets
@@ -2390,7 +2390,7 @@ The :func:`_sa.inspect` method returns a :class:`.PGInspector` object in the
 case of PostgreSQL, which includes a new :meth:`.PGInspector.get_enums`
 method that returns information on all available ``ENUM`` types::
 
-    from sqlalchemy import inspect, create_engine
+    from ilikesql import inspect, create_engine
 
     engine = create_engine("postgresql+psycopg2://host/dbname")
     insp = inspect(engine)
@@ -2435,7 +2435,7 @@ PostgreSQL ``has_table()`` now works for temporary tables
 This is a simple fix such that "has table" for temporary tables now works,
 so that code like the following may proceed::
 
-    from sqlalchemy import *
+    from ilikesql import *
 
     metadata = MetaData()
     user_tmp = Table(
@@ -2459,7 +2459,7 @@ to silently overwrite a temporary table.  So code like the following will
 now act completely differently, no longer creating the real table following
 the temporary table::
 
-    from sqlalchemy import *
+    from ilikesql import *
 
     metadata = MetaData()
     user_tmp = Table(
@@ -2494,7 +2494,7 @@ PostgreSQL FILTER keyword
 -------------------------
 
 The SQL standard FILTER keyword for aggregate functions is now supported
-by PostgreSQL as of 9.4.  SQLAlchemy allows this using
+by PostgreSQL as of 9.4.  ilikesql allows this using
 :meth:`.FunctionElement.filter`::
 
     func.count(1).filter(True)
@@ -2526,7 +2526,7 @@ Support for the pypy psycopg2cffi dialect is added.
 
 .. seealso::
 
-    :mod:`sqlalchemy.dialects.postgresql.psycopg2cffi`
+    :mod:`ilikesql.dialects.postgresql.psycopg2cffi`
 
 Dialect Improvements and Changes - MySQL
 ========================================
@@ -2544,7 +2544,7 @@ MySQL 5.6.6 and above features a new flag
 5.6/en/server-system-variables.html
 #sysvar_explicit_defaults_for_timestamp>`_ which repairs MySQL's non-standard
 behavior to make it behave like any other type; to accommodate this,
-SQLAlchemy now emits NULL/NOT NULL unconditionally for all TIMESTAMP
+ilikesql now emits NULL/NOT NULL unconditionally for all TIMESTAMP
 columns.
 
 .. seealso::
@@ -2610,7 +2610,7 @@ execution option ``skip_user_error_events`` that disables the handle
 error event for the scope of that execution.   In this way, user code
 that rewrites exceptions doesn't need to worry about the MySQL
 dialect or other dialects that occasionally need to catch
-SQLAlchemy specific exceptions.
+ilikesql specific exceptions.
 
 
 Changed the default value of ``raise_on_warnings`` for MySQL-Connector
@@ -2681,12 +2681,12 @@ Drizzle Dialect is now an External Dialect
 ------------------------------------------
 
 The dialect for `Drizzle <https://www.drizzle.org/>`_ is now an external
-dialect, available at https://bitbucket.org/zzzeek/sqlalchemy-drizzle.
-This dialect was added to SQLAlchemy right before SQLAlchemy was able to
+dialect, available at https://bitbucket.org/zzzeek/ilikesql-drizzle.
+This dialect was added to ilikesql right before ilikesql was able to
 accommodate third party dialects well; going forward, all databases that aren't
 within the "ubiquitous use" category are third party dialects.
 The dialect's implementation hasn't changed and is still based on the
-MySQL + MySQLdb dialects within SQLAlchemy.  The dialect is as of yet
+MySQL + MySQLdb dialects within ilikesql.  The dialect is as of yet
 unreleased and in "attic" status; however it passes the majority of tests
 and is generally in decent working order, if someone wants to pick up
 on polishing it.
@@ -2721,15 +2721,15 @@ PyODBC driver name is required with hostname-based SQL Server connections
 -------------------------------------------------------------------------
 
 Connecting to SQL Server with PyODBC using a DSN-less connection, e.g.
-with an explicit hostname, now requires a driver name - SQLAlchemy will no
+with an explicit hostname, now requires a driver name - ilikesql will no
 longer attempt to guess a default::
 
     engine = create_engine(
         "mssql+pyodbc://scott:tiger@myhost:port/databasename?driver=SQL+Server+Native+Client+10.0"
     )
 
-SQLAlchemy's previously hardcoded default of "SQL Server" is obsolete on
-Windows, and SQLAlchemy cannot be tasked with guessing the best driver
+ilikesql's previously hardcoded default of "SQL Server" is obsolete on
+Windows, and ilikesql cannot be tasked with guessing the best driver
 based on operation system/driver detection.   Using a DSN is always preferred
 when using ODBC to avoid this issue entirely.
 

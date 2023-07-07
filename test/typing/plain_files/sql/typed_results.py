@@ -3,24 +3,24 @@ from __future__ import annotations
 import asyncio
 from typing import cast
 
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import create_engine
-from sqlalchemy import insert
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import table
-from sqlalchemy.ext.asyncio import AsyncConnection
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import Session
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import create_engine
+from ilikesql import insert
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import table
+from ilikesql.ext.asyncio import AsyncConnection
+from ilikesql.ext.asyncio import AsyncSession
+from ilikesql.ext.asyncio import create_async_engine
+from ilikesql.orm import aliased
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import Session
 
 
 class Base(DeclarativeBase):
@@ -59,7 +59,7 @@ async def async_connect() -> AsyncConnection:
 
 async_connection = asyncio.run(async_connect())
 
-# EXPECTED_RE_TYPE: sqlalchemy..*AsyncConnection\*?
+# EXPECTED_RE_TYPE: ilikesql..*AsyncConnection\*?
 reveal_type(async_connection)
 
 async_session = AsyncSession(async_connection)
@@ -74,18 +74,18 @@ user = session.query(User).one()
 
 user_iter = iter(session.scalars(select(User)))
 
-# EXPECTED_RE_TYPE: sqlalchemy..*AsyncSession\*?
+# EXPECTED_RE_TYPE: ilikesql..*AsyncSession\*?
 reveal_type(async_session)
 
 
 single_stmt = select(User.name).where(User.name == "foo")
 
-# EXPECTED_RE_TYPE: sqlalchemy..*Select\*?\[Tuple\[builtins.str\*?\]\]
+# EXPECTED_RE_TYPE: ilikesql..*Select\*?\[Tuple\[builtins.str\*?\]\]
 reveal_type(single_stmt)
 
 multi_stmt = select(User.id, User.name).where(User.name == "foo")
 
-# EXPECTED_RE_TYPE: sqlalchemy..*Select\*?\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+# EXPECTED_RE_TYPE: ilikesql..*Select\*?\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
 reveal_type(multi_stmt)
 
 
@@ -123,14 +123,14 @@ def t_entity_varieties() -> None:
 
     r1 = session.execute(s1)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*.Result\[Tuple\[builtins.int\*?, typed_results.User\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql..*.Result\[Tuple\[builtins.int\*?, typed_results.User\*?, builtins.str\*?\]\]
     reveal_type(r1)
 
     s2 = select(User, a1).where(User.name == "foo")
 
     r2 = session.execute(s2)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*Result\[Tuple\[typed_results.User\*?, typed_results.User\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*Result\[Tuple\[typed_results.User\*?, typed_results.User\*?\]\]
     reveal_type(r2)
 
     row = r2.t.one()
@@ -146,16 +146,16 @@ def t_entity_varieties() -> None:
     # automatically typed since they are dynamically generated
     a1_id = cast(Mapped[int], a1.id)
     s3 = select(User.id, a1_id, a1, User).where(User.name == "foo")
-    # EXPECTED_RE_TYPE: sqlalchemy.*Select\*?\[Tuple\[builtins.int\*?, builtins.int\*?, typed_results.User\*?, typed_results.User\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*Select\*?\[Tuple\[builtins.int\*?, builtins.int\*?, typed_results.User\*?, typed_results.User\*?\]\]
     reveal_type(s3)
 
     # testing Mapped[entity]
     some_mp = cast(Mapped[User], object())
     s4 = select(some_mp, a1, User).where(User.name == "foo")
 
-    # NOTEXPECTED_RE_TYPE: sqlalchemy..*Select\*?\[Tuple\[typed_results.User\*?, typed_results.User\*?, typed_results.User\*?\]\]
+    # NOTEXPECTED_RE_TYPE: ilikesql..*Select\*?\[Tuple\[typed_results.User\*?, typed_results.User\*?, typed_results.User\*?\]\]
 
-    # sqlalchemy.sql._gen_overloads.Select[Tuple[typed_results.User, typed_results.User, typed_results.User]]
+    # ilikesql.sql._gen_overloads.Select[Tuple[typed_results.User, typed_results.User, typed_results.User]]
 
     # EXPECTED_TYPE: Select[Tuple[User, User, User]]
     reveal_type(s4)
@@ -166,7 +166,7 @@ def t_entity_varieties() -> None:
 
     s5 = select(x, y, User.name + "hi")
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*Select\*?\[Tuple\[builtins.int\*?, builtins.int\*?\, builtins.str\*?]\]
+    # EXPECTED_RE_TYPE: ilikesql..*Select\*?\[Tuple\[builtins.int\*?, builtins.int\*?\, builtins.str\*?]\]
     reveal_type(s5)
 
 
@@ -225,12 +225,12 @@ def t_result_scalar_accessors() -> None:
 
     r4 = result.scalars()
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ScalarResult\[builtins.str.*?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ScalarResult\[builtins.str.*?\]
     reveal_type(r4)
 
     r5 = result.scalars(0)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ScalarResult\[builtins.str.*?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ScalarResult\[builtins.str.*?\]
     reveal_type(r5)
 
 
@@ -254,12 +254,12 @@ async def t_async_result_scalar_accessors() -> None:
 
     r4 = result.scalars()
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ScalarResult\[builtins.str.*?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ScalarResult\[builtins.str.*?\]
     reveal_type(r4)
 
     r5 = result.scalars(0)
 
-    # EXPECTED_RE_TYPE: sqlalchemy..*ScalarResult\[builtins.str.*?\]
+    # EXPECTED_RE_TYPE: ilikesql..*ScalarResult\[builtins.str.*?\]
     reveal_type(r5)
 
 
@@ -334,11 +334,11 @@ async def t_async_result_insertmanyvalues_scalars() -> None:
 def t_connection_execute_multi_row_t() -> None:
     result = connection.execute(multi_stmt)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*CursorResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*CursorResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
     reveal_type(result)
     row = result.one()
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*Row\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*Row\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
     reveal_type(row)
 
     x, y = row.t
@@ -353,7 +353,7 @@ def t_connection_execute_multi_row_t() -> None:
 def t_connection_execute_multi() -> None:
     result = connection.execute(multi_stmt).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
     reveal_type(result)
     row = result.one()
 
@@ -372,7 +372,7 @@ def t_connection_execute_multi() -> None:
 def t_connection_execute_single() -> None:
     result = connection.execute(single_stmt).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.str\*?\]\]
     reveal_type(result)
     row = result.one()
 
@@ -388,7 +388,7 @@ def t_connection_execute_single() -> None:
 def t_connection_execute_single_row_scalar() -> None:
     result = connection.execute(single_stmt).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.str\*?\]\]
     reveal_type(result)
 
     x = result.scalar()
@@ -407,7 +407,7 @@ def t_connection_scalar() -> None:
 def t_connection_scalars() -> None:
     result = connection.scalars(single_stmt)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*ScalarResult\[builtins.str\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*ScalarResult\[builtins.str\*?\]
     reveal_type(result)
     data = result.all()
 
@@ -418,7 +418,7 @@ def t_connection_scalars() -> None:
 def t_session_execute_multi() -> None:
     result = session.execute(multi_stmt).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
     reveal_type(result)
     row = result.one()
 
@@ -437,7 +437,7 @@ def t_session_execute_multi() -> None:
 def t_session_execute_single() -> None:
     result = session.execute(single_stmt).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.str\*?\]\]
     reveal_type(result)
     row = result.one()
 
@@ -460,7 +460,7 @@ def t_session_scalar() -> None:
 def t_session_scalars() -> None:
     result = session.scalars(single_stmt)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*ScalarResult\[builtins.str\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*ScalarResult\[builtins.str\*?\]
     reveal_type(result)
     data = result.all()
 
@@ -471,7 +471,7 @@ def t_session_scalars() -> None:
 async def t_async_connection_execute_multi() -> None:
     result = (await async_connection.execute(multi_stmt)).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
     reveal_type(result)
     row = result.one()
 
@@ -490,7 +490,7 @@ async def t_async_connection_execute_multi() -> None:
 async def t_async_connection_execute_single() -> None:
     result = (await async_connection.execute(single_stmt)).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.str\*?\]\]
     reveal_type(result)
 
     row = result.one()
@@ -514,7 +514,7 @@ async def t_async_connection_scalar() -> None:
 async def t_async_connection_scalars() -> None:
     result = await async_connection.scalars(single_stmt)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*ScalarResult\*?\[builtins.str\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*ScalarResult\*?\[builtins.str\*?\]
     reveal_type(result)
     data = result.all()
 
@@ -525,7 +525,7 @@ async def t_async_connection_scalars() -> None:
 async def t_async_session_execute_multi() -> None:
     result = (await async_session.execute(multi_stmt)).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
     reveal_type(result)
     row = result.one()
 
@@ -544,7 +544,7 @@ async def t_async_session_execute_multi() -> None:
 async def t_async_session_execute_single() -> None:
     result = (await async_session.execute(single_stmt)).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.str\*?\]\]
     reveal_type(result)
     row = result.one()
 
@@ -567,7 +567,7 @@ async def t_async_session_scalar() -> None:
 async def t_async_session_scalars() -> None:
     result = await async_session.scalars(single_stmt)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*ScalarResult\*?\[builtins.str\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*ScalarResult\*?\[builtins.str\*?\]
     reveal_type(result)
     data = result.all()
 
@@ -578,7 +578,7 @@ async def t_async_session_scalars() -> None:
 async def t_async_connection_stream_multi() -> None:
     result = (await async_connection.stream(multi_stmt)).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*AsyncTupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*AsyncTupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
     reveal_type(result)
     row = await result.one()
 
@@ -597,7 +597,7 @@ async def t_async_connection_stream_multi() -> None:
 async def t_async_connection_stream_single() -> None:
     result = (await async_connection.stream(single_stmt)).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*AsyncTupleResult\[Tuple\[builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*AsyncTupleResult\[Tuple\[builtins.str\*?\]\]
     reveal_type(result)
     row = await result.one()
 
@@ -613,7 +613,7 @@ async def t_async_connection_stream_single() -> None:
 async def t_async_connection_stream_scalars() -> None:
     result = await async_connection.stream_scalars(single_stmt)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*AsyncScalarResult\*?\[builtins.str\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*AsyncScalarResult\*?\[builtins.str\*?\]
     reveal_type(result)
     data = await result.all()
 
@@ -624,7 +624,7 @@ async def t_async_connection_stream_scalars() -> None:
 async def t_async_session_stream_multi() -> None:
     result = (await async_session.stream(multi_stmt)).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*TupleResult\[Tuple\[builtins.int\*?, builtins.str\*?\]\]
     reveal_type(result)
     row = await result.one()
 
@@ -643,7 +643,7 @@ async def t_async_session_stream_multi() -> None:
 async def t_async_session_stream_single() -> None:
     result = (await async_session.stream(single_stmt)).t
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*AsyncTupleResult\[Tuple\[builtins.str\*?\]\]
+    # EXPECTED_RE_TYPE: ilikesql.*AsyncTupleResult\[Tuple\[builtins.str\*?\]\]
     reveal_type(result)
     row = await result.one()
 
@@ -659,7 +659,7 @@ async def t_async_session_stream_single() -> None:
 async def t_async_session_stream_scalars() -> None:
     result = await async_session.stream_scalars(single_stmt)
 
-    # EXPECTED_RE_TYPE: sqlalchemy.*AsyncScalarResult\*?\[builtins.str\*?\]
+    # EXPECTED_RE_TYPE: ilikesql.*AsyncScalarResult\*?\[builtins.str\*?\]
     reveal_type(result)
     data = await result.all()
 

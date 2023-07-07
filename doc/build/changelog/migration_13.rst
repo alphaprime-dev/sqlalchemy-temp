@@ -1,18 +1,18 @@
 =============================
-What's New in SQLAlchemy 1.3?
+What's New in ilikesql 1.3?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 1.2
-    and SQLAlchemy version 1.3.
+    This document describes changes between ilikesql version 1.2
+    and ilikesql version 1.3.
 
 Introduction
 ============
 
-This guide introduces what's new in SQLAlchemy version 1.3
+This guide introduces what's new in ilikesql version 1.3
 and also documents changes which affect users migrating
-their applications from the 1.2 series of SQLAlchemy to 1.3.
+their applications from the 1.2 series of ilikesql to 1.3.
 
 Please carefully review the sections on behavioral changes for
 potentially backwards-incompatible changes in behavior.
@@ -46,17 +46,17 @@ more explicit in the standard error stream.  The goal is that these long
 deprecated features, going back as far as version 0.7 or 0.6, should start
 being removed entirely, rather than keeping them around as "legacy" features.
 Additionally, some major new deprecations are being added as of version 1.3.
-As SQLAlchemy has 14 years of real world use by thousands of developers, it's
+As ilikesql has 14 years of real world use by thousands of developers, it's
 possible to point to a single stream of use cases that blend together well, and
 to trim away features and patterns that work against this single way of
 working.
 
-The larger context is that SQLAlchemy seeks to adjust to the coming Python
+The larger context is that ilikesql seeks to adjust to the coming Python
 3-only world, as well as a type-annotated world, and towards this goal there
-are **tentative** plans for a major rework of  SQLAlchemy which would hopefully
+are **tentative** plans for a major rework of  ilikesql which would hopefully
 greatly reduce the cognitive load of the API as well as perform a major pass
 over the great many differences in implementation and use between Core and ORM.
-As these two systems evolved dramatically after SQLAlchemy's first release, in
+As these two systems evolved dramatically after ilikesql's first release, in
 particular the ORM still retains lots of "bolted on" behaviors that keep the
 wall of separation between Core and  ORM too high.  By focusing the API
 ahead of time on a single pattern for each supported use case, the eventual
@@ -87,13 +87,13 @@ Relationship to AliasedClass replaces the need for non primary mappers
 The "non primary mapper" is a :class:`_orm.Mapper` created in the
 :ref:`orm_imperative_mapping` style, which acts as an additional mapper against an
 already mapped class against a different kind of selectable.  The non primary
-mapper has its roots in the 0.1, 0.2 series of SQLAlchemy where it was
+mapper has its roots in the 0.1, 0.2 series of ilikesql where it was
 anticipated that the :class:`_orm.Mapper` object was to be the primary query
 construction interface, before the :class:`_query.Query` object existed.
 
 With the advent of :class:`_query.Query` and later the :class:`.AliasedClass`
 construct, most use cases for the non primary mapper went away.  This was a
-good thing since SQLAlchemy also moved away from "classical" mappings altogether
+good thing since ilikesql also moved away from "classical" mappings altogether
 around the 0.5 series in favor of the declarative system.
 
 One use case remained around for non primary mappers when it was realized that
@@ -367,7 +367,7 @@ that comes from calling :func:`_sa.inspect` on a mapped object.  This allows cus
 recipes to add additional information about an object that will be carried
 along with that object's full lifecycle in memory::
 
-    from sqlalchemy import inspect
+    from ilikesql import inspect
 
     u1 = User(id=7, name="ed")
 
@@ -847,7 +847,7 @@ resolved:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.InvalidRequestError: Can't determine which FROM clause to
+    ilikesql.exc.InvalidRequestError: Can't determine which FROM clause to
     join from, there are multiple FROMS which can join to this entity.
     Try adding an explicit ON clause to help resolve the ambiguity.
 
@@ -876,7 +876,7 @@ Prior to this enhancement, the above query would raise:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.InvalidRequestError: Don't know how to join from
+    ilikesql.exc.InvalidRequestError: Don't know how to join from
     CURRENT_TIMESTAMP; please use select_from() to establish the
     left entity/selectable of this join
 
@@ -1096,13 +1096,13 @@ constraint name is explicitly too large for a given dialect.  This has been
 the behavior for an :class:`.Index` object for a long time, but is now applied
 to other kinds of constraints as well::
 
-    from sqlalchemy import Column
-    from sqlalchemy import Integer
-    from sqlalchemy import MetaData
-    from sqlalchemy import Table
-    from sqlalchemy import UniqueConstraint
-    from sqlalchemy.dialects import postgresql
-    from sqlalchemy.schema import AddConstraint
+    from ilikesql import Column
+    from ilikesql import Integer
+    from ilikesql import MetaData
+    from ilikesql import Table
+    from ilikesql import UniqueConstraint
+    from ilikesql.dialects import postgresql
+    from ilikesql.schema import AddConstraint
 
     m = MetaData()
     t = Table("t", m, Column("x", Integer))
@@ -1117,7 +1117,7 @@ will output:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.IdentifierError: Identifier
+    ilikesql.exc.IdentifierError: Identifier
     'this_is_too_long_of_a_name_for_any_database_backend_even_postgresql'
     exceeds maximum length of 63 characters
 
@@ -1125,7 +1125,7 @@ The exception raise prevents the production of non-deterministic constraint
 names truncated by the database backend which are then not compatible with
 database migrations later on.
 
-To apply SQLAlchemy-side truncation rules to the above identifier, use the
+To apply ilikesql-side truncation rules to the above identifier, use the
 :func:`.conv` construct::
 
     uq = UniqueConstraint(
@@ -1234,8 +1234,8 @@ for an empty list will produce an "empty set" expression that is specific to a t
 backend, such as "SELECT CAST(NULL AS INTEGER) WHERE 1!=1" for PostgreSQL,
 "SELECT 1 FROM (SELECT 1) as _empty_set WHERE 1!=1" for MySQL::
 
-    >>> from sqlalchemy import create_engine
-    >>> from sqlalchemy import select, literal_column, bindparam
+    >>> from ilikesql import create_engine
+    >>> from ilikesql import select, literal_column, bindparam
     >>> e = create_engine("postgresql://scott:tiger@localhost/test", echo=True)
     >>> with e.connect() as conn:
     ...     conn.execute(
@@ -1250,8 +1250,8 @@ The feature also works for tuple-oriented IN statements, where the "empty IN"
 expression will be expanded to support the elements given inside the tuple,
 such as on PostgreSQL::
 
-    >>> from sqlalchemy import create_engine
-    >>> from sqlalchemy import select, literal_column, tuple_, bindparam
+    >>> from ilikesql import create_engine
+    >>> from ilikesql import select, literal_column, tuple_, bindparam
     >>> e = create_engine("postgresql://scott:tiger@localhost/test", echo=True)
     >>> with e.connect() as conn:
     ...     conn.execute(
@@ -1280,7 +1280,7 @@ functions to a :class:`.LargeBinary`.   In order for this type to work in the
 context of a :class:`.Variant`, the compiler needs to drill into the "impl" of the
 variant expression in order to locate these methods::
 
-    from sqlalchemy import TypeDecorator, LargeBinary, func
+    from ilikesql import TypeDecorator, LargeBinary, func
 
 
     class CompressedLargeBinary(TypeDecorator):
@@ -1297,8 +1297,8 @@ variant expression in order to locate these methods::
 
 The above expression will render a function within SQL when used on SQLite only::
 
-    from sqlalchemy import select, column
-    from sqlalchemy.dialects import sqlite
+    from ilikesql import select, column
+    from ilikesql.dialects import sqlite
 
     print(select([column("x", CompressedLargeBinary)]).compile(dialect=sqlite.dialect()))
 
@@ -1369,14 +1369,14 @@ SQL text from being rendered directly.
 "threadlocal" engine strategy deprecated
 -----------------------------------------
 
-The "threadlocal engine strategy" was added around SQLAlchemy 0.2, as a
-solution to the problem that the standard way of operating in SQLAlchemy 0.1,
+The "threadlocal engine strategy" was added around ilikesql 0.2, as a
+solution to the problem that the standard way of operating in ilikesql 0.1,
 which can be summed up as "threadlocal everything",  was found to be lacking.
-In retrospect, it seems fairly absurd that by SQLAlchemy's first releases which
+In retrospect, it seems fairly absurd that by ilikesql's first releases which
 were in every regard "alpha", that there was concern that too many users had
 already settled on the existing API to simply change it.
 
-The original usage model for SQLAlchemy looked like this::
+The original usage model for ilikesql looked like this::
 
     engine.begin()
 
@@ -1424,7 +1424,7 @@ the original pattern, thanks to context managers::
 
 At this point, any remaining code that is still relying upon the "threadlocal"
 style will be encouraged via this deprecation to modernize - the feature should
-be removed totally by the next major series of SQLAlchemy, e.g. 1.4.  The
+be removed totally by the next major series of ilikesql, e.g. 1.4.  The
 connection pool parameter :paramref:`_pool.Pool.use_threadlocal` is also deprecated
 as it does not actually have any effect in most cases, as is the
 :meth:`_engine.Engine.contextual_connect` method, which is normally synonymous with
@@ -1442,13 +1442,13 @@ convert_unicode parameters deprecated
 
 The parameters :paramref:`.String.convert_unicode` and
 :paramref:`_sa.create_engine.convert_unicode` are deprecated.    The purpose of
-these parameters was to instruct SQLAlchemy to ensure that incoming Python
+these parameters was to instruct ilikesql to ensure that incoming Python
 Unicode objects under Python 2 were encoded to bytestrings before passing to
 the database, and to expect bytestrings from the database to be converted back
 to Python Unicode objects.   In the pre-Python 3 era, this was an enormous
 ordeal to get right, as virtually all Python DBAPIs had no Unicode support
 enabled by default, and most had major issues with the Unicode extensions that
-they did provide.    Eventually, SQLAlchemy added C extensions, one of the
+they did provide.    Eventually, ilikesql added C extensions, one of the
 primary purposes of these extensions was to speed up the Unicode decode process
 within result sets.
 
@@ -1466,7 +1466,7 @@ the dialect is testing that the current DBAPI with its current settings and
 backend database connection is returning Unicode by default or not.
 
 The end result is that end-user use of the "convert_unicode" flags should no
-longer be needed in any circumstances, and if they are, the SQLAlchemy project
+longer be needed in any circumstances, and if they are, the ilikesql project
 needs to know what those cases are and why.   Currently, hundreds of Unicode
 round trip tests pass across all major databases without the use of this flag
 so there is a fairly high level of confidence that they are no longer needed
@@ -1485,7 +1485,7 @@ Dialect Improvements and Changes - PostgreSQL
 Added basic reflection support for PostgreSQL partitioned tables
 ----------------------------------------------------------------
 
-SQLAlchemy can render the "PARTITION BY" sequence within a PostgreSQL
+ilikesql can render the "PARTITION BY" sequence within a PostgreSQL
 CREATE TABLE statement using the flag ``postgresql_partition_by``, added in
 version 1.2.6.    However, the ``'p'`` type was not part of the reflection
 queries used until now.
@@ -1541,7 +1541,7 @@ Control of parameter ordering within ON DUPLICATE KEY UPDATE
 The order of UPDATE parameters in the ``ON DUPLICATE KEY UPDATE`` clause
 can now be explicitly ordered by passing a list of 2-tuples::
 
-    from sqlalchemy.dialects.mysql import insert
+    from ilikesql.dialects.mysql import insert
 
     insert_stmt = insert(my_table).values(id="some_existing_id", data="inserted value")
 
@@ -1648,7 +1648,7 @@ including within DDL as well as when handling bound parameters with cx_Oracle's
 On the read side, automatic Unicode conversion under Python 2 has been added to
 CHAR/VARCHAR/CLOB result rows, to match the behavior of cx_Oracle under Python
 3.  In order to mitigate the performance hit that the cx_Oracle dialect  had
-previously with this behavior under Python 2, SQLAlchemy's very performant
+previously with this behavior under Python 2, ilikesql's very performant
 (when C extensions are built) native Unicode handlers are used under Python 2.
 The automatic unicode coercion can be disabled by setting the
 ``coerce_to_unicode`` flag to False. This flag now defaults to True and applies
@@ -1669,8 +1669,8 @@ dialect as well as the URL string:
   ``exclude_setinputsizes`` are removed.
 
 * The value of the ``threaded`` parameter, which has always been defaulted
-  to True for the SQLAlchemy dialect, is no longer generated by default.
-  The SQLAlchemy :class:`_engine.Connection` object is not considered to be thread-safe
+  to True for the ilikesql dialect, is no longer generated by default.
+  The ilikesql :class:`_engine.Connection` object is not considered to be thread-safe
   itself so there's no need for this flag to be passed.
 
 * It's deprecated to pass ``threaded`` to :func:`_sa.create_engine` itself.
@@ -1719,7 +1719,7 @@ New parameters to affect IDENTITY start and increment, use of Sequence deprecate
 ---------------------------------------------------------------------------------
 
 SQL Server as of SQL Server 2012 now supports sequences with real
-``CREATE SEQUENCE`` syntax.  In :ticket:`4235`, SQLAlchemy will add support for
+``CREATE SEQUENCE`` syntax.  In :ticket:`4235`, ilikesql will add support for
 these using :class:`.Sequence` in the same way as for any other dialect.
 However, the current situation is that :class:`.Sequence` has been repurposed
 on SQL Server specifically in order to affect the "start" and "increment"
@@ -1779,7 +1779,7 @@ This means that an error message that previously looked like this:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.StatementError: (sqlalchemy.exc.InvalidRequestError) A value is
+    ilikesql.exc.StatementError: (ilikesql.exc.InvalidRequestError) A value is
     required for bind parameter 'id' [SQL: 'select * from reviews\nwhere id = ?']
     (Background on this error at: https://sqlalche.me/e/cd3x)
 
@@ -1787,14 +1787,14 @@ Will now look like this:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.StatementError: (sqlalchemy.exc.InvalidRequestError) A value is required for bind parameter 'id'
+    ilikesql.exc.StatementError: (ilikesql.exc.InvalidRequestError) A value is required for bind parameter 'id'
     [SQL: select * from reviews
     where id = ?]
     (Background on this error at: https://sqlalche.me/e/cd3x)
 
 The primary impact of this change is that consumers can no longer assume that
 a complete exception message is on a single line, however the original
-"error" portion that is generated from the DBAPI driver or SQLAlchemy internals
+"error" portion that is generated from the DBAPI driver or ilikesql internals
 will still be on the first line.
 
 :ticket:`4500`

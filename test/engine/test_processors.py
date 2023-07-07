@@ -2,13 +2,13 @@ import datetime
 import re
 from types import MappingProxyType
 
-from sqlalchemy import exc
-from sqlalchemy.engine import processors
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.util import immutabledict
+from ilikesql import exc
+from ilikesql.engine import processors
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.util import immutabledict
 
 
 class _BooleanProcessorTest(fixtures.TestBase):
@@ -33,7 +33,7 @@ class CyBooleanProcessorTest(_BooleanProcessorTest):
 
     @classmethod
     def setup_test_class(cls):
-        from sqlalchemy.cyextension import processors
+        from ilikesql.cyextension import processors
 
         cls.module = processors
 
@@ -129,7 +129,7 @@ class _DateProcessorTest(fixtures.TestBase):
 class PyDateProcessorTest(_DateProcessorTest):
     @classmethod
     def setup_test_class(cls):
-        from sqlalchemy.engine import _py_processors
+        from ilikesql.engine import _py_processors
 
         cls.module = _py_processors
 
@@ -139,7 +139,7 @@ class CyDateProcessorTest(_DateProcessorTest):
 
     @classmethod
     def setup_test_class(cls):
-        from sqlalchemy.cyextension import processors
+        from ilikesql.cyextension import processors
 
         cls.module = processors
 
@@ -281,7 +281,7 @@ class _DistillArgsTest(fixtures.TestBase):
 class PyDistillArgsTest(_DistillArgsTest):
     @classmethod
     def setup_test_class(cls):
-        from sqlalchemy.engine import _py_util
+        from ilikesql.engine import _py_util
 
         cls.module = _py_util
 
@@ -291,6 +291,6 @@ class CyDistillArgsTest(_DistillArgsTest):
 
     @classmethod
     def setup_test_class(cls):
-        from sqlalchemy.cyextension import util
+        from ilikesql.cyextension import util
 
         cls.module = util

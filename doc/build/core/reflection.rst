@@ -1,4 +1,4 @@
-.. currentmodule:: sqlalchemy.schema
+.. currentmodule:: ilikesql.schema
 
 .. _metadata_reflection_toplevel:
 .. _metadata_reflection:
@@ -7,10 +7,10 @@
 Reflecting Database Objects
 ===========================
 
-A :class:`~sqlalchemy.schema.Table` object can be instructed to load
+A :class:`~ilikesql.schema.Table` object can be instructed to load
 information about itself from the corresponding database schema object already
 existing within the database. This process is called *reflection*. In the
-most simple case you need only specify the table name, a :class:`~sqlalchemy.schema.MetaData`
+most simple case you need only specify the table name, a :class:`~ilikesql.schema.MetaData`
 object, and the ``autoload_with`` argument::
 
     >>> messages = Table("messages", metadata_obj, autoload_with=engine)
@@ -19,13 +19,13 @@ object, and the ``autoload_with`` argument::
 
 The above operation will use the given engine to query the database for
 information about the ``messages`` table, and will then generate
-:class:`~sqlalchemy.schema.Column`, :class:`~sqlalchemy.schema.ForeignKey`,
+:class:`~ilikesql.schema.Column`, :class:`~ilikesql.schema.ForeignKey`,
 and other objects corresponding to this information as though the
-:class:`~sqlalchemy.schema.Table` object were hand-constructed in Python.
+:class:`~ilikesql.schema.Table` object were hand-constructed in Python.
 
 When tables are reflected, if a given table references another one via foreign
-key, a second :class:`~sqlalchemy.schema.Table` object is created within the
-:class:`~sqlalchemy.schema.MetaData` object representing the connection.
+key, a second :class:`~ilikesql.schema.Table` object is created within the
+:class:`~ilikesql.schema.MetaData` object representing the connection.
 Below, assume the table ``shopping_cart_items`` references a table named
 ``shopping_carts``. Reflecting the ``shopping_cart_items`` table has the
 effect such that the ``shopping_carts`` table will also be loaded::
@@ -34,12 +34,12 @@ effect such that the ``shopping_carts`` table will also be loaded::
     >>> "shopping_carts" in metadata_obj.tables
     True
 
-The :class:`~sqlalchemy.schema.MetaData` has an interesting "singleton-like"
+The :class:`~ilikesql.schema.MetaData` has an interesting "singleton-like"
 behavior such that if you requested both tables individually,
-:class:`~sqlalchemy.schema.MetaData` will ensure that exactly one
-:class:`~sqlalchemy.schema.Table` object is created for each distinct table
-name. The :class:`~sqlalchemy.schema.Table` constructor actually returns to
-you the already-existing :class:`~sqlalchemy.schema.Table` object if one
+:class:`~ilikesql.schema.MetaData` will ensure that exactly one
+:class:`~ilikesql.schema.Table` object is created for each distinct table
+name. The :class:`~ilikesql.schema.Table` constructor actually returns to
+you the already-existing :class:`~ilikesql.schema.Table` object if one
 already exists with the given name. Such as below, we can access the already
 generated ``shopping_carts`` table just by naming it::
 
@@ -49,7 +49,7 @@ Of course, it's a good idea to use ``autoload_with=engine`` with the above table
 regardless. This is so that the table's attributes will be loaded if they have
 not been already. The autoload operation only occurs for the table if it
 hasn't already been loaded; once loaded, new calls to
-:class:`~sqlalchemy.schema.Table` with the same name will not re-issue any
+:class:`~ilikesql.schema.Table` with the same name will not re-issue any
 reflection queries.
 
 .. _reflection_overriding_columns:
@@ -86,8 +86,8 @@ of a table::
 
     my_view = Table("some_view", metadata, autoload_with=engine)
 
-Above, ``my_view`` is a :class:`~sqlalchemy.schema.Table` object with
-:class:`~sqlalchemy.schema.Column` objects representing the names and types of
+Above, ``my_view`` is a :class:`~ilikesql.schema.Table` object with
+:class:`~ilikesql.schema.Column` objects representing the names and types of
 each column within the view "some_view".
 
 Usually, it's desired to have at least a primary key constraint when
@@ -108,10 +108,10 @@ which are part of the primary key or have foreign key constraints::
 Reflecting All Tables at Once
 -----------------------------
 
-The :class:`~sqlalchemy.schema.MetaData` object can also get a listing of
+The :class:`~ilikesql.schema.MetaData` object can also get a listing of
 tables and reflect the full set. This is achieved by using the
-:func:`~sqlalchemy.schema.MetaData.reflect` method. After calling it, all
-located tables are present within the :class:`~sqlalchemy.schema.MetaData`
+:func:`~ilikesql.schema.MetaData.reflect` method. After calling it, all
+located tables are present within the :class:`~ilikesql.schema.MetaData`
 object's dictionary of tables::
 
     metadata_obj = MetaData()
@@ -192,9 +192,9 @@ Interaction of Schema-qualified Reflection with the Default Schema
 
 .. admonition:: Section Best Practices Summarized
 
-   In this section, we discuss SQLAlchemy's reflection behavior regarding
+   In this section, we discuss ilikesql's reflection behavior regarding
    tables that are visible in the "default schema" of a database session,
-   and how these interact with SQLAlchemy directives that include the schema
+   and how these interact with ilikesql directives that include the schema
    explicitly.  As a best practice, ensure the "default" schema for a database
    is just a single name, and not a list of names; for tables that are
    part of this "default" schema and can be named without schema qualification
@@ -217,7 +217,7 @@ it's also perfectly fine if the schema name *is* present).
 Since most relational databases therefore have the concept of a particular
 table object which can be referred towards both in a schema-qualified way, as
 well as an "implicit" way where no schema is present, this presents a
-complexity for SQLAlchemy's reflection
+complexity for ilikesql's reflection
 feature.  Reflecting a table in
 a schema-qualified manner will always populate its :attr:`_schema.Table.schema`
 attribute and additionally affect how this :class:`_schema.Table` is organized
@@ -245,9 +245,9 @@ two SQL statements as equivalent:
     SELECT message_id FROM messages
 
 This is not a problem as the table can be found in both ways.  However
-in SQLAlchemy, it's the **identity** of the :class:`_schema.Table` object
+in ilikesql, it's the **identity** of the :class:`_schema.Table` object
 that determines its semantic role within a SQL statement.  Based on the current
-decisions within SQLAlchemy, this means that if we reflect the same "messages" table in
+decisions within ilikesql, this means that if we reflect the same "messages" table in
 both a schema-qualified as well as a non-schema qualified manner, we get
 **two** :class:`_schema.Table` objects that will **not** be treated as
 semantically equivalent::
@@ -280,7 +280,7 @@ tables were generated by the reflection process; this is because when
 the reflection process encounters a foreign key constraint on a table
 being reflected, it branches out to reflect that referenced table as well.
 The decision making it uses to assign the schema to this referenced
-table is that SQLAlchemy will **omit a default schema** from the reflected
+table is that ilikesql will **omit a default schema** from the reflected
 :class:`_schema.ForeignKeyConstraint` object if the owning
 :class:`_schema.Table` also omits its schema name and also that these two objects
 are in the same schema, but will **include** it if
@@ -354,50 +354,50 @@ A low level interface which provides a backend-agnostic system of loading
 lists of schema, table, column, and constraint descriptions from a given
 database is also available. This is known as the "Inspector"::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy import inspect
+    from ilikesql import create_engine
+    from ilikesql import inspect
 
     engine = create_engine("...")
     insp = inspect(engine)
     print(insp.get_table_names())
 
-.. autoclass:: sqlalchemy.engine.reflection.Inspector
+.. autoclass:: ilikesql.engine.reflection.Inspector
     :members:
     :undoc-members:
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedColumn
+.. autoclass:: ilikesql.engine.interfaces.ReflectedColumn
     :members:
     :inherited-members: dict
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedComputed
+.. autoclass:: ilikesql.engine.interfaces.ReflectedComputed
     :members:
     :inherited-members: dict
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedCheckConstraint
+.. autoclass:: ilikesql.engine.interfaces.ReflectedCheckConstraint
     :members:
     :inherited-members: dict
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedForeignKeyConstraint
+.. autoclass:: ilikesql.engine.interfaces.ReflectedForeignKeyConstraint
     :members:
     :inherited-members: dict
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedIdentity
+.. autoclass:: ilikesql.engine.interfaces.ReflectedIdentity
     :members:
     :inherited-members: dict
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedIndex
+.. autoclass:: ilikesql.engine.interfaces.ReflectedIndex
     :members:
     :inherited-members: dict
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedPrimaryKeyConstraint
+.. autoclass:: ilikesql.engine.interfaces.ReflectedPrimaryKeyConstraint
     :members:
     :inherited-members: dict
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedUniqueConstraint
+.. autoclass:: ilikesql.engine.interfaces.ReflectedUniqueConstraint
     :members:
     :inherited-members: dict
 
-.. autoclass:: sqlalchemy.engine.interfaces.ReflectedTableComment
+.. autoclass:: ilikesql.engine.interfaces.ReflectedTableComment
     :members:
     :inherited-members: dict
 
@@ -413,15 +413,15 @@ the :meth:`_reflection.Inspector.get_columns` method of
 :class:`_reflection.Inspector`, the datatypes will be as specific as possible
 to the target database.   This means that if an "integer" datatype is reflected
 from a MySQL database, the type will be represented by the
-:class:`sqlalchemy.dialects.mysql.INTEGER` class, which includes MySQL-specific
+:class:`ilikesql.dialects.mysql.INTEGER` class, which includes MySQL-specific
 attributes such as "display_width".   Or on PostgreSQL, a PostgreSQL-specific
-datatype such as :class:`sqlalchemy.dialects.postgresql.INTERVAL` or
-:class:`sqlalchemy.dialects.postgresql.ENUM` may be returned.
+datatype such as :class:`ilikesql.dialects.postgresql.INTERVAL` or
+:class:`ilikesql.dialects.postgresql.ENUM` may be returned.
 
 There is a use case for reflection which is that a given :class:`_schema.Table`
 is to be transferred to a different vendor database.   To suit this use case,
 there is a technique by which these vendor-specific datatypes can be converted
-on the fly to be instance of SQLAlchemy backend-agnostic datatypes, for
+on the fly to be instance of ilikesql backend-agnostic datatypes, for
 the examples above types such as :class:`_types.Integer`, :class:`_types.Interval`
 and :class:`_types.Enum`.   This may be achieved by intercepting the
 column reflection using the :meth:`_events.DDLEvents.column_reflect` event
@@ -447,7 +447,7 @@ and options:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import MetaData, Table, create_engine
+    >>> from ilikesql import MetaData, Table, create_engine
     >>> mysql_engine = create_engine("mysql+mysqldb://scott:tiger@localhost/test")
     >>> metadata_obj = MetaData()
     >>> my_mysql_table = Table("my_table", metadata_obj, autoload_with=mysql_engine)
@@ -458,7 +458,7 @@ object.  We can then, for demonstration purposes, print out the MySQL-specific
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.schema import CreateTable
+    >>> from ilikesql.schema import CreateTable
     >>> print(CreateTable(my_mysql_table).compile(mysql_engine))
     {printsql}CREATE TABLE my_table (
     id INTEGER(11) NOT NULL AUTO_INCREMENT,
@@ -472,8 +472,8 @@ object.  We can then, for demonstration purposes, print out the MySQL-specific
 Above, the MySQL-specific datatypes and options were maintained.   If we wanted
 a :class:`_schema.Table` that we could instead transfer cleanly to another
 database vendor, replacing the special datatypes
-:class:`sqlalchemy.dialects.mysql.MEDIUMINT` and
-:class:`sqlalchemy.dialects.mysql.TINYINT` with :class:`_types.Integer`, we can
+:class:`ilikesql.dialects.mysql.MEDIUMINT` and
+:class:`ilikesql.dialects.mysql.TINYINT` with :class:`_types.Integer`, we can
 choose instead to "genericize" the datatypes on this table, or otherwise change
 them in any way we'd like, by establishing a handler using the
 :meth:`_events.DDLEvents.column_reflect` event.  The custom handler will make use
@@ -484,7 +484,7 @@ The format of this dictionary is described at :meth:`_reflection.Inspector.get_c
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import event
+    >>> from ilikesql import event
     >>> metadata_obj = MetaData()
 
     >>> @event.listens_for(metadata_obj, "column_reflect")
@@ -509,7 +509,7 @@ We now get a new :class:`_schema.Table` that is generic and uses
         PRIMARY KEY (id)
     )
 
-Noting above also that SQLAlchemy will usually make a decent guess for other
+Noting above also that ilikesql will usually make a decent guess for other
 behaviors, such as that the MySQL ``AUTO_INCREMENT`` directive is represented
 in PostgreSQL most closely using the ``SERIAL`` auto-incrementing datatype.
 
@@ -540,7 +540,7 @@ includes but is not limited to:
 * The association of a particular :class:`.Sequence` with a given :class:`_schema.Column`
 
 The relational database also in many cases reports on table metadata in a
-different format than what was specified in SQLAlchemy.   The :class:`_schema.Table`
+different format than what was specified in ilikesql.   The :class:`_schema.Table`
 objects returned from reflection cannot be always relied upon to produce the identical
 DDL as the original Python-defined :class:`_schema.Table` objects.   Areas where
 this occurs includes server defaults, column-associated sequences and various

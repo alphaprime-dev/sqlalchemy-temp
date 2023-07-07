@@ -1,35 +1,35 @@
 import itertools
 import random
 
-from sqlalchemy import bindparam
-from sqlalchemy import column
-from sqlalchemy import exc
-from sqlalchemy import exists
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import update
-from sqlalchemy import util
-from sqlalchemy.dialects import mysql
-from sqlalchemy.engine import default
-from sqlalchemy.sql import operators
-from sqlalchemy.sql.elements import BooleanClauseList
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import bindparam
+from ilikesql import column
+from ilikesql import exc
+from ilikesql import exists
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import update
+from ilikesql import util
+from ilikesql.dialects import mysql
+from ilikesql.engine import default
+from ilikesql.sql import operators
+from ilikesql.sql.elements import BooleanClauseList
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import mock
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class _UpdateFromTestBase:
@@ -835,7 +835,7 @@ class UpdateTest(_UpdateFromTestBase, fixtures.TablesTest, AssertsCompiledSQL):
 
     @testing.fixture
     def randomized_param_order_update(self):
-        from sqlalchemy.sql.dml import UpdateDMLState
+        from ilikesql.sql.dml import UpdateDMLState
 
         super_process_ordered_values = UpdateDMLState._process_ordered_values
 
@@ -859,7 +859,7 @@ class UpdateTest(_UpdateFromTestBase, fixtures.TablesTest, AssertsCompiledSQL):
             yield
 
     def random_update_order_parameters():
-        from sqlalchemy import ARRAY
+        from ilikesql import ARRAY
 
         t = table(
             "foo",

@@ -44,16 +44,16 @@ The solution is to close out all connections before emitting DROP TABLE::
     # now locks are removed
     mytable.drop(engine)
 
-Does SQLAlchemy support ALTER TABLE, CREATE VIEW, CREATE TRIGGER, Schema Upgrade Functionality?
+Does ilikesql support ALTER TABLE, CREATE VIEW, CREATE TRIGGER, Schema Upgrade Functionality?
 ===============================================================================================
 
 
-General ALTER support isn't present in SQLAlchemy directly.  For special DDL
+General ALTER support isn't present in ilikesql directly.  For special DDL
 on an ad-hoc basis, the :class:`.DDL` and related constructs can be used.
 See :ref:`metadata_ddl_toplevel` for a discussion on this subject.
 
 A more comprehensive option is to use schema migration tools, such as Alembic
-or SQLAlchemy-Migrate; see :ref:`schema_migrations` for discussion on this.
+or ilikesql-Migrate; see :ref:`schema_migrations` for discussion on this.
 
 How can I sort Table objects in order of their dependency?
 ==========================================================
@@ -71,10 +71,10 @@ This is available via the :attr:`_schema.MetaData.sorted_tables` function::
 How can I get the CREATE TABLE/ DROP TABLE output as a string?
 ==============================================================
 
-Modern SQLAlchemy has clause constructs which represent DDL operations. These
+Modern ilikesql has clause constructs which represent DDL operations. These
 can be rendered to strings like any other SQL expression::
 
-    from sqlalchemy.schema import CreateTable
+    from ilikesql.schema import CreateTable
 
     print(CreateTable(mytable))
 
@@ -86,7 +86,7 @@ There's also a special form of :class:`_engine.Engine` available via
 :func:`.create_mock_engine` that allows one to dump an entire
 metadata creation sequence as a string, using this recipe::
 
-    from sqlalchemy import create_mock_engine
+    from ilikesql import create_mock_engine
 
 
     def dump(sql, *multiparams, **params):
@@ -96,7 +96,7 @@ metadata creation sequence as a string, using this recipe::
     engine = create_mock_engine("postgresql+psycopg2://", dump)
     metadata_obj.create_all(engine, checkfirst=False)
 
-The `Alembic <https://alembic.sqlalchemy.org>`_ tool also supports
+The `Alembic <https://alembic.ilikesql.org>`_ tool also supports
 an "offline" SQL generation mode that renders database migrations as SQL scripts.
 
 How can I subclass Table/Column to provide certain behaviors/configurations?
@@ -107,4 +107,4 @@ However, there are simple ways to get on-construction behaviors using creation
 functions, and behaviors related to the linkages between schema objects such as
 constraint conventions or naming conventions using attachment events.
 An example of many of these
-techniques can be seen at `Naming Conventions <https://www.sqlalchemy.org/trac/wiki/UsageRecipes/NamingConventions>`_.
+techniques can be seen at `Naming Conventions <https://www.ilikesql.org/trac/wiki/UsageRecipes/NamingConventions>`_.

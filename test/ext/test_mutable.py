@@ -6,43 +6,43 @@ import pickle
 from typing import Any
 from typing import Dict
 
-from sqlalchemy import event
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import JSON
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.ext.mutable import MutableComposite
-from sqlalchemy.ext.mutable import MutableDict
-from sqlalchemy.ext.mutable import MutableList
-from sqlalchemy.ext.mutable import MutableSet
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.instrumentation import ClassManager
-from sqlalchemy.orm.mapper import Mapper
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.entities import BasicEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import picklers
-from sqlalchemy.types import PickleType
-from sqlalchemy.types import TypeDecorator
-from sqlalchemy.types import VARCHAR
+from ilikesql import event
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import JSON
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.ext.mutable import MutableComposite
+from ilikesql.ext.mutable import MutableDict
+from ilikesql.ext.mutable import MutableList
+from ilikesql.ext.mutable import MutableSet
+from ilikesql.orm import attributes
+from ilikesql.orm import column_property
+from ilikesql.orm import composite
+from ilikesql.orm import declarative_base
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import Session
+from ilikesql.orm.instrumentation import ClassManager
+from ilikesql.orm.mapper import Mapper
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing.entities import BasicEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import picklers
+from ilikesql.types import PickleType
+from ilikesql.types import TypeDecorator
+from ilikesql.types import VARCHAR
 
 
 class Foo(BasicEntity):
@@ -771,20 +771,20 @@ class _MutableListTestBase(_MutableListTestFixture):
 
         pickles = [
             b"\x80\x04\x95<\x00\x00\x00\x00\x00\x00\x00\x8c\x16"
-            b"sqlalchemy.ext.mutable\x94\x8c\x0bMutableList\x94\x93\x94)"
+            b"ilikesql.ext.mutable\x94\x8c\x0bMutableList\x94\x93\x94)"
             b"\x81\x94(K\x01K\x02e]\x94(K\x01K\x02eb.",
-            b"ccopy_reg\n_reconstructor\np0\n(csqlalchemy.ext.mutable\n"
+            b"ccopy_reg\n_reconstructor\np0\n(cilikesql.ext.mutable\n"
             b"MutableList\np1\nc__builtin__\nlist\np2\n(lp3\nI1\naI2\n"
             b"atp4\nRp5\n(lp6\nI1\naI2\nab.",
-            b"ccopy_reg\n_reconstructor\nq\x00(csqlalchemy.ext.mutable\n"
+            b"ccopy_reg\n_reconstructor\nq\x00(cilikesql.ext.mutable\n"
             b"MutableList\nq\x01c__builtin__\nlist\nq\x02]q\x03(K\x01K"
             b"\x02etq\x04Rq\x05]q\x06(K\x01K\x02eb.",
-            b"\x80\x02csqlalchemy.ext.mutable\nMutableList\nq\x00)\x81q"
+            b"\x80\x02cilikesql.ext.mutable\nMutableList\nq\x00)\x81q"
             b"\x01(K\x01K\x02e]q\x02(K\x01K\x02eb.",
-            b"\x80\x03csqlalchemy.ext.mutable\nMutableList\nq\x00)\x81q"
+            b"\x80\x03cilikesql.ext.mutable\nMutableList\nq\x00)\x81q"
             b"\x01(K\x01K\x02e]q\x02(K\x01K\x02eb.",
             b"\x80\x04\x95<\x00\x00\x00\x00\x00\x00\x00\x8c\x16"
-            b"sqlalchemy.ext.mutable\x94\x8c\x0bMutableList\x94\x93\x94)"
+            b"ilikesql.ext.mutable\x94\x8c\x0bMutableList\x94\x93\x94)"
             b"\x81\x94(K\x01K\x02e]\x94(K\x01K\x02eb.",
         ]
 
@@ -1227,7 +1227,7 @@ class MutableColumnCopyArrayTest(_MutableListTestBase, fixtures.MappedTest):
 
     @classmethod
     def define_tables(cls, metadata):
-        from sqlalchemy.sql.sqltypes import ARRAY
+        from ilikesql.sql.sqltypes import ARRAY
 
         MutableList = cls._type_fixture()
 
@@ -1466,7 +1466,7 @@ class _CompositeTestBase:
         )
 
     def setup_test(self):
-        from sqlalchemy.ext import mutable
+        from ilikesql.ext import mutable
 
         mutable._setup_composite_listener()
 

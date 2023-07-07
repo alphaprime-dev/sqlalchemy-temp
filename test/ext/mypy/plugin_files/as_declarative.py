@@ -1,13 +1,13 @@
 from typing import List
 from typing import Optional
 
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import as_declarative
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql.schema import ForeignKey
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.declarative import as_declarative
+from ilikesql.orm import Mapped
+from ilikesql.orm import relationship
+from ilikesql.sql.schema import ForeignKey
 
 
 @as_declarative()

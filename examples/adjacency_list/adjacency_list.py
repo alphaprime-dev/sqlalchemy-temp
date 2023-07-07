@@ -3,17 +3,17 @@ from __future__ import annotations
 from typing import Dict
 from typing import Optional
 
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import select
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import MappedAsDataclass
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.collections import attribute_keyed_dict
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import select
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import MappedAsDataclass
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm.collections import attribute_keyed_dict
 
 
 class Base(DeclarativeBase):

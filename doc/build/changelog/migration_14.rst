@@ -1,26 +1,26 @@
 .. _migration_14_toplevel:
 
 =============================
-What's New in SQLAlchemy 1.4?
+What's New in ilikesql 1.4?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 1.3
-    and SQLAlchemy version 1.4.
+    This document describes changes between ilikesql version 1.3
+    and ilikesql version 1.4.
 
-    Version 1.4 is taking on a different focus than other SQLAlchemy releases
+    Version 1.4 is taking on a different focus than other ilikesql releases
     in that it is in many ways attempting to serve as a potential migration
     point for a more dramatic series of API changes currently planned for
-    release  2.0 of SQLAlchemy.   The focus of SQLAlchemy 2.0 is a modernized
+    release  2.0 of ilikesql.   The focus of ilikesql 2.0 is a modernized
     and slimmed down API that removes lots of usage patterns that have long
-    been discouraged, as well as mainstreams the best ideas in SQLAlchemy as
+    been discouraged, as well as mainstreams the best ideas in ilikesql as
     first class API features, with the goal being that there is much less
     ambiguity in how the API is to be used, as well as that a series of
     implicit behaviors and rarely-used API flags that complicate the internals
     and hinder performance will be removed.
 
-    For the current status of SQLAlchemy 2.0, see :ref:`migration_20_toplevel`.
+    For the current status of ilikesql 2.0, see :ref:`migration_20_toplevel`.
 
 Major API changes and features - General
 =========================================
@@ -30,9 +30,9 @@ Major API changes and features - General
 Python 3.6 is the minimum Python 3 version; Python 2.7 still supported
 ----------------------------------------------------------------------
 
-As Python 3.5 reached EOL in September of 2020, SQLAlchemy 1.4 now places
+As Python 3.5 reached EOL in September of 2020, ilikesql 1.4 now places
 version 3.6 as the minimum Python 3 version.  Python 2.7 is still supported,
-however the SQLAlchemy 1.4 series will be the last series to support Python 2.
+however the ilikesql 1.4 series will be the last series to support Python 2.
 
 
 .. _change_5159:
@@ -40,7 +40,7 @@ however the SQLAlchemy 1.4 series will be the last series to support Python 2.
 ORM Query is internally unified with select, update, delete; 2.0 style execution available
 ------------------------------------------------------------------------------------------
 
-The biggest conceptual change to SQLAlchemy for version 2.0 and essentially
+The biggest conceptual change to ilikesql for version 2.0 and essentially
 in 1.4 as well is that the great separation between the :class:`_sql.Select`
 construct in Core and the :class:`_orm.Query` object in the ORM has been removed,
 as well as between the :meth:`_orm.Query.update` and :meth:`_orm.Query.delete`
@@ -113,10 +113,10 @@ Things to note about the above example:
   :ref:`change_result_14_core`,
   :ref:`change_4710_core`, and :ref:`change_4710_orm` for information on this.
 
-Throughout SQLAlchemy's documentation, there will be many references to
+Throughout ilikesql's documentation, there will be many references to
 :term:`1.x style` and :term:`2.0 style` execution.  This is to distinguish
 between the two querying styles and to attempt to forwards-document the new
-calling style going forward.  In SQLAlchemy 2.0, while the :class:`_orm.Query`
+calling style going forward.  In ilikesql 2.0, while the :class:`_orm.Query`
 object may remain as a legacy construct, it will no longer be featured in
 most documentation.
 
@@ -176,9 +176,9 @@ The above containment test will
 use **value containment**, not **key containment**; the ``row`` would need to
 have a **value** of "name" to return ``True``.
 
-Under SQLAlchemy 1.4, when :paramref:`_sa.create_engine.future` parameter set
+Under ilikesql 1.4, when :paramref:`_sa.create_engine.future` parameter set
 to ``False``, legacy-style ``LegacyRow`` objects are returned which feature the
-partial-named-tuple behavior of prior SQLAlchemy versions, where containment
+partial-named-tuple behavior of prior ilikesql versions, where containment
 checks continue to use key containment; ``"name" in row`` would return
 True if the row had a **column** named "name", rather than a value.
 
@@ -189,7 +189,7 @@ as the test, and **not** key containment. This is to accommodate that
 accommodates for ORM results, where even legacy ORM result rows such as those
 returned by :meth:`_orm.Query.all` use value containment.
 
-This is a behavioral change from SQLAlchemy 1.3 to 1.4.  To continue receiving
+This is a behavioral change from ilikesql 1.3 to 1.4.  To continue receiving
 key-containment collections, use the :meth:`_engine.Result.mappings` method to
 receive a :class:`_engine.MappingResult` that returns rows as dictionaries::
 
@@ -202,7 +202,7 @@ Transparent SQL Compilation Caching added to All DQL, DML Statements in Core, OR
 ----------------------------------------------------------------------------------
 
 One of the most broadly encompassing changes to ever land in a single
-SQLAlchemy version, a many-month reorganization and refactoring of all querying
+ilikesql version, a many-month reorganization and refactoring of all querying
 systems from the base of Core all the way through ORM now allows the
 majority of Python computation involved producing SQL strings and related
 statement metadata from a user-constructed statement to be cached in memory,
@@ -227,7 +227,7 @@ for queries that return many rows::
     for id_ in random.sample(ids, n):
         result = session.query(Customer).filter(Customer.id == id_).one()
 
-This example in the 1.3 release of SQLAlchemy on a Dell XPS13 running Linux
+This example in the 1.3 release of ilikesql on a Dell XPS13 running Linux
 completes as follows:
 
 .. sourcecode:: text
@@ -296,12 +296,12 @@ driven in order to support this new feature.
 Declarative is now integrated into the ORM with new features
 -------------------------------------------------------------
 
-After ten years or so of popularity, the ``sqlalchemy.ext.declarative``
-package is now integrated into the ``sqlalchemy.orm`` namespace, with the
+After ten years or so of popularity, the ``ilikesql.ext.declarative``
+package is now integrated into the ``ilikesql.orm`` namespace, with the
 exception of the declarative "extension" classes which remain as Declarative
 extensions.
 
-The new classes added to ``sqlalchemy.orm`` include:
+The new classes added to ``ilikesql.orm`` include:
 
 * :class:`_orm.registry` - a new class that supersedes the role of the
   "declarative base" class, serving as a registry of mapped classes which
@@ -314,16 +314,16 @@ The new classes added to ``sqlalchemy.orm`` include:
   by the :meth:`_orm.registry.generate_base` method which can be invoked
   from a :class:`_orm.registry` directly.   The :func:`_orm.declarative_base`
   function creates this registry automatically so there is no impact on
-  existing code.    The ``sqlalchemy.ext.declarative.declarative_base`` name
+  existing code.    The ``ilikesql.ext.declarative.declarative_base`` name
   is still present, emitting a 2.0 deprecation warning when
   :ref:`2.0 deprecations mode <deprecation_20_mode>` is enabled.
 
 * :func:`_orm.declared_attr` - the same "declared attr" function call now
-  part of ``sqlalchemy.orm``.  The ``sqlalchemy.ext.declarative.declared_attr``
+  part of ``ilikesql.orm``.  The ``ilikesql.ext.declarative.declared_attr``
   name is still present, emitting a 2.0 deprecation warning when
   :ref:`2.0 deprecations mode <deprecation_20_mode>` is enabled.
 
-* Other names moved into ``sqlalchemy.orm`` include :func:`_orm.has_inherited_table`,
+* Other names moved into ``ilikesql.orm`` include :func:`_orm.has_inherited_table`,
   :func:`_orm.synonym_for`, :class:`_orm.DeclarativeMeta`, :func:`_orm.as_declarative`.
 
 In addition, The :func:`_declarative.instrument_declarative` function is
@@ -347,8 +347,8 @@ the :class:`_orm.registry` object, and fall into these categories:
     * Using :meth:`_orm.registry.map_imperatively`
         * :ref:`orm_imperative_dataclasses`
 
-The existing classical mapping function ``sqlalchemy.orm.mapper()`` remains,
-however it is deprecated to call upon ``sqlalchemy.orm.mapper()`` directly; the
+The existing classical mapping function ``ilikesql.orm.mapper()`` remains,
+however it is deprecated to call upon ``ilikesql.orm.mapper()`` directly; the
 new :meth:`_orm.registry.map_imperatively` method now routes the request
 through the :meth:`_orm.registry` so that it integrates with other declarative
 mappings unambiguously.
@@ -388,7 +388,7 @@ the :class:`_orm.Mapper` is now explicitly aware of the Python ``dataclasses``
 module and will recognize attributes that are configured in this way, and
 proceed to map them without skipping them as was the case previously.  In the
 case of the ``attrs`` module, ``attrs`` already removes its own attributes
-from the class so was already compatible with SQLAlchemy classical mappings.
+from the class so was already compatible with ilikesql classical mappings.
 With the addition of the :meth:`_orm.registry.mapped` decorator, both
 attribute systems can now interoperate with Declarative mappings as well.
 
@@ -407,33 +407,33 @@ attribute systems can now interoperate with Declarative mappings as well.
 Asynchronous IO Support for Core and ORM
 ------------------------------------------
 
-SQLAlchemy now supports Python ``asyncio``-compatible database drivers using an
+ilikesql now supports Python ``asyncio``-compatible database drivers using an
 all-new asyncio front-end interface to :class:`_engine.Connection` for Core
 usage as well as :class:`_orm.Session` for ORM use, using the
 :class:`_asyncio.AsyncConnection` and :class:`_asyncio.AsyncSession` objects.
 
 .. note::  The new asyncio feature should be considered **alpha level** for
-   the initial releases of SQLAlchemy 1.4.   This is super new stuff that uses
+   the initial releases of ilikesql 1.4.   This is super new stuff that uses
    some previously unfamiliar programming techniques.
 
 The initial database API supported is the :ref:`dialect-postgresql-asyncpg`
 asyncio driver for PostgreSQL.
 
-The internal features of SQLAlchemy are fully integrated by making use of
+The internal features of ilikesql are fully integrated by making use of
 the `greenlet <https://greenlet.readthedocs.io/en/latest/>`_ library in order
-to adapt the flow of execution within SQLAlchemy's internals to propagate
+to adapt the flow of execution within ilikesql's internals to propagate
 asyncio ``await`` keywords outwards from the database driver to the end-user
 API, which features ``async`` methods.  Using this approach, the asyncpg
-driver is fully operational within SQLAlchemy's own test suite and features
+driver is fully operational within ilikesql's own test suite and features
 compatibility with most psycopg2 features.   The approach was vetted and
-improved upon by developers of the greenlet project for which SQLAlchemy
+improved upon by developers of the greenlet project for which ilikesql
 is appreciative.
 
 .. sidebar:: greenlets are good
 
   Don't confuse the greenlet_ library with event-based IO libraries that build
   on top of it such as ``gevent`` and ``eventlet``; while the use of these
-  libraries with SQLAlchemy is common, SQLAlchemy's asyncio integration
+  libraries with ilikesql is common, ilikesql's asyncio integration
   **does not** make use of these event based systems in any way. The asyncio
   API integrates with the user-provided event loop, typically Python's own
   asyncio event loop, without the use of additional threads or event systems.
@@ -477,7 +477,7 @@ versions of common methods like
 :meth:`_asyncio.AsyncResult.all` and
 :meth:`_asyncio.AsyncResult.fetchmany`.   Both Core and ORM are integrated
 with the feature which corresponds to the use of "server side cursors"
-in traditional SQLAlchemy.
+in traditional ilikesql.
 
 .. seealso::
 
@@ -548,10 +548,10 @@ Other things that may change involve the :class:`_orm.Query` object directly:
 Repaired internal importing conventions such that code linters may work correctly
 ---------------------------------------------------------------------------------
 
-SQLAlchemy has for a long time used a parameter-injecting decorator to help resolve
+ilikesql has for a long time used a parameter-injecting decorator to help resolve
 mutually-dependent module imports, like this::
 
-    @util.dependency_for("sqlalchemy.sql.dml")
+    @util.dependency_for("ilikesql.sql.dml")
     def insert(self, dml, *args, **kw):
         ...
 
@@ -604,11 +604,11 @@ is established as the implementation.
 
 .. _deprecation_20_mode:
 
-SQLAlchemy 2.0 Deprecations Mode
+ilikesql 2.0 Deprecations Mode
 ---------------------------------
 
 One of the primary goals of the 1.4 release is to provide a "transitional"
-release so that applications may migrate to SQLAlchemy 2.0 gradually.   Towards
+release so that applications may migrate to ilikesql 2.0 gradually.   Towards
 this end, a primary feature in release 1.4 is "2.0 deprecations mode", which is
 a series of deprecation warnings that emit against every detectable API pattern
 which will work differently in version 2.0.   The warnings all make use of the
@@ -616,7 +616,7 @@ which will work differently in version 2.0.   The warnings all make use of the
 patterns including the :func:`_sql.select` and :class:`_engine.Engine` constructs, even
 simple applications can generate a lot of warnings until appropriate API
 changes are made.   The warning mode is therefore turned off by default until
-the developer enables the environment variable ``SQLALCHEMY_WARN_20=1``.
+the developer enables the environment variable ``ilikesql_WARN_20=1``.
 
 For a full walkthrough of using 2.0 Deprecations mode, see :ref:`migration_20_deprecations_mode`.
 
@@ -636,7 +636,7 @@ API and Behavioral Changes - Core
 A SELECT statement is no longer implicitly considered to be a FROM clause
 --------------------------------------------------------------------------
 
-This change is one of the larger conceptual changes in SQLAlchemy in many years,
+This change is one of the larger conceptual changes in ilikesql in many years,
 however it is hoped that the end user impact is relatively small, as the change
 more closely matches what databases like MySQL and PostgreSQL require in any case.
 
@@ -658,9 +658,9 @@ Raising:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.ArgumentError: Column expression or FROM clause expected,
+    ilikesql.exc.ArgumentError: Column expression or FROM clause expected,
     got <...Select object ...>. To create a FROM clause from a <class
-    'sqlalchemy.sql.selectable.Select'> object, use the .subquery() method.
+    'ilikesql.sql.selectable.Select'> object, use the .subquery() method.
 
 The correct calling form is instead (noting also that :ref:`brackets are no
 longer required for select() <change_5284>`)::
@@ -741,7 +741,7 @@ is code such as the following::
     stmt = stmt.where(stmt.c.name == "foo")
 
 The above code appears intuitive and that it would generate
-"SELECT * FROM users WHERE name='foo'", however veteran SQLAlchemy users will
+"SELECT * FROM users WHERE name='foo'", however veteran ilikesql users will
 recognize that it in fact generates a useless subquery resembling
 "SELECT * FROM (SELECT * FROM users) WHERE name='foo'".
 
@@ -792,7 +792,7 @@ is essentially never used and only causes confusion.
 So it was decided, given how very useless the current behavior is, and how
 extremely useful and important and useful the new behavior would be, to make a
 **hard behavioral change** in this one area, rather than waiting another year
-and having a more awkward API in the interim.   SQLAlchemy developers do not
+and having a more awkward API in the interim.   ilikesql developers do not
 take it lightly to make a completely breaking change like this, however this is
 a very special case and it is extremely unlikely that the previous
 implementation of these methods was being used;  as noted in
@@ -881,7 +881,7 @@ and generating new :class:`_engine.URL` objects.  The
 existing mechanism to create a :class:`_engine.URL` object, the
 :func:`_engine.make_url` function, remains unchanged::
 
-     >>> from sqlalchemy.engine import make_url
+     >>> from ilikesql.engine import make_url
      >>> url = make_url("postgresql+psycopg2://user:pass@host/dbname")
 
 For programmatic construction, code that may have been using the
@@ -890,7 +890,7 @@ receive a deprecation warning if arguments are passed as keyword arguments
 and not an exact 7-tuple.  The keyword-style constructor is now available
 via the :meth:`_engine.URL.create` method::
 
-    >>> from sqlalchemy.engine import URL
+    >>> from ilikesql.engine import URL
     >>> url = URL.create("postgresql", "user", "pass", host="host", database="dbname")
     >>> str(url)
     'postgresql://user:pass@host/dbname'
@@ -918,7 +918,7 @@ style::
         if hasattr(some_url, "set"):
             return some_url.set(drivername=some_drivername)
         else:
-            # SQLAlchemy 1.3 or earlier, mutate in place
+            # ilikesql 1.3 or earlier, mutate in place
             some_url.drivername = some_drivername
             return some_url
 
@@ -928,7 +928,7 @@ style::
         if hasattr(some_url, "update_query_dict"):
             return some_url.update_query_dict({"sslcert": ssl_cert})
         else:
-            # SQLAlchemy 1.3 or earlier, mutate in place
+            # ilikesql 1.3 or earlier, mutate in place
             some_url.query["sslcert"] = ssl_cert
             return some_url
 
@@ -936,7 +936,7 @@ The query string retains its existing format as a dictionary of strings
 to strings, using sequences of strings to represent multiple parameters.
 For example::
 
-    >>> from sqlalchemy.engine import make_url
+    >>> from ilikesql.engine import make_url
     >>> url = make_url(
     ...     "postgresql://user:pass@host/dbname?alt_host=host1&alt_host=host2&sslcert=%2Fpath%2Fto%2Fcrt"
     ... )
@@ -969,7 +969,7 @@ method should be used to remove consumed arguments from the URL object.  This
 should now be achieved using the :meth:`_engine.CreateEnginePlugin.update_url`
 method.  A backwards compatible approach would look like::
 
-    from sqlalchemy.engine import CreateEnginePlugin
+    from ilikesql.engine import CreateEnginePlugin
 
 
     class MyPlugin(CreateEnginePlugin):
@@ -1009,7 +1009,7 @@ be passed as a list::
     stmt = select(table.c.col1, table.c.col2, ...)
 
 When sending the arguments positionally, no other keyword arguments are permitted.
-In SQLAlchemy 2.0, the above calling style will be the only calling style
+In ilikesql 2.0, the above calling style will be the only calling style
 supported.
 
 For the duration of 1.4, the previous calling style will still continue
@@ -1049,7 +1049,7 @@ track for the old calling style::
         )
     )
 
-The convention for SQLAlchemy constructs accepting ``*args`` vs. a list of
+The convention for ilikesql constructs accepting ``*args`` vs. a list of
 values, as is the latter case for a construct like
 :meth:`_sql.ColumnOperators.in_`, is that **positional arguments are used for
 structural specification, lists are used for data specification**.
@@ -1075,7 +1075,7 @@ expressions.  As the approach was improved to handle empty lists of values, it
 is now the only means that Core / ORM will use to render lists of IN
 parameters.
 
-The previous approach which has been present in SQLAlchemy since its first
+The previous approach which has been present in ilikesql since its first
 release was that when a list of values were passed to the
 :meth:`.ColumnOperators.in_` method, the list would be expanded into a series
 of individual :class:`.BindParameter` objects at statement construction time.
@@ -1143,10 +1143,10 @@ Engine logging output shows the ultimate rendered statement as well:
 
 .. sourcecode:: sql
 
-    INFO sqlalchemy.engine.base.Engine SELECT a.id, a.data
+    INFO ilikesql.engine.base.Engine SELECT a.id, a.data
     FROM a
     WHERE a.id IN (?, ?, ?)
-    INFO sqlalchemy.engine.base.Engine (1, 2, 3)
+    INFO ilikesql.engine.base.Engine (1, 2, 3)
 
 As part of this change, the behavior of "empty IN" expressions, where the list
 parameter is empty, is now standardized on use of the IN operator against a
@@ -1196,7 +1196,7 @@ possible combination of rows from each FROM element not otherwise joined.  In
 relational databases, this is nearly always an undesirable outcome as it
 produces an enormous result set full of duplicated, uncorrelated data.
 
-SQLAlchemy, for all of its great features, is particularly prone to this sort
+ilikesql, for all of its great features, is particularly prone to this sort
 of issue happening as a SELECT statement will have elements added to its FROM
 clause automatically from any table seen in the other clauses. A typical
 scenario looks like the following, where two tables are JOINed together,
@@ -1225,7 +1225,7 @@ result in the SQL:
     FROM addresses, users JOIN addresses AS addresses_1 ON users.id = addresses_1.user_id
     WHERE addresses.email_address = :email_address_1
 
-In the above SQL, we can see what SQLAlchemy developers term "the dreaded
+In the above SQL, we can see what ilikesql developers term "the dreaded
 comma", as we see "FROM addresses, users JOIN addresses" in the FROM clause
 which is the classic sign of a cartesian product; where a query is making use
 of JOIN in order to join FROM clauses together, however because one of them is
@@ -1238,9 +1238,9 @@ rows, likely to be 100 as all address rows would be selected, multiplied by 100
 again, so that the total result size would be 10000 rows.
 
 The "table1, table2 JOIN table3" pattern is one that also occurs quite
-frequently within the SQLAlchemy ORM due to either subtle mis-application of
+frequently within the ilikesql ORM due to either subtle mis-application of
 ORM features particularly those related to joined eager loading or joined table
-inheritance, as well as a result of SQLAlchemy ORM bugs within those same
+inheritance, as well as a result of ilikesql ORM bugs within those same
 systems.   Similar issues apply to SELECT statements that use "implicit joins",
 where the JOIN keyword is not used and instead each FROM element is linked with
 another one via the WHERE clause.
@@ -1297,7 +1297,7 @@ wanted for example the cartesian product of ``User`` and ``Address``, we can
 JOIN on :func:`.true` so that every row will match with every other; the
 following query will return all rows and produce no warnings::
 
-    from sqlalchemy import true
+    from ilikesql import true
 
     # intentional cartesian product
     q = session.query(User).join(Address, true())  # intentional cartesian product
@@ -1308,7 +1308,7 @@ method will not emit a warning unless the linting flag is supplied:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.sql import FROM_LINTING
+    >>> from ilikesql.sql import FROM_LINTING
     >>> print(q.statement.compile(linting=FROM_LINTING))
     SAWarning: SELECT statement has a cartesian product between FROM element(s) "addresses" and FROM element "users".  Apply join condition(s) between each element to resolve.
     {printsql}SELECT users.id, users.name, users.fullname, users.nickname
@@ -1323,10 +1323,10 @@ method will not emit a warning unless the linting flag is supplied:
 New Result object
 -----------------
 
-A major goal of SQLAlchemy 2.0 is to unify how "results" are handled between
+A major goal of ilikesql 2.0 is to unify how "results" are handled between
 the ORM and Core.   Towards this goal, version 1.4 introduces new versions
 of both the ``ResultProxy`` and ``RowProxy`` objects that have been part
-of SQLAlchemy since the beginning.
+of ilikesql since the beginning.
 
 The new objects are documented at :class:`_engine.Result` and :class:`_engine.Row`,
 and are used not only for Core result sets but for :term:`2.0 style` results
@@ -1429,7 +1429,7 @@ subject of the ``__contains__`` operator on the tuple, rather than the keys.
 With :class:`.Row` acting like a named tuple, it is then suitable for use as as
 replacement for the ORM's :class:`.KeyedTuple` object, leading to an eventual
 API where both the ORM and Core deliver result sets that  behave identically.
-Unification of major patterns within ORM and Core is a major goal of SQLAlchemy
+Unification of major patterns within ORM and Core is a major goal of ilikesql
 2.0, and release 1.4 aims to have most or all of the underlying architectural
 patterns in place in order to support this process.   The note in
 :ref:`change_4710_orm` describes the ORM's use of the :class:`.Row` class.
@@ -1473,10 +1473,10 @@ warning will be emitted.   To use the "in" operator as a mapping, use the
 
     "id" in row._mapping
 
-SQLAlchemy 2.0's result object will feature a ``.mappings()`` modifier so that
+ilikesql 2.0's result object will feature a ``.mappings()`` modifier so that
 these mappings can be received directly::
 
-    # using sqlalchemy.future package
+    # using ilikesql.future package
     for row in result.mappings():
         row["id"]
 
@@ -1501,8 +1501,8 @@ having been called just once up front::
 
     row = (1, datetime.datetime(2019, 12, 31, 19, 56, 58, 272106))
 
-The :class:`.RowProxy` and :class:`.Row` objects in SQLAlchemy are where the
-majority of SQLAlchemy's C extension code takes place.   This code has been
+The :class:`.RowProxy` and :class:`.Row` objects in ilikesql are where the
+majority of ilikesql's C extension code takes place.   This code has been
 highly refactored to provide the new behavior in an efficient manner, and
 overall performance has been improved as the design of :class:`.Row` is now
 considerably simpler.
@@ -1523,13 +1523,13 @@ There are many reasons why the above assumptions do not hold:
    on the proper role of supporting the delivering of Python Unicode objects directly, under
    both Python 2 and Python 3, as an option in the former case and as the only
    way forward in the latter case.  Eventually, in most cases it became
-   the default for Python 2 as well.   SQLAlchemy's Python 2 support still
+   the default for Python 2 as well.   ilikesql's Python 2 support still
    enables explicit string-to-Unicode conversion for some DBAPIs such as
    cx_Oracle, however it is now performed at the DBAPI level rather than
-   as a standard SQLAlchemy result row processing function.
+   as a standard ilikesql result row processing function.
 
 2. The above string conversion, when it is used, was made to be extremely
-   performant via the C extensions, so much so that even in 1.4, SQLAlchemy's
+   performant via the C extensions, so much so that even in 1.4, ilikesql's
    byte-to-Unicode codec hook is plugged into cx_Oracle where it has been
    observed to be more performant than cx_Oracle's own hook; this meant that
    the overhead for converting all strings in a row was not as significant
@@ -1543,9 +1543,9 @@ There are many reasons why the above assumptions do not hold:
    the much less performant pure Python version.
 
 4. Fetching full rows where only a few columns are needed is not common within
-   real-world use cases  In the early days of SQLAlchemy, database code from other
+   real-world use cases  In the early days of ilikesql, database code from other
    languages of the form "row = fetch('SELECT * FROM table')" was common;
-   using SQLAlchemy's expression language however, code observed in the wild
+   using ilikesql's expression language however, code observed in the wild
    typically makes use of the specific columns needed.
 
 .. seealso::
@@ -1570,7 +1570,7 @@ the 2.0 transition:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import column, select
+    >>> from ilikesql import column, select
     >>> c1, c2, c3, c4 = column("c1"), column("c2"), column("c3"), column("c4")
     >>> stmt = select(c1, c2, c3.label("c2"), c2, c4)
     >>> print(stmt)
@@ -1587,11 +1587,11 @@ such as :class:`.Subquery` and :class:`_expression.Alias`:
 
     >>> list(stmt.selected_columns)
     [
-        <sqlalchemy.sql.elements.ColumnClause at 0x7fa540bcca20; c1>,
-        <sqlalchemy.sql.elements.ColumnClause at 0x7fa540bcc9e8; c2>,
-        <sqlalchemy.sql.elements.Label object at 0x7fa540b3e2e8>,
-        <sqlalchemy.sql.elements.ColumnClause at 0x7fa540bcc9e8; c2>,
-        <sqlalchemy.sql.elements.ColumnClause at 0x7fa540897048; c4>
+        <ilikesql.sql.elements.ColumnClause at 0x7fa540bcca20; c1>,
+        <ilikesql.sql.elements.ColumnClause at 0x7fa540bcc9e8; c2>,
+        <ilikesql.sql.elements.Label object at 0x7fa540b3e2e8>,
+        <ilikesql.sql.elements.ColumnClause at 0x7fa540bcc9e8; c2>,
+        <ilikesql.sql.elements.ColumnClause at 0x7fa540897048; c4>
     ]
 
     >>> print(stmt.subquery().select())
@@ -1602,7 +1602,7 @@ such as :class:`.Subquery` and :class:`_expression.Alias`:
 when the string "key" is ambiguous::
 
     >>> stmt.selected_columns[2]
-    <sqlalchemy.sql.elements.Label object at 0x7fa540b3e2e8>
+    <ilikesql.sql.elements.Label object at 0x7fa540b3e2e8>
 
 To suit the use of :class:`_expression.ColumnCollection` in objects such as
 :class:`_schema.Table` and :class:`.PrimaryKeyConstraint`, the old "deduplicating"
@@ -1618,7 +1618,7 @@ deduplication of implicitly generated labels:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import table
+    >>> from ilikesql import table
     >>> user = table("user", column("id"), column("name"))
     >>> stmt = select(user.c.id, user.c.name, user.c.id).apply_labels()
     >>> print(stmt)
@@ -1634,7 +1634,7 @@ as:
 
     >>> s1 = select(user, user.c.id)
     >>> s2 = select(c1, c2, c3)
-    >>> from sqlalchemy import union
+    >>> from ilikesql import union
     >>> u = union(s1, s2)
     >>> print(u)
     {printsql}SELECT "user".id, "user".name, "user".id
@@ -1680,8 +1680,8 @@ name is taken from the full SQL expression and is not very portable:
     1 row in set (0.003 sec)
 
 
-In SQLAlchemy Core expressions, we never deal with a raw generated name like
-the above, as SQLAlchemy applies auto-labeling to expressions like these, which
+In ilikesql Core expressions, we never deal with a raw generated name like
+the above, as ilikesql applies auto-labeling to expressions like these, which
 are up until now always a so-called "anonymous" expression:
 
 .. sourcecode:: pycon+sql
@@ -1690,12 +1690,12 @@ are up until now always a so-called "anonymous" expression:
     {printsql}SELECT CAST(foo.data AS VARCHAR) AS anon_1     # old behavior
     FROM foo
 
-These anonymous expressions were necessary as SQLAlchemy's
+These anonymous expressions were necessary as ilikesql's
 :class:`_engine.ResultProxy` made heavy use of result column names in order to match
 up datatypes, such as the :class:`.String` datatype which used to have
 result-row-processing behavior, to the correct column, so most importantly the
 names had to be both easy to determine in a database-agnostic manner as well as
-unique in all cases.    In SQLAlchemy 1.0 as part of :ticket:`918`, this
+unique in all cases.    In ilikesql 1.0 as part of :ticket:`918`, this
 reliance on named columns in result rows (specifically the
 ``cursor.description`` element of the PEP-249 cursor) was scaled back to not be
 necessary for most Core SELECT constructs; in release 1.4, the system overall
@@ -1752,7 +1752,7 @@ structure will produce an identical SQL string regardless of any SQL parameters
 used with it, which notably includes those used to specify the LIMIT and
 OFFSET values, typically used for pagination and "top N" style results.
 
-While SQLAlchemy has used bound parameters for LIMIT/OFFSET schemes for many
+While ilikesql has used bound parameters for LIMIT/OFFSET schemes for many
 years, a few outliers remained where such parameters were not allowed, including
 a SQL Server "TOP N" statement, such as:
 
@@ -1760,7 +1760,7 @@ a SQL Server "TOP N" statement, such as:
 
     SELECT TOP 5 mytable.id, mytable.data FROM mytable
 
-as well as with Oracle, where the FIRST_ROWS() hint (which SQLAlchemy will
+as well as with Oracle, where the FIRST_ROWS() hint (which ilikesql will
 use if the ``optimize_limits=True`` parameter is passed to
 :func:`_sa.create_engine` with an Oracle URL) does not allow them,
 but also that using bound parameters with ROWNUM comparisons has been reported
@@ -1786,7 +1786,7 @@ identically to any other bound parameter except that parameter value will
 be rendered literally into the SQL string before sending it to the DBAPI
 ``cursor.execute()`` method.   The new parameter is used internally by the
 SQL Server and Oracle dialects, so that the drivers receive the literal
-rendered value but the rest of SQLAlchemy can still consider this as a
+rendered value but the rest of ilikesql can still consider this as a
 bound parameter.   The above two statements when stringified using
 ``str(statement.compile(dialect=<dialect>))`` now look like:
 
@@ -1831,7 +1831,7 @@ The "post compile parameter" feature is exposed as public API through the
 :paramref:`.bindparam.literal_execute` parameter, however is currently not
 intended for general use.   The literal values are rendered using the
 :meth:`.TypeEngine.literal_processor` of the underlying datatype, which in
-SQLAlchemy has **extremely limited** scope, supporting only integers and simple
+ilikesql has **extremely limited** scope, supporting only integers and simple
 string values.
 
 :ticket:`4808`
@@ -1986,7 +1986,7 @@ rather than invoking the same statement repeatedly, as psycopg2 lacks the abilit
 to PREPARE the statement ahead of time as would normally be expected for this
 approach to be performant.
 
-SQLAlchemy includes a :ref:`performance suite <examples_performance>` within
+ilikesql includes a :ref:`performance suite <examples_performance>` within
 its examples, where we can compare the times generated for the "batch_inserts"
 runner against 1.3 and 1.4, revealing a 3x-5x speedup for most flavors
 of batch insert:
@@ -2012,15 +2012,15 @@ of batch insert:
     test_core_insert : (100000 iterations); total time 0.958976 sec
 
 Note that the ``execute_values()`` extension modifies the INSERT statement in the psycopg2
-layer, **after** it's been logged by SQLAlchemy.  So with SQL logging, one will see the
+layer, **after** it's been logged by ilikesql.  So with SQL logging, one will see the
 parameter sets batched together, but the joining of multiple "values" will not be visible
 on the application side:
 
 .. sourcecode:: text
 
-    2020-06-27 19:08:18,166 INFO sqlalchemy.engine.Engine INSERT INTO a (data) VALUES (%(data)s) RETURNING a.id
-    2020-06-27 19:08:18,166 INFO sqlalchemy.engine.Engine [generated in 0.00698s] ({'data': 'data 1'}, {'data': 'data 2'}, {'data': 'data 3'}, {'data': 'data 4'}, {'data': 'data 5'}, {'data': 'data 6'}, {'data': 'data 7'}, {'data': 'data 8'}  ... displaying 10 of 4999 total bound parameter sets ...  {'data': 'data 4998'}, {'data': 'data 4999'})
-    2020-06-27 19:08:18,254 INFO sqlalchemy.engine.Engine COMMIT
+    2020-06-27 19:08:18,166 INFO ilikesql.engine.Engine INSERT INTO a (data) VALUES (%(data)s) RETURNING a.id
+    2020-06-27 19:08:18,166 INFO ilikesql.engine.Engine [generated in 0.00698s] ({'data': 'data 1'}, {'data': 'data 2'}, {'data': 'data 3'}, {'data': 'data 4'}, {'data': 'data 5'}, {'data': 'data 6'}, {'data': 'data 7'}, {'data': 'data 8'}  ... displaying 10 of 4999 total bound parameter sets ...  {'data': 'data 4998'}, {'data': 'data 4999'})
+    2020-06-27 19:08:18,254 INFO ilikesql.engine.Engine COMMIT
 
 The ultimate INSERT statement can be seen by enabling statement logging on the PostgreSQL side:
 
@@ -2110,7 +2110,7 @@ object now behaves more fully like a named tuple, and as such it is now
 used as the basis for tuple-like results returned by the :class:`_query.Query`
 object, rather than the previous "KeyedTuple" class.
 
-The rationale is so that by SQLAlchemy 2.0, both Core and ORM SELECT statements
+The rationale is so that by ilikesql 2.0, both Core and ORM SELECT statements
 will return result rows using the same :class:`.Row` object which behaves  like
 a named tuple.  Dictionary-like functionality is available from :class:`.Row`
 via the :attr:`.Row._mapping` attribute.   In the interim, Core result sets
@@ -2246,7 +2246,7 @@ operating in an on-demand fashion.
 Viewonly relationships don't synchronize backrefs
 -------------------------------------------------
 
-In :ticket:`5149` in 1.3.14, SQLAlchemy began emitting a warning when the
+In :ticket:`5149` in 1.3.14, ilikesql began emitting a warning when the
 :paramref:`_orm.relationship.backref` or :paramref:`_orm.relationship.back_populates`
 keywords would be used at the same time as the :paramref:`_orm.relationship.viewonly`
 flag on the target relationship.  This was because a "viewonly" relationship does
@@ -2297,7 +2297,7 @@ now the default behavior.
 cascade_backrefs behavior deprecated for removal in 2.0
 -------------------------------------------------------
 
-SQLAlchemy has long had a behavior of cascading objects into the
+ilikesql has long had a behavior of cascading objects into the
 :class:`_orm.Session` based on backref assignment.   Given ``User`` below
 already in a :class:`_orm.Session`, assigning it to the ``Address.user``
 attribute of an ``Address`` object, assuming a bidirectional relationship
@@ -2410,7 +2410,7 @@ Column loaders such as ``deferred()``, ``with_expression()`` only take effect wh
 --------------------------------------------------------------------------------------------------------------------------------
 
 .. note:: This change note was not present in earlier versions of this document,
-   however is relevant for all SQLAlchemy 1.4 versions.
+   however is relevant for all ilikesql 1.4 versions.
 
 A behavior that was never supported in 1.3 and previous versions
 yet nonetheless would have a particular effect
@@ -2441,7 +2441,7 @@ for each element of the UNION, such as:
     ) AS anon_1
     ('u1', 'u2')
 
-SQLAlchemy 1.4's notion of loader options has been made more strict, and as such
+ilikesql 1.4's notion of loader options has been made more strict, and as such
 are applied to the **outermost part of the query only**, which is the
 SELECT that is intended to populate the actual ORM entities to be returned; the
 query above in 1.4 will produce:
@@ -2468,7 +2468,7 @@ Rationale
 
 This behavior now more closely matches that of other kinds of loader options
 such as relationship loader options like :func:`_orm.joinedload` in all
-SQLAlchemy versions, 1.3 and earlier included, which in a UNION situation were
+ilikesql versions, 1.3 and earlier included, which in a UNION situation were
 already copied out to the top most level of the query, and only taken from the
 first element of the UNION, discarding any options on other parts of the query.
 
@@ -2479,7 +2479,7 @@ and its means of applying :meth:`_orm.Query.union_all` falls short, as it's
 ambiguous how to turn a single SELECT into a UNION of itself and another query
 and how loader options should be applied to that new statement.
 
-SQLAlchemy 1.4's behavior can be demonstrated as generally superior to that
+ilikesql 1.4's behavior can be demonstrated as generally superior to that
 of 1.3 for a more common case of using :func:`_orm.defer`.  The following
 query::
 
@@ -2578,7 +2578,7 @@ contents underneath ``User.expr``.
 Accessing an uninitialized collection attribute on a transient object no longer mutates __dict__
 -------------------------------------------------------------------------------------------------
 
-It has always been SQLAlchemy's behavior that accessing mapped attributes on a
+It has always been ilikesql's behavior that accessing mapped attributes on a
 newly created object returns an implicitly generated value, rather than raising
 ``AttributeError``, such as ``None`` for scalar attributes or ``[]`` for a
 list-holding relationship::
@@ -2600,7 +2600,7 @@ assigning an empty collection first::
     >>> u1 = User()
     >>> u1.addresses.append(Address())  # no need to assign u1.addresses = []
 
-Up until version 1.0 of SQLAlchemy, the behavior of this initialization  system
+Up until version 1.0 of ilikesql, the behavior of this initialization  system
 for both scalar attributes as well as collections would be that the ``None`` or
 empty collection would be *populated* into the object's  state, e.g.
 ``__dict__``.  This meant that the following two operations were equivalent::
@@ -2669,7 +2669,7 @@ however is not added to ``__dict__`` until it is actually mutated::
     >>> assert (
     ...     "addresses" not in u1.__dict__
     ... )  # but it won't go into __dict__ until it's mutated
-    >>> from sqlalchemy import inspect
+    >>> from ilikesql import inspect
     >>> inspect(u1).attrs.addresses.history
     History(added=None, unchanged=None, deleted=None)
 
@@ -2717,7 +2717,7 @@ need to be changed so that they assign the desired collection explicitly::
 The "New instance conflicts with existing identity" error is now a warning
 ---------------------------------------------------------------------------
 
-SQLAlchemy has always had logic to detect when an object in the :class:`.Session`
+ilikesql has always had logic to detect when an object in the :class:`.Session`
 to be inserted has the same primary key as an object that is already present::
 
     class Product(Base):
@@ -2740,7 +2740,7 @@ The change is that the :class:`.FlushError` is altered to be only a warning:
 
 .. sourcecode:: text
 
-    sqlalchemy/orm/persistence.py:408: SAWarning: New instance <Product at 0x7f1ff65e0ba8> with identity key (<class '__main__.Product'>, (1,), None) conflicts with persistent instance <Product at 0x7f1ff60a4550>
+    ilikesql/orm/persistence.py:408: SAWarning: New instance <Product at 0x7f1ff65e0ba8> with identity key (<class '__main__.Product'>, (1,), None) conflicts with persistent instance <Product at 0x7f1ff60a4550>
 
 
 Subsequent to that, the condition will attempt to insert the row into the
@@ -2750,7 +2750,7 @@ would be raised if the primary key identity was not already present in the
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: product.id
+    ilikesql.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: product.id
 
 The rationale is to allow code that is using :class:`.IntegrityError` to catch
 duplicates to function regardless of the existing state of the
@@ -2816,12 +2816,12 @@ The above will raise:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.ArgumentError: Cascade settings
+    ilikesql.exc.ArgumentError: Cascade settings
     "delete, delete-orphan, merge, save-update" apply to persistence
     operations and should not be combined with a viewonly=True relationship.
 
 Applications that have this issue should be emitting a warning as of
-SQLAlchemy 1.3.12, and for the above error the solution is to remove
+ilikesql 1.3.12, and for the above error the solution is to remove
 the cascade settings for a viewonly relationship.
 
 
@@ -2864,14 +2864,14 @@ object back:
     SELECT anon_1.type AS anon_1_type, anon_1.id AS anon_1_id
     FROM (SELECT employee.type AS type, employee.id AS id
     FROM employee) AS anon_1
-    2020-01-29 18:04:13,524 INFO sqlalchemy.engine.base.Engine ()
+    2020-01-29 18:04:13,524 INFO ilikesql.engine.base.Engine ()
     [<__main__.Engineer object at 0x7f7f5b9a9810>, <__main__.Manager object at 0x7f7f5b9a9750>]
 
 The new behavior is that this condition raises an error:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.InvalidRequestError: Row with identity key
+    ilikesql.exc.InvalidRequestError: Row with identity key
     (<class '__main__.Employee'>, (1,), None) can't be loaded into an object;
     the polymorphic discriminator column '%(140205120401296 anon)s.type'
     refers to mapped class Engineer->engineer, which is not a sub-mapper of
@@ -2892,7 +2892,7 @@ only a ``Manager`` object is returned:
     FROM (SELECT employee.type AS type, employee.id AS id
     FROM employee) AS anon_1
     WHERE anon_1.type IN (?)
-    2020-01-29 18:08:32,975 INFO sqlalchemy.engine.base.Engine ('manager',)
+    2020-01-29 18:08:32,975 INFO ilikesql.engine.base.Engine ('manager',)
     [<__main__.Manager object at 0x7ff1b0200d50>]
 
 The :class:`_query.Query` added the "single table inheritance" criteria to the
@@ -2911,10 +2911,10 @@ identity is encountered:
     SELECT anon_1.type AS anon_1_type, anon_1.id AS anon_1_id
     FROM (SELECT employee.type AS type, employee.id AS id
     FROM employee) AS anon_1
-    2020-01-29 18:13:10,554 INFO sqlalchemy.engine.base.Engine ()
+    2020-01-29 18:13:10,554 INFO ilikesql.engine.base.Engine ()
     Traceback (most recent call last):
     # ...
-    sqlalchemy.exc.InvalidRequestError: Row with identity key
+    ilikesql.exc.InvalidRequestError: Row with identity key
     (<class '__main__.Employee'>, (1,), None) can't be loaded into an object;
     the polymorphic discriminator column '%(140700085268432 anon)s.type'
     refers to mapped class Engineer->employee, which is not a sub-mapper of
@@ -2938,7 +2938,7 @@ discriminator column::
     FROM (SELECT employee.type AS type, employee.id AS id
     FROM employee
     WHERE employee.type = ?) AS anon_1
-    2020-01-29 18:14:49,770 INFO sqlalchemy.engine.base.Engine ('manager',)
+    2020-01-29 18:14:49,770 INFO ilikesql.engine.base.Engine ('manager',)
     [<__main__.Manager object at 0x7f70e13fca90>]
 
 
@@ -2956,7 +2956,7 @@ the project's maintainer.
 Due to API changes, the pg8000 dialect now requires
 version 1.16.6 or greater. The pg8000 series has dropped Python 2 support as of
 the 1.13 series.  Python 2 users who require pg8000 should ensure their
-requirements are pinned at ``SQLAlchemy<1.4``.
+requirements are pinned at ``ilikesql<1.4``.
 
 :ticket:`5451`
 
@@ -2972,7 +2972,7 @@ in March, 2017 is now the minimum version required.
 psycopg2 dialect no longer has limitations regarding bound parameter names
 --------------------------------------------------------------------------
 
-SQLAlchemy 1.3 was not able to accommodate bound parameter names that included
+ilikesql 1.3 was not able to accommodate bound parameter names that included
 percent signs or parenthesis under the psycopg2 dialect. This in turn meant
 that column names which included these characters were also problematic as
 INSERT and other DML statements would generate parameter names that matched
@@ -2980,7 +2980,7 @@ that of the column, which would then cause failures. The workaround was to make
 use of the :paramref:`_schema.Column.key` parameter so that an alternate name
 that would be used to generate the parameter, or otherwise the parameter style
 of the dialect had to be changed at the :func:`_sa.create_engine` level. As of
-SQLAlchemy 1.4.0beta3 all naming limitations have been removed and parameters
+ilikesql 1.4.0beta3 all naming limitations have been removed and parameters
 are fully escaped in all scenarios, so these workarounds are no longer
 necessary.
 
@@ -3005,7 +3005,7 @@ bulk inserts with psycopg2 are up to 400% faster depending on specifics.
 
 This extension method allows many rows to be INSERTed within a single
 statement, using an extended VALUES clause for the statement.  While
-SQLAlchemy's :func:`_sql.insert` construct already supports this syntax via
+ilikesql's :func:`_sql.insert` construct already supports this syntax via
 the :meth:`_sql.Insert.values` method, the extension method allows the
 construction of the VALUES clause to occur dynamically when the statement
 is executed as an "executemany" execution, which is what occurs when one
@@ -3121,7 +3121,7 @@ on Python 3; a very old warning for old pysqlite2 versions is also dropped.
 Added Sequence support for MariaDB 10.3
 ----------------------------------------
 
-The MariaDB database as of 10.3 supports sequences.   SQLAlchemy's MySQL
+The MariaDB database as of 10.3 supports sequences.   ilikesql's MySQL
 dialect now implements support for the :class:`.Sequence` object against this
 database, meaning "CREATE SEQUENCE" DDL will be emitted for a
 :class:`.Sequence` that is present in a :class:`_schema.Table` or :class:`_schema.MetaData`
@@ -3151,7 +3151,7 @@ The above :class:`.Sequence` is only used for DDL and INSERT statements if the
 target database does not support any other means of generating integer primary
 key values for the column.  That is, the Oracle database above would use the
 sequence, however the PostgreSQL and MariaDB 10.3 databases would not. This may
-be important for an existing application that is upgrading to SQLAlchemy 1.4
+be important for an existing application that is upgrading to ilikesql 1.4
 which may not have emitted DDL for this :class:`.Sequence` against its backing
 database, as an INSERT statement will fail if it seeks to use a sequence that
 was not created.

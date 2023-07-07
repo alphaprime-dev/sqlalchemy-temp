@@ -1,11 +1,11 @@
 =============================
-What's new in SQLAlchemy 0.4?
+What's new in ilikesql 0.4?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 0.3,
-    last released October 14, 2007, and SQLAlchemy version 0.4,
+    This document describes changes between ilikesql version 0.3,
+    last released October 14, 2007, and ilikesql version 0.4,
     last released October 12, 2008.
 
     Document date:  March 21, 2008
@@ -14,12 +14,12 @@ First Things First
 ==================
 
 If you're using any ORM features, make sure you import from
-``sqlalchemy.orm``:
+``ilikesql.orm``:
 
 ::
 
-    from sqlalchemy import *
-    from sqlalchemy.orm import *
+    from ilikesql import *
+    from ilikesql.orm import *
 
 Secondly, anywhere you used to say ``engine=``,
 ``connectable=``, ``bind_to=``, ``something.engine``,
@@ -45,8 +45,8 @@ they'll work there too.
 Module Imports
 ==============
 
-In 0.3, "``from sqlalchemy import *``" would import all of
-sqlalchemy's sub-modules into your namespace. Version 0.4 no
+In 0.3, "``from ilikesql import *``" would import all of
+ilikesql's sub-modules into your namespace. Version 0.4 no
 longer imports sub-modules into the namespace. This may mean
 you need to add extra imports into your code.
 
@@ -54,7 +54,7 @@ In 0.3, this code worked:
 
 ::
 
-    from sqlalchemy import *
+    from ilikesql import *
 
 
     class UTCDateTime(types.TypeDecorator):
@@ -64,8 +64,8 @@ In 0.4, one must do:
 
 ::
 
-    from sqlalchemy import *
-    from sqlalchemy import types
+    from ilikesql import *
+    from ilikesql import types
 
 
     class UTCDateTime(types.TypeDecorator):
@@ -411,7 +411,7 @@ like any other type:
 
 If you'd like to define the way the mapped attributes
 generate SQL clauses when used in expressions, create your
-own ``sqlalchemy.orm.PropComparator`` subclass, defining any
+own ``ilikesql.orm.PropComparator`` subclass, defining any
 of the common operators (like ``__eq__()``, ``__le__()``,
 etc.), and send it in to ``composite()``.  Composite types
 work as primary keys too, and are usable in ``query.get()``:
@@ -560,7 +560,7 @@ a typical query looks like:
 Horizontal Scaling (Sharding) API
 ---------------------------------
 
-[browser:/sqlalchemy/trunk/examples/sharding/attribute_shard
+[browser:/ilikesql/trunk/examples/sharding/attribute_shard
 .py]
 
 Sessions
@@ -579,8 +579,8 @@ your ``engine`` (or anywhere):
 
 ::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql import create_engine
+    from ilikesql.orm import sessionmaker
 
     engine = create_engine("myengine://")
     Session = sessionmaker(bind=engine, autoflush=True, transactional=True)
@@ -604,7 +604,7 @@ with both ``sessionmaker`` as well as ``create_session()``:
 
 ::
 
-    from sqlalchemy.orm import scoped_session, sessionmaker
+    from ilikesql.orm import scoped_session, sessionmaker
 
     Session = scoped_session(sessionmaker(autoflush=True, transactional=True))
     Session.configure(bind=engine)
@@ -717,14 +717,14 @@ Nested Session Transactions with SAVEPOINT
 
 Available at the Engine and ORM level.  ORM docs so far:
 
-https://www.sqlalchemy.org/docs/04/session.html#unitofwork_managing
+https://www.ilikesql.org/docs/04/session.html#unitofwork_managing
 
 Two-Phase Commit Sessions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Available at the Engine and ORM level.  ORM docs so far:
 
-https://www.sqlalchemy.org/docs/04/session.html#unitofwork_managing
+https://www.ilikesql.org/docs/04/session.html#unitofwork_managing
 
 Inheritance
 -----------
@@ -732,7 +732,7 @@ Inheritance
 Polymorphic Inheritance with No Joins or Unions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-New docs for inheritance:  https://www.sqlalchemy.org/docs/04
+New docs for inheritance:  https://www.ilikesql.org/docs/04
 /mappers.html#advdatamapping_mapper_inheritance_joined
 
 Better Polymorphic Behavior with ``get()``
@@ -748,10 +748,10 @@ querying the database.
 Types
 -----
 
-Custom Subclasses of ``sqlalchemy.types.TypeDecorator``
+Custom Subclasses of ``ilikesql.types.TypeDecorator``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-There is a `New API <https://www.sqlalchemy.org/docs/04/types
+There is a `New API <https://www.ilikesql.org/docs/04/types
 .html#types_custom>`_ for subclassing a TypeDecorator.
 Using the 0.3 API causes compilation errors in some cases.
 
@@ -765,14 +765,14 @@ All the "anonymous" labels and aliases use a simple
 <name>_<number> format now.  SQL is much easier to read and
 is compatible with plan optimizer caches.  Just check out
 some of the examples in the tutorials:
-https://www.sqlalchemy.org/docs/04/ormtutorial.html
-https://www.sqlalchemy.org/docs/04/sqlexpression.html
+https://www.ilikesql.org/docs/04/ormtutorial.html
+https://www.ilikesql.org/docs/04/sqlexpression.html
 
 Generative select() Constructs
 ------------------------------
 
 This is definitely the way to go with ``select()``.  See htt
-p://www.sqlalchemy.org/docs/04/sqlexpression.html#sql_transf
+p://www.ilikesql.org/docs/04/sqlexpression.html#sql_transf
 orm .
 
 New Operator System
@@ -781,7 +781,7 @@ New Operator System
 SQL operators and more or less every SQL keyword there is
 are now abstracted into the compiler layer.  They now act
 intelligently and are type/backend aware, see:
-https://www.sqlalchemy.org/docs/04/sqlexpression.html#sql_operators
+https://www.ilikesql.org/docs/04/sqlexpression.html#sql_operators
 
 All ``type`` Keyword Arguments Renamed to ``type_``
 ---------------------------------------------------

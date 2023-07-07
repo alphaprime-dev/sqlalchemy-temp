@@ -1,44 +1,44 @@
-from sqlalchemy import alias
-from sqlalchemy import and_
-from sqlalchemy import bindparam
-from sqlalchemy import CHAR
-from sqlalchemy import column
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import join
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import null
-from sqlalchemy import or_
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy.engine import default
-from sqlalchemy.sql import coercions
-from sqlalchemy.sql import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import quoted_name
-from sqlalchemy.sql import roles
-from sqlalchemy.sql import visitors
-from sqlalchemy.sql.selectable import SelectStatementGrouping
-from sqlalchemy.testing import assertions
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import config
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.provision import normalize_sequence
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import alias
+from ilikesql import and_
+from ilikesql import bindparam
+from ilikesql import CHAR
+from ilikesql import column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import join
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import null
+from ilikesql import or_
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql.engine import default
+from ilikesql.sql import coercions
+from ilikesql.sql import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.sql import operators
+from ilikesql.sql import quoted_name
+from ilikesql.sql import roles
+from ilikesql.sql import visitors
+from ilikesql.sql.selectable import SelectStatementGrouping
+from ilikesql.testing import assertions
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import config
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing.provision import normalize_sequence
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class ToMetaDataTest(fixtures.TestBase):
@@ -674,7 +674,7 @@ class TableDeprecationTest(fixtures.TestBase):
 
 class LegacyOperatorTest(AssertsCompiledSQL, fixtures.TestBase):
     """
-    Several operators were renamed for SqlAlchemy 2.0 in #5429 and #5435
+    Several operators were renamed for ilikesql 2.0 in #5429 and #5435
 
     This test class is designed to ensure the deprecated legacy operators
     are still available and equivalent to their modern replacements.
@@ -737,7 +737,7 @@ class LegacyOperatorTest(AssertsCompiledSQL, fixtures.TestBase):
 
     def test_issue_5429_assertions(self):
         """
-        2) ensure compatibility across sqlalchemy.testing.assertions
+        2) ensure compatibility across ilikesql.testing.assertions
         """
         # functions
         # is_not

@@ -9,17 +9,17 @@ from __future__ import annotations
 import datetime
 import os
 
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import select
-from sqlalchemy.ext.horizontal_shard import set_shard_id
-from sqlalchemy.ext.horizontal_shard import ShardedSession
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import select
+from ilikesql.ext.horizontal_shard import set_shard_id
+from ilikesql.ext.horizontal_shard import ShardedSession
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import sessionmaker
 
 
 echo = True

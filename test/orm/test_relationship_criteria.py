@@ -1,42 +1,42 @@
 import datetime
 import random
 
-from sqlalchemy import Column
-from sqlalchemy import DateTime
-from sqlalchemy import delete
-from sqlalchemy import event
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import insert
-from sqlalchemy import Integer
-from sqlalchemy import literal_column
-from sqlalchemy import orm
-from sqlalchemy import select
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import union
-from sqlalchemy import update
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import defer
-from sqlalchemy.orm import join as orm_join
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import lazyload
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm import with_loader_criteria
-from sqlalchemy.orm.decl_api import declared_attr
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing.assertions import expect_raises
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.util import resolve_lambda
+from ilikesql import Column
+from ilikesql import DateTime
+from ilikesql import delete
+from ilikesql import event
+from ilikesql import exc as sa_exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import insert
+from ilikesql import Integer
+from ilikesql import literal_column
+from ilikesql import orm
+from ilikesql import select
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import union
+from ilikesql import update
+from ilikesql.orm import aliased
+from ilikesql.orm import column_property
+from ilikesql.orm import defer
+from ilikesql.orm import join as orm_join
+from ilikesql.orm import joinedload
+from ilikesql.orm import lazyload
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import subqueryload
+from ilikesql.orm import with_loader_criteria
+from ilikesql.orm.decl_api import declared_attr
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing.assertions import expect_raises
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.util import resolve_lambda
 from test.orm import _fixtures
 
 

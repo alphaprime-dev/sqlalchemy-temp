@@ -1,33 +1,33 @@
 from unittest.mock import Mock
 
-import sqlalchemy as sa
-from sqlalchemy import delete
-from sqlalchemy import ForeignKey
-from sqlalchemy import insert
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import true
-from sqlalchemy import update
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm.query import Query
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import delete
+from ilikesql import ForeignKey
+from ilikesql import insert
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import true
+from ilikesql import update
+from ilikesql.orm import aliased
+from ilikesql.orm import backref
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.orm.query import Query
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 from test.orm import _fixtures
 
 
@@ -447,14 +447,14 @@ class BindIntegrationTest(_fixtures.FixtureTest):
         engine = {"e1": e1, "e2": e2, "e3": e3}[expected_engine_name]
 
         with mock.patch(
-            "sqlalchemy.orm.context." "ORMCompileState.orm_setup_cursor_result"
+            "ilikesql.orm.context." "ORMCompileState.orm_setup_cursor_result"
         ), mock.patch(
-            "sqlalchemy.orm.context.ORMCompileState.orm_execute_statement"
+            "ilikesql.orm.context.ORMCompileState.orm_execute_statement"
         ), mock.patch(
-            "sqlalchemy.orm.bulk_persistence."
+            "ilikesql.orm.bulk_persistence."
             "BulkORMInsert.orm_execute_statement"
         ), mock.patch(
-            "sqlalchemy.orm.bulk_persistence."
+            "ilikesql.orm.bulk_persistence."
             "BulkUDCompileState.orm_setup_cursor_result"
         ):
             sess.execute(statement)

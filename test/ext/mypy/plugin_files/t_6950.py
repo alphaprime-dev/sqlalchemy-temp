@@ -1,12 +1,12 @@
 from typing import cast
 
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import query_expression
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import with_expression
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql.orm import declarative_base
+from ilikesql.orm import Mapped
+from ilikesql.orm import query_expression
+from ilikesql.orm import Session
+from ilikesql.orm import with_expression
 
 Base = declarative_base()
 

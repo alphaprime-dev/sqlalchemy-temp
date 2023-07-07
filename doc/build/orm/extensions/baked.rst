@@ -3,7 +3,7 @@
 Baked Queries
 =============
 
-.. module:: sqlalchemy.ext.baked
+.. module:: ilikesql.ext.baked
 
 ``baked`` provides an alternative creational pattern for
 :class:`~.query.Query` objects, which allows for caching of the object's
@@ -20,7 +20,7 @@ cache the **return results** from the database.  A technique that demonstrates
 the caching of the SQL calls and result sets themselves is available in
 :ref:`examples_caching`.
 
-.. deprecated:: 1.4  SQLAlchemy 1.4 and 2.0 feature an all-new direct query
+.. deprecated:: 1.4  ilikesql 1.4 and 2.0 feature an all-new direct query
    caching system that removes the need for the :class:`.BakedQuery` system.
    Caching is now transparently active for all Core and ORM queries with no
    action taken by the user, using the system described at :ref:`sql_caching`.
@@ -28,8 +28,8 @@ the caching of the SQL calls and result sets themselves is available in
 
 .. deepalchemy::
 
-    The :mod:`sqlalchemy.ext.baked` extension is **not for beginners**.  Using
-    it correctly requires a good high level understanding of how SQLAlchemy, the
+    The :mod:`ilikesql.ext.baked` extension is **not for beginners**.  Using
+    it correctly requires a good high level understanding of how ilikesql, the
     database driver, and the backend database interact with each other.  This
     extension presents a very specific kind of optimization that is not ordinarily
     needed.  As noted above, it **does not cache queries**, only the string
@@ -41,7 +41,7 @@ Synopsis
 Usage of the baked system starts by producing a so-called "bakery", which
 represents storage for a particular series of query objects::
 
-    from sqlalchemy.ext import baked
+    from ilikesql.ext import baked
 
     bakery = baked.bakery()
 
@@ -55,7 +55,7 @@ its construction as a series of Python callables, which are typically lambdas.
 For succinct usage, it overrides the ``+=`` operator so that a typical
 query build-up looks like the following::
 
-    from sqlalchemy import bindparam
+    from ilikesql import bindparam
 
 
     def search_for_user(session, username, email=None):
@@ -165,7 +165,7 @@ as being impacted by this particular form of overhead.
 
 .. topic:: Measure twice, cut once
 
-    For background on how to profile a SQLAlchemy application, please see
+    For background on how to profile a ilikesql application, please see
     the section :ref:`faq_performance`.  It is essential that performance
     measurement techniques are used when attempting to improve the performance
     of an application.
@@ -206,7 +206,7 @@ overhead.
 To reduce the additional overhead, we need some more specialized logic,
 some way to memoize the construction of the select object and the
 construction of the SQL.  There is an example of this on the wiki
-in the section `BakedQuery <https://bitbucket.org/zzzeek/sqlalchemy/wiki/UsageRecipes/BakedQuery>`_,
+in the section `BakedQuery <https://bitbucket.org/zzzeek/ilikesql/wiki/UsageRecipes/BakedQuery>`_,
 a precursor to this feature, however in that system, we aren't caching
 the *construction* of the query.  In order to remove all the overhead,
 we need to cache both the construction of the query as well as the SQL
@@ -356,7 +356,7 @@ This section will describe some techniques for specific query situations.
 Using IN expressions
 ^^^^^^^^^^^^^^^^^^^^
 
-The :meth:`.ColumnOperators.in_` method in SQLAlchemy historically renders
+The :meth:`.ColumnOperators.in_` method in ilikesql historically renders
 a variable set of bound parameters based on the list of items that's passed
 to the method.   This doesn't work for baked queries as the length of that
 list can change on different calls.  To solve this problem, the
@@ -410,7 +410,7 @@ of the baked query::
 Using the before_compile event
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As of SQLAlchemy 1.3.11, the use of the :meth:`.QueryEvents.before_compile`
+As of ilikesql 1.3.11, the use of the :meth:`.QueryEvents.before_compile`
 event against a particular :class:`_query.Query` will disallow the baked query
 system from caching the query, if the event hook returns a new :class:`_query.Query`
 object that is different from the one passed in.  This is so that the
@@ -461,7 +461,7 @@ order to identify or eliminate baked queries as the cause of an issue.
 Lazy Loading Integration
 ------------------------
 
-.. versionchanged:: 1.4 As of SQLAlchemy 1.4, the "baked query" system is no
+.. versionchanged:: 1.4 As of ilikesql 1.4, the "baked query" system is no
    longer part of the relationship loading system.
    The :ref:`native caching <sql_caching>` system is used instead.
 

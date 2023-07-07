@@ -3,16 +3,16 @@
 Oracle
 ======
 
-.. automodule:: sqlalchemy.dialects.oracle.base
+.. automodule:: ilikesql.dialects.oracle.base
 
 Oracle Data Types
 -----------------
 
-As with all SQLAlchemy dialects, all UPPERCASE types that are known to be
+As with all ilikesql dialects, all UPPERCASE types that are known to be
 valid with Oracle are importable from the top level dialect, whether
-they originate from :mod:`sqlalchemy.types` or from the local dialect::
+they originate from :mod:`ilikesql.types` or from the local dialect::
 
-    from sqlalchemy.dialects.oracle import (
+    from ilikesql.dialects.oracle import (
         BFILE,
         BLOB,
         CHAR,
@@ -39,7 +39,7 @@ they originate from :mod:`sqlalchemy.types` or from the local dialect::
 Types which are specific to Oracle, or have Oracle-specific
 construction arguments, are as follows:
 
-.. currentmodule:: sqlalchemy.dialects.oracle
+.. currentmodule:: ilikesql.dialects.oracle
 
 .. autoclass:: BFILE
   :members: __init__
@@ -85,12 +85,12 @@ construction arguments, are as follows:
 cx_Oracle
 ---------
 
-.. automodule:: sqlalchemy.dialects.oracle.cx_oracle
+.. automodule:: ilikesql.dialects.oracle.cx_oracle
 
 .. _oracledb:
 
 python-oracledb
 ---------------
 
-.. automodule:: sqlalchemy.dialects.oracle.oracledb
+.. automodule:: ilikesql.dialects.oracle.oracledb
 

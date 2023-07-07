@@ -1,70 +1,70 @@
-from sqlalchemy import BLOB
-from sqlalchemy import BOOLEAN
-from sqlalchemy import Boolean
-from sqlalchemy import cast
-from sqlalchemy import CHAR
-from sqlalchemy import CheckConstraint
-from sqlalchemy import CLOB
-from sqlalchemy import Column
-from sqlalchemy import Computed
-from sqlalchemy import create_engine
-from sqlalchemy import DATE
-from sqlalchemy import Date
-from sqlalchemy import DATETIME
-from sqlalchemy import DateTime
-from sqlalchemy import DECIMAL
-from sqlalchemy import DOUBLE
-from sqlalchemy import Double
-from sqlalchemy import exc
-from sqlalchemy import extract
-from sqlalchemy import FLOAT
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Index
-from sqlalchemy import INT
-from sqlalchemy import Integer
-from sqlalchemy import Interval
-from sqlalchemy import LargeBinary
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import NCHAR
-from sqlalchemy import NUMERIC
-from sqlalchemy import Numeric
-from sqlalchemy import NVARCHAR
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import SmallInteger
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import TEXT
-from sqlalchemy import Text
-from sqlalchemy import text
-from sqlalchemy import TIME
-from sqlalchemy import Time
-from sqlalchemy import TIMESTAMP
-from sqlalchemy import types as sqltypes
-from sqlalchemy import Unicode
-from sqlalchemy import UnicodeText
-from sqlalchemy import VARCHAR
-from sqlalchemy.dialects.mysql import base as mysql
-from sqlalchemy.dialects.mysql import insert
-from sqlalchemy.dialects.mysql import match
-from sqlalchemy.sql import column
-from sqlalchemy.sql import table
-from sqlalchemy.sql.expression import bindparam
-from sqlalchemy.sql.expression import literal_column
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_ignore_whitespace
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import Variation
+from ilikesql import BLOB
+from ilikesql import BOOLEAN
+from ilikesql import Boolean
+from ilikesql import cast
+from ilikesql import CHAR
+from ilikesql import CheckConstraint
+from ilikesql import CLOB
+from ilikesql import Column
+from ilikesql import Computed
+from ilikesql import create_engine
+from ilikesql import DATE
+from ilikesql import Date
+from ilikesql import DATETIME
+from ilikesql import DateTime
+from ilikesql import DECIMAL
+from ilikesql import DOUBLE
+from ilikesql import Double
+from ilikesql import exc
+from ilikesql import extract
+from ilikesql import FLOAT
+from ilikesql import Float
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Index
+from ilikesql import INT
+from ilikesql import Integer
+from ilikesql import Interval
+from ilikesql import LargeBinary
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import NCHAR
+from ilikesql import NUMERIC
+from ilikesql import Numeric
+from ilikesql import NVARCHAR
+from ilikesql import PrimaryKeyConstraint
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import SmallInteger
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import TEXT
+from ilikesql import Text
+from ilikesql import text
+from ilikesql import TIME
+from ilikesql import Time
+from ilikesql import TIMESTAMP
+from ilikesql import types as sqltypes
+from ilikesql import Unicode
+from ilikesql import UnicodeText
+from ilikesql import VARCHAR
+from ilikesql.dialects.mysql import base as mysql
+from ilikesql.dialects.mysql import insert
+from ilikesql.dialects.mysql import match
+from ilikesql.sql import column
+from ilikesql.sql import table
+from ilikesql.sql.expression import bindparam
+from ilikesql.sql.expression import literal_column
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_ignore_whitespace
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import mock
+from ilikesql.testing import Variation
 
 
 class ReservedWordFixture(AssertsCompiledSQL):
@@ -89,7 +89,7 @@ class ReservedWordFixture(AssertsCompiledSQL):
             "rw_table.`mdb_reserved` FROM rw_table"
         )
 
-        from sqlalchemy.dialects.mysql import reserved_words
+        from ilikesql.dialects.mysql import reserved_words
 
         reserved_words.RESERVED_WORDS_MARIADB.add("mdb_reserved")
         reserved_words.RESERVED_WORDS_MYSQL.add("mysql_reserved")
@@ -196,7 +196,7 @@ class CompileTest(ReservedWordFixture, fixtures.TestBase, AssertsCompiledSQL):
         )
 
     def test_create_index_with_arbitrary_column_element(self):
-        from sqlalchemy.ext.compiler import compiles
+        from ilikesql.ext.compiler import compiles
 
         class _textual_index_element(sql.ColumnElement):
             """alembic's wrapper"""

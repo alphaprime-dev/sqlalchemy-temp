@@ -1,4 +1,4 @@
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 .. _mapper_composite:
 
@@ -44,8 +44,8 @@ of the columns to be generated, in this case the names; the
 :func:`_orm.composite` construct derives the column types (in this case
 ``int``, corresponding to :class:`_types.Integer`) from the dataclass directly::
 
-    from sqlalchemy.orm import DeclarativeBase, Mapped
-    from sqlalchemy.orm import composite, mapped_column
+    from ilikesql.orm import DeclarativeBase, Mapped
+    from ilikesql.orm import composite, mapped_column
 
 
     class Base(DeclarativeBase):
@@ -67,7 +67,7 @@ The above mapping would correspond to a CREATE TABLE statement as:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.schema import CreateTable
+    >>> from ilikesql.schema import CreateTable
     >>> print(CreateTable(Vertex.__table__))
     {printsql}CREATE TABLE vertices (
       id INTEGER NOT NULL,
@@ -191,8 +191,8 @@ illustrate an equvalent mapping as that of the main section above.
   where we also pass the ``Point`` class as the first argument to
   :func:`_orm.composite`::
 
-    from sqlalchemy import Integer
-    from sqlalchemy.orm import mapped_column, composite
+    from ilikesql import Integer
+    from ilikesql.orm import mapped_column, composite
 
 
     class Vertex(Base):
@@ -213,7 +213,7 @@ illustrate an equvalent mapping as that of the main section above.
   the option to pass attribute names to :func:`_orm.composite` instead of
   full column constructs::
 
-    from sqlalchemy.orm import mapped_column, composite, Mapped
+    from ilikesql.orm import mapped_column, composite, Mapped
 
 
     class Vertex(Base):
@@ -308,12 +308,12 @@ the same expression that the base "greater than" does::
 
     import dataclasses
 
-    from sqlalchemy.orm import composite
-    from sqlalchemy.orm import CompositeProperty
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.sql import and_
+    from ilikesql.orm import composite
+    from ilikesql.orm import CompositeProperty
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.sql import and_
 
 
     @dataclasses.dataclass
@@ -405,10 +405,10 @@ four source columns ultimately resides::
     from typing import Any
     from typing import Tuple
 
-    from sqlalchemy.orm import composite
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql.orm import composite
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     @dataclasses.dataclass

@@ -3,61 +3,61 @@ import datetime
 import decimal
 import os
 
-import sqlalchemy as sa
-from sqlalchemy import Boolean
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import Date
-from sqlalchemy import DateTime
-from sqlalchemy import DefaultClause
-from sqlalchemy import Float
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import LargeBinary
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import Numeric
-from sqlalchemy import NVARCHAR
-from sqlalchemy import PickleType
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import text
-from sqlalchemy import Time
-from sqlalchemy import types
-from sqlalchemy import Unicode
-from sqlalchemy import UnicodeText
-from sqlalchemy.dialects.mssql import base as mssql
-from sqlalchemy.dialects.mssql import NTEXT
-from sqlalchemy.dialects.mssql import ROWVERSION
-from sqlalchemy.dialects.mssql import TIMESTAMP
-from sqlalchemy.dialects.mssql import UNIQUEIDENTIFIER
-from sqlalchemy.dialects.mssql.base import _MSDate
-from sqlalchemy.dialects.mssql.base import BIT
-from sqlalchemy.dialects.mssql.base import DATETIMEOFFSET
-from sqlalchemy.dialects.mssql.base import MS_2005_VERSION
-from sqlalchemy.dialects.mssql.base import MS_2008_VERSION
-from sqlalchemy.dialects.mssql.base import TIME
-from sqlalchemy.sql import sqltypes
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import ComparesTables
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing import pickleable
-from sqlalchemy.testing.suite import test_types
-from sqlalchemy.util import b
+import ilikesql as sa
+from ilikesql import Boolean
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import Date
+from ilikesql import DateTime
+from ilikesql import DefaultClause
+from ilikesql import Float
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import LargeBinary
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import Numeric
+from ilikesql import NVARCHAR
+from ilikesql import PickleType
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import text
+from ilikesql import Time
+from ilikesql import types
+from ilikesql import Unicode
+from ilikesql import UnicodeText
+from ilikesql.dialects.mssql import base as mssql
+from ilikesql.dialects.mssql import NTEXT
+from ilikesql.dialects.mssql import ROWVERSION
+from ilikesql.dialects.mssql import TIMESTAMP
+from ilikesql.dialects.mssql import UNIQUEIDENTIFIER
+from ilikesql.dialects.mssql.base import _MSDate
+from ilikesql.dialects.mssql.base import BIT
+from ilikesql.dialects.mssql.base import DATETIMEOFFSET
+from ilikesql.dialects.mssql.base import MS_2005_VERSION
+from ilikesql.dialects.mssql.base import MS_2008_VERSION
+from ilikesql.dialects.mssql.base import TIME
+from ilikesql.sql import sqltypes
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import ComparesTables
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_not
+from ilikesql.testing import pickleable
+from ilikesql.testing.suite import test_types
+from ilikesql.util import b
 
 
 class TimeParameterTest(fixtures.TablesTest):
@@ -156,7 +156,7 @@ class MSDateTypeTest(fixtures.TestBase):
         )
 
     def test_extract(self, connection):
-        from sqlalchemy import extract
+        from ilikesql import extract
 
         fivedaysago = datetime.datetime.now() - datetime.timedelta(days=5)
         for field, exp in (
@@ -436,15 +436,15 @@ class TypeDDLTest(fixtures.TestBase):
         "Exercise type specification for date types."
 
         if driver == "base":
-            from sqlalchemy.dialects.mssql import base
+            from ilikesql.dialects.mssql import base
 
             dialect = base.MSDialect()
         elif driver == "pyodbc":
-            from sqlalchemy.dialects.mssql import pyodbc
+            from ilikesql.dialects.mssql import pyodbc
 
             dialect = pyodbc.dialect()
         elif driver == "pymssql":
-            from sqlalchemy.dialects.mssql import pymssql
+            from ilikesql.dialects.mssql import pymssql
 
             dialect = pymssql.dialect()
         else:

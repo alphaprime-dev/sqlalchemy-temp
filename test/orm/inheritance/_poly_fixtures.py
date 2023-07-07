@@ -1,17 +1,17 @@
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import util
-from sqlalchemy.orm import polymorphic_union
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import config
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import util
+from ilikesql.orm import polymorphic_union
+from ilikesql.orm import relationship
+from ilikesql.orm import sessionmaker
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import config
+from ilikesql.testing import fixtures
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class Company(ComparableEntity):

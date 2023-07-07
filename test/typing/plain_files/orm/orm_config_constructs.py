@@ -1,11 +1,11 @@
-from sqlalchemy import String
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import query_expression
-from sqlalchemy.orm import validates
+from ilikesql import String
+from ilikesql.orm import column_property
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import deferred
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import query_expression
+from ilikesql.orm import validates
 
 
 class Base(DeclarativeBase):

@@ -3,44 +3,44 @@ import functools
 import itertools
 import uuid
 
-from sqlalchemy import and_
-from sqlalchemy import ARRAY
-from sqlalchemy import bindparam
-from sqlalchemy import DateTime
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Identity
-from sqlalchemy import insert
-from sqlalchemy import insert_sentinel
-from sqlalchemy import INT
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import TypeDecorator
-from sqlalchemy import Uuid
-from sqlalchemy import VARCHAR
-from sqlalchemy.engine import cursor as _cursor
-from sqlalchemy.sql.compiler import InsertmanyvaluesSentinelOpts
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import config
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import provision
-from sqlalchemy.testing.fixtures import insertmanyvalues_fixture
-from sqlalchemy.testing.provision import normalize_sequence
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import and_
+from ilikesql import ARRAY
+from ilikesql import bindparam
+from ilikesql import DateTime
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Identity
+from ilikesql import insert
+from ilikesql import insert_sentinel
+from ilikesql import INT
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import TypeDecorator
+from ilikesql import Uuid
+from ilikesql import VARCHAR
+from ilikesql.engine import cursor as _cursor
+from ilikesql.sql.compiler import InsertmanyvaluesSentinelOpts
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import config
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing import provision
+from ilikesql.testing.fixtures import insertmanyvalues_fixture
+from ilikesql.testing.provision import normalize_sequence
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class ExpectExpr:
@@ -109,7 +109,7 @@ class InsertExecTest(fixtures.TablesTest):
 
         assert_raises_message(
             exc.StatementError,
-            r"\(sqlalchemy.exc.InvalidRequestError\) A value is required for "
+            r"\(ilikesql.exc.InvalidRequestError\) A value is required for "
             "bind parameter 'user_name', in "
             "parameter group 2\n"
             r"\[SQL: u?INSERT INTO users",
@@ -375,7 +375,7 @@ class InsertExecTest(fixtures.TablesTest):
     # TODO: why not in the sqlite suite?
     @testing.only_on("sqlite+pysqlite")
     def test_lastrowid_zero(self, metadata, connection):
-        from sqlalchemy.dialects import sqlite
+        from ilikesql.dialects import sqlite
 
         class ExcCtx(sqlite.base.SQLiteExecutionContext):
             def get_lastrowid(self):
@@ -711,7 +711,7 @@ class TableInsertTest(fixtures.TablesTest):
         """test new use case in #7998"""
 
         # NOTE: this use case uses cursor.lastrowid on SQLite, MySQL, MariaDB,
-        # however when SQLAlchemy 2.0 adds support for RETURNING to SQLite
+        # however when ilikesql 2.0 adds support for RETURNING to SQLite
         # and MariaDB, it should work there as well.
 
         t = self.tables.foo_no_seq
@@ -728,7 +728,7 @@ class TableInsertTest(fixtures.TablesTest):
         """test new use case in #7998"""
 
         # NOTE: this use case uses cursor.lastrowid on SQLite, MySQL, MariaDB,
-        # however when SQLAlchemy 2.0 adds support for RETURNING to SQLite
+        # however when ilikesql 2.0 adds support for RETURNING to SQLite
         # and MariaDB, it should work there as well.
 
         t = self.tables.foo_no_seq

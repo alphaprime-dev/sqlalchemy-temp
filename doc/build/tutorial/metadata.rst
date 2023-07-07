@@ -9,13 +9,13 @@ Working with Database Metadata
 ==============================
 
 With engines and SQL execution down, we are ready to begin some Alchemy.
-The central element of both SQLAlchemy Core and ORM is the SQL Expression
+The central element of both ilikesql Core and ORM is the SQL Expression
 Language which allows for fluent, composable construction of SQL queries.
 The foundation for these queries are Python objects that represent database
 concepts like tables and columns.   These objects are known collectively
 as :term:`database metadata`.
 
-The most common foundational objects for database metadata in SQLAlchemy are
+The most common foundational objects for database metadata in ilikesql are
 known as  :class:`_schema.MetaData`, :class:`_schema.Table`, and :class:`_schema.Column`.
 The sections below will illustrate how these objects are used in both a
 Core-oriented style as well as an ORM-oriented style.
@@ -41,10 +41,10 @@ Setting up MetaData with Table objects
 
 When we work with a relational database, the basic data-holding structure
 in the database which we query from is known as a **table**.
-In SQLAlchemy, the database "table" is ultimately represented
+In ilikesql, the database "table" is ultimately represented
 by a Python object similarly named :class:`_schema.Table`.
 
-To start using the SQLAlchemy Expression Language, we will want to have
+To start using the ilikesql Expression Language, we will want to have
 :class:`_schema.Table` objects constructed that represent all of the database
 tables we are interested in working with. The :class:`_schema.Table` is
 constructed programmatically, either directly by using the
@@ -65,19 +65,19 @@ that stores a series of :class:`_schema.Table` objects keyed to their string
 name.   While the ORM provides some options on where to get this collection,
 we always have the option to simply make one directly, which looks like::
 
-    >>> from sqlalchemy import MetaData
+    >>> from ilikesql import MetaData
     >>> metadata_obj = MetaData()
 
 Once we have a :class:`_schema.MetaData` object, we can declare some
 :class:`_schema.Table` objects. This tutorial will start with the classic
-SQLAlchemy tutorial model, which has a table called ``user_account`` that
+ilikesql tutorial model, which has a table called ``user_account`` that
 stores, for example, the users of a website, and a related table ``address``,
 which stores email addresses associated with rows in the ``user_account``
 table. When not using ORM Declarative models at all, we construct each
 :class:`_schema.Table` object directly, typically assigning each to a variable
 that will be how we will refer to the table in application code::
 
-    >>> from sqlalchemy import Table, Column, Integer, String
+    >>> from ilikesql import Table, Column, Integer, String
     >>> user_table = Table(
     ...     "user_account",
     ...     metadata_obj,
@@ -168,7 +168,7 @@ attribute on the :class:`_schema.Table` object::
 The constraint that is most typically declared explicitly is the
 :class:`_schema.ForeignKeyConstraint` object that corresponds to a database
 :term:`foreign key constraint`.  When we declare tables that are related to
-each other, SQLAlchemy uses the presence of these foreign key constraint
+each other, ilikesql uses the presence of these foreign key constraint
 declarations not only so that they are emitted within CREATE statements to
 the database, but also to assist in constructing SQL expressions.
 
@@ -178,7 +178,7 @@ via the :class:`_schema.ForeignKey` object.  Below we declare a second table
 ``address`` that will have a foreign key constraint referring to the ``user``
 table::
 
-    >>> from sqlalchemy import ForeignKey
+    >>> from ilikesql import ForeignKey
     >>> address_table = Table(
     ...     "address",
     ...     metadata_obj,
@@ -265,7 +265,7 @@ reverse order as it would emit CREATE in order to drop schema elements.
     for test suites, small and/or new applications, and applications that use
     short-lived databases.  For management of an application database schema
     over the long term however, a schema management tool such as `Alembic
-    <https://alembic.sqlalchemy.org>`_, which builds upon SQLAlchemy, is likely
+    <https://alembic.ilikesql.org>`_, which builds upon ilikesql, is likely
     a better choice, as it can manage and orchestrate the process of
     incrementally altering a fixed database schema over time as the design of
     the application changes.
@@ -281,8 +281,8 @@ Using ORM Declarative Forms to Define Table Metadata
 .. topic:: Another way to make Table objects?
 
   The preceding examples illustrated direct use of the :class:`_schema.Table`
-  object, which underlies how SQLAlchemy ultimately refers to database tables
-  when constructing SQL expressions. As mentioned, the SQLAlchemy ORM provides
+  object, which underlies how ilikesql ultimately refers to database tables
+  when constructing SQL expressions. As mentioned, the ilikesql ORM provides
   for a facade around the :class:`_schema.Table` declaration process referred
   towards as **Declarative Table**.   The Declarative Table process accomplishes
   the same goal as we had in the previous section, that of building
@@ -290,7 +290,7 @@ Using ORM Declarative Forms to Define Table Metadata
   something else called an :term:`ORM mapped class`, or just "mapped class".
   The mapped class is the
   most common foundational unit of SQL when using the ORM, and in modern
-  SQLAlchemy can also be used quite effectively with Core-centric
+  ilikesql can also be used quite effectively with Core-centric
   use as well.
 
   Some benefits of using Declarative Table include:
@@ -329,9 +329,9 @@ When using the ORM, the :class:`_schema.MetaData` collection remains present,
 however it itself is associated with an ORM-only construct commonly referred
 towards as the **Declarative Base**.   The most expedient way to acquire
 a new Declarative Base is to create a new class that subclasses the
-SQLAlchemy :class:`_orm.DeclarativeBase` class::
+ilikesql :class:`_orm.DeclarativeBase` class::
 
-    >>> from sqlalchemy.orm import DeclarativeBase
+    >>> from ilikesql.orm import DeclarativeBase
     >>> class Base(DeclarativeBase):
     ...     pass
 
@@ -352,7 +352,7 @@ mapped classes, they each will reference a :class:`.Table` within this
     MetaData()
 
 The Declarative Base also refers to a collection called :class:`_orm.registry`, which
-is the central "mapper configuration" unit in the SQLAlchemy ORM.  While
+is the central "mapper configuration" unit in the ilikesql ORM.  While
 seldom accessed directly, this object is central to the mapper configuration
 process, as a set of ORM mapped classes will coordinate with each other via
 this registry.   As was the case with :class:`.MetaData`, our Declarative
@@ -361,7 +361,7 @@ pass our own :class:`_orm.registry`), which we can access
 via the :attr:`_orm.DeclarativeBase.registry` class variable::
 
     >>> Base.registry
-    <sqlalchemy.orm.decl_api.registry object at 0x...>
+    <ilikesql.orm.decl_api.registry object at 0x...>
 
 .. topic::  Other ways to map with the ``registry``
 
@@ -387,9 +387,9 @@ types::
 
     >>> from typing import List
     >>> from typing import Optional
-    >>> from sqlalchemy.orm import Mapped
-    >>> from sqlalchemy.orm import mapped_column
-    >>> from sqlalchemy.orm import relationship
+    >>> from ilikesql.orm import Mapped
+    >>> from ilikesql.orm import mapped_column
+    >>> from ilikesql.orm import relationship
 
     >>> class User(Base):
     ...     __tablename__ = "user_account"
@@ -485,7 +485,7 @@ about these classes include:
 
 .. topic::  Where'd the old Declarative go?
 
-    Users of SQLAlchemy 1.4 or previous will note that the above mapping
+    Users of ilikesql 1.4 or previous will note that the above mapping
     uses a dramatically different form than before; not only does it use
     :func:`_orm.mapped_column` instead of :class:`.Column` in the Declarative
     mapping, it also uses Python type annotations to derive column information.
@@ -498,7 +498,7 @@ about these classes include:
     are superseded by new constructs is first and foremost to integrate
     smoothly with :pep:`484` tools, including IDEs such as VSCode and type
     checkers such as Mypy and Pyright, without the need for plugins. Secondly,
-    deriving the declarations from type annotations is part of SQLAlchemy's
+    deriving the declarations from type annotations is part of ilikesql's
     integration with Python dataclasses, which can now be
     :ref:`generated natively <orm_declarative_native_dataclasses>` from mappings.
 
@@ -597,8 +597,8 @@ and generating in-Python data structures to represent the schemas within
 that database.
 
 .. tip::  There is no requirement that reflection must be used in order to
-   use SQLAlchemy with a pre-existing database.  It is entirely typical that
-   the SQLAlchemy application declares all metadata explicitly in Python,
+   use ilikesql with a pre-existing database.  It is entirely typical that
+   the ilikesql application declares all metadata explicitly in Python,
    such that its structure corresponds to that the existing database.
    The metadata structure also need not include tables, columns, or other
    constraints and constructs in the pre-existing database that are not needed

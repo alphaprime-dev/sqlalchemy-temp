@@ -24,28 +24,28 @@ date.
 
 """
 
-from sqlalchemy import and_
-from sqlalchemy import Boolean
-from sqlalchemy import case
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import literal_column
-from sqlalchemy import null
-from sqlalchemy import or_
-from sqlalchemy import String
-from sqlalchemy import Unicode
-from sqlalchemy import UnicodeText
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.collections import attribute_keyed_dict
-from sqlalchemy.orm.interfaces import PropComparator
+from ilikesql import and_
+from ilikesql import Boolean
+from ilikesql import case
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import literal_column
+from ilikesql import null
+from ilikesql import or_
+from ilikesql import String
+from ilikesql import Unicode
+from ilikesql import UnicodeText
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.ext.hybrid import hybrid_property
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm.collections import attribute_keyed_dict
+from ilikesql.orm.interfaces import PropComparator
 from .dictlike import ProxiedDictMixin
 
 

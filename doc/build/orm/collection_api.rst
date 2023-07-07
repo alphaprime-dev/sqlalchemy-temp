@@ -2,7 +2,7 @@
 
 .. _custom_collections_toplevel:
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 ========================================
 Collection Customization and API Details
@@ -29,12 +29,12 @@ common collection types for these are ``list`` and ``set``, which in
 the :class:`_orm.Mapped` container, as demonstrated in the ``Parent.children`` collection
 below where ``list`` is used::
 
-    from sqlalchemy import ForeignKey
+    from ilikesql import ForeignKey
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -60,12 +60,12 @@ Or for a ``set``, illustrated in the same
 ``Parent.children`` collection::
 
     from typing import Set
-    from sqlalchemy import ForeignKey
+    from ilikesql import ForeignKey
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -158,12 +158,12 @@ may be appropriately parametrized::
     from typing import Dict
     from typing import Optional
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import attribute_keyed_dict
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql.orm import attribute_keyed_dict
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -262,7 +262,7 @@ Other built-in dictionary types include :func:`.column_keyed_dict`,
 which is almost like :func:`.attribute_keyed_dict` except given the :class:`_schema.Column`
 object directly::
 
-    from sqlalchemy.orm import column_keyed_dict
+    from ilikesql.orm import column_keyed_dict
 
 
     class Item(Base):
@@ -279,7 +279,7 @@ as well as :func:`.mapped_collection` which is passed any callable function.
 Note that it's usually easier to use :func:`.attribute_keyed_dict` along
 with a ``@property`` as mentioned earlier::
 
-    from sqlalchemy.orm import mapped_collection
+    from ilikesql.orm import mapped_collection
 
 
     class Item(Base):
@@ -366,8 +366,8 @@ in the correct order using an ``__init__`` method.
 An event handler such as the following may also be used to track changes in the
 collection as well::
 
-    from sqlalchemy import event
-    from sqlalchemy.orm import attributes
+    from ilikesql import event
+    from ilikesql.orm import attributes
 
 
     @event.listens_for(B.data, "set")
@@ -384,7 +384,7 @@ Custom Collection Implementations
 
 You can use your own types for collections as well.  In simple cases,
 inheriting from ``list`` or ``set``, adding custom behavior, is all that's needed.
-In other cases, special decorators are needed to tell SQLAlchemy more detail
+In other cases, special decorators are needed to tell ilikesql more detail
 about how the collection operates.
 
 .. topic:: Do I need a custom collection implementation?
@@ -414,12 +414,12 @@ about how the collection operates.
    otherwise be modeled externally to the collection.   They can of course
    be combined with the above two approaches.
 
-Collections in SQLAlchemy are transparently *instrumented*. Instrumentation
+Collections in ilikesql are transparently *instrumented*. Instrumentation
 means that normal operations on the collection are tracked and result in
 changes being written to the database at flush time. Additionally, collection
 operations can fire *events* which indicate some secondary operation must take
 place. Examples of a secondary operation include saving the child item in the
-parent's :class:`~sqlalchemy.orm.session.Session` (i.e. the ``save-update``
+parent's :class:`~ilikesql.orm.session.Session` (i.e. the ``save-update``
 cascade), as well as synchronizing the state of a bi-directional relationship
 (i.e. a :func:`.backref`).
 
@@ -478,7 +478,7 @@ as a ``set``. ``remove`` is known to be part of the set interface and will be
 instrumented.
 
 But this class won't work quite yet: a little glue is needed to adapt it for
-use by SQLAlchemy. The ORM needs to know which methods to use to append, remove
+use by ilikesql. The ORM needs to know which methods to use to append, remove
 and iterate over members of the collection. When using a type like ``list`` or
 ``set``, the appropriate methods are well-known and used automatically when
 present.  However the class above, which only roughly resembles a ``set``, does not
@@ -497,7 +497,7 @@ get the job done.
 
 .. sourcecode:: python
 
-    from sqlalchemy.orm.collections import collection
+    from ilikesql.orm.collections import collection
 
 
     class SetLike:
@@ -516,14 +516,14 @@ get the job done.
         def __iter__(self):
             return iter(self.data)
 
-And that's all that's needed to complete the example. SQLAlchemy will add
+And that's all that's needed to complete the example. ilikesql will add
 instances via the ``append`` method. ``remove`` and ``__iter__`` are the
 default methods for sets and will be used for removing and iteration. Default
 methods can be changed as well:
 
 .. sourcecode:: python+sql
 
-    from sqlalchemy.orm.collections import collection
+    from ilikesql.orm.collections import collection
 
 
     class MyList(list):
@@ -538,7 +538,7 @@ methods can be changed as well:
 
 There is no requirement to be "list-like" or "set-like" at all. Collection classes
 can be any shape, so long as they have the append, remove and iterate
-interface marked for SQLAlchemy's use. Append and remove methods will be
+interface marked for ilikesql's use. Append and remove methods will be
 called with a mapped entity as the single argument, and iterator methods are
 called with no arguments and must return an iterator.
 
@@ -554,7 +554,7 @@ collection support to other classes. It uses a keying function to delegate to
 
 .. sourcecode:: python+sql
 
-    from sqlalchemy.orm.collections import KeyFuncDict
+    from ilikesql.orm.collections import KeyFuncDict
 
 
     class MyNodeMap(KeyFuncDict):
@@ -573,7 +573,7 @@ from within an already instrumented call can cause events to be fired off
 repeatedly, or inappropriately, leading to internal state corruption in
 rare cases::
 
-    from sqlalchemy.orm.collections import KeyFuncDict, collection
+    from ilikesql.orm.collections import KeyFuncDict, collection
 
 
     class MyKeyFuncDict(KeyFuncDict):
@@ -596,7 +596,7 @@ The ORM understands the ``dict`` interface just like lists and sets, and will
 automatically instrument all "dict-like" methods if you choose to subclass
 ``dict`` or provide dict-like collection behavior in a duck-typed class. You
 must decorate appender and remover methods, however- there are no compatible
-methods in the basic dictionary interface for SQLAlchemy to use by default.
+methods in the basic dictionary interface for ilikesql to use by default.
 Iteration will go through ``values()`` unless otherwise decorated.
 
 
@@ -627,7 +627,7 @@ subclass when a ``list``, ``set`` or ``dict`` is used directly.
 Collection API
 -----------------------------
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 .. autofunction:: attribute_keyed_dict
 
@@ -641,16 +641,16 @@ Collection API
 
 .. autodata:: mapped_collection
 
-.. autoclass:: sqlalchemy.orm.KeyFuncDict
+.. autoclass:: ilikesql.orm.KeyFuncDict
    :members:
 
-.. autodata:: sqlalchemy.orm.MappedCollection
+.. autodata:: ilikesql.orm.MappedCollection
 
 
 Collection Internals
 -----------------------------
 
-.. currentmodule:: sqlalchemy.orm.collections
+.. currentmodule:: ilikesql.orm.collections
 
 .. autofunction:: bulk_replace
 

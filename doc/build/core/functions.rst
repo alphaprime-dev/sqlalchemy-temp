@@ -5,7 +5,7 @@
 SQL and Generic Functions
 =========================
 
-.. currentmodule:: sqlalchemy.sql.functions
+.. currentmodule:: ilikesql.sql.functions
 
 SQL functions are invoked by using the :data:`_sql.func` namespace.
 See the tutorial at :ref:`tutorial_functions` for background on how to
@@ -48,8 +48,8 @@ automatically.  The are invoked in the same way as any other member of the
 
 Note that any name not known to :data:`_sql.func` generates the function name
 as is - there is no restriction on what SQL functions can be called, known or
-unknown to SQLAlchemy, built-in or user defined. The section here only
-describes those functions where SQLAlchemy already knows what argument and
+unknown to ilikesql, built-in or user defined. The section here only
+describes those functions where ilikesql already knows what argument and
 return types are in use.
 
 .. autoclass:: array_agg

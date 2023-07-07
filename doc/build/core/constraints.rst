@@ -1,13 +1,13 @@
 .. _metadata_constraints_toplevel:
 .. _metadata_constraints:
 
-.. currentmodule:: sqlalchemy.schema
+.. currentmodule:: ilikesql.schema
 
 ================================
 Defining Constraints and Indexes
 ================================
 
-This section will discuss SQL :term:`constraints` and indexes.  In SQLAlchemy
+This section will discuss SQL :term:`constraints` and indexes.  In ilikesql
 the key classes include :class:`_schema.ForeignKeyConstraint` and :class:`.Index`.
 
 .. _metadata_foreignkeys:
@@ -22,16 +22,16 @@ columns which are constrained the *foreign key* columns and the columns which
 they are constrained towards the *referenced* columns. The referenced columns
 almost always define the primary key for their owning table, though there are
 exceptions to this. The foreign key is the "joint" that connects together
-pairs of rows which have a relationship with each other, and SQLAlchemy
+pairs of rows which have a relationship with each other, and ilikesql
 assigns very deep importance to this concept in virtually every area of its
 operation.
 
-In SQLAlchemy as well as in DDL, foreign key constraints can be defined as
+In ilikesql as well as in DDL, foreign key constraints can be defined as
 additional attributes within the table clause, or for single-column foreign
 keys they may optionally be specified within the definition of a single
 column. The single column foreign key is more common, and at the column level
-is specified by constructing a :class:`~sqlalchemy.schema.ForeignKey` object
-as an argument to a :class:`~sqlalchemy.schema.Column` object::
+is specified by constructing a :class:`~ilikesql.schema.ForeignKey` object
+as an argument to a :class:`~ilikesql.schema.Column` object::
 
     user_preference = Table(
         "user_preference",
@@ -46,11 +46,11 @@ Above, we define a new table ``user_preference`` for which each row must
 contain a value in the ``user_id`` column that also exists in the ``user``
 table's ``user_id`` column.
 
-The argument to :class:`~sqlalchemy.schema.ForeignKey` is most commonly a
+The argument to :class:`~ilikesql.schema.ForeignKey` is most commonly a
 string of the form *<tablename>.<columnname>*, or for a table in a remote
 schema or "owner" of the form *<schemaname>.<tablename>.<columnname>*. It may
-also be an actual :class:`~sqlalchemy.schema.Column` object, which as we'll
-see later is accessed from an existing :class:`~sqlalchemy.schema.Table`
+also be an actual :class:`~ilikesql.schema.Column` object, which as we'll
+see later is accessed from an existing :class:`~ilikesql.schema.Table`
 object via its ``c`` collection::
 
     ForeignKey(user.c.user_id)
@@ -60,7 +60,7 @@ and ``user_preference`` is resolved only when first needed, so that table
 objects can be easily spread across multiple modules and defined in any order.
 
 Foreign keys may also be defined at the table level, using the
-:class:`~sqlalchemy.schema.ForeignKeyConstraint` object. This object can
+:class:`~ilikesql.schema.ForeignKeyConstraint` object. This object can
 describe a single- or multi-column foreign key. A multi-column foreign key is
 known as a *composite* foreign key, and almost always references a table that
 has a composite primary key. Below we define a table ``invoice`` which has a
@@ -90,10 +90,10 @@ And then a table ``invoice_item`` with a composite foreign key referencing
     )
 
 It's important to note that the
-:class:`~sqlalchemy.schema.ForeignKeyConstraint` is the only way to define a
+:class:`~ilikesql.schema.ForeignKeyConstraint` is the only way to define a
 composite foreign key. While we could also have placed individual
-:class:`~sqlalchemy.schema.ForeignKey` objects on both the
-``invoice_item.invoice_id`` and ``invoice_item.ref_num`` columns, SQLAlchemy
+:class:`~ilikesql.schema.ForeignKey` objects on both the
+``invoice_item.invoice_id`` and ``invoice_item.ref_num`` columns, ilikesql
 would not be aware that these two values should be paired together - it would
 be two individual foreign key constraints instead of a single composite
 foreign key referencing two columns.
@@ -197,7 +197,7 @@ a name to either constraint here, we will receive the following error:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.CircularDependencyError: Can't sort tables for DROP;
+    ilikesql.exc.CircularDependencyError: Can't sort tables for DROP;
     an unresolvable foreign key dependency exists between tables:
     element, node.  Please ensure that the ForeignKey and ForeignKeyConstraint
     objects involved in the cycle have names so that they can be dropped
@@ -256,7 +256,7 @@ like the following is generated:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.CompileError: Can't emit DROP CONSTRAINT for constraint
+    ilikesql.exc.CompileError: Can't emit DROP CONSTRAINT for constraint
     ForeignKeyConstraint(...); it has no name
 
 .. seealso::
@@ -277,8 +277,8 @@ In data definition language these are specified using phrases like "ON UPDATE
 CASCADE", "ON DELETE CASCADE", and "ON DELETE SET NULL", corresponding to
 foreign key constraints. The phrase after "ON UPDATE" or "ON DELETE" may also
 allow other phrases that are specific to the database in use. The
-:class:`~sqlalchemy.schema.ForeignKey` and
-:class:`~sqlalchemy.schema.ForeignKeyConstraint` objects support the
+:class:`~ilikesql.schema.ForeignKey` and
+:class:`~ilikesql.schema.ForeignKeyConstraint` objects support the
 generation of this clause via the ``onupdate`` and ``ondelete`` keyword
 arguments. The value is any string which will be output after the appropriate
 "ON UPDATE" or "ON DELETE" phrase::
@@ -326,13 +326,13 @@ UNIQUE Constraint
 -----------------
 
 Unique constraints can be created anonymously on a single column using the
-``unique`` keyword on :class:`~sqlalchemy.schema.Column`. Explicitly named
+``unique`` keyword on :class:`~ilikesql.schema.Column`. Explicitly named
 unique constraints and/or those with multiple columns are created via the
-:class:`~sqlalchemy.schema.UniqueConstraint` table-level construct.
+:class:`~ilikesql.schema.UniqueConstraint` table-level construct.
 
 .. sourcecode:: python+sql
 
-    from sqlalchemy import UniqueConstraint
+    from ilikesql import UniqueConstraint
 
     metadata_obj = MetaData()
     mytable = Table(
@@ -350,7 +350,7 @@ CHECK Constraint
 ----------------
 
 Check constraints can be named or unnamed and can be created at the Column or
-Table level, using the :class:`~sqlalchemy.schema.CheckConstraint` construct.
+Table level, using the :class:`~ilikesql.schema.CheckConstraint` construct.
 The text of the check constraint is passed directly through to the database,
 so there is limited "database independent" behavior. Column level check
 constraints generally should only refer to the column to which they are
@@ -361,7 +361,7 @@ older versions of MySQL (prior to 8.0.16).
 
 .. sourcecode:: python+sql
 
-    from sqlalchemy import CheckConstraint
+    from ilikesql import CheckConstraint
 
     metadata_obj = MetaData()
     mytable = Table(
@@ -392,7 +392,7 @@ present, based on the :class:`_schema.Column` objects that are marked with the
 object provides explicit access to this constraint, which includes the
 option of being configured directly::
 
-    from sqlalchemy import PrimaryKeyConstraint
+    from ilikesql import PrimaryKeyConstraint
 
     my_table = Table(
         "mytable",
@@ -410,8 +410,8 @@ option of being configured directly::
 Setting up Constraints when using the Declarative ORM Extension
 ---------------------------------------------------------------
 
-The :class:`_schema.Table` is the SQLAlchemy Core construct that allows one to define
-table metadata, which among other things can be used by the SQLAlchemy ORM
+The :class:`_schema.Table` is the ilikesql Core construct that allows one to define
+table metadata, which among other things can be used by the ilikesql ORM
 as a target to map a class.  The :ref:`Declarative <declarative_toplevel>`
 extension allows the :class:`_schema.Table` object to be created automatically, given
 the contents of the table primarily as a mapping of :class:`_schema.Column` objects.
@@ -443,8 +443,8 @@ parameters which create :class:`.UniqueConstraint` and :class:`.Index` objects
 without an explicit name being specified.
 
 The use case of alteration of existing tables and constraints can be handled
-by schema migration tools such as `Alembic <https://alembic.sqlalchemy.org/>`_.
-However, neither Alembic nor SQLAlchemy currently create names for constraint
+by schema migration tools such as `Alembic <https://alembic.ilikesql.org/>`_.
+However, neither Alembic nor ilikesql currently create names for constraint
 objects where the name is otherwise unspecified, leading to the case where
 being able to alter existing constraints means that one must reverse-engineer
 the naming system used by the relational database to auto-assign names,
@@ -456,7 +456,7 @@ using events.  This approach has the advantage that constraints will get
 a consistent naming scheme without the need for explicit name parameters
 throughout the code, and also that the convention takes place just as well
 for those constraints and indexes produced by the :paramref:`_schema.Column.unique`
-and :paramref:`_schema.Column.index` parameters.  As of SQLAlchemy 0.9.2 this
+and :paramref:`_schema.Column.index` parameters.  As of ilikesql 0.9.2 this
 event-based approach is included, and can be configured using the argument
 :paramref:`_schema.MetaData.naming_convention`.
 
@@ -538,10 +538,10 @@ The Default Naming Convention
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default value for :paramref:`_schema.MetaData.naming_convention` handles
-the long-standing SQLAlchemy behavior of assigning a name to a :class:`.Index`
+the long-standing ilikesql behavior of assigning a name to a :class:`.Index`
 object that is created using the :paramref:`_schema.Column.index` parameter::
 
-    >>> from sqlalchemy.sql.schema import DEFAULT_NAMING_CONVENTION
+    >>> from ilikesql.sql.schema import DEFAULT_NAMING_CONVENTION
     >>> DEFAULT_NAMING_CONVENTION
     immutabledict({'ix': 'ix_%(column_0_label)s'})
 
@@ -643,7 +643,7 @@ name as follows::
     :paramref:`_schema.MetaData.naming_convention` - for additional usage details
     as well as a listing of all available naming components.
 
-    `The Importance of Naming Constraints <https://alembic.sqlalchemy.org/en/latest/naming.html>`_ - in the Alembic documentation.
+    `The Importance of Naming Constraints <https://alembic.ilikesql.org/en/latest/naming.html>`_ - in the Alembic documentation.
 
 
 .. versionadded:: 1.3.0 added multi-column naming tokens such as ``%(column_0_N_name)s``.
@@ -695,7 +695,7 @@ either by declaring the constraint separate from the table::
 
 or by using a :func:`_expression.column` inline::
 
-    from sqlalchemy import column
+    from ilikesql import column
 
     metadata_obj = MetaData(naming_convention={"ck": "ck_%(table_name)s_%(column_0_name)s"})
 
@@ -815,7 +815,7 @@ Constraints API
     :inherited-members:
 
 
-.. autofunction:: sqlalchemy.schema.conv
+.. autofunction:: ilikesql.schema.conv
 
 .. _schema_indexes:
 
@@ -824,14 +824,14 @@ Indexes
 
 Indexes can be created anonymously (using an auto-generated name ``ix_<column
 label>``) for a single column using the inline ``index`` keyword on
-:class:`~sqlalchemy.schema.Column`, which also modifies the usage of
+:class:`~ilikesql.schema.Column`, which also modifies the usage of
 ``unique`` to apply the uniqueness to the index itself, instead of adding a
 separate UNIQUE constraint. For indexes with specific names or which encompass
-more than one column, use the :class:`~sqlalchemy.schema.Index` construct,
+more than one column, use the :class:`~ilikesql.schema.Index` construct,
 which requires a name.
 
-Below we illustrate a :class:`~sqlalchemy.schema.Table` with several
-:class:`~sqlalchemy.schema.Index` objects associated. The DDL for "CREATE
+Below we illustrate a :class:`~ilikesql.schema.Table` with several
+:class:`~ilikesql.schema.Index` objects associated. The DDL for "CREATE
 INDEX" is issued right after the create statements for the table:
 
 .. sourcecode:: python+sql
@@ -890,7 +890,7 @@ identify columns::
         Index("idx_col34", "col3", "col4", unique=True),
     )
 
-The :class:`~sqlalchemy.schema.Index` object also supports its own ``create()`` method:
+The :class:`~ilikesql.schema.Index` object also supports its own ``create()`` method:
 
 .. sourcecode:: python+sql
 
@@ -907,14 +907,14 @@ Functional Indexes
 target backend.  To create an index against a column using a descending
 value, the :meth:`_expression.ColumnElement.desc` modifier may be used::
 
-    from sqlalchemy import Index
+    from ilikesql import Index
 
     Index("someindex", mytable.c.somecol.desc())
 
 Or with a backend that supports functional indexes such as PostgreSQL,
 a "case insensitive" index can be created using the ``lower()`` function::
 
-    from sqlalchemy import func, Index
+    from ilikesql import func, Index
 
     Index("someindex", func.lower(mytable.c.somecol))
 

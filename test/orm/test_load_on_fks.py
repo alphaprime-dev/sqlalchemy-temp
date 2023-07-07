@@ -1,15 +1,15 @@
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm.attributes import instance_state
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import backref
+from ilikesql.orm import declarative_base
+from ilikesql.orm import relationship
+from ilikesql.orm.attributes import instance_state
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import fixtures
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
 
 
 class FlushOnPendingTest(AssertsExecutionResults, fixtures.TestBase):

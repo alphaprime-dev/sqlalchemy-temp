@@ -1,22 +1,22 @@
 .. _metadata_ddl_toplevel:
 .. _metadata_ddl:
-.. currentmodule:: sqlalchemy.schema
+.. currentmodule:: ilikesql.schema
 
 Customizing DDL
 ===============
 
 In the preceding sections we've discussed a variety of schema constructs
-including :class:`~sqlalchemy.schema.Table`,
-:class:`~sqlalchemy.schema.ForeignKeyConstraint`,
-:class:`~sqlalchemy.schema.CheckConstraint`, and
-:class:`~sqlalchemy.schema.Sequence`. Throughout, we've relied upon the
-``create()`` and :func:`~sqlalchemy.schema.MetaData.create_all` methods of
-:class:`~sqlalchemy.schema.Table` and :class:`~sqlalchemy.schema.MetaData` in
+including :class:`~ilikesql.schema.Table`,
+:class:`~ilikesql.schema.ForeignKeyConstraint`,
+:class:`~ilikesql.schema.CheckConstraint`, and
+:class:`~ilikesql.schema.Sequence`. Throughout, we've relied upon the
+``create()`` and :func:`~ilikesql.schema.MetaData.create_all` methods of
+:class:`~ilikesql.schema.Table` and :class:`~ilikesql.schema.MetaData` in
 order to issue data definition language (DDL) for all constructs. When issued,
 a pre-determined order of operations is invoked, and DDL to create each table
 is created unconditionally including all constraints and other objects
 associated with it. For more complex scenarios where database-specific DDL is
-required, SQLAlchemy offers two techniques which can be used to add any DDL
+required, ilikesql offers two techniques which can be used to add any DDL
 based on any condition, either accompanying the standard generation of tables
 or by itself.
 
@@ -24,7 +24,7 @@ Custom DDL
 ----------
 
 Custom DDL phrases are most easily achieved using the
-:class:`~sqlalchemy.schema.DDL` construct. This construct works like all the
+:class:`~ilikesql.schema.DDL` construct. This construct works like all the
 other DDL elements except it accepts a string which is the text to be emitted:
 
 .. sourcecode:: python+sql
@@ -40,7 +40,7 @@ other DDL elements except it accepts a string which is the text to be emitted:
     )
 
 A more comprehensive method of creating libraries of DDL constructs is to use
-custom compilation - see :ref:`sqlalchemy.ext.compiler_toplevel` for
+custom compilation - see :ref:`ilikesql.ext.compiler_toplevel` for
 details.
 
 
@@ -143,14 +143,14 @@ first looking within the PostgreSQL catalogs to see if it exists:
 Using the built-in DDLElement Classes
 -------------------------------------
 
-The ``sqlalchemy.schema`` package contains SQL expression constructs that
+The ``ilikesql.schema`` package contains SQL expression constructs that
 provide DDL expressions, all of which extend from the common base
 :class:`.ExecutableDDLElement`. For example, to produce a ``CREATE TABLE`` statement,
 one can use the :class:`.CreateTable` construct:
 
 .. sourcecode:: python+sql
 
-    from sqlalchemy.schema import CreateTable
+    from ilikesql.schema import CreateTable
 
     with engine.connect() as conn:
         conn.execute(CreateTable(mytable))
@@ -163,17 +163,17 @@ one can use the :class:`.CreateTable` construct:
         col6 INTEGER
     ){stop}
 
-Above, the :class:`~sqlalchemy.schema.CreateTable` construct works like any
+Above, the :class:`~ilikesql.schema.CreateTable` construct works like any
 other expression construct (such as ``select()``, ``table.insert()``, etc.).
-All of SQLAlchemy's DDL oriented constructs are subclasses of
+All of ilikesql's DDL oriented constructs are subclasses of
 the :class:`.ExecutableDDLElement` base class; this is the base of all the
 objects corresponding to CREATE and DROP as well as ALTER,
-not only in SQLAlchemy but in Alembic Migrations as well.
+not only in ilikesql but in Alembic Migrations as well.
 A full reference of available constructs is in :ref:`schema_api_ddl`.
 
 User-defined DDL constructs may also be created as subclasses of
 :class:`.ExecutableDDLElement` itself.   The documentation in
-:ref:`sqlalchemy.ext.compiler_toplevel` has several examples of this.
+:ref:`ilikesql.ext.compiler_toplevel` has several examples of this.
 
 .. _schema_ddl_ddl_if:
 
@@ -198,9 +198,9 @@ creating the definition for a :class:`.Table`
 (or similarly, when using the ``__table_args__`` collection in an ORM
 declarative mapping), such as::
 
-    from sqlalchemy import CheckConstraint, Index
-    from sqlalchemy import MetaData, Table, Column
-    from sqlalchemy import Integer, String
+    from ilikesql import CheckConstraint, Index
+    from ilikesql import MetaData, Table, Column
+    from ilikesql import Integer, String
 
     meta = MetaData()
 
@@ -223,7 +223,7 @@ dialect, for example, neither construct will be included:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> sqlite_engine = create_engine("sqlite+pysqlite://", echo=True)
     >>> meta.create_all(sqlite_engine)
     {execsql}BEGIN (implicit)
@@ -245,7 +245,7 @@ statement emitted for the index:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> postgresql_engine = create_engine(
     ...     "postgresql+psycopg2://scott:tiger@localhost/test", echo=True
     ... )

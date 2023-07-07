@@ -5,25 +5,25 @@ import re
 import textwrap
 import time
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.hybrid import hybrid_method
-from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.ext.hybrid import hybrid_method
+from ilikesql.ext.hybrid import hybrid_property
+from ilikesql.orm import joinedload
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
 
 
 logging.basicConfig(
     filename="space_invaders.log",
     format="%(asctime)s,%(msecs)03d %(levelname)-5.5s %(message)s",
 )
-logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+logging.getLogger("ilikesql.engine").setLevel(logging.INFO)
 
 Base = declarative_base()
 

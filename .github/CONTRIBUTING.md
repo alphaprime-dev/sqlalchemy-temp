@@ -1,3 +1,3 @@
-# Contributing to SQLAlchemy
+# Contributing to ilikesql
 
-Please see out current Developer Guide at [Develop](https://www.sqlalchemy.org/develop.html)
+Please see out current Developer Guide at [Develop](https://www.ilikesql.org/develop.html)

@@ -17,48 +17,48 @@ from unittest import mock
 
 from typing_extensions import Annotated
 
-from sqlalchemy import BigInteger
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import JSON
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import composite
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import interfaces
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import MappedAsDataclass
-from sqlalchemy.orm import MappedColumn
-from sqlalchemy.orm import query_expression
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import registry as _RegistryType
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import synonym
-from sqlalchemy.sql.base import _NoArg
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_regex
-from sqlalchemy.testing import expect_deprecated
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing import Variation
-from sqlalchemy.util import compat
+from ilikesql import BigInteger
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import JSON
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.orm import column_property
+from ilikesql.orm import composite
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import declared_attr
+from ilikesql.orm import deferred
+from ilikesql.orm import interfaces
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import MappedAsDataclass
+from ilikesql.orm import MappedColumn
+from ilikesql.orm import query_expression
+from ilikesql.orm import registry
+from ilikesql.orm import registry as _RegistryType
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import synonym
+from ilikesql.sql.base import _NoArg
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_regex
+from ilikesql.testing import expect_deprecated
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import ne_
+from ilikesql.testing import Variation
+from ilikesql.util import compat
 
 
 def _dataclass_mixin_warning(clsname, attrnames):
@@ -981,7 +981,7 @@ class RelationshipDefaultFactoryTest(fixtures.TestBase):
     def test_no_field_args_w_new_style(self, registry: _RegistryType):
         with expect_raises_message(
             exc.InvalidRequestError,
-            "SQLAlchemy mapped dataclasses can't consume mapping information",
+            "ilikesql mapped dataclasses can't consume mapping information",
         ):
 
             @registry.mapped_as_dataclass()
@@ -1001,7 +1001,7 @@ class RelationshipDefaultFactoryTest(fixtures.TestBase):
 
         with expect_raises_message(
             exc.InvalidRequestError,
-            "SQLAlchemy mapped dataclasses can't consume mapping information",
+            "ilikesql mapped dataclasses can't consume mapping information",
         ):
 
             @registry.mapped_as_dataclass()
@@ -1439,7 +1439,7 @@ class DataclassArgsTest(fixtures.TestBase):
             exc.ArgumentError,
             r"Attribute 'x' on class .*A.* includes dataclasses "
             r"argument\(s\): "
-            rf"{unwanted_args} but class does not specify SQLAlchemy native "
+            rf"{unwanted_args} but class does not specify ilikesql native "
             "dataclass configuration",
         ):
 

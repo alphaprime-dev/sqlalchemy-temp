@@ -13,7 +13,7 @@ target-version = ['py37']
 black-line-length = 79
 
 [tool.slotscheck]
-exclude-modules = '^sqlalchemy\.testing'
+exclude-modules = '^ilikesql\.testing'
 
 # disable isort, for IDEs that just default isort to be turned on, e.g. vscode.
 # we use flake8-import-order for import sorting, using zimports to actually
@@ -29,12 +29,12 @@ norecursedirs = "examples build doc lib"
 python_files = "test_*.py"
 minversion = "6.2"
 filterwarnings = [
-    # NOTE: additional SQLAlchemy specific filters in
-    # sqlalchemy/testing/warnings.py.   SQLAlchemy modules cannot be named
+    # NOTE: additional ilikesql specific filters in
+    # ilikesql/testing/warnings.py.   ilikesql modules cannot be named
     # here as pytest loads them immediately, which breaks coverage as well
     # as sys.path adjustments in conftest.py
     "error::DeprecationWarning:test",
-    "error::DeprecationWarning:sqlalchemy",
+    "error::DeprecationWarning:ilikesql",
 
     # sqlite3 warnings due to test/dialect/test_sqlite.py->test_native_datetime,
     # which is asserting that these deprecated-in-py312 handlers are functional
@@ -64,7 +64,7 @@ incremental = true
 [[tool.mypy.overrides]]
 
 module = [
-    "sqlalchemy.*"
+    "ilikesql.*"
 ]
 
 warn_unused_ignores = false
@@ -78,7 +78,7 @@ test-requires = "pytest pytest-xdist"
 test-command = "python -s -m pytest -c {project}/pyproject.toml -n2 -q --nomemory --notimingintensive --nomypy {project}/test"
 
 build = "*"
-# python 3.6 is no longer supported by sqlalchemy
+# python 3.6 is no longer supported by ilikesql
 # pypy uses the universal wheel fallback, since it does not use any compiled extension
 skip = "cp36-* pp*"
 # TODO: remove this skip once action support arm macs

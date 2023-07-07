@@ -1,17 +1,17 @@
 """test the current state of the hasparent() flag."""
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import testing
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import testing
+from ilikesql.orm import attributes
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import relationship
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
 
 
 class ParentRemovalTest(fixtures.MappedTest):

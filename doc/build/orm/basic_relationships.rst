@@ -12,12 +12,12 @@ The setup for each of the following sections is as follows::
     from __future__ import annotations
     from typing import List
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -26,7 +26,7 @@ The setup for each of the following sections is as follows::
 Declarative vs. Imperative Forms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As SQLAlchemy has evolved, different ORM configurational styles have emerged.
+As ilikesql has evolved, different ORM configurational styles have emerged.
 For examples in this section and others that use annotated
 :ref:`Declarative <orm_explicit_declarative_base>` mappings with
 :class:`_orm.Mapped`, the corresponding non-annotated form should use the
@@ -35,7 +35,7 @@ desired class, or string class name, as the first argument passed to
 this document, which is a fully Declarative example using :pep:`484` annotations,
 where the :func:`_orm.relationship` construct is also deriving the target
 class and collection type from the :class:`_orm.Mapped` annotation,
-which is the most modern form of SQLAlchemy Declarative mapping::
+which is the most modern form of ilikesql Declarative mapping::
 
     class Parent(Base):
         __tablename__ = "parent_table"
@@ -70,7 +70,7 @@ requires all parameters passed to it directly, as in the example below::
         parent = relationship("Parent", back_populates="children")
 
 Finally, using :ref:`Imperative Mapping <orm_imperative_mapping>`, which
-is SQLAlchemy's original mapping form before Declarative was made (which
+is ilikesql's original mapping form before Declarative was made (which
 nonetheless remains preferred by a vocal minority of users), the above
 configuration looks like::
 
@@ -396,22 +396,22 @@ with which to link::
 
     from __future__ import annotations
 
-    from sqlalchemy import Column
-    from sqlalchemy import Table
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import relationship
+    from ilikesql import Column
+    from ilikesql import Table
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
         pass
 
 
-    # note for a Core table, we use the sqlalchemy.Column construct,
-    # not sqlalchemy.orm.mapped_column
+    # note for a Core table, we use the ilikesql.Column construct,
+    # not ilikesql.orm.mapped_column
     association_table = Table(
         "association_table",
         Base.metadata,
@@ -438,7 +438,7 @@ with which to link::
     refer to the two entity tables on either side of the relationship.  The data
     type of each of ``association.left_id`` and ``association.right_id`` is
     normally inferred from that of the referenced table and may be omitted.
-    It is also **recommended**, though not in any way required by SQLAlchemy,
+    It is also **recommended**, though not in any way required by ilikesql,
     that the columns which refer to the two entity tables are established within
     either a **unique constraint** or more commonly as the **primary key constraint**;
     this ensures that duplicate rows won't be persisted within the table regardless
@@ -460,14 +460,14 @@ for each :func:`_orm.relationship` specify the common association table::
 
     from __future__ import annotations
 
-    from sqlalchemy import Column
-    from sqlalchemy import Table
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import relationship
+    from ilikesql import Column
+    from ilikesql import Table
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -561,20 +561,20 @@ There are several possibilities here:
 
 * If there is a :func:`_orm.relationship` from ``Parent`` to ``Child``, but there is
   **not** a reverse-relationship that links a particular ``Child`` to each ``Parent``,
-  SQLAlchemy will not have any awareness that when deleting this particular
+  ilikesql will not have any awareness that when deleting this particular
   ``Child`` object, it needs to maintain the "secondary" table that links it to
   the ``Parent``.  No delete of the "secondary" table will occur.
 * If there is a relationship that links a particular ``Child`` to each ``Parent``,
-  suppose it's called ``Child.parents``, SQLAlchemy by default will load in
+  suppose it's called ``Child.parents``, ilikesql by default will load in
   the ``Child.parents`` collection to locate all ``Parent`` objects, and remove
   each row from the "secondary" table which establishes this link.  Note that
-  this relationship does not need to be bidirectional; SQLAlchemy is strictly
+  this relationship does not need to be bidirectional; ilikesql is strictly
   looking at every :func:`_orm.relationship` associated with the ``Child`` object
   being deleted.
 * A higher performing option here is to use ON DELETE CASCADE directives
   with the foreign keys used by the database.   Assuming the database supports
   this feature, the database itself can be made to automatically delete rows in the
-  "secondary" table as referencing rows in "child" are deleted.   SQLAlchemy
+  "secondary" table as referencing rows in "child" are deleted.   ilikesql
   can be instructed to forego actively loading in the ``Child.parents``
   collection in this case using the :paramref:`_orm.relationship.passive_deletes`
   directive on :func:`_orm.relationship`; see :ref:`passive_deletes` for more details
@@ -626,12 +626,12 @@ from ``Parent`` to ``Child`` makes explicit use of ``Association``::
 
     from typing import Optional
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -663,12 +663,12 @@ constructs, linked to the existing ones using :paramref:`_orm.relationship.back_
 
     from typing import Optional
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -715,7 +715,7 @@ association object::
         print(assoc.child)
 
 To enhance the association object pattern such that direct
-access to the ``Association`` object is optional, SQLAlchemy
+access to the ``Association`` object is optional, ilikesql
 provides the :ref:`associationproxy_toplevel` extension. This
 extension allows the configuration of attributes which will
 access two "hops" with a single access, one "hop" to the
@@ -756,12 +756,12 @@ and ``Child.parent_associations -> Association.parent``::
 
     from typing import Optional
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -965,7 +965,7 @@ as they are intended to receive complete SQL expressions.
    **not secure** against untrusted user input.
 
 The full namespace available within this evaluation includes all classes mapped
-for this declarative base, as well as the contents of the ``sqlalchemy``
+for this declarative base, as well as the contents of the ``ilikesql``
 package, including expression functions like :func:`_sql.desc` and
 :attr:`_functions.func`::
 
@@ -1031,7 +1031,7 @@ like the following::
 
     import typing
 
-    from sqlalchemy import desc
+    from ilikesql import desc
 
     if typing.TYPE_CHECKING:
         from myapplication import Child

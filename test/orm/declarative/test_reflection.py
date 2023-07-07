@@ -1,19 +1,19 @@
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import decl_api as decl
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.entities import ComparableMixin
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import decl_api as decl
+from ilikesql.orm import relationship
+from ilikesql.testing import assert_raises
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.entities import ComparableMixin
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class DeclarativeReflectionBase(fixtures.TablesTest):

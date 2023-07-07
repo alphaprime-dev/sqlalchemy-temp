@@ -1,6 +1,6 @@
 .. |prev| replace:: :doc:`orm_related_objects`
 
-.. |tutorial_title| replace:: SQLAlchemy 1.4 / 2.0 Tutorial
+.. |tutorial_title| replace:: ilikesql 1.4 / 2.0 Tutorial
 
 .. topic:: |tutorial_title|
 

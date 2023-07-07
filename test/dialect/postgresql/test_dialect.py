@@ -4,59 +4,59 @@ import logging
 import logging.handlers
 import re
 
-from sqlalchemy import BigInteger
-from sqlalchemy import bindparam
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import DateTime
-from sqlalchemy import DDL
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import extract
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import Numeric
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import SmallInteger
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import TypeDecorator
-from sqlalchemy.dialects.postgresql import asyncpg as asyncpg_dialect
-from sqlalchemy.dialects.postgresql import base as postgresql
-from sqlalchemy.dialects.postgresql import HSTORE
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.dialects.postgresql import psycopg as psycopg_dialect
-from sqlalchemy.dialects.postgresql import psycopg2 as psycopg2_dialect
-from sqlalchemy.dialects.postgresql import Range
-from sqlalchemy.dialects.postgresql.psycopg2 import EXECUTEMANY_VALUES
-from sqlalchemy.dialects.postgresql.psycopg2 import (
+from ilikesql import BigInteger
+from ilikesql import bindparam
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import DateTime
+from ilikesql import DDL
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import extract
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import Numeric
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import SmallInteger
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import TypeDecorator
+from ilikesql.dialects.postgresql import asyncpg as asyncpg_dialect
+from ilikesql.dialects.postgresql import base as postgresql
+from ilikesql.dialects.postgresql import HSTORE
+from ilikesql.dialects.postgresql import JSONB
+from ilikesql.dialects.postgresql import psycopg as psycopg_dialect
+from ilikesql.dialects.postgresql import psycopg2 as psycopg2_dialect
+from ilikesql.dialects.postgresql import Range
+from ilikesql.dialects.postgresql.psycopg2 import EXECUTEMANY_VALUES
+from ilikesql.dialects.postgresql.psycopg2 import (
     EXECUTEMANY_VALUES_PLUS_BATCH,
 )
-from sqlalchemy.engine import url
-from sqlalchemy.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertions import assert_raises
-from sqlalchemy.testing.assertions import assert_raises_message
-from sqlalchemy.testing.assertions import AssertsCompiledSQL
-from sqlalchemy.testing.assertions import AssertsExecutionResults
-from sqlalchemy.testing.assertions import eq_
-from sqlalchemy.testing.assertions import eq_regex
-from sqlalchemy.testing.assertions import expect_raises
-from sqlalchemy.testing.assertions import ne_
+from ilikesql.engine import url
+from ilikesql.sql.selectable import LABEL_STYLE_TABLENAME_PLUS_COL
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing.assertions import assert_raises
+from ilikesql.testing.assertions import assert_raises_message
+from ilikesql.testing.assertions import AssertsCompiledSQL
+from ilikesql.testing.assertions import AssertsExecutionResults
+from ilikesql.testing.assertions import eq_
+from ilikesql.testing.assertions import eq_regex
+from ilikesql.testing.assertions import expect_raises
+from ilikesql.testing.assertions import ne_
 
 
 class DialectTest(fixtures.TestBase):
@@ -1044,7 +1044,7 @@ class MiscBackendTest(
     @testing.requires.no_coverage
     @testing.requires.any_psycopg_compatibility
     def test_notice_logging(self):
-        log = logging.getLogger("sqlalchemy.dialects.postgresql")
+        log = logging.getLogger("ilikesql.dialects.postgresql")
         buf = logging.handlers.BufferingHandler(100)
         lev = log.level
         log.addHandler(buf)
@@ -1214,7 +1214,7 @@ $$ LANGUAGE plpgsql;
         )
 
     def test_quoted_name_bindparam_ok(self):
-        from sqlalchemy.sql.elements import quoted_name
+        from ilikesql.sql.elements import quoted_name
 
         with testing.db.connect() as conn:
             eq_(

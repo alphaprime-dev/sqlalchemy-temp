@@ -13,13 +13,13 @@ I'm getting errors related to "``numpy.int64``", "``numpy.bool_``", etc.
 
 The numpy_ package has its own numeric datatypes that extend from Python's
 numeric types, but contain some behaviors that in some cases make them impossible
-to reconcile with some of SQLAlchemy's behaviors, as well as in some cases
+to reconcile with some of ilikesql's behaviors, as well as in some cases
 with those of the underlying DBAPI driver in use.
 
 Two errors which can occur are ``ProgrammingError: can't adapt type 'numpy.int64'``
 on a backend such as psycopg2, and ``ArgumentError: SQL expression object
 expected, got object of type <class 'numpy.bool_'> instead``; in
-more recent versions of SQLAlchemy this may be ``ArgumentError: SQL expression
+more recent versions of ilikesql this may be ``ArgumentError: SQL expression
 for WHERE/HAVING role expected, got True``.
 
 In the first case, the issue is due to psycopg2 not having an appropriate
@@ -42,14 +42,14 @@ by queries.   This may be illustrated from code based on the following::
 
 In the latter case, the issue is due to the ``numpy.int64`` datatype overriding
 the ``__eq__()`` method and enforcing that the return type of an expression is
-``numpy.True`` or ``numpy.False``, which breaks SQLAlchemy's expression
+``numpy.True`` or ``numpy.False``, which breaks ilikesql's expression
 language behavior that expects to return :class:`_sql.ColumnElement`
 expressions from Python equality comparisons:
 
 .. sourcecode:: pycon+sql
 
     >>> import numpy
-    >>> from sqlalchemy import column, Integer
+    >>> from ilikesql import column, Integer
     >>> print(column("x", Integer) == numpy.int64(10))  # works
     {printsql}x = :x_1{stop}
     >>> print(numpy.int64(10) == column("x", Integer))  # breaks

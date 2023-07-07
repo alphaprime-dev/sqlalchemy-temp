@@ -3,18 +3,18 @@ from __future__ import annotations
 from typing import Tuple
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import Integer
-from sqlalchemy import lambda_stmt
-from sqlalchemy import MetaData
-from sqlalchemy import Result
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import Integer
+from ilikesql import lambda_stmt
+from ilikesql import MetaData
+from ilikesql import Result
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
 
 
 class Base(DeclarativeBase):

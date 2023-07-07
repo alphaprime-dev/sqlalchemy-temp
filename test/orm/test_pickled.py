@@ -1,42 +1,42 @@
 import copy
 import pickle
 
-import sqlalchemy as sa
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import lazyload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import state as sa_state
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm import with_loader_criteria
-from sqlalchemy.orm import with_polymorphic
-from sqlalchemy.orm.collections import attribute_keyed_dict
-from sqlalchemy.orm.collections import column_keyed_dict
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.pickleable import Address
-from sqlalchemy.testing.pickleable import AddressWMixin
-from sqlalchemy.testing.pickleable import Child1
-from sqlalchemy.testing.pickleable import Child2
-from sqlalchemy.testing.pickleable import Dingaling
-from sqlalchemy.testing.pickleable import EmailUser
-from sqlalchemy.testing.pickleable import Mixin
-from sqlalchemy.testing.pickleable import Order
-from sqlalchemy.testing.pickleable import Parent
-from sqlalchemy.testing.pickleable import Screen
-from sqlalchemy.testing.pickleable import User
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import picklers
+import ilikesql as sa
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import aliased
+from ilikesql.orm import attributes
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import lazyload
+from ilikesql.orm import relationship
+from ilikesql.orm import state as sa_state
+from ilikesql.orm import subqueryload
+from ilikesql.orm import with_loader_criteria
+from ilikesql.orm import with_polymorphic
+from ilikesql.orm.collections import attribute_keyed_dict
+from ilikesql.orm.collections import column_keyed_dict
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.pickleable import Address
+from ilikesql.testing.pickleable import AddressWMixin
+from ilikesql.testing.pickleable import Child1
+from ilikesql.testing.pickleable import Child2
+from ilikesql.testing.pickleable import Dingaling
+from ilikesql.testing.pickleable import EmailUser
+from ilikesql.testing.pickleable import Mixin
+from ilikesql.testing.pickleable import Order
+from ilikesql.testing.pickleable import Parent
+from ilikesql.testing.pickleable import Screen
+from ilikesql.testing.pickleable import User
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import picklers
 from test.orm import _fixtures
 from .inheritance._poly_fixtures import _Polymorphic
 from .inheritance._poly_fixtures import Company
@@ -159,7 +159,7 @@ class PickleTest(fixtures.MappedTest):
         assert_raises_message(
             orm_exc.UnmappedInstanceError,
             "Cannot deserialize object of type "
-            "<class 'sqlalchemy.testing.pickleable.User'> - no mapper()",
+            "<class 'ilikesql.testing.pickleable.User'> - no mapper()",
             pickle.loads,
             u1_pickled,
         )

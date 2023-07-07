@@ -1,22 +1,22 @@
-import sqlalchemy as sa
-from sqlalchemy import event
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import instrumentation
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import event
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql.orm import attributes
+from ilikesql.orm import class_mapper
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import instrumentation
+from ilikesql.orm import relationship
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import ne_
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class InitTest(fixtures.ORMTest):
@@ -529,7 +529,7 @@ class MapperInitTest(fixtures.MappedTest):
             sa.exc.SAWarning,
             r"__del__\(\) method on class "
             r"<class '.*\.A'> will cause "
-            r"unreachable cycles and memory leaks, as SQLAlchemy "
+            r"unreachable cycles and memory leaks, as ilikesql "
             r"instrumentation often creates reference cycles.  "
             r"Please remove this method.",
             self.mapper_registry.map_imperatively,

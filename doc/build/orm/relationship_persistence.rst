@@ -37,10 +37,10 @@ Or:
 In the first case, a row points to itself. Technically, a database that uses
 sequences such as PostgreSQL or Oracle can INSERT the row at once using a
 previously generated value, but databases which rely upon autoincrement-style
-primary key identifiers cannot. The :func:`~sqlalchemy.orm.relationship`
+primary key identifiers cannot. The :func:`~ilikesql.orm.relationship`
 always assumes a "parent/child" model of row population during flush, so
 unless you are populating the primary key/foreign key columns directly,
-:func:`~sqlalchemy.orm.relationship` needs to use two statements.
+:func:`~ilikesql.orm.relationship` needs to use two statements.
 
 In the second case, the "widget" row must be inserted before any referring
 "entry" rows, but then the "favorite_entry_id" column of that "widget" row
@@ -50,7 +50,7 @@ INSERT statements; an UPDATE must be performed in order to keep foreign key
 constraints fulfilled. The exception is if the foreign keys are configured as
 "deferred until commit" (a feature some databases support) and if the
 identifiers were populated manually (again essentially bypassing
-:func:`~sqlalchemy.orm.relationship`).
+:func:`~ilikesql.orm.relationship`).
 
 To enable the usage of a supplementary UPDATE statement,
 we use the :paramref:`_orm.relationship.post_update` option
@@ -62,10 +62,10 @@ be placed on just *one* of the relationships, preferably the
 many-to-one side.  Below we illustrate
 a complete example, including two :class:`_schema.ForeignKey` constructs::
 
-    from sqlalchemy import Integer, ForeignKey
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import relationship
+    from ilikesql import Integer, ForeignKey
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -122,16 +122,16 @@ it's guaranteed that ``favorite_entry_id`` refers to an ``Entry``
 that also refers to this ``Widget``.  We can use a composite foreign key,
 as illustrated below::
 
-    from sqlalchemy import (
+    from ilikesql import (
         Integer,
         ForeignKey,
         String,
         UniqueConstraint,
         ForeignKeyConstraint,
     )
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -237,7 +237,7 @@ Simulating limited ON UPDATE CASCADE without foreign key support
 
 In those cases when a database that does not support referential integrity
 is used, and natural primary keys with mutable values are in play,
-SQLAlchemy offers a feature in order to allow propagation of primary key
+ilikesql offers a feature in order to allow propagation of primary key
 values to already-referenced foreign keys to a **limited** extent,
 by emitting an UPDATE statement against foreign key columns that immediately
 reference a primary key column whose value has changed.
@@ -246,13 +246,13 @@ MySQL when the ``MyISAM`` storage engine is used, and SQLite when the
 ``PRAGMA foreign_keys=ON`` pragma is not used.  The Oracle database also
 has no support for ``ON UPDATE CASCADE``, but because it still enforces
 referential integrity, needs constraints to be marked as deferrable
-so that SQLAlchemy can emit UPDATE statements.
+so that ilikesql can emit UPDATE statements.
 
 The feature is enabled by setting the
 :paramref:`_orm.relationship.passive_updates` flag to ``False``,
 most preferably on a one-to-many or
 many-to-many :func:`_orm.relationship`.  When "updates" are no longer
-"passive" this indicates that SQLAlchemy will
+"passive" this indicates that ilikesql will
 issue UPDATE statements individually for
 objects referenced in the collection referred to by the parent object
 with a changing primary key value.  This also implies that collections

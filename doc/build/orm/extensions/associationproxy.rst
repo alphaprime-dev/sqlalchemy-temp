@@ -3,7 +3,7 @@
 Association Proxy
 =================
 
-.. module:: sqlalchemy.ext.associationproxy
+.. module:: ilikesql.ext.associationproxy
 
 ``associationproxy`` is used to create a read/write view of a
 target attribute across a relationship.  It essentially conceals
@@ -33,17 +33,17 @@ exception of an extra attribute added to the ``User`` class called
     from typing import Final
     from typing import List
 
-    from sqlalchemy import Column
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import Integer
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
-    from sqlalchemy.ext.associationproxy import association_proxy
-    from sqlalchemy.ext.associationproxy import AssociationProxy
+    from ilikesql import Column
+    from ilikesql import ForeignKey
+    from ilikesql import Integer
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
+    from ilikesql.ext.associationproxy import association_proxy
+    from ilikesql.ext.associationproxy import AssociationProxy
 
 
     class Base(DeclarativeBase):
@@ -186,14 +186,14 @@ collection of ``User`` to the ``.keyword`` attribute present on each
     from typing import List
     from typing import Optional
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import String
-    from sqlalchemy.ext.associationproxy import association_proxy
-    from sqlalchemy.ext.associationproxy import AssociationProxy
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import String
+    from ilikesql.ext.associationproxy import association_proxy
+    from ilikesql.ext.associationproxy import AssociationProxy
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -299,7 +299,7 @@ by all these operations::
 Proxying to Dictionary Based Collections
 ----------------------------------------
 
-The association proxy can proxy to dictionary based collections as well.   SQLAlchemy
+The association proxy can proxy to dictionary based collections as well.   ilikesql
 mappings usually use the :func:`.attribute_keyed_dict` collection type to
 create dictionary collections, as well as the extended techniques described in
 :ref:`dictionary_collections`.
@@ -320,15 +320,15 @@ when new elements are added to the dictionary::
     from __future__ import annotations
     from typing import Dict
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import String
-    from sqlalchemy.ext.associationproxy import association_proxy
-    from sqlalchemy.ext.associationproxy import AssociationProxy
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
-    from sqlalchemy.orm.collections import attribute_keyed_dict
+    from ilikesql import ForeignKey
+    from ilikesql import String
+    from ilikesql.ext.associationproxy import association_proxy
+    from ilikesql.ext.associationproxy import AssociationProxy
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
+    from ilikesql.orm.collections import attribute_keyed_dict
 
 
     class Base(DeclarativeBase):
@@ -410,15 +410,15 @@ present on ``UserKeywordAssociation``::
 
     from __future__ import annotations
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import String
-    from sqlalchemy.ext.associationproxy import association_proxy
-    from sqlalchemy.ext.associationproxy import AssociationProxy
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
-    from sqlalchemy.orm.collections import attribute_keyed_dict
+    from ilikesql import ForeignKey
+    from ilikesql import String
+    from ilikesql.ext.associationproxy import association_proxy
+    from ilikesql.ext.associationproxy import AssociationProxy
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
+    from ilikesql.orm.collections import attribute_keyed_dict
 
 
     class Base(DeclarativeBase):
@@ -497,7 +497,7 @@ One caveat with our example above is that because ``Keyword`` objects are create
 for each dictionary set operation, the example fails to maintain uniqueness for
 the ``Keyword`` objects on their string name, which is a typical requirement for
 a tagging scenario such as this one.  For this use case the recipe
-`UniqueObject <https://www.sqlalchemy.org/trac/wiki/UsageRecipes/UniqueObject>`_, or
+`UniqueObject <https://www.ilikesql.org/trac/wiki/UsageRecipes/UniqueObject>`_, or
 a comparable creational strategy, is
 recommended, which will apply a "lookup first, then create" strategy to the constructor
 of the ``Keyword`` class, so that an already existing ``Keyword`` is returned if the
@@ -524,11 +524,11 @@ that refers to a column, as well as an association proxy that refers
 to a related object, as in the example mapping below::
 
     from __future__ import annotations
-    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.ext.associationproxy import association_proxy, AssociationProxy
-    from sqlalchemy.orm import DeclarativeBase, relationship
-    from sqlalchemy.orm.collections import attribute_keyed_dict
-    from sqlalchemy.orm.collections import Mapped
+    from ilikesql import Column, ForeignKey, Integer, String
+    from ilikesql.ext.associationproxy import association_proxy, AssociationProxy
+    from ilikesql.orm import DeclarativeBase, relationship
+    from ilikesql.orm.collections import attribute_keyed_dict
+    from ilikesql.orm.collections import Mapped
 
 
     class Base(DeclarativeBase):
@@ -635,11 +635,11 @@ Cascading Scalar Deletes
 Given a mapping as::
 
     from __future__ import annotations
-    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.ext.associationproxy import association_proxy, AssociationProxy
-    from sqlalchemy.orm import DeclarativeBase, relationship
-    from sqlalchemy.orm.collections import attribute_keyed_dict
-    from sqlalchemy.orm.collections import Mapped
+    from ilikesql import Column, ForeignKey, Integer, String
+    from ilikesql.ext.associationproxy import association_proxy, AssociationProxy
+    from ilikesql.orm import DeclarativeBase, relationship
+    from ilikesql.orm.collections import attribute_keyed_dict
+    from ilikesql.orm.collections import Mapped
 
 
     class Base(DeclarativeBase):
@@ -702,14 +702,14 @@ object::
 
     from typing import List
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import String
-    from sqlalchemy.ext.associationproxy import association_proxy
-    from sqlalchemy.ext.associationproxy import AssociationProxy
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql import String
+    from ilikesql.ext.associationproxy import association_proxy
+    from ilikesql.ext.associationproxy import AssociationProxy
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):

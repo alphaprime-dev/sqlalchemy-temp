@@ -23,7 +23,7 @@ its primary interactive endpoints, the :class:`_engine.Connection` and
 
     When using the ORM, the :class:`_engine.Engine` is managed by another
     object called the :class:`_orm.Session`.  The :class:`_orm.Session` in
-    modern SQLAlchemy emphasizes a transactional and SQL execution pattern that
+    modern ilikesql emphasizes a transactional and SQL execution pattern that
     is largely identical to that of the :class:`_engine.Connection` discussed
     below, so while this subsection is Core-centric, all of the concepts here
     are essentially relevant to ORM use as well and is recommended for all ORM
@@ -31,11 +31,11 @@ its primary interactive endpoints, the :class:`_engine.Connection` and
     will be contrasted with that of the :class:`_orm.Session` at the end
     of this section.
 
-As we have yet to introduce the SQLAlchemy Expression Language that is the
-primary feature of SQLAlchemy, we will make use of one simple construct within
+As we have yet to introduce the ilikesql Expression Language that is the
+primary feature of ilikesql, we will make use of one simple construct within
 this package called the :func:`_sql.text` construct, which allows us to write
 SQL statements as **textual SQL**.   Rest assured that textual SQL in
-day-to-day SQLAlchemy use is by far the exception rather than the rule for most
+day-to-day ilikesql use is by far the exception rather than the rule for most
 tasks, even though it always remains fully available.
 
 .. rst-class:: core-header
@@ -60,7 +60,7 @@ in more detail later:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import text
+    >>> from ilikesql import text
 
     >>> with engine.connect() as conn:
     ...     result = conn.execute(text("select 'hello world'"))
@@ -113,10 +113,10 @@ where we acquired the :class:`_engine.Connection` object:
     {execsql}BEGIN (implicit)
     CREATE TABLE some_table (x int, y int)
     [...] ()
-    <sqlalchemy.engine.cursor.CursorResult object at 0x...>
+    <ilikesql.engine.cursor.CursorResult object at 0x...>
     INSERT INTO some_table (x, y) VALUES (?, ?)
     [...] [(1, 1), (2, 4)]
-    <sqlalchemy.engine.cursor.CursorResult object at 0x...>
+    <ilikesql.engine.cursor.CursorResult object at 0x...>
     COMMIT
 
 Above, we emitted two SQL statements that are generally transactional, a
@@ -127,7 +127,7 @@ committed within our block, we invoke the
 :meth:`_engine.Connection.commit` method which commits the transaction. After
 we call this method inside the block, we can continue to run more SQL
 statements and if we choose we may call :meth:`_engine.Connection.commit`
-again for subsequent statements.  SQLAlchemy refers to this style as **commit as
+again for subsequent statements.  ilikesql refers to this style as **commit as
 you go**.
 
 There is also another style of committing data, which is that we can declare
@@ -150,7 +150,7 @@ may be referred towards as **begin once**:
     {execsql}BEGIN (implicit)
     INSERT INTO some_table (x, y) VALUES (?, ?)
     [...] [(6, 8), (9, 10)]
-    <sqlalchemy.engine.cursor.CursorResult object at 0x...>
+    <ilikesql.engine.cursor.CursorResult object at 0x...>
     COMMIT
 
 "Begin once" style is often preferred as it is more succinct and indicates the
@@ -161,7 +161,7 @@ purposes.
 .. topic::  What's "BEGIN (implicit)"?
 
     You might have noticed the log line "BEGIN (implicit)" at the start of a
-    transaction block.  "implicit" here means that SQLAlchemy **did not
+    transaction block.  "implicit" here means that ilikesql **did not
     actually send any command** to the database; it just considers this to be
     the start of the DBAPI's implicit transaction.   You can register
     :ref:`event hooks <core_sql_events>` to intercept this event, for example.
@@ -172,7 +172,7 @@ purposes.
    such as "CREATE TABLE" is recommended to be within a transaction block that
    ends with COMMIT, as many databases uses transactional DDL such that the
    schema changes don't take place until the transaction is committed. However,
-   as we'll see later, we usually let SQLAlchemy run DDL sequences for us as
+   as we'll see later, we usually let ilikesql run DDL sequences for us as
    part of a higher level operation where we don't generally need to worry
    about the COMMIT.
 
@@ -332,19 +332,19 @@ In the logged SQL output, we can see that the bound parameter ``:y`` was
 converted into a question mark when it was sent to the SQLite database.
 This is because the SQLite database driver uses a format called "qmark parameter style",
 which is one of six different formats allowed by the DBAPI specification.
-SQLAlchemy abstracts these formats into just one, which is the "named" format
+ilikesql abstracts these formats into just one, which is the "named" format
 using a colon.
 
 .. topic:: Always use bound parameters
 
     As mentioned at the beginning of this section, textual SQL is not the usual
-    way we work with SQLAlchemy.  However, when using textual SQL, a Python
+    way we work with ilikesql.  However, when using textual SQL, a Python
     literal value, even non-strings like integers or dates, should **never be
     stringified into SQL string directly**; a parameter should **always** be
     used.  This is most famously known as how to avoid SQL injection attacks
-    when the data is untrusted.  However it also allows the SQLAlchemy dialects
+    when the data is untrusted.  However it also allows the ilikesql dialects
     and/or DBAPI to correctly handle the incoming input for the backend.
-    Outside of plain textual SQL use cases, SQLAlchemy's Core Expression API
+    Outside of plain textual SQL use cases, ilikesql's Core Expression API
     otherwise ensures that Python literal values are passed as bound parameters
     where appropriate.
 
@@ -373,7 +373,7 @@ of execution is known as :term:`executemany`:
     {execsql}BEGIN (implicit)
     INSERT INTO some_table (x, y) VALUES (?, ?)
     [...] [(11, 12), (13, 14)]
-    <sqlalchemy.engine.cursor.CursorResult object at 0x...>
+    <ilikesql.engine.cursor.CursorResult object at 0x...>
     COMMIT
 
 The above operation is equivalent to running the given INSERT statement once
@@ -385,7 +385,7 @@ latter doesn't support returning of result rows, even if the statement includes
 the RETURNING clause. The one exception to this is when using a Core
 :func:`_sql.insert` construct, introduced later in this tutorial at
 :ref:`tutorial_core_insert`, which also indicates RETURNING using the
-:meth:`_sql.Insert.returning` method.  In that case, SQLAlchemy makes use of
+:meth:`_sql.Insert.returning` method.  In that case, ilikesql makes use of
 special logic to reorganize the INSERT statement so that it can be invoked
 for many rows while still supporting RETURNING.
 
@@ -414,7 +414,7 @@ as the tutorial proceeds, we will be able to illustrate each pattern in
 terms of Core and ORM use together.
 
 The fundamental transactional / database interactive object when using the
-ORM is called the :class:`_orm.Session`.  In modern SQLAlchemy, this object
+ORM is called the :class:`_orm.Session`.  In modern ilikesql, this object
 is used in a manner very similar to that of the :class:`_engine.Connection`,
 and in fact as the :class:`_orm.Session` is used, it refers to a
 :class:`_engine.Connection` internally which it uses to emit SQL.
@@ -432,7 +432,7 @@ a context manager:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.orm import Session
+    >>> from ilikesql.orm import Session
 
     >>> stmt = text("SELECT x, y FROM some_table WHERE y > :y ORDER BY x, y")
     >>> with Session(engine) as session:

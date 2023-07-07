@@ -56,7 +56,7 @@ from the :class:`_dml.Insert` object itself, will invoke **bulk INSERT mode**
 for the statement, which essentially means the operation will optimize
 as much as possible for many rows::
 
-    >>> from sqlalchemy import insert
+    >>> from ilikesql import insert
     >>> session.execute(
     ...     insert(User),
     ...     [
@@ -108,7 +108,7 @@ columns back as well as fully constructed ORM objects corresponding
 to the newly generated records.    INSERT..RETURNING requires the use of a backend that
 supports SQL RETURNING syntax as well as support for :term:`executemany`
 with RETURNING; this feature is available with all
-:ref:`SQLAlchemy-included <included_dialects>` backends
+:ref:`ilikesql-included <included_dialects>` backends
 with the exception of MySQL (MariaDB is included).
 
 As an example, we can run the same statement as before, adding use of the
@@ -335,7 +335,7 @@ If we wanted to INSERT a series of ``LogRecord`` elements, each with a unique
 to all rows, we can pass ``timestamp`` within :meth:`_dml.Insert.values`
 and then pass the additional records using "bulk" mode::
 
-    >>> from sqlalchemy import func
+    >>> from ilikesql import func
     >>> log_record_result = session.scalars(
     ...     insert(LogRecord).values(code="SQLA", timestamp=func.now()).returning(LogRecord),
     ...     [
@@ -404,7 +404,7 @@ A contrived example of an INSERT that embeds per-row SQL expressions,
 and also demonstrates :meth:`_dml.Insert.returning` in this form, is below::
 
 
-  >>> from sqlalchemy import select
+  >>> from ilikesql import select
   >>> address_result = session.scalars(
   ...     insert(Address)
   ...     .values(
@@ -473,7 +473,7 @@ Legacy Session Bulk INSERT Methods
 
 The :class:`_orm.Session` includes legacy methods for performing
 "bulk" INSERT and UPDATE statements.  These methods share implementations
-with the SQLAlchemy 2.0 versions of these features, described
+with the ilikesql 2.0 versions of these features, described
 at :ref:`orm_queryguide_bulk_insert` and :ref:`orm_queryguide_bulk_update`,
 however lack many features, namely RETURNING support as well as support
 for session-synchronization.
@@ -485,7 +485,7 @@ can port code as follows, starting with this mappings example::
 
 The above is expressed using the new API as::
 
-    from sqlalchemy import insert
+    from ilikesql import insert
 
     session.execute(insert(User), [{"name": "u1"}, {"name": "u2"}, {"name": "u3"}])
 
@@ -499,7 +499,7 @@ The above is expressed using the new API as::
 ORM "upsert" Statements
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Selected backends with SQLAlchemy may include dialect-specific :class:`_dml.Insert`
+Selected backends with ilikesql may include dialect-specific :class:`_dml.Insert`
 constructs which additionally have the ability to perform "upserts", or INSERTs
 where an existing row in the parameter set is turned into an approximation of
 an UPDATE statement instead. By "existing row" , this may mean rows
@@ -507,7 +507,7 @@ which share the same primary key value, or may refer to other indexed
 columns within the row that are considered to be unique; this is dependent
 on the capabilities of the backend in use.
 
-The dialects included with SQLAlchemy that include dialect-specific "upsert"
+The dialects included with ilikesql that include dialect-specific "upsert"
 API features are:
 
 * SQLite - using :class:`_sqlite.Insert` documented at :ref:`sqlite_on_conflict_insert`
@@ -522,7 +522,7 @@ in two separate steps.
 Third party backends such as those mentioned at :ref:`external_toplevel` may
 also feature similar constructs.
 
-While SQLAlchemy does not yet have a backend-agnostic upsert construct, the above
+While ilikesql does not yet have a backend-agnostic upsert construct, the above
 :class:`_dml.Insert` variants are nonetheless ORM compatible in that they may be used
 in the same way as the :class:`_dml.Insert` construct itself as documented at
 :ref:`orm_queryguide_insert_values`, that is, by embedding the desired rows
@@ -550,7 +550,7 @@ as ORM mapped attribute keys, rather than column names:
 
 ::
 
-    >>> from sqlalchemy.dialects.sqlite import insert as sqlite_upsert
+    >>> from ilikesql.dialects.sqlite import insert as sqlite_upsert
     >>> stmt = sqlite_upsert(User).values(
     ...     [
     ...         {"name": "spongebob", "fullname": "Spongebob Squarepants"},
@@ -577,7 +577,7 @@ as ORM mapped attribute keys, rather than column names:
 Using RETURNING with upsert statements
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-From the SQLAlchemy ORM's point of view, upsert statements look like regular
+From the ilikesql ORM's point of view, upsert statements look like regular
 :class:`_dml.Insert` constructs, which includes that :meth:`_dml.Insert.returning`
 works with upsert statements in the same way as was demonstrated at
 :ref:`orm_queryguide_insert_values`, so that any column expression or
@@ -665,7 +665,7 @@ UPDATE by primary key mode** for the statement, generating the appropriate
 WHERE criteria to match each row by primary key, and using :term:`executemany`
 to run each parameter set against the UPDATE statement::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> session.execute(
     ...     update(User),
     ...     [
@@ -725,7 +725,7 @@ the :meth:`_orm.Session.connection` method to acquire the current
 :class:`_engine.Connection` for the transaction::
 
 
-    >>> from sqlalchemy import bindparam
+    >>> from ilikesql import bindparam
     >>> session.connection().execute(
     ...     update(User).where(User.name == bindparam("u_name")),
     ...     [
@@ -815,7 +815,7 @@ The example below::
 
 Is expressed using the new API as::
 
-    from sqlalchemy import update
+    from ilikesql import update
 
     session.execute(
         update(User),
@@ -860,7 +860,7 @@ As an example, below an UPDATE is emitted that affects the "fullname"
 field of multiple rows
 ::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> stmt = (
     ...     update(User)
     ...     .where(User.name.in_(["squidward", "sandy"]))
@@ -874,7 +874,7 @@ field of multiple rows
 
 For a DELETE, an example of deleting rows based on criteria::
 
-    >>> from sqlalchemy import delete
+    >>> from ilikesql import delete
     >>> stmt = delete(User).where(User.name.in_(["squidward", "sandy"]))
     >>> session.execute(stmt)
     {execsql}DELETE FROM user_account WHERE user_account.name IN (?, ?)
@@ -908,7 +908,7 @@ This synchronization is controllable as the "synchronization strategy",
 which is passed as an string ORM execution option, typically by using the
 :paramref:`_orm.Session.execute.execution_options` dictionary::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> stmt = (
     ...     update(User).where(User.name == "squidward").values(fullname="Squidward Tentacles")
     ... )
@@ -920,7 +920,7 @@ which is passed as an string ORM execution option, typically by using the
 The execution option may also be bundled with the statement itself using the
 :meth:`_sql.Executable.execution_options` method::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> stmt = (
     ...     update(User)
     ...     .where(User.name == "squidward")
@@ -935,7 +935,7 @@ The execution option may also be bundled with the statement itself using the
 The following values for ``synchronize_session`` are supported:
 
 * ``'auto'`` - this is the default.   The ``'fetch'`` strategy will be used on
-  backends that support RETURNING, which includes all SQLAlchemy-native drivers
+  backends that support RETURNING, which includes all ilikesql-native drivers
   except for MySQL.   If RETURNING is not supported, the ``'evaluate'``
   strategy will be used instead.
 
@@ -999,7 +999,7 @@ The :meth:`.UpdateBase.returning` method is fully compatible with
 ORM-enabled UPDATE and DELETE with WHERE criteria.   Full ORM objects
 and/or columns may be indicated for RETURNING::
 
-    >>> from sqlalchemy import update
+    >>> from ilikesql import update
     >>> stmt = (
     ...     update(User)
     ...     .where(User.name == "squidward")
@@ -1102,7 +1102,7 @@ would be DELETEd at the same time.   To DELETE many rows of joined inheritance
 objects **without** using cascading foreign keys, emit DELETE for each
 table individually::
 
-    >>> from sqlalchemy import delete
+    >>> from ilikesql import delete
     >>> session.execute(delete(Manager).where(Manager.id == 1))
     {execsql}DELETE FROM manager WHERE manager.id = ?
     [...] (1,)

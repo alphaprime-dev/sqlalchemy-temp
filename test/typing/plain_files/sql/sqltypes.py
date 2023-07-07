@@ -1,5 +1,5 @@
-from sqlalchemy import Float
-from sqlalchemy import Numeric
+from ilikesql import Float
+from ilikesql import Numeric
 
 # EXPECTED_TYPE: Float[float]
 reveal_type(Float())

@@ -1,7 +1,7 @@
 Column Elements and Expressions
 ===============================
 
-.. currentmodule:: sqlalchemy.sql.expression
+.. currentmodule:: ilikesql.sql.expression
 
 The expression API consists of a series of classes each of which represents a
 specific lexical element within a SQL string.  Composed together
@@ -19,8 +19,8 @@ is placed in the FROM clause of a SELECT statement.
 Column Element Foundational Constructors
 -----------------------------------------
 
-Standalone functions imported from the ``sqlalchemy`` namespace which are
-used when building up SQLAlchemy Expression Language constructs.
+Standalone functions imported from the ``ilikesql`` namespace which are
+used when building up ilikesql Expression Language constructs.
 
 .. autofunction:: and_
 
@@ -211,7 +211,7 @@ The classes here are generated using the constructors listed at
 .. autoclass:: WithinGroup
    :members:
 
-.. autoclass:: sqlalchemy.sql.elements.WrapsColumnExpression
+.. autoclass:: ilikesql.sql.elements.WrapsColumnExpression
    :members:
 
 .. autoclass:: True_

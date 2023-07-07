@@ -12,7 +12,7 @@ at the same time, or to accommodate a :class:`_schema.Table` or other
 
 The following examples assume a declarative base class as::
 
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -40,9 +40,9 @@ example below illustrates the most basic use of this construct within a
 Declarative mapping::
 
 
-    from sqlalchemy import Integer, String
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import mapped_column
+    from ilikesql import Integer, String
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -86,8 +86,8 @@ further at :ref:`orm_declarative_metadata`.
 
 .. sidebar::  ``mapped_column()`` supersedes the use of ``Column()``
 
-  Users of 1.x SQLAlchemy will note the use of the :func:`_orm.mapped_column`
-  construct, which is new as of the SQLAlchemy 2.0 series.  This ORM-specific
+  Users of 1.x ilikesql will note the use of the :func:`_orm.mapped_column`
+  construct, which is new as of the ilikesql 2.0 series.  This ORM-specific
   construct is intended first and foremost to be a drop-in replacement for
   the use of :class:`_schema.Column` within Declarative mappings only, adding
   new ORM-specific convenience features such as the ability to establish
@@ -96,7 +96,7 @@ further at :ref:`orm_declarative_metadata`.
   accurate representation of how the attribute will behave at runtime at
   both the class level as well as the instance level.  As will be seen in
   the following sections, it's also at the forefront of a new
-  annotation-driven configuration style introduced in SQLAlchemy 2.0.
+  annotation-driven configuration style introduced in ilikesql 2.0.
 
   Users of legacy code should be aware that the :class:`_schema.Column` form
   will always work in Declarative in the same way it always has. The different
@@ -142,7 +142,7 @@ The :func:`_orm.mapped_column` construct is capable of deriving its column-confi
 information from :pep:`484` type annotations associated with the attribute
 as declared in the Declarative mapped class.   These type annotations,
 if used,  **must**
-be present within a special SQLAlchemy type called :class:`_orm.Mapped`, which
+be present within a special ilikesql type called :class:`_orm.Mapped`, which
 is a generic_ type that then indicates a specific Python type within it.
 
 Below illustrates the mapping from the previous section, adding the use of
@@ -150,10 +150,10 @@ Below illustrates the mapping from the previous section, adding the use of
 
     from typing import Optional
 
-    from sqlalchemy import String
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql import String
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -193,7 +193,7 @@ The two qualities that :func:`_orm.mapped_column` derives from the
   :class:`.DateTime`, or :class:`.Uuid`, to name a few common types.
 
   The datatype is determined based on a dictionary of Python type to
-  SQLAlchemy datatype.   This dictionary is completely customizable,
+  ilikesql datatype.   This dictionary is completely customizable,
   as detailed in the next section :ref:`orm_declarative_mapped_column_type_map`.
   The default type map is implemented as in the code example below::
 
@@ -205,7 +205,7 @@ The two qualities that :func:`_orm.mapped_column` derives from the
       import decimal
       import uuid
 
-      from sqlalchemy import types
+      from ilikesql import types
 
       # default type mapping, deriving the type for mapped_column()
       # from a Mapped[] annotation
@@ -240,7 +240,7 @@ The two qualities that :func:`_orm.mapped_column` derives from the
   and the absense of ``typing.Optional[]`` means ``NOT NULL``. If there is no
   ``Mapped[]`` annotation present at all, and there is no
   :paramref:`_orm.mapped_column.nullable` or
-  :paramref:`_orm.mapped_column.primary_key` parameter, then SQLAlchemy's usual
+  :paramref:`_orm.mapped_column.primary_key` parameter, then ilikesql's usual
   default for :class:`_schema.Column` of ``NULL`` is used.
 
   In the example below, the ``id`` and ``data`` columns will be ``NOT NULL``,
@@ -248,9 +248,9 @@ The two qualities that :func:`_orm.mapped_column` derives from the
 
       from typing import Optional
 
-      from sqlalchemy.orm import DeclarativeBase
-      from sqlalchemy.orm import Mapped
-      from sqlalchemy.orm import mapped_column
+      from ilikesql.orm import DeclarativeBase
+      from ilikesql.orm import Mapped
+      from ilikesql.orm import mapped_column
 
 
       class Base(DeclarativeBase):
@@ -299,9 +299,9 @@ The two qualities that :func:`_orm.mapped_column` derives from the
 Customizing the Type Map
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-The mapping of Python types to SQLAlchemy :class:`_types.TypeEngine` types
+The mapping of Python types to ilikesql :class:`_types.TypeEngine` types
 described in the previous section defaults to a hardcoded dictionary
-present in the ``sqlalchemy.sql.sqltypes`` module.  However, the :class:`_orm.registry`
+present in the ``ilikesql.sql.sqltypes`` module.  However, the :class:`_orm.registry`
 object that coordinates the Declarative mapping process will first consult
 a local, user defined dictionary of types which may be passed
 as the :paramref:`_orm.registry.type_annotation_map` parameter when
@@ -316,9 +316,9 @@ the registry and Declarative base could be configured as::
 
     import datetime
 
-    from sqlalchemy import BIGINT, Integer, NVARCHAR, String, TIMESTAMP
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped, mapped_column, registry
+    from ilikesql import BIGINT, Integer, NVARCHAR, String, TIMESTAMP
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped, mapped_column, registry
 
 
     class Base(DeclarativeBase):
@@ -341,8 +341,8 @@ first on the Microsoft SQL Server backend, illustrating the ``NVARCHAR`` datatyp
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.schema import CreateTable
-    >>> from sqlalchemy.dialects import mssql, postgresql
+    >>> from ilikesql.schema import CreateTable
+    >>> from ilikesql.dialects import mssql, postgresql
     >>> print(CreateTable(SomeClass.__table__).compile(dialect=mssql.dialect()))
     {printsql}CREATE TABLE some_table (
       id BIGINT NOT NULL IDENTITY,
@@ -395,12 +395,12 @@ declare two variants of :class:`.String` and :class:`.Numeric`::
 
     from typing_extensions import Annotated
 
-    from sqlalchemy import Numeric
-    from sqlalchemy import String
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import registry
+    from ilikesql import Numeric
+    from ilikesql import String
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import registry
 
     str_30 = Annotated[str, 30]
     str_50 = Annotated[str, 50]
@@ -443,7 +443,7 @@ of ``VARCHAR`` and ``NUMERIC`` we've configured, and looks like:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.schema import CreateTable
+    >>> from ilikesql.schema import CreateTable
     >>> print(CreateTable(SomeClass.__table__))
     {printsql}CREATE TABLE some_table (
       short_name VARCHAR(30) NOT NULL,
@@ -483,7 +483,7 @@ into :func:`_orm.mapped_column` instances that we then bundle directly into
 instances of ``Annotated``, which are then re-used in any number of class
 declarations.  Declarative will unpack an ``Annotated`` object
 when provided in this manner, skipping over any other directives that don't
-apply to SQLAlchemy and searching only for SQLAlchemy ORM constructs.
+apply to ilikesql and searching only for ilikesql ORM constructs.
 
 The example below illustrates a variety of pre-configured field types used
 in this way, where we define ``intpk`` that represents an :class:`.Integer` primary
@@ -496,9 +496,9 @@ and ``required_name`` which is a :class:`.String` of length 30 that's
 
     from typing_extensions import Annotated
 
-    from sqlalchemy import func
-    from sqlalchemy import String
-    from sqlalchemy.orm import mapped_column
+    from ilikesql import func
+    from ilikesql import String
+    from ilikesql.orm import mapped_column
 
 
     intpk = Annotated[int, mapped_column(primary_key=True)]
@@ -528,7 +528,7 @@ specific to each attribute::
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.schema import CreateTable
+    >>> from ilikesql.schema import CreateTable
     >>> print(CreateTable(SomeClass.__table__))
     {printsql}CREATE TABLE some_table (
       id INTEGER NOT NULL,
@@ -549,7 +549,7 @@ of the ``NULL`` / ``NOT NULL`` setting that takes place in the database::
     import datetime
     from typing import Optional
 
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.orm import DeclarativeBase
 
     timestamp = Annotated[
         datetime.datetime,
@@ -578,12 +578,12 @@ default for the ``created_at`` column::
 
     from typing_extensions import Annotated
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy import func
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.schema import CreateTable
+    from ilikesql import ForeignKey
+    from ilikesql import func
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.schema import CreateTable
 
     intpk = Annotated[int, mapped_column(primary_key=True)]
     timestamp = Annotated[
@@ -617,7 +617,7 @@ adding a ``FOREIGN KEY`` constraint as well as substituting
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.schema import CreateTable
+    >>> from ilikesql.schema import CreateTable
     >>> print(CreateTable(SomeClass.__table__))
     {printsql}CREATE TABLE some_table (
       id INTEGER NOT NULL,
@@ -648,15 +648,15 @@ Using Python ``Enum`` or pep-586 ``Literal`` types in the type map
 
 User-defined Python types which derive from the Python built-in ``enum.Enum``
 as well as the ``typing.Literal``
-class are automatically linked to the SQLAlchemy :class:`.Enum` datatype
+class are automatically linked to the ilikesql :class:`.Enum` datatype
 when used in an ORM declarative mapping.  The example below uses
 a custom ``enum.Enum`` within the ``Mapped[]`` constructor::
 
     import enum
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -696,9 +696,9 @@ a ``typing.Literal`` that consists of all strings::
 
     from typing import Literal
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -716,7 +716,7 @@ a ``typing.Literal`` that consists of all strings::
 
 The entries used in :paramref:`_orm.registry.type_annotation_map` link the base
 ``enum.Enum`` Python type as well as the ``typing.Literal`` type to the
-SQLAlchemy :class:`.Enum` SQL type, using a special form which indicates to the
+ilikesql :class:`.Enum` SQL type, using a special form which indicates to the
 :class:`.Enum` datatype that it should automatically configure itself against
 an arbitrary enumerated type. This configuration, which is implicit by default,
 would be indicated explicitly as::
@@ -724,14 +724,14 @@ would be indicated explicitly as::
     import enum
     import typing
 
-    import sqlalchemy
-    from sqlalchemy.orm import DeclarativeBase
+    import ilikesql
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
         type_annotation_map = {
-            enum.Enum: sqlalchemy.Enum(enum.Enum),
-            typing.Literal: sqlalchemy.Enum(enum.Enum),
+            enum.Enum: ilikesql.Enum(enum.Enum),
+            typing.Literal: ilikesql.Enum(enum.Enum),
         }
 
 The resolution logic within Declarative is able to resolve subclasses
@@ -775,15 +775,15 @@ type map::
     import enum
     import typing
 
-    import sqlalchemy
-    from sqlalchemy.orm import DeclarativeBase
+    import ilikesql
+    from ilikesql.orm import DeclarativeBase
 
     Status = Literal["pending", "received", "completed"]
 
 
     class Base(DeclarativeBase):
         type_annotation_map = {
-            Status: sqlalchemy.Enum("pending", "received", "completed", name="status_enum"),
+            Status: ilikesql.Enum("pending", "received", "completed", name="status_enum"),
         }
 
 Or alternatively within :func:`_orm.mapped_column`::
@@ -791,8 +791,8 @@ Or alternatively within :func:`_orm.mapped_column`::
     import enum
     import typing
 
-    import sqlalchemy
-    from sqlalchemy.orm import DeclarativeBase
+    import ilikesql
+    from ilikesql.orm import DeclarativeBase
 
     Status = Literal["pending", "received", "completed"]
 
@@ -806,7 +806,7 @@ Or alternatively within :func:`_orm.mapped_column`::
 
         id: Mapped[int] = mapped_column(primary_key=True)
         status: Mapped[Status] = mapped_column(
-            sqlalchemy.Enum("pending", "received", "completed", name="status_enum")
+            ilikesql.Enum("pending", "received", "completed", name="status_enum")
         )
 
 Altering the Configuration of the Default Enum
@@ -820,14 +820,14 @@ For example, to use "non native enumerations" unconditionally, the
 
     import enum
     import typing
-    import sqlalchemy
-    from sqlalchemy.orm import DeclarativeBase
+    import ilikesql
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
         type_annotation_map = {
-            enum.Enum: sqlalchemy.Enum(enum.Enum, native_enum=False),
-            typing.Literal: sqlalchemy.Enum(enum.Enum, native_enum=False),
+            enum.Enum: ilikesql.Enum(enum.Enum, native_enum=False),
+            typing.Literal: ilikesql.Enum(enum.Enum, native_enum=False),
         }
 
 .. versionchanged:: 2.0.1  Implemented support for overriding parameters
@@ -841,8 +841,8 @@ as setting the string length to 50 when using the example ``Status``
 datatype::
 
     import enum
-    import sqlalchemy
-    from sqlalchemy.orm import DeclarativeBase
+    import ilikesql
+    from ilikesql.orm import DeclarativeBase
 
 
     class Status(enum.Enum):
@@ -853,7 +853,7 @@ datatype::
 
     class Base(DeclarativeBase):
         type_annotation_map = {
-            Status: sqlalchemy.Enum(Status, length=50, native_enum=False)
+            Status: ilikesql.Enum(Status, length=50, native_enum=False)
         }
 
 Linking Specific ``enum.Enum`` or ``typing.Literal`` to other datatypes
@@ -870,8 +870,8 @@ types is linked to the :class:`_sqltypes.JSON` datatype::
 
     from typing import Literal
 
-    from sqlalchemy import JSON
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql import JSON
+    from ilikesql.orm import DeclarativeBase
 
     my_literal = Literal[0, 1, True, False, "true", "false"]
 
@@ -887,7 +887,7 @@ to resolve to :class:`_sqltypes.Enum` datatypes.
 Dataclass features in ``mapped_column()``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :func:`_orm.mapped_column` construct integrates with SQLAlchemy's
+The :func:`_orm.mapped_column` construct integrates with ilikesql's
 "native dataclasses" feature, discussed at
 :ref:`orm_declarative_native_dataclasses`.   See that section for current
 background on additional directives supported by :func:`_orm.mapped_column`.
@@ -912,7 +912,7 @@ The above table is ultimately the same one that corresponds to the
 :attr:`_orm.Mapper.local_table` attribute, which we can see through the
 :ref:`runtime inspection system <inspection_toplevel>`::
 
-    from sqlalchemy import inspect
+    from ilikesql import inspect
 
     user_table = inspect(User).local_table
 
@@ -985,7 +985,7 @@ using the :paramref:`_schema.Table.schema` argument.   When using Declarative
 tables, this option is passed like any other to the ``__table_args__``
 dictionary::
 
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -1002,8 +1002,8 @@ at :ref:`schema_metadata_schema_name`.   The :class:`_schema.MetaData` object
 may be constructed separately and associated with a :class:`_orm.DeclarativeBase`
 subclass by assigning to the ``metadata`` attribute directly::
 
-    from sqlalchemy import MetaData
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql import MetaData
+    from ilikesql.orm import DeclarativeBase
 
     metadata_obj = MetaData(schema="some_schema")
 
@@ -1097,7 +1097,7 @@ and will see the SQL names generated:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> print(select(User.id, User.name).where(User.name == "x"))
     {printsql}SELECT "user".user_id, "user".user_name
     FROM "user"
@@ -1174,8 +1174,8 @@ object is produced separately and passed to the declarative process
 directly::
 
 
-    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql import Column, ForeignKey, Integer, String
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -1240,7 +1240,7 @@ The "imperative table" form is also used when a non-:class:`_schema.Table`
 construct, such as a :class:`_sql.Join` or :class:`_sql.Subquery` object,
 is to be mapped.  An example below::
 
-    from sqlalchemy import func, select
+    from ilikesql import func, select
 
     subq = (
         select(
@@ -1317,8 +1317,8 @@ object for its internal use automatically, by naming it in the class
 declaration, typing tools will be able to match the attribute to the
 :class:`_orm.Mapped` annotation::
 
-    from sqlalchemy.orm import column_property
-    from sqlalchemy.orm import Mapped
+    from ilikesql.orm import column_property
+    from ilikesql.orm import Mapped
 
 
     class User(Base):
@@ -1355,7 +1355,7 @@ associate additional parameters with the column.   Options include:
   below, the ``User.bio`` column will not be loaded by default, but only
   when accessed::
 
-    from sqlalchemy.orm import deferred
+    from ilikesql.orm import deferred
 
     user_table = Table(
         "user",
@@ -1381,7 +1381,7 @@ associate additional parameters with the column.   Options include:
   collection when inspecting the history of the attribute.   This may incur
   additional SQL statements::
 
-    from sqlalchemy.orm import deferred
+    from ilikesql.orm import deferred
 
     user_table = Table(
         "user",
@@ -1429,9 +1429,9 @@ use a declarative hybrid mapping, passing the
 :paramref:`_schema.Table.autoload_with` parameter to the constructor for
 :class:`_schema.Table`::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy import Table
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql import create_engine
+    from ilikesql import Table
+    from ilikesql.orm import DeclarativeBase
 
     engine = create_engine("postgresql+psycopg2://user:pass@hostname/my_existing_database")
 
@@ -1452,9 +1452,9 @@ A variant on the above pattern that scales for many tables is to use the
 objects at once, then refer to them from the :class:`.MetaData`::
 
 
-    from sqlalchemy import create_engine
-    from sqlalchemy import Table
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql import create_engine
+    from ilikesql import Table
+    from ilikesql.orm import DeclarativeBase
 
     engine = create_engine("postgresql+psycopg2://user:pass@hostname/my_existing_database")
 
@@ -1492,8 +1492,8 @@ the reflection process against a target database, and will integrate the
 results with the declarative table mapping process, that is, classes which
 use the ``__tablename__`` attribute::
 
-    from sqlalchemy.ext.declarative import DeferredReflection
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.ext.declarative import DeferredReflection
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -1575,8 +1575,8 @@ The event hook is most easily
 associated with the :class:`_schema.MetaData` object that's in use
 as illustrated below::
 
-    from sqlalchemy import event
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql import event
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -1632,12 +1632,12 @@ mapping against an existing :class:`.Table` object where the table does not
 have any declared primary key (as may occur in reflection scenarios), we may
 map such a table as in the following example::
 
-    from sqlalchemy import Column
-    from sqlalchemy import MetaData
-    from sqlalchemy import String
-    from sqlalchemy import Table
-    from sqlalchemy import UniqueConstraint
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql import Column
+    from ilikesql import MetaData
+    from ilikesql import String
+    from ilikesql import Table
+    from ilikesql import UniqueConstraint
+    from ilikesql.orm import DeclarativeBase
 
 
     metadata = MetaData()

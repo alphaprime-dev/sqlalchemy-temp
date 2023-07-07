@@ -1,39 +1,39 @@
 import copy
 
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import CascadeOptions
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import foreign
-from sqlalchemy.orm import object_mapper
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import util as orm_util
-from sqlalchemy.orm import with_parent
-from sqlalchemy.orm.attributes import instance_state
-from sqlalchemy.orm.collections import attribute_keyed_dict
-from sqlalchemy.orm.decl_api import declarative_base
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import not_in
-from sqlalchemy.testing.assertsql import CompiledSQL
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import exc as sa_exc
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import attributes
+from ilikesql.orm import backref
+from ilikesql.orm import CascadeOptions
+from ilikesql.orm import class_mapper
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import foreign
+from ilikesql.orm import object_mapper
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm import util as orm_util
+from ilikesql.orm import with_parent
+from ilikesql.orm.attributes import instance_state
+from ilikesql.orm.collections import attribute_keyed_dict
+from ilikesql.orm.decl_api import declarative_base
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import not_in
+from ilikesql.testing.assertsql import CompiledSQL
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 from test.orm import _fixtures
 
 
@@ -3079,8 +3079,8 @@ class PendingOrphanTestSingleLevel(fixtures.MappedTest):
 class PendingOrphanTestTwoLevel(fixtures.MappedTest):
     """test usages stated at
 
-    https://article.gmane.org/gmane.comp.python.sqlalchemy.user/3085
-    https://article.gmane.org/gmane.comp.python.sqlalchemy.user/3119
+    https://article.gmane.org/gmane.comp.python.ilikesql.user/3085
+    https://article.gmane.org/gmane.comp.python.ilikesql.user/3119
     """
 
     @classmethod
@@ -4239,7 +4239,7 @@ class SubclassCascadeTest(fixtures.DeclarativeMappedTest):
         lang = eng.languages[0]
         maven_build = lang.maven_builds[0]
 
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         state = inspect(obj)
         it = inspect(Company).cascade_iterator("save-update", state)

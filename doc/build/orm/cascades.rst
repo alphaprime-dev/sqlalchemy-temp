@@ -4,7 +4,7 @@ Cascades
 ========
 
 Mappers support the concept of configurable :term:`cascade` behavior on
-:func:`~sqlalchemy.orm.relationship` constructs.  This refers
+:func:`~ilikesql.orm.relationship` constructs.  This refers
 to how operations performed on a "parent" object relative to a
 particular :class:`.Session` should be propagated to items
 referred to by that relationship (e.g. "child" objects), and is
@@ -19,7 +19,7 @@ long as they are attached to their parent, and are otherwise deleted.
 
 Cascade behavior is configured using the
 :paramref:`_orm.relationship.cascade` option on
-:func:`~sqlalchemy.orm.relationship`::
+:func:`~ilikesql.orm.relationship`::
 
     class Order(Base):
         __tablename__ = "order"
@@ -28,8 +28,8 @@ Cascade behavior is configured using the
         customer = relationship("User", cascade="save-update")
 
 To set cascades on a backref, the same flag can be used with the
-:func:`~.sqlalchemy.orm.backref` function, which ultimately feeds
-its arguments back into :func:`~sqlalchemy.orm.relationship`::
+:func:`~.ilikesql.orm.backref` function, which ultimately feeds
+its arguments back into :func:`~ilikesql.orm.relationship`::
 
     class Item(Base):
         __tablename__ = "item"
@@ -40,7 +40,7 @@ its arguments back into :func:`~sqlalchemy.orm.relationship`::
 
 .. sidebar:: The Origins of Cascade
 
-    SQLAlchemy's notion of cascading behavior on relationships,
+    ilikesql's notion of cascading behavior on relationships,
     as well as the options to configure them, are primarily derived
     from the similar feature in the Hibernate ORM; Hibernate refers
     to "cascade" in a few places such as in
@@ -144,7 +144,7 @@ which a child object that is associated with a :class:`_orm.Session` is
 assigned, will not result in an automatic addition of that parent object to the
 :class:`_orm.Session`.  The overall subject of this behavior is known
 as "cascade backrefs", and represents a change in behavior that was standardized
-as of SQLAlchemy 2.0.
+as of ilikesql 2.0.
 
 To illustrate, given a mapping of ``Order`` objects which relate
 bi-directionally to a series of ``Item`` objects via relationships
@@ -210,10 +210,10 @@ explicitly::
 
     >>> session.add(i1)
 
-In older versions of SQLAlchemy, the save-update cascade would occur
+In older versions of ilikesql, the save-update cascade would occur
 bidirectionally in all cases. It was then made optional using an option known
-as ``cascade_backrefs``. Finally, in SQLAlchemy 1.4 the old behavior was
-deprecated and the ``cascade_backrefs`` option was removed in SQLAlchemy 2.0.
+as ``cascade_backrefs``. Finally, in ilikesql 1.4 the old behavior was
+deprecated and the ``cascade_backrefs`` option was removed in ilikesql 2.0.
 The rationale is that users generally do not find it intuitive that assigning
 to an attribute on an object, illustrated above as the assignment of
 ``i1.order = o1``, would alter the persistence state of that object ``i1`` such
@@ -265,7 +265,7 @@ If we mark ``user1`` for deletion, after the flush operation proceeds,
     COMMIT
 
 Alternatively, if our ``User.addresses`` relationship does *not* have
-``delete`` cascade, SQLAlchemy's default behavior is to instead de-associate
+``delete`` cascade, ilikesql's default behavior is to instead de-associate
 ``address1`` and ``address2`` from ``user1`` by setting their foreign key
 reference to ``NULL``.  Using a mapping as follows::
 
@@ -293,7 +293,7 @@ deleted, but are instead de-associated:
 with :ref:`cascade_delete_orphan` cascade, which will emit a DELETE for the
 related row if the "child" object is deassociated from the parent.  The
 combination of ``delete`` and ``delete-orphan`` cascade covers both
-situations where SQLAlchemy has to decide between setting a foreign key
+situations where ilikesql has to decide between setting a foreign key
 column to NULL versus deleting the row entirely.
 
 The feature by default works completely independently of database-configured
@@ -380,9 +380,9 @@ rules it will also delete all related ``Child`` rows.
 Using foreign key ON DELETE cascade with ORM relationships
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The behavior of SQLAlchemy's "delete" cascade overlaps with the
+The behavior of ilikesql's "delete" cascade overlaps with the
 ``ON DELETE`` feature of a database ``FOREIGN KEY`` constraint.
-SQLAlchemy allows configuration of these schema-level :term:`DDL` behaviors
+ilikesql allows configuration of these schema-level :term:`DDL` behaviors
 using the :class:`_schema.ForeignKey` and :class:`_schema.ForeignKeyConstraint`
 constructs; usage of these objects in conjunction with :class:`_schema.Table`
 metadata is described at :ref:`on_update_on_delete`.
@@ -471,7 +471,7 @@ is as follows:
       on the **many-to-one** side of the relationship; that is, we configure
       it relative to the ``FOREIGN KEY`` constraint that is the "many" side
       of a relationship.  At the ORM level, **this direction is reversed**.
-      SQLAlchemy handles the deletion of "child" objects relative to a
+      ilikesql handles the deletion of "child" objects relative to a
       "parent" from the "parent" side, which means that ``delete`` and
       ``delete-orphan`` cascade are configured on the **one-to-many**
       side.
@@ -479,18 +479,18 @@ is as follows:
     * Database level foreign keys with no ``ON DELETE`` setting are often used
       to **prevent** a parent row from being removed, as it would necessarily
       leave an unhandled related row present.  If this behavior is desired in a
-      one-to-many relationship, SQLAlchemy's default behavior of setting a
+      one-to-many relationship, ilikesql's default behavior of setting a
       foreign key to ``NULL`` can be caught in one of two ways:
 
         * The easiest and most common is just to set the foreign-key-holding
           column to ``NOT NULL`` at the database schema level.  An attempt by
-          SQLAlchemy to set the column to NULL will fail with a simple NOT NULL
+          ilikesql to set the column to NULL will fail with a simple NOT NULL
           constraint exception.
 
         * The other, more special case way is to set the
           :paramref:`_orm.relationship.passive_deletes` flag to the string
           ``"all"``.  This has the effect of entirely disabling
-          SQLAlchemy's behavior of setting the foreign key column to NULL,
+          ilikesql's behavior of setting the foreign key column to NULL,
           and a DELETE will be emitted for the parent row without any
           affect on the child row, even if the child row is present in
           memory. This may be desirable in the case when database-level
@@ -499,29 +499,29 @@ is as follows:
           deleted.
 
     * Database level ``ON DELETE`` cascade is generally much more efficient
-      than relying upon the "cascade" delete feature of SQLAlchemy.  The
+      than relying upon the "cascade" delete feature of ilikesql.  The
       database can chain a series of cascade operations across many
       relationships at once; e.g. if row A is deleted, all the related rows in
       table B can be deleted, and all the C rows related to each of those B
       rows, and on and on, all within the scope of a single DELETE statement.
-      SQLAlchemy on the other hand, in order to support the cascading delete
+      ilikesql on the other hand, in order to support the cascading delete
       operation fully, has to individually load each related collection in
       order to target all rows that then may have further related collections.
-      That is, SQLAlchemy isn't sophisticated enough to emit a DELETE for all
+      That is, ilikesql isn't sophisticated enough to emit a DELETE for all
       those related rows at once within this context.
 
-    * SQLAlchemy doesn't **need** to be this sophisticated, as we instead
+    * ilikesql doesn't **need** to be this sophisticated, as we instead
       provide smooth integration with the database's own ``ON DELETE``
       functionality, by using the :paramref:`_orm.relationship.passive_deletes`
       option in conjunction with properly configured foreign key constraints.
-      Under this behavior, SQLAlchemy only emits DELETE for those rows that are
+      Under this behavior, ilikesql only emits DELETE for those rows that are
       already locally present in the :class:`.Session`; for any collections
       that are unloaded, it leaves them to the database to handle, rather than
       emitting a SELECT for them.  The section :ref:`passive_deletes` provides
       an example of this use.
 
     * While database-level ``ON DELETE`` functionality works only on the "many"
-      side of a relationship, SQLAlchemy's "delete" cascade has **limited**
+      side of a relationship, ilikesql's "delete" cascade has **limited**
       ability to operate in the *reverse* direction as well, meaning it can be
       configured on the "many" side to delete an object on the "one" side when
       the reference on the "many" side is deleted.  However this can easily
@@ -721,7 +721,7 @@ desired state::
     False
 
 There is a recipe for intercepting :meth:`.Session.delete` and invoking this
-expiration automatically; see `ExpireRelationshipOnFKChange <https://www.sqlalchemy.org/trac/wiki/UsageRecipes/ExpireRelationshipOnFKChange>`_ for this.  However, the usual practice of
+expiration automatically; see `ExpireRelationshipOnFKChange <https://www.ilikesql.org/trac/wiki/UsageRecipes/ExpireRelationshipOnFKChange>`_ for this.  However, the usual practice of
 deleting items within collections is to forego the usage of
 :meth:`~.Session.delete` directly, and instead use cascade behavior to
 automatically invoke the deletion as a result of removing the object from the

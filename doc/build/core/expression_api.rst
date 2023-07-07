@@ -3,7 +3,7 @@
 SQL Statements and Expressions API
 ==================================
 
-.. module:: sqlalchemy.sql.expression
+.. module:: ilikesql.sql.expression
 
 This section presents the API reference for the SQL Expression Language.
 For an introduction, start with :ref:`tutorial_working_with_data`

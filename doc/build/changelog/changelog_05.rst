@@ -407,7 +407,7 @@
         :tags: orm
         :tickets: 
 
-      Added AttributeExtension to sqlalchemy.orm.__all__
+      Added AttributeExtension to ilikesql.orm.__all__
 
     .. change::
         :tags: orm
@@ -430,7 +430,7 @@
       Added enable_assertions(False) to Query which disables
       the usual assertions for expected state - used
       by Query subclasses to engineer custom state..  See
-      https://www.sqlalchemy.org/trac/wiki/UsageRecipes/PreFilteredQuery
+      https://www.ilikesql.org/trac/wiki/UsageRecipes/PreFilteredQuery
       for an example.
 
     .. change::
@@ -590,7 +590,7 @@
       Call session.add() if you'd like a free-standing object to be
       part of your session.  Otherwise, a DIY version of
       Session.mapper is now documented at
-      https://www.sqlalchemy.org/trac/wiki/UsageRecipes/SessionAwareMapper
+      https://www.ilikesql.org/trac/wiki/UsageRecipes/SessionAwareMapper
       The method will remain deprecated throughout 0.6.
 
     .. change::
@@ -671,8 +671,8 @@
         :tags: orm
         :tickets: 1463
 
-      sqlalchemy.orm.join and sqlalchemy.orm.outerjoin are now
-      added to __all__ in sqlalchemy.orm.*.
+      ilikesql.orm.join and ilikesql.orm.outerjoin are now
+      added to __all__ in ilikesql.orm.*.
 
     .. change::
         :tags: orm
@@ -963,7 +963,7 @@
         :tags: sql
         :tickets: 
 
-      ``sqlalchemy.extract()`` is now dialect sensitive and can
+      ``ilikesql.extract()`` is now dialect sensitive and can
       extract components of timestamps idiomatically across the
       supported databases, including SQLite.
 
@@ -1160,7 +1160,7 @@
         :tickets: 
 
       Added an attribute helper method ``set_committed_value`` in
-      sqlalchemy.orm.attributes.  Given an object, attribute name,
+      ilikesql.orm.attributes.  Given an object, attribute name,
       and value, will set the value on the object as part of its
       "committed" state, i.e. state that is understood to have
       been loaded from the database.   Helps with the creation of
@@ -1248,7 +1248,7 @@
         :tickets: 1327
 
       Added PGUuid and PGBit types to
-      sqlalchemy.databases.postgres.
+      ilikesql.databases.postgres.
 
     .. change::
         :tags: postgresql
@@ -1771,7 +1771,7 @@
 
       query.join() raises an error when the target of the join
       doesn't match the property-based attribute - while it's
-      unlikely anyone is doing this, the SQLAlchemy author was
+      unlikely anyone is doing this, the ilikesql author was
       guilty of this particular loosey-goosey behavior.
 
     .. change::
@@ -1985,7 +1985,7 @@
         :tags: sql
         :tickets: 
 
-      sqlalchemy.sql.expression.Function is now a public class.  It
+      ilikesql.sql.expression.Function is now a public class.  It
       can be subclassed to provide user-defined SQL functions in an
       imperative style, including with pre-established behaviors.
       The postgis.py example illustrates one usage of this.
@@ -2003,7 +2003,7 @@
         :tags: sql
         :tickets: 1215
 
-      Fixed the import weirdness in sqlalchemy.sql to not export
+      Fixed the import weirdness in ilikesql.sql to not export
       __names__.
 
     .. change::
@@ -2508,7 +2508,7 @@
         :tags: ext
         :tickets: 
 
-      Added a new extension sqlalchemy.ext.serializer.  Provides
+      Added a new extension ilikesql.ext.serializer.  Provides
       Serializer/Deserializer "classes" which mirror
       Pickle/Unpickle, as well as dumps() and loads(). This
       serializer implements an "external object" pickler which keeps
@@ -3253,7 +3253,7 @@
         :tags: orm
         :tickets: 
 
-      The "entity_name" feature of SQLAlchemy mappers has been
+      The "entity_name" feature of ilikesql mappers has been
       removed.  For rationale, see https://tinyurl.com/6nm2ne
 
     .. change::
@@ -3523,7 +3523,7 @@
       
       To get the old behavior globally:
       
-           from sqlalchemy.databases.sqlite import DateTimeMixin
+           from ilikesql.databases.sqlite import DateTimeMixin
            DateTimeMixin.__legacy_microseconds__ = True
       
       To get the behavior on individual DateTime types:
@@ -3587,7 +3587,7 @@
       Custom instrumentation may use any mechanism to associate a
       ClassManager with a class and an InstanceState with an
       instance.  Attributes on those objects are still the default
-      association mechanism used by SQLAlchemy's native
+      association mechanism used by ilikesql's native
       instrumentation.
 
     .. change::
@@ -3611,30 +3611,30 @@
         :tags: 
         :tickets: 
 
-      sqlalchemy.exceptions has been renamed to sqlalchemy.exc.  The
+      ilikesql.exceptions has been renamed to ilikesql.exc.  The
       module may be imported under either name.
 
     .. change::
         :tags: 
         :tickets: 
 
-      ORM-related exceptions are now defined in sqlalchemy.orm.exc.
+      ORM-related exceptions are now defined in ilikesql.orm.exc.
       ConcurrentModificationError, FlushError, and
       UnmappedColumnError compatibility aliases are installed in
-      sqlalchemy.exc during the import of sqlalchemy.orm.
+      ilikesql.exc during the import of ilikesql.orm.
 
     .. change::
         :tags: 
         :tickets: 
 
-      sqlalchemy.logging has been renamed to sqlalchemy.log.
+      ilikesql.logging has been renamed to ilikesql.log.
 
     .. change::
         :tags: 
         :tickets: 
 
-      The transitional sqlalchemy.log.SADeprecationWarning alias for
-      the warning's definition in sqlalchemy.exc has been removed.
+      The transitional ilikesql.log.SADeprecationWarning alias for
+      the warning's definition in ilikesql.exc has been removed.
 
     .. change::
         :tags: 

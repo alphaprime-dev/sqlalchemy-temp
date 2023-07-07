@@ -2,50 +2,50 @@ import itertools
 from operator import itemgetter
 import re
 
-import sqlalchemy as sa
-from sqlalchemy import BigInteger
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import Identity
-from sqlalchemy import Index
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import join
-from sqlalchemy import MetaData
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import Sequence
-from sqlalchemy import SmallInteger
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy import UniqueConstraint
-from sqlalchemy.dialects.postgresql import ARRAY
-from sqlalchemy.dialects.postgresql import base as postgresql
-from sqlalchemy.dialects.postgresql import ExcludeConstraint
-from sqlalchemy.dialects.postgresql import INTEGER
-from sqlalchemy.dialects.postgresql import INTERVAL
-from sqlalchemy.dialects.postgresql import pg_catalog
-from sqlalchemy.dialects.postgresql import TSRANGE
-from sqlalchemy.engine import ObjectKind
-from sqlalchemy.engine import ObjectScope
-from sqlalchemy.schema import CreateIndex
-from sqlalchemy.sql import ddl as sa_ddl
-from sqlalchemy.sql.schema import CheckConstraint
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertions import assert_warns
-from sqlalchemy.testing.assertions import AssertsExecutionResults
-from sqlalchemy.testing.assertions import ComparesIndexes
-from sqlalchemy.testing.assertions import eq_
-from sqlalchemy.testing.assertions import expect_raises
-from sqlalchemy.testing.assertions import expect_warnings
-from sqlalchemy.testing.assertions import is_
-from sqlalchemy.testing.assertions import is_false
-from sqlalchemy.testing.assertions import is_true
-from sqlalchemy.types import NullType
+import ilikesql as sa
+from ilikesql import BigInteger
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import Identity
+from ilikesql import Index
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import join
+from ilikesql import MetaData
+from ilikesql import PrimaryKeyConstraint
+from ilikesql import Sequence
+from ilikesql import SmallInteger
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql import UniqueConstraint
+from ilikesql.dialects.postgresql import ARRAY
+from ilikesql.dialects.postgresql import base as postgresql
+from ilikesql.dialects.postgresql import ExcludeConstraint
+from ilikesql.dialects.postgresql import INTEGER
+from ilikesql.dialects.postgresql import INTERVAL
+from ilikesql.dialects.postgresql import pg_catalog
+from ilikesql.dialects.postgresql import TSRANGE
+from ilikesql.engine import ObjectKind
+from ilikesql.engine import ObjectScope
+from ilikesql.schema import CreateIndex
+from ilikesql.sql import ddl as sa_ddl
+from ilikesql.sql.schema import CheckConstraint
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import fixtures
+from ilikesql.testing import mock
+from ilikesql.testing.assertions import assert_warns
+from ilikesql.testing.assertions import AssertsExecutionResults
+from ilikesql.testing.assertions import ComparesIndexes
+from ilikesql.testing.assertions import eq_
+from ilikesql.testing.assertions import expect_raises
+from ilikesql.testing.assertions import expect_warnings
+from ilikesql.testing.assertions import is_
+from ilikesql.testing.assertions import is_false
+from ilikesql.testing.assertions import is_true
+from ilikesql.types import NullType
 
 
 class ReflectionFixtures:
@@ -83,7 +83,7 @@ class ForeignTableReflectionTest(
 
     @classmethod
     def define_tables(cls, metadata):
-        from sqlalchemy.testing import config
+        from ilikesql.testing import config
 
         dblink = config.file_config.get(
             "sqla_testing", "postgres_test_db_link"
@@ -567,7 +567,7 @@ class DomainReflectionTest(fixtures.TestBase, AssertsExecutionResults):
         ), "Expected reflected column to be nullable."
 
     def test_unknown_types(self, connection):
-        from sqlalchemy.dialects.postgresql import base
+        from ilikesql.dialects.postgresql import base
 
         ischema_names = base.PGDialect.ischema_names
         base.PGDialect.ischema_names = {}

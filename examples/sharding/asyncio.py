@@ -13,23 +13,23 @@ from __future__ import annotations
 import asyncio
 import datetime
 
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import Table
-from sqlalchemy.ext.asyncio import async_sessionmaker
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.ext.horizontal_shard import set_shard_id
-from sqlalchemy.ext.horizontal_shard import ShardedSession
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import immediateload
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import visitors
+from ilikesql import Column
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import Table
+from ilikesql.ext.asyncio import async_sessionmaker
+from ilikesql.ext.asyncio import create_async_engine
+from ilikesql.ext.horizontal_shard import set_shard_id
+from ilikesql.ext.horizontal_shard import ShardedSession
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import immediateload
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.sql import operators
+from ilikesql.sql import visitors
 
 
 echo = True

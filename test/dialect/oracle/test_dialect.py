@@ -4,42 +4,42 @@ import re
 from unittest import mock
 from unittest.mock import Mock
 
-from sqlalchemy import bindparam
-from sqlalchemy import Computed
-from sqlalchemy import create_engine
-from sqlalchemy import Enum
-from sqlalchemy import exc
-from sqlalchemy import Float
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import literal_column
-from sqlalchemy import outparam
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import Unicode
-from sqlalchemy import UnicodeText
-from sqlalchemy.dialects.oracle import base as oracle
-from sqlalchemy.dialects.oracle import cx_oracle
-from sqlalchemy.dialects.oracle import oracledb
-from sqlalchemy.engine import url
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import pep435_enum
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.suite import test_select
+from ilikesql import bindparam
+from ilikesql import Computed
+from ilikesql import create_engine
+from ilikesql import Enum
+from ilikesql import exc
+from ilikesql import Float
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import literal_column
+from ilikesql import outparam
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import Unicode
+from ilikesql import UnicodeText
+from ilikesql.dialects.oracle import base as oracle
+from ilikesql.dialects.oracle import cx_oracle
+from ilikesql.dialects.oracle import oracledb
+from ilikesql.engine import url
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import pep435_enum
+from ilikesql.testing.schema import Table
+from ilikesql.testing.suite import test_select
 
 
 class CxOracleDialectTest(fixtures.TestBase):
@@ -723,7 +723,7 @@ class CompatFlagsTest(fixtures.TestBase, AssertsCompiledSQL):
         self.assert_compile(UnicodeText(), "NCLOB", dialect=dialect)
 
     def test_ident_length_in_13_is_30(self):
-        from sqlalchemy import __version__
+        from ilikesql import __version__
 
         m = re.match(r"(\d+)\.(\d+)(?:\.(\d+))?", __version__)
         version = tuple(int(x) for x in m.group(1, 2, 3) if x is not None)

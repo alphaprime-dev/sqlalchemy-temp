@@ -1,4 +1,4 @@
 [gerrit]
-host=gerrit.sqlalchemy.org
-project=sqlalchemy/sqlalchemy
+host=gerrit.ilikesql.org
+project=ilikesql/ilikesql
 defaultbranch=main

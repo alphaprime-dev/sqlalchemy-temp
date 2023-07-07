@@ -1,10 +1,10 @@
 .. _plugins:
-.. _sqlalchemy.ext:
+.. _ilikesql.ext:
 
 ORM Extensions
 ==============
 
-SQLAlchemy has a variety of ORM extensions available, which add additional
+ilikesql has a variety of ORM extensions available, which add additional
 functionality to the core behavior.
 
 The extensions build almost entirely on public core and ORM APIs and users should

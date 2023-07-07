@@ -3,7 +3,7 @@
 Hybrid Attributes
 =================
 
-.. automodule:: sqlalchemy.ext.hybrid
+.. automodule:: ilikesql.ext.hybrid
 
 API Reference
 -------------

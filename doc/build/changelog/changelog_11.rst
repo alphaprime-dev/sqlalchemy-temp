@@ -95,7 +95,7 @@
         :versions: 1.2.0b4
 
         Added :func:`.nullsfirst` and :func:`.nullslast` as top level imports
-        in the ``sqlalchemy.`` and ``sqlalchemy.sql.`` namespace.  Pull request
+        in the ``ilikesql.`` and ``ilikesql.sql.`` namespace.  Pull request
         courtesy Lele Gaifax.
 
     .. change::
@@ -182,7 +182,7 @@
         10.2.9.
 
         Note that this changelog message was NOT released with
-        SQLAlchemy 1.2.0b3 and was added retroactively.
+        ilikesql 1.2.0b3 and was added retroactively.
 
     .. change::
         :tags: bug, mssql
@@ -648,7 +648,7 @@
         :versions: 1.2.0b1
         :tickets: 3950
 
-        Fixed bug in :mod:`sqlalchemy.ext.mutable` where the
+        Fixed bug in :mod:`ilikesql.ext.mutable` where the
         :meth:`.Mutable.as_mutable` method would not track a type that had
         been copied using :meth:`.TypeEngine.copy`.  This became more of
         a regression in 1.1 compared to 1.0 because the :class:`.TypeDecorator`
@@ -829,7 +829,7 @@
         :tags: bug, ext
         :tickets: 3901
 
-        Fixed bug in new :mod:`sqlalchemy.ext.indexable` extension
+        Fixed bug in new :mod:`ilikesql.ext.indexable` extension
         where setting of a property that itself refers to another property
         would fail.
 
@@ -950,7 +950,7 @@
         :tickets: 3878
 
         Fixed 1.1 regression where "import *" would not work for
-        sqlalchemy.sql.expression, due to mis-spelled ``any_`` and ``all_``
+        ilikesql.sql.expression, due to mis-spelled ``any_`` and ``all_``
         functions.
 
     .. change:: 3880
@@ -1471,7 +1471,7 @@
         :tickets: 3786
 
         Raise a more descriptive exception / message when ClauseElement
-        or non-SQLAlchemy objects that are not "executable" are erroneously
+        or non-ilikesql objects that are not "executable" are erroneously
         passed to ``.execute()``; a new exception ObjectNotExecutableError
         is raised consistently in all cases.
 
@@ -1586,13 +1586,13 @@
     .. change::
         :tags: bug, ext
 
-        sqlalchemy.ext.indexable will intercept IndexError as well
+        ilikesql.ext.indexable will intercept IndexError as well
         as KeyError when raising as AttributeError.
 
     .. change::
         :tags: feature, ext
 
-        Added a "default" parameter to the new sqlalchemy.ext.indexable
+        Added a "default" parameter to the new ilikesql.ext.indexable
         extension.
 
 .. changelog::
@@ -1603,7 +1603,7 @@
         :tags: bug, ext, postgresql
         :tickets: 3732
 
-        Made a slight behavioral change in the ``sqlalchemy.ext.compiler``
+        Made a slight behavioral change in the ``ilikesql.ext.compiler``
         extension, whereby the existing compilation schemes for an established
         construct would be removed if that construct itself didn't already
         have its own dedicated ``__visit_name__``.  This was a
@@ -1843,7 +1843,7 @@
         :tickets: 3394
 
         The :paramref:`_orm.Mapper.order_by` parameter is deprecated.
-        This is an old parameter no longer relevant to how SQLAlchemy
+        This is an old parameter no longer relevant to how ilikesql
         works, once the Query object was introduced.  By deprecating it
         we establish that we aren't supporting non-working use cases
         and that we encourage applications to move off of the use of this
@@ -2112,9 +2112,9 @@
     .. change::
         :tags: change, postgresql
 
-        The ``sqlalchemy.dialects.postgres`` module, long deprecated, is
+        The ``ilikesql.dialects.postgres`` module, long deprecated, is
         removed; this has emitted a warning for many years and projects
-        should be calling upon ``sqlalchemy.dialects.postgresql``.
+        should be calling upon ``ilikesql.dialects.postgresql``.
         Engine URLs of the form ``postgres://`` will still continue to function,
         however.
 
@@ -2352,7 +2352,7 @@
         is no longer implicitly enabled for a :class:`_schema.Table` that has a
         composite primary key.  In order to accommodate being able to enable
         autoincrement for a composite PK member column while at the same time
-        maintaining SQLAlchemy's long standing behavior of enabling
+        maintaining ilikesql's long standing behavior of enabling
         implicit autoincrement for a single integer primary key, a third
         state has been added to the :paramref:`_schema.Column.autoincrement` parameter
         ``"auto"``, which is now the default.

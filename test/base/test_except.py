@@ -3,11 +3,11 @@
 from itertools import product
 import pickle
 
-from sqlalchemy import exc as sa_exceptions
-from sqlalchemy.engine import default
-from sqlalchemy.testing import combinations_list
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
+from ilikesql import exc as sa_exceptions
+from ilikesql.engine import default
+from ilikesql.testing import combinations_list
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
 
 
 class Error(Exception):
@@ -115,10 +115,10 @@ class WrapTest(fixtures.TestBase):
         except sa_exceptions.StatementError as err:
             eq_(
                 str(err),
-                "(sqlalchemy.exc.InvalidRequestError) hello\n"
+                "(ilikesql.exc.InvalidRequestError) hello\n"
                 "[SQL: select * from table]\n[parameters: [{'x': 1}]]",
             )
-            eq_(err.args, ("(sqlalchemy.exc.InvalidRequestError) hello",))
+            eq_(err.args, ("(ilikesql.exc.InvalidRequestError) hello",))
 
     def test_statement_error_w_code(self):
         try:
@@ -131,13 +131,13 @@ class WrapTest(fixtures.TestBase):
         except sa_exceptions.StatementError as err:
             eq_(
                 str(err),
-                "(sqlalchemy.exc.InvalidRequestError) hello\n"
+                "(ilikesql.exc.InvalidRequestError) hello\n"
                 "[SQL: select * from table]\n"
                 "[parameters: [{'x': 1}]]\n"
                 "(Background on this error at: https://sqlalche.me/e/%s/abcd)"
                 % sa_exceptions._version_token,
             )
-            eq_(err.args, ("(sqlalchemy.exc.InvalidRequestError) hello",))
+            eq_(err.args, ("(ilikesql.exc.InvalidRequestError) hello",))
 
     def test_wrap_multi_arg(self):
         # this is not supported by the API but oslo_db is doing it
@@ -421,7 +421,7 @@ def details(cls):
 
 ALL_EXC = [
     (
-        [sa_exceptions.SQLAlchemyError],
+        [sa_exceptions.ilikesqlError],
         [lambda cls: cls(1, 2, code="42")],
     ),
     ([sa_exceptions.ObjectNotExecutableError], [lambda cls: cls("xx")]),

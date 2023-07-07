@@ -1,23 +1,23 @@
-from sqlalchemy import alias
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import Enum
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import true
-from sqlalchemy.engine import default
-from sqlalchemy.sql import func
-from sqlalchemy.sql import select
-from sqlalchemy.sql import Values
-from sqlalchemy.sql.compiler import FROM_LINTING
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.util import OrderedDict
+from ilikesql import alias
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import Enum
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import true
+from ilikesql.engine import default
+from ilikesql.sql import func
+from ilikesql.sql import select
+from ilikesql.sql import Values
+from ilikesql.sql.compiler import FROM_LINTING
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.util import OrderedDict
 
 
 class ValuesTest(fixtures.TablesTest, AssertsCompiledSQL):
@@ -195,7 +195,7 @@ class ValuesTest(fixtures.TablesTest, AssertsCompiledSQL):
     @testing.fixture
     def tricky_types_parameter_fixture(self):
         class SomeEnum:
-            # Implements PEP 435 in the minimal fashion needed by SQLAlchemy
+            # Implements PEP 435 in the minimal fashion needed by ilikesql
             __members__ = OrderedDict()
 
             def __init__(self, name, value, alias=None):

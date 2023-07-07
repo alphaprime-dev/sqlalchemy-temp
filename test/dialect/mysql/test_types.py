@@ -2,33 +2,33 @@ from collections import OrderedDict
 import datetime
 import decimal
 
-from sqlalchemy import BOOLEAN
-from sqlalchemy import Boolean
-from sqlalchemy import Column
-from sqlalchemy import DefaultClause
-from sqlalchemy import Enum
-from sqlalchemy import exc
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import TIMESTAMP
-from sqlalchemy import TypeDecorator
-from sqlalchemy import types as sqltypes
-from sqlalchemy import UnicodeText
-from sqlalchemy.dialects.mysql import base as mysql
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_regex
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
+from ilikesql import BOOLEAN
+from ilikesql import Boolean
+from ilikesql import Column
+from ilikesql import DefaultClause
+from ilikesql import Enum
+from ilikesql import exc
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import TIMESTAMP
+from ilikesql import TypeDecorator
+from ilikesql import types as sqltypes
+from ilikesql import UnicodeText
+from ilikesql.dialects.mysql import base as mysql
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_regex
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
 
 
 class TypeCompileTest(fixtures.TestBase, AssertsCompiledSQL):
@@ -774,7 +774,7 @@ class EnumSetTest(
     __backend__ = True
 
     class SomeEnum:
-        # Implements PEP 435 in the minimal fashion needed by SQLAlchemy
+        # Implements PEP 435 in the minimal fashion needed by ilikesql
         __members__ = OrderedDict()
 
         def __init__(self, name, value):

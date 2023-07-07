@@ -7,19 +7,19 @@ row into a completely basic Python object and appending to a list. The
 time spent typically more than doubles.  The point is that while
 DBAPIs will give you raw rows very fast if they are written in C, the
 moment you do anything with those rows, even something trivial,
-overhead grows extremely fast in cPython. SQLAlchemy's Core and
+overhead grows extremely fast in cPython. ilikesql's Core and
 lighter-weight ORM options add absolutely minimal overhead, and the
 full blown ORM doesn't do terribly either even though mapped objects
 provide a huge amount of functionality.
 
 """
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Bundle
-from sqlalchemy.orm import Session
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import Bundle
+from ilikesql.orm import Session
 from . import Profiler
 
 

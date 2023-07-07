@@ -219,7 +219,7 @@
         If this keyword isn't present, the setup will still succeed
         with setuptools rather than falling back to distutils.  C extension
         building can be disabled now also by setting the
-        DISABLE_SQLALCHEMY_CEXT environment variable.  This variable works
+        DISABLE_ilikesql_CEXT environment variable.  This variable works
         whether or not setuptools is even available.
 
     .. change::
@@ -260,7 +260,7 @@
         :versions: 0.9.4
         :tickets: 2975
 
-        Removed stale names from ``sqlalchemy.orm.interfaces.__all__`` and
+        Removed stale names from ``ilikesql.orm.interfaces.__all__`` and
         refreshed with current names, so that an ``import *`` from this
         module again works.
 
@@ -530,7 +530,7 @@
         the error handling specific to the ``connect()`` routine would both
         inappropriately run the exception through the dialect's
         :meth:`.Dialect.is_disconnect` routine as well as wrap it in
-        a :class:`sqlalchemy.exc.DBAPIError`.  It is now propagated unchanged
+        a :class:`ilikesql.exc.DBAPIError`.  It is now propagated unchanged
         in the same way as occurs within the execute process.
 
      .. change::
@@ -964,7 +964,7 @@
         will now interpret ORM entities as target tables to be operated upon,
         e.g.::
 
-            from sqlalchemy import insert, update, delete
+            from ilikesql import insert, update, delete
 
             ins = insert(SomeMappedClass).values(x=5)
 
@@ -1010,7 +1010,7 @@
         :tickets: 2764
         :versions: 0.9.0b1
 
-        Added :class:`sqlalchemy.types.BIGINT` to the list of type names that can be
+        Added :class:`ilikesql.types.BIGINT` to the list of type names that can be
         reflected by the SQLite dialect; courtesy Russell Stuart.
 
     .. change::
@@ -1042,7 +1042,7 @@
         is now required in order to run the unit test suite.  While part
         of the standard library as of Python 3.3, previous Python installations
         will need to install this in order to run unit tests or to
-        use the ``sqlalchemy.testing`` package for external dialects.
+        use the ``ilikesql.testing`` package for external dialects.
 
     .. change::
         :tags: bug, orm
@@ -1388,7 +1388,7 @@
       :tags: bug, orm
       :tickets: 2698
 
-      Fixes to the ``sqlalchemy.ext.serializer`` extension, including
+      Fixes to the ``ilikesql.ext.serializer`` extension, including
       that the "id" passed from the pickler is turned into a string
       to prevent against bytes being parsed on Py3K, as well as that
       ``relationship()`` and ``orm.join()`` constructs are now properly
@@ -1639,7 +1639,7 @@
       passed to Table(); since we want to support external dialects
       and also want to support args without a certain dialect
       being installed, it only checks the format of the arg now,
-      rather than looking for that dialect in sqlalchemy.dialects.
+      rather than looking for that dialect in ilikesql.dialects.
 
     .. change::
       :tags: bug, sql
@@ -2018,7 +2018,7 @@
     .. change::
         :tags: postgresql, bug
 
-      Fixed bug in :class:`~sqlalchemy.dialects.postgresql.array()` construct whereby using it
+      Fixed bug in :class:`~ilikesql.dialects.postgresql.array()` construct whereby using it
       inside of an :func:`_expression.insert` construct would produce an
       error regarding a parameter issue in the ``self_group()`` method.
 
@@ -2169,7 +2169,7 @@
       in no call to ``connection.commit()``, hence avoiding
       "no transaction" errors.   Two-phase transactions have
       now been shown to work in a rudimental fashion with
-      SQLAlchemy and cx_oracle, however are subject to caveats
+      ilikesql and cx_oracle, however are subject to caveats
       observed with the driver; check the documentation
       for details.  Also in 0.7.10.
 
@@ -2177,7 +2177,7 @@
         :tags: sql, bug
         :tickets: 2618
 
-      The :class:`~sqlalchemy.types.DECIMAL` type now honors the "precision" and
+      The :class:`~ilikesql.types.DECIMAL` type now honors the "precision" and
       "scale" arguments when rendering DDL.
 
     .. change::
@@ -2256,7 +2256,7 @@
     .. change::
         :tags: orm, extensions, feature
 
-      The :mod:`sqlalchemy.ext.mutable` extension now includes the
+      The :mod:`ilikesql.ext.mutable` extension now includes the
       example :class:`.MutableDict` class as part of the extension.
 
     .. change::
@@ -2293,7 +2293,7 @@
     .. change::
         :tags: engine
 
-      The "reflect=True" argument to :class:`~sqlalchemy.schema.MetaData` is deprecated.
+      The "reflect=True" argument to :class:`~ilikesql.schema.MetaData` is deprecated.
       Please use the :meth:`_schema.MetaData.reflect` method.
 
     .. change::
@@ -2444,15 +2444,15 @@
         :tags: general
         :tickets:
 
-      SQLAlchemy 0.8 now targets Python 2.5 and
+      ilikesql 0.8 now targets Python 2.5 and
       above.  Python 2.4 is no longer supported.
 
     .. change::
         :tags: removed, general
         :tickets: 2433
 
-      The "sqlalchemy.exceptions"
-      synonym for "sqlalchemy.exc" is removed
+      The "ilikesql.exceptions"
+      synonym for "ilikesql.exc" is removed
       fully.
 
     .. change::
@@ -2464,10 +2464,10 @@
       as the mutable=True flag on PickleType
       and postgresql.ARRAY has been removed.
       In-place mutations are detected by the ORM
-      using the sqlalchemy.ext.mutable extension,
+      using the ilikesql.ext.mutable extension,
       introduced in 0.7.   The removal of MutableType
       and associated constructs removes a great
-      deal of complexity from SQLAlchemy's internals.
+      deal of complexity from ilikesql's internals.
       The approach performed poorly as it would incur
       a scan of the full contents of the Session
       when in use.
@@ -2479,7 +2479,7 @@
       The InstrumentationManager interface
       and the entire related system of alternate
       class implementation is now moved out
-      to sqlalchemy.ext.instrumentation.   This is
+      to ilikesql.ext.instrumentation.   This is
       a seldom used system that adds significant
       complexity and overhead to the mechanics of
       class instrumentation.  The new architecture
@@ -2797,7 +2797,7 @@
       flush events
       like after_insert(), after_update(), etc.
       It's been prominently documented for a long
-      time that  SQLAlchemy cannot guarantee
+      time that  ilikesql cannot guarantee
       results when the Session is manipulated within
       the execution of the flush plan,
       however users are still doing it, so now
@@ -2999,8 +2999,8 @@
       * dont_load argument to Session.merge()
         (use load=True)
 
-      * sqlalchemy.orm.shard module
-        (use sqlalchemy.ext.horizontal_shard)
+      * ilikesql.orm.shard module
+        (use ilikesql.ext.horizontal_shard)
 
     .. change::
         :tags: engine, feature
@@ -3029,12 +3029,12 @@
 
       The libraries used by the test suite
       have been moved around a bit so that they are
-      part of the SQLAlchemy install again.  In addition,
+      part of the ilikesql install again.  In addition,
       a new suite of tests is present in the
-      new sqlalchemy.testing.suite package.  This is
+      new ilikesql.testing.suite package.  This is
       an under-development system that hopes to provide
       a universal testing suite for external dialects.
-      Dialects which are maintained outside of SQLAlchemy
+      Dialects which are maintained outside of ilikesql
       can use the new test fixture as the framework
       for their own tests, and will get for free a
       "compliance" suite of dialect-focused tests,
@@ -3316,7 +3316,7 @@
 
       The behavior of column targeting
       in result sets is now case sensitive by
-      default.   SQLAlchemy for many years would
+      default.   ilikesql for many years would
       run a case-insensitive conversion on these values,
       probably to alleviate early case sensitivity
       issues with dialects like Oracle and
@@ -3493,13 +3493,13 @@
 
       the MS Access dialect has been
       moved to its own project on Bitbucket,
-      taking advantage of the new SQLAlchemy
+      taking advantage of the new ilikesql
       dialect compliance suite.   The dialect is
       still in very rough shape and probably not
       ready for general use yet, however
       it does have *extremely* rudimental
       functionality now.
-      https://bitbucket.org/zzzeek/sqlalchemy-access
+      https://bitbucket.org/zzzeek/ilikesql-access
 
     .. change::
         :tags: maxdb, moved
@@ -3508,7 +3508,7 @@
       The MaxDB dialect, which hasn't been
       functional for several years, is
       moved out to a pending bitbucket project,
-      https://bitbucket.org/zzzeek/sqlalchemy-maxdb.
+      https://bitbucket.org/zzzeek/ilikesql-maxdb.
 
     .. change::
         :tags: sqlite, feature

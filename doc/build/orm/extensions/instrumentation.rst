@@ -3,14 +3,14 @@
 Alternate Class Instrumentation
 ===============================
 
-.. automodule:: sqlalchemy.ext.instrumentation
+.. automodule:: ilikesql.ext.instrumentation
 
 API Reference
 -------------
 
 .. autodata:: INSTRUMENTATION_MANAGER
 
-.. autoclass:: sqlalchemy.orm.instrumentation.InstrumentationFactory
+.. autoclass:: ilikesql.orm.instrumentation.InstrumentationFactory
 
 .. autoclass:: InstrumentationManager
     :members:

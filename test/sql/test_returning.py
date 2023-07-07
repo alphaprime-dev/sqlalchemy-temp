@@ -1,37 +1,37 @@
 import itertools
 
-from sqlalchemy import Boolean
-from sqlalchemy import column
-from sqlalchemy import delete
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import func
-from sqlalchemy import insert
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import type_coerce
-from sqlalchemy import update
-from sqlalchemy.sql import crud
-from sqlalchemy.sql.sqltypes import NullType
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import config
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing import provision
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.types import TypeDecorator
+from ilikesql import Boolean
+from ilikesql import column
+from ilikesql import delete
+from ilikesql import exc as sa_exc
+from ilikesql import func
+from ilikesql import insert
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import type_coerce
+from ilikesql import update
+from ilikesql.sql import crud
+from ilikesql.sql.sqltypes import NullType
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import config
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing import provision
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
+from ilikesql.types import TypeDecorator
 
 
 class ReturnCombinationTests(fixtures.TestBase, AssertsCompiledSQL):
@@ -731,8 +731,8 @@ class InsertReturnDefaultsTest(fixtures.TablesTest):
 
     @classmethod
     def define_tables(cls, metadata):
-        from sqlalchemy.sql import ColumnElement
-        from sqlalchemy.ext.compiler import compiles
+        from ilikesql.sql import ColumnElement
+        from ilikesql.ext.compiler import compiles
 
         counter = itertools.count()
 
@@ -821,7 +821,7 @@ class InsertReturnDefaultsTest(fixtures.TablesTest):
         )
 
     def test_insert_sql_expr(self, connection):
-        from sqlalchemy import literal
+        from ilikesql import literal
 
         t1 = self.tables.t1
         result = connection.execute(
@@ -999,7 +999,7 @@ class UpdatedReturnDefaultsTest(fixtures.TablesTest):
         eq_(result.all(), [(1, "x", 3)])
 
     def test_update_sql_expr(self, connection):
-        from sqlalchemy import literal
+        from ilikesql import literal
 
         t1 = self.tables.t1
         connection.execute(t1.insert().values(upddef=1))
@@ -1244,8 +1244,8 @@ class InsertManyReturningTest(fixtures.TablesTest):
 
     @classmethod
     def define_tables(cls, metadata):
-        from sqlalchemy.sql import ColumnElement
-        from sqlalchemy.ext.compiler import compiles
+        from ilikesql.sql import ColumnElement
+        from ilikesql.ext.compiler import compiles
 
         counter = itertools.count()
 

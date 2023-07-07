@@ -1,6 +1,6 @@
 """
 Illustrates how to embed
-`dogpile.cache <https://dogpilecache.sqlalchemy.org/>`_
+`dogpile.cache <https://dogpilecache.ilikesql.org/>`_
 functionality with ORM queries, allowing full cache control
 as well as the ability to pull "lazy loaded" attributes from long term cache.
 
@@ -33,7 +33,7 @@ E.g.::
 
     print(result.scalars().all())
 
-To run, both SQLAlchemy and dogpile.cache must be
+To run, both ilikesql and dogpile.cache must be
 installed or on the current PYTHONPATH. The demo will create a local
 directory for datafiles, insert initial data, and run. Running the
 demo a second time will utilize the cache files already present, and

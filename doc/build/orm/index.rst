@@ -1,6 +1,6 @@
 .. _orm_toplevel:
 
-SQLAlchemy ORM
+ilikesql ORM
 ==============
 
 Here, the Object Relational Mapper is introduced and fully described. If you

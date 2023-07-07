@@ -20,13 +20,13 @@ except ImportError:
     HAS_CYTHON = False
 
 IS_CPYTHON = platform.python_implementation() == "CPython"
-DISABLE_EXTENSION = bool(os.environ.get("DISABLE_SQLALCHEMY_CEXT"))
-REQUIRE_EXTENSION = bool(os.environ.get("REQUIRE_SQLALCHEMY_CEXT"))
+DISABLE_EXTENSION = bool(os.environ.get("DISABLE_ilikesql_CEXT"))
+REQUIRE_EXTENSION = bool(os.environ.get("REQUIRE_ilikesql_CEXT"))
 
 if DISABLE_EXTENSION and REQUIRE_EXTENSION:
     raise RuntimeError(
-        "Cannot set both 'DISABLE_SQLALCHEMY_CEXT' and "
-        "'REQUIRE_SQLALCHEMY_CEXT' environment variables"
+        "Cannot set both 'DISABLE_ilikesql_CEXT' and "
+        "'REQUIRE_ilikesql_CEXT' environment variables"
     )
 
 
@@ -44,8 +44,8 @@ if HAS_CYTHON and IS_CPYTHON and not DISABLE_EXTENSION:
     ]
     cython_directives = {"language_level": "3"}
 
-    module_prefix = "sqlalchemy.cyextension."
-    source_prefix = "lib/sqlalchemy/cyextension/"
+    module_prefix = "ilikesql.cyextension."
+    source_prefix = "lib/ilikesql/cyextension/"
 
     ext_modules = cast(
         "list[Extension]",
@@ -69,7 +69,7 @@ elif REQUIRE_EXTENSION:
     if not IS_CPYTHON:
         reasons.append("Not CPython, build is supported only on it")
     raise RuntimeError(
-        "Cython extension build is required because REQUIRE_SQLALCHEMY_CEXT "
+        "Cython extension build is required because REQUIRE_ilikesql_CEXT "
         f"is set but it was deselected because: {'; '.join(reasons)}; "
         "will not degrade to pure python install"
     )
@@ -78,4 +78,4 @@ else:
     ext_modules = []
     cmdclass = {}
 
-setup(name="ilikesql", cmdclass=cmdclass, ext_modules=ext_modules)
+setup(cmdclass=cmdclass, ext_modules=ext_modules)

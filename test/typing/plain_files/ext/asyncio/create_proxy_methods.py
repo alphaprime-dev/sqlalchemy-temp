@@ -1,10 +1,10 @@
-from sqlalchemy import text
-from sqlalchemy.ext.asyncio import async_scoped_session
-from sqlalchemy.ext.asyncio import AsyncConnection
-from sqlalchemy.ext.asyncio import AsyncEngine
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
-from sqlalchemy.ext.asyncio.session import async_sessionmaker
+from ilikesql import text
+from ilikesql.ext.asyncio import async_scoped_session
+from ilikesql.ext.asyncio import AsyncConnection
+from ilikesql.ext.asyncio import AsyncEngine
+from ilikesql.ext.asyncio import AsyncSession
+from ilikesql.ext.asyncio import create_async_engine
+from ilikesql.ext.asyncio.session import async_sessionmaker
 
 # async engine
 async_engine: AsyncEngine = create_async_engine("")

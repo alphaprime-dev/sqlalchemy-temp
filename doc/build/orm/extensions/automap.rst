@@ -3,7 +3,7 @@
 Automap
 =======
 
-.. automodule:: sqlalchemy.ext.automap
+.. automodule:: ilikesql.ext.automap
 
 API Reference
 -------------

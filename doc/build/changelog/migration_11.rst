@@ -1,18 +1,18 @@
 =============================
-What's New in SQLAlchemy 1.1?
+What's New in ilikesql 1.1?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 1.0
-    and SQLAlchemy version 1.1.
+    This document describes changes between ilikesql version 1.0
+    and ilikesql version 1.1.
 
 Introduction
 ============
 
-This guide introduces what's new in SQLAlchemy version 1.1,
+This guide introduces what's new in ilikesql version 1.1,
 and also documents changes which affect users migrating
-their applications from the 1.0 series of SQLAlchemy to 1.1.
+their applications from the 1.0 series of ilikesql to 1.1.
 
 Please carefully review the sections on behavioral changes for
 potentially backwards-incompatible changes in behavior.
@@ -23,7 +23,7 @@ Platform / Installer Changes
 Setuptools is now required for install
 --------------------------------------
 
-SQLAlchemy's ``setup.py`` file has for many years supported operation
+ilikesql's ``setup.py`` file has for many years supported operation
 both with Setuptools installed and without; supporting a "fallback" mode
 that uses straight Distutils.  As a Setuptools-less Python environment is
 now unheard of, and in order to support the featureset of Setuptools
@@ -40,8 +40,8 @@ Enabling / Disabling C Extension builds is only via environment variable
 ------------------------------------------------------------------------
 
 The C Extensions build by default during install as long as it is possible.
-To disable C extension builds, the ``DISABLE_SQLALCHEMY_CEXT`` environment
-variable was made available as of SQLAlchemy 0.8.6 / 0.9.4.  The previous
+To disable C extension builds, the ``DISABLE_ilikesql_CEXT`` environment
+variable was made available as of ilikesql 0.8.6 / 0.9.4.  The previous
 approach of using the ``--without-cextensions`` argument has been removed,
 as it relies on deprecated features of setuptools.
 
@@ -132,7 +132,7 @@ so that a "strong reference" may be maintained mirroring the object
 moving in and out of this map.  With this new capability, there is no longer
 any need for the :paramref:`.Session.weak_identity_map` parameter and the
 corresponding :class:`.StrongIdentityMap` object.  This option has remained
-in SQLAlchemy for many years as the "strong-referencing" behavior used to be
+in ilikesql for many years as the "strong-referencing" behavior used to be
 the only behavior available, and many applications were written to assume
 this behavior.   It has long been recommended that strong-reference tracking
 of objects not be an intrinsic job of the :class:`.Session` and instead
@@ -189,7 +189,7 @@ the row.  With the introduction of PostgreSQL's special types like
 unhashable and encountering problems here is more prevalent than
 it was previously.
 
-In fact, SQLAlchemy has since version 0.8 included a flag on datatypes that
+In fact, ilikesql has since version 0.8 included a flag on datatypes that
 are noted as "unhashable", however this flag was not used consistently
 on built in types.  As described in :ref:`change_3499_postgresql`, this
 flag is now set consistently for all of PostgreSQL's "structural" types.
@@ -250,12 +250,12 @@ approach which applied a counter to the object.
 Specific checks added for passing mapped classes, instances as SQL literals
 ---------------------------------------------------------------------------
 
-The typing system now has specific checks for passing of SQLAlchemy
+The typing system now has specific checks for passing of ilikesql
 "inspectable" objects in contexts where they would otherwise be handled as
-literal values.   Any SQLAlchemy built-in object that is legal to pass as a
+literal values.   Any ilikesql built-in object that is legal to pass as a
 SQL value (which is not already a :class:`_expression.ClauseElement` instance)
 includes a method ``__clause_element__()`` which provides a
-valid SQL expression for that object.  For SQLAlchemy objects that
+valid SQL expression for that object.  For ilikesql objects that
 don't provide this, such as mapped classes, mappers, and mapped
 instances, a more informative error message is emitted rather than
 allowing the DBAPI to receive the object and fail later.  An example
@@ -265,7 +265,7 @@ string value::
 
     >>> some_user = User()
     >>> q = s.query(User).filter(User.name == some_user)
-    sqlalchemy.exc.ArgumentError: Object <__main__.User object at 0x103167e90> is not legal as a SQL literal value
+    ilikesql.exc.ArgumentError: Object <__main__.User object at 0x103167e90> is not legal as a SQL literal value
 
 The exception is now immediate when the comparison is made between
 ``User.name == some_user``.  Previously, a comparison like the above
@@ -435,9 +435,9 @@ rollback occurs; if a strong reference to this object remains into the next
 transaction, the fact that this object was not inserted and should be
 removed would be lost, and the flush would incorrectly raise an error::
 
-    from sqlalchemy import Column, create_engine
-    from sqlalchemy.orm import Session
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Column, create_engine
+    from ilikesql.orm import Session
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -525,9 +525,9 @@ base table, and not the subclass table, allowing configured ON DELETE CASCADE
 to take place for the configured foreign keys.  This is configured using
 the :paramref:`.orm.mapper.passive_deletes` option::
 
-    from sqlalchemy import Column, Integer, String, ForeignKey, create_engine
-    from sqlalchemy.orm import Session
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Column, Integer, String, ForeignKey, create_engine
+    from ilikesql.orm import Session
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -710,7 +710,7 @@ With the change, the expression returned by ``A.some_name`` is wrapped inside
 of its own ``QueryableAttribute`` wrapper::
 
     >>> A.some_name
-    <sqlalchemy.orm.attributes.hybrid_propertyProxy object at 0x7fde03888230>
+    <ilikesql.orm.attributes.hybrid_propertyProxy object at 0x7fde03888230>
 
 A lot of testing went into making sure this wrapper works correctly, including
 for elaborate schemes like that of the
@@ -724,7 +724,7 @@ expression.  That is, accessing ``A.some_name.info`` now returns the same
 dictionary that you'd get from ``inspect(A).all_orm_descriptors['some_name'].info``::
 
     >>> A.some_name.info["foo"] = "bar"
-    >>> from sqlalchemy import inspect
+    >>> from ilikesql import inspect
     >>> inspect(A).all_orm_descriptors["some_name"].info
     {'foo': 'bar'}
 
@@ -842,7 +842,7 @@ improvement will now be apparent.
 Improvements to the Query.correlate method with polymorphic entities
 --------------------------------------------------------------------
 
-In recent SQLAlchemy versions, the SQL generated by many forms of
+In recent ilikesql versions, the SQL generated by many forms of
 "polymorphic" queries has a more "flat" form than it used to, where
 a JOIN of several tables is no longer bundled into a subquery unconditionally.
 To accommodate this, the :meth:`_query.Query.correlate` method now extracts the
@@ -893,7 +893,7 @@ may not correctly refer to this subquery.  In all cases, a way to refer
 to the "polymorphic" entity fully is to create an :func:`.aliased` object
 from it first::
 
-    # works with all SQLAlchemy versions and all types of polymorphic
+    # works with all ilikesql versions and all types of polymorphic
     # aliasing.
 
     paliased = aliased(Person)
@@ -1052,21 +1052,21 @@ when a non-eagerly-loaded attribute is accessed for read.  The two variants
 test for either a lazy load of any variety, including those that would
 only return None or retrieve from the identity map::
 
-    >>> from sqlalchemy.orm import raiseload
+    >>> from ilikesql.orm import raiseload
     >>> a1 = s.query(A).options(raiseload(A.some_b)).first()
     >>> a1.some_b
     Traceback (most recent call last):
     ...
-    sqlalchemy.exc.InvalidRequestError: 'A.some_b' is not available due to lazy='raise'
+    ilikesql.exc.InvalidRequestError: 'A.some_b' is not available due to lazy='raise'
 
 Or a lazy load only where SQL would be emitted::
 
-    >>> from sqlalchemy.orm import raiseload
+    >>> from ilikesql.orm import raiseload
     >>> a1 = s.query(A).options(raiseload(A.some_b, sql_only=True)).first()
     >>> a1.some_b
     Traceback (most recent call last):
     ...
-    sqlalchemy.exc.InvalidRequestError: 'A.bs' is not available due to lazy='raise_on_sql'
+    ilikesql.exc.InvalidRequestError: 'A.bs' is not available due to lazy='raise_on_sql'
 
 :ticket:`3512`
 
@@ -1075,7 +1075,7 @@ Or a lazy load only where SQL would be emitted::
 Mapper.order_by is deprecated
 -----------------------------
 
-This old parameter from the very first versions of SQLAlchemy was part of
+This old parameter from the very first versions of ilikesql was part of
 the original design of the ORM which featured the :class:`_orm.Mapper` object
 as a public-facing query structure.   This role has long since been replaced
 by the :class:`_query.Query` object, where we use :meth:`_query.Query.order_by` to
@@ -1175,7 +1175,7 @@ statement:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import table, column, select, literal, exists
+    >>> from ilikesql import table, column, select, literal, exists
     >>> orders = table(
     ...     "orders",
     ...     column("region"),
@@ -1227,7 +1227,7 @@ RANGE and ROWS expressions for window functions:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import func
+    >>> from ilikesql import func
 
     >>> print(func.row_number().over(order_by="x", range_=(-5, 10)))
     {printsql}row_number() OVER (ORDER BY x RANGE BETWEEN :param_1 PRECEDING AND :param_2 FOLLOWING){stop}
@@ -1262,7 +1262,7 @@ selectable, e.g. lateral correlation:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import table, column, select, true
+    >>> from ilikesql import table, column, select, true
     >>> people = table("people", column("people_id"), column("age"), column("name"))
     >>> books = table("books", column("book_id"), column("owner_id"))
     >>> subq = (
@@ -1296,7 +1296,7 @@ The SQL standard TABLESAMPLE can be rendered using the
 :meth:`_expression.FromClause.tablesample` method, which returns a :class:`_expression.TableSample`
 construct similar to an alias::
 
-    from sqlalchemy import func
+    from ilikesql import func
 
     selectable = people.tablesample(func.bernoulli(1), name="alias", seed=func.random())
     stmt = select([selectable.c.people_id])
@@ -1317,7 +1317,7 @@ statement would render as:
 The ``.autoincrement`` directive is no longer implicitly enabled for a composite primary key column
 ---------------------------------------------------------------------------------------------------
 
-SQLAlchemy has always had the convenience feature of enabling the backend database's
+ilikesql has always had the convenience feature of enabling the backend database's
 "autoincrement" feature for a single-column integer primary key; by "autoincrement"
 we mean that the database column will include whatever DDL directives the
 database provides in order to indicate an auto-incrementing integer identifier,
@@ -1379,7 +1379,7 @@ An INSERT emitted with no values for this table will produce this warning:
     key for table 'b', but has no Python-side or server-side default
     generator indicated, nor does it indicate 'autoincrement=True',
     and no explicit value is passed.  Primary key columns may not
-    store NULL. Note that as of SQLAlchemy 1.1, 'autoincrement=True'
+    store NULL. Note that as of ilikesql 1.1, 'autoincrement=True'
     must be indicated explicitly for composite (e.g. multicolumn)
     primary keys if AUTO_INCREMENT/SERIAL/IDENTITY behavior is
     expected for one of the columns in the primary key. CREATE TABLE
@@ -1444,7 +1444,7 @@ which on SQLite works for NULL unlike other backends:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.dialects import sqlite
+    >>> from ilikesql.dialects import sqlite
     >>> print(column("x").is_distinct_from(None).compile(dialect=sqlite.dialect()))
     {printsql}x IS NOT NULL{stop}
 
@@ -1493,7 +1493,7 @@ that's needed now is the same ordering of columns within the textual SQL
 and the column arguments passed to :meth:`_expression.TextClause.columns`::
 
 
-    from sqlalchemy import text
+    from ilikesql import text
 
     stmt = text(
         "SELECT users.id, addresses.id, users.id, "
@@ -1588,7 +1588,7 @@ and return values are the actual enumerated objects, not the
 string/integer/etc values::
 
     import enum
-    from sqlalchemy import Table, MetaData, Column, Enum, create_engine
+    from ilikesql import Table, MetaData, Column, Enum, create_engine
 
 
     class MyEnum(enum.Enum):
@@ -1624,7 +1624,7 @@ The :class:`.RowProxy` object now accommodates single negative integer indexes
 like a regular Python sequence, both in the pure Python and C-extension
 version.  Previously, negative values would only work in slices::
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> e = create_engine("sqlite://")
     >>> row = e.execute("select 1, 2, 3").first()
     >>> row[-1], row[-2], row[1], row[-2:2]
@@ -1642,7 +1642,7 @@ in-Python validation of input values when the :paramref:`.Enum.validate_strings`
 flag is used (1.1.0b2)::
 
 
-    >>> from sqlalchemy import Table, MetaData, Column, Enum, create_engine
+    >>> from ilikesql import Table, MetaData, Column, Enum, create_engine
     >>> t = Table(
     ...     "data",
     ...     MetaData(),
@@ -1653,7 +1653,7 @@ flag is used (1.1.0b2)::
     >>> e.execute(t.insert(), {"value": "four"})
     Traceback (most recent call last):
       ...
-    sqlalchemy.exc.StatementError: (exceptions.LookupError)
+    ilikesql.exc.StatementError: (exceptions.LookupError)
     "four" is not among the defined enum values
     [SQL: u'INSERT INTO data (value) VALUES (?)']
     [parameters: [{'value': 'four'}]]
@@ -1717,21 +1717,21 @@ A large value present as a bound parameter for a SQL statement, as well as a
 large value present in a result row, will now be truncated during display
 within logging, exception reporting, as well as ``repr()`` of the row itself::
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> import random
     >>> e = create_engine("sqlite://", echo="debug")
     >>> some_value = "".join(chr(random.randint(52, 85)) for i in range(5000))
     >>> row = e.execute("select ?", [some_value]).first()
     ... # (lines are wrapped for clarity) ...
-    2016-02-17 13:23:03,027 INFO sqlalchemy.engine.base.Engine select ?
-    2016-02-17 13:23:03,027 INFO sqlalchemy.engine.base.Engine
+    2016-02-17 13:23:03,027 INFO ilikesql.engine.base.Engine select ?
+    2016-02-17 13:23:03,027 INFO ilikesql.engine.base.Engine
     ('E6@?>9HPOJB<<BHR:@=TS:5ILU=;JLM<4?B9<S48PTNG9>:=TSTLA;9K;9FPM4M8M@;NM6GU
     LUAEBT9QGHNHTHR5EP75@OER4?SKC;D:TFUMD:M>;C6U:JLM6R67GEK<A6@S@C@J7>4=4:P
     GJ7HQ6 ... (4702 characters truncated) ... J6IK546AJMB4N6S9L;;9AKI;=RJP
     HDSSOTNBUEEC9@Q:RCL:I@5?FO<9K>KJAGAO@E6@A7JI8O:J7B69T6<8;F:S;4BEIJS9HM
     K:;5OLPM@JR;R:J6<SOTTT=>Q>7T@I::OTDC:CC<=NGP6C>BC8N',)
-    2016-02-17 13:23:03,027 DEBUG sqlalchemy.engine.base.Engine Col ('?',)
-    2016-02-17 13:23:03,027 DEBUG sqlalchemy.engine.base.Engine
+    2016-02-17 13:23:03,027 DEBUG ilikesql.engine.base.Engine Col ('?',)
+    2016-02-17 13:23:03,027 DEBUG ilikesql.engine.base.Engine
     Row (u'E6@?>9HPOJB<<BHR:@=TS:5ILU=;JLM<4?B9<S48PTNG9>:=TSTLA;9K;9FPM4M8M@;
     NM6GULUAEBT9QGHNHTHR5EP75@OER4?SKC;D:TFUMD:M>;C6U:JLM6R67GEK<A6@S@C@J7
     >4=4:PGJ7HQ ... (4703 characters truncated) ... J6IK546AJMB4N6S9L;;9AKI;=
@@ -1754,7 +1754,7 @@ JSON support added to Core
 --------------------------
 
 As MySQL now has a JSON datatype in addition to the PostgreSQL JSON datatype,
-the core now gains a :class:`sqlalchemy.types.JSON` datatype that is the basis
+the core now gains a :class:`ilikesql.types.JSON` datatype that is the basis
 for both of these.  Using this type allows access to the "getitem" operator
 as well as the "getpath" operator in a way that is agnostic across PostgreSQL
 and MySQL.
@@ -1861,8 +1861,8 @@ should receive a SQL NULL or JSON ``"null"`` value, the constant
 JSON ``"null"``, regardless of what :paramref:`.types.JSON.none_as_null` is set
 to::
 
-    from sqlalchemy import null
-    from sqlalchemy.dialects.postgresql import JSON
+    from ilikesql import null
+    from ilikesql.dialects.postgresql import JSON
 
     obj1 = MyObject(json_value=null())  # will *always* insert SQL NULL
     obj2 = MyObject(json_value=JSON.NULL)  # will *always* insert JSON string "null"
@@ -1906,7 +1906,7 @@ standalone operator functions :func:`_expression.any_` and
 of the traditional SQL way, allowing a right-side expression form such
 as::
 
-    from sqlalchemy import any_, all_
+    from ilikesql import any_, all_
 
     select([mytable]).where(12 == any_(mytable.c.data[5]))
 
@@ -1922,7 +1922,7 @@ databases is limited.  On the PostgreSQL backend, the two operators
 **only accept subquery values**.  On MySQL, one can use an expression
 such as::
 
-    from sqlalchemy import any_, all_
+    from ilikesql import any_, all_
 
     subq = select([mytable.c.value])
     select([mytable]).where(12 > any_(subq))
@@ -1938,14 +1938,14 @@ With the new :class:`_types.ARRAY` type we can also implement a pre-typed
 function for the ``array_agg()`` SQL function that returns an array,
 which is now available using :class:`_functions.array_agg`::
 
-    from sqlalchemy import func
+    from ilikesql import func
 
     stmt = select([func.array_agg(table.c.value)])
 
 A PostgreSQL element for an aggregate ORDER BY is also added via
 :class:`_postgresql.aggregate_order_by`::
 
-    from sqlalchemy.dialects.postgresql import aggregate_order_by
+    from ilikesql.dialects.postgresql import aggregate_order_by
 
     expr = func.array_agg(aggregate_order_by(table.c.a, table.c.b.desc()))
     stmt = select([expr])
@@ -1959,7 +1959,7 @@ Producing:
 The PG dialect itself also provides an :func:`_postgresql.array_agg` wrapper to
 ensure the :class:`_postgresql.ARRAY` type::
 
-    from sqlalchemy.dialects.postgresql import array_agg
+    from ilikesql.dialects.postgresql import array_agg
 
     stmt = select([array_agg(table.c.value).contains("foo")])
 
@@ -1968,7 +1968,7 @@ Additionally, functions like ``percentile_cont()``, ``percentile_disc()``,
 ``WITHIN GROUP (ORDER BY <expr>)`` are now available via the
 :meth:`.FunctionElement.within_group` modifier::
 
-    from sqlalchemy import func
+    from ilikesql import func
 
     stmt = select(
         [
@@ -2069,7 +2069,7 @@ datatypes:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import table, column
+    >>> from ilikesql import table, column
     t>>> t = table('x', column('a'), column('b'))
     >>> print(t.insert().returning(t.c.a, t.c.b))
     {printsql}INSERT INTO x (a, b) VALUES (:a, :b) RETURNING x.a, x.b
@@ -2318,7 +2318,7 @@ Will raise:
 
 .. sourcecode:: text
 
-    sqlalchemy.exc.InvalidRequestError: A validation function for mapped attribute 'data'
+    ilikesql.exc.InvalidRequestError: A validation function for mapped attribute 'data'
     on mapper Mapper|A|a already exists.
 
 :ticket:`3776`
@@ -2386,8 +2386,8 @@ passed through the literal quoting system:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.schema import MetaData, Table, Column, CreateTable
-    >>> from sqlalchemy.types import String
+    >>> from ilikesql.schema import MetaData, Table, Column, CreateTable
+    >>> from ilikesql.types import String
     >>> t = Table("t", MetaData(), Column("x", String(), server_default="hi ' there"))
     >>> print(CreateTable(t))
     {printsql}CREATE TABLE t (
@@ -2418,7 +2418,7 @@ features which include LIMIT, OFFSET, and/or ORDER BY:
 
 The above query requires parenthesis within each sub-select in order to
 group the sub-results correctly.  Production of the above statement in
-SQLAlchemy Core looks like::
+ilikesql Core looks like::
 
     stmt1 = select([table1.c.x]).order_by(table1.c.y).limit(1)
     stmt2 = select([table1.c.x]).order_by(table2.c.y).limit(2)
@@ -2443,7 +2443,7 @@ subqueries must be a SELECT of an ALIAS::
 
     stmt = union(stmt1, stmt2)
 
-This workaround works on all SQLAlchemy versions.  In the ORM, it looks like::
+This workaround works on all ilikesql versions.  In the ORM, it looks like::
 
     stmt1 = session.query(Model1).order_by(Model1.y).limit(1).subquery().select()
     stmt2 = session.query(Model2).order_by(Model2.y).limit(1).subquery().select()
@@ -2451,7 +2451,7 @@ This workaround works on all SQLAlchemy versions.  In the ORM, it looks like::
     stmt = session.query(Model1).from_statement(stmt1.union(stmt2))
 
 The behavior here has many parallels to the "join rewriting" behavior
-introduced in SQLAlchemy 0.9 in :ref:`feature_joins_09`; however in this case
+introduced in ilikesql 0.9 in :ref:`feature_joins_09`; however in this case
 we have opted not to add new rewriting behavior to accommodate this
 case for SQLite.
 The existing rewriting behavior is very complicated already, and the case of
@@ -2471,12 +2471,12 @@ Support for INSERT..ON CONFLICT (DO UPDATE | DO NOTHING)
 
 The ``ON CONFLICT`` clause of ``INSERT`` added to PostgreSQL as of
 version 9.5 is now supported using a PostgreSQL-specific version of the
-:class:`_expression.Insert` object, via :func:`sqlalchemy.dialects.postgresql.dml.insert`.
+:class:`_expression.Insert` object, via :func:`ilikesql.dialects.postgresql.dml.insert`.
 This :class:`_expression.Insert` subclass adds two new methods :meth:`_expression.Insert.on_conflict_do_update`
 and :meth:`_expression.Insert.on_conflict_do_nothing` which implement the full syntax
 supported by PostgreSQL 9.5 in this area::
 
-    from sqlalchemy.dialects.postgresql import insert
+    from ilikesql.dialects.postgresql import insert
 
     insert_stmt = insert(my_table).values(id="some_id", data="some data to insert")
 
@@ -2657,7 +2657,7 @@ collection.
 The new argument :paramref:`.PGInspector.get_view_names.include`
 allows specification of which sub-types of views should be returned::
 
-    from sqlalchemy import inspect
+    from ilikesql import inspect
 
     insp = inspect(engine)
 
@@ -2689,9 +2689,9 @@ The `PyGreSQL <https://pypi.org/project/PyGreSQL>`_ DBAPI is now supported.
 The "postgres" module is removed
 --------------------------------
 
-The ``sqlalchemy.dialects.postgres`` module, long deprecated, is
+The ``ilikesql.dialects.postgres`` module, long deprecated, is
 removed; this has emitted a warning for many years and projects
-should be calling upon ``sqlalchemy.dialects.postgresql``.
+should be calling upon ``ilikesql.dialects.postgresql``.
 Engine URLs of the form ``postgres://`` will still continue to function,
 however.
 
@@ -2857,7 +2857,7 @@ Dotted column names workaround lifted for SQLite version 3.10.0
 The SQLite dialect has long had a workaround for an issue where the database
 driver does not report the correct column names for some SQL result sets, in
 particular when UNION is used.  The workaround is detailed at
-:ref:`sqlite_dotted_column_names`, and requires that SQLAlchemy assume that any
+:ref:`sqlite_dotted_column_names`, and requires that ilikesql assume that any
 column name with a dot in it is actually a ``tablename.columnname`` combination
 delivered via this buggy behavior, with an option to turn it off via the
 ``sqlite_raw_colnames`` execution option.
@@ -2865,11 +2865,11 @@ delivered via this buggy behavior, with an option to turn it off via the
 As of SQLite version 3.10.0, the bug in UNION and other queries has been fixed;
 like the change described in :ref:`change_3634`, SQLite's changelog only
 identifies it cryptically as "Added the colUsed field to sqlite3_index_info for
-use by the sqlite3_module.xBestIndex method", however SQLAlchemy's translation
+use by the sqlite3_module.xBestIndex method", however ilikesql's translation
 of these dotted column names is no longer required with this version, so is
 turned off when version 3.10.0 or greater is detected.
 
-Overall, the SQLAlchemy :class:`_engine.ResultProxy` as of the 1.0 series relies much
+Overall, the ilikesql :class:`_engine.ResultProxy` as of the 1.0 series relies much
 less on column names in result sets when delivering results for Core and ORM
 SQL constructs, so the importance of this issue was already lessened in any
 case.
@@ -2896,7 +2896,7 @@ Reflection of the name of PRIMARY KEY constraints
 The SQLite backend now takes advantage of the "sqlite_master" view
 of SQLite in order to extract the name of the primary key constraint
 of a table from the original DDL, in the same way that is achieved for
-foreign key constraints in recent SQLAlchemy versions.
+foreign key constraints in recent ilikesql versions.
 
 :ticket:`3629`
 
@@ -2949,14 +2949,14 @@ When reflecting a type such as :class:`.String`, :class:`_expression.TextClause`
 which includes a length, an "un-lengthed" type under SQL Server would
 copy the "length" parameter as the value ``"max"``::
 
-    >>> from sqlalchemy import create_engine, inspect
+    >>> from ilikesql import create_engine, inspect
     >>> engine = create_engine("mssql+pyodbc://scott:tiger@ms_2008", echo=True)
     >>> engine.execute("create table s (x varchar(max), y varbinary(max))")
     >>> insp = inspect(engine)
     >>> for col in insp.get_columns("s"):
     ...     print(col["type"].__class__, col["type"].length)
-    <class 'sqlalchemy.sql.sqltypes.VARCHAR'> max
-    <class 'sqlalchemy.dialects.mssql.base.VARBINARY'> max
+    <class 'ilikesql.sql.sqltypes.VARCHAR'> max
+    <class 'ilikesql.dialects.mssql.base.VARBINARY'> max
 
 The "length" parameter in the base types is expected to be an integer value
 or None only; None indicates unbounded length which the SQL Server dialect
@@ -2965,8 +2965,8 @@ out as None, so that the type objects work in non-SQL Server contexts::
 
     >>> for col in insp.get_columns("s"):
     ...     print(col["type"].__class__, col["type"].length)
-    <class 'sqlalchemy.sql.sqltypes.VARCHAR'> None
-    <class 'sqlalchemy.dialects.mssql.base.VARBINARY'> None
+    <class 'ilikesql.sql.sqltypes.VARCHAR'> None
+    <class 'ilikesql.dialects.mssql.base.VARBINARY'> None
 
 Applications which may have been relying on a direct comparison of the "length"
 value to the string "max" should consider the value of ``None`` to mean
@@ -2991,7 +2991,7 @@ for a primary key, allowing a different index to be used as "clustered".
 The legacy_schema_aliasing flag is now set to False
 ---------------------------------------------------
 
-SQLAlchemy 1.0.5 introduced the ``legacy_schema_aliasing`` flag to the
+ilikesql 1.0.5 introduced the ``legacy_schema_aliasing`` flag to the
 MSSQL dialect, allowing so-called "legacy mode" aliasing to be turned off.
 This aliasing attempts to turn schema-qualified tables into aliases;
 given a table such as::
@@ -3017,7 +3017,7 @@ name into an alias:
 However, this aliasing has been shown to be unnecessary and in many cases
 produces incorrect SQL.
 
-In SQLAlchemy 1.1, the ``legacy_schema_aliasing`` flag now defaults to
+In ilikesql 1.1, the ``legacy_schema_aliasing`` flag now defaults to
 False, disabling this mode of behavior and allowing the MSSQL dialect to behave
 normally with schema-qualified tables.  For applications which may rely
 on this behavior, set the flag back to True.

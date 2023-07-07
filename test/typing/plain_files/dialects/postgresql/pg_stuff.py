@@ -2,20 +2,20 @@ from typing import Any
 from typing import Dict
 from uuid import UUID as _py_uuid
 
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import or_
-from sqlalchemy import select
-from sqlalchemy import Text
-from sqlalchemy.dialects.postgresql import ARRAY
-from sqlalchemy.dialects.postgresql import array
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import or_
+from ilikesql import select
+from ilikesql import Text
+from ilikesql.dialects.postgresql import ARRAY
+from ilikesql.dialects.postgresql import array
+from ilikesql.dialects.postgresql import JSONB
+from ilikesql.dialects.postgresql import UUID
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
 
 
 # test #6402

@@ -4,8 +4,8 @@
 Engine Configuration
 ====================
 
-The :class:`_engine.Engine` is the starting point for any SQLAlchemy application. It's
-"home base" for the actual database and its :term:`DBAPI`, delivered to the SQLAlchemy
+The :class:`_engine.Engine` is the starting point for any ilikesql application. It's
+"home base" for the actual database and its :term:`DBAPI`, delivered to the ilikesql
 application through a connection pool and a :class:`.Dialect`, which describes how
 to talk to a specific kind of database/DBAPI combination.
 
@@ -21,7 +21,7 @@ of the database.
 Creating an engine is just a matter of issuing a single call,
 :func:`_sa.create_engine()`::
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     engine = create_engine("postgresql+psycopg2://scott:tiger@localhost:5432/mydatabase")
 
@@ -45,8 +45,8 @@ applications.
 Supported Databases
 ===================
 
-SQLAlchemy includes many :class:`.Dialect` implementations for various
-backends.   Dialects for the most common databases are included with SQLAlchemy; a handful
+ilikesql includes many :class:`.Dialect` implementations for various
+backends.   Dialects for the most common databases are included with ilikesql; a handful
 of others require an additional install of a separate dialect.
 
 See the section :ref:`dialect_toplevel` for information on the various backends available.
@@ -69,7 +69,7 @@ and "database" portions. The typical form of a database URL is:
 
     dialect+driver://username:password@host:port/database
 
-Dialect names include the identifying name of the SQLAlchemy dialect,
+Dialect names include the identifying name of the ilikesql dialect,
 a name such as ``sqlite``, ``mysql``, ``postgresql``, ``oracle``, or ``mssql``.
 The drivername is the name of the DBAPI to be used to connect to
 the database using all lowercase letters. If not specified, a "default" DBAPI
@@ -102,7 +102,7 @@ The encoding for the above password can be generated using
 
 The URL may then be passed as a string to :func:`_sa.create_engine`::
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     engine = create_engine("postgresql+pg8000://dbuser:kx%40jj5%2Fg@pghost10/appdb")
 
@@ -130,7 +130,7 @@ The :class:`.URL` object is created using the :meth:`_engine.URL.create()`
 constructor method, passing all fields individually.   Special characters
 such as those within passwords may be passed without any modification::
 
-    from sqlalchemy import URL
+    from ilikesql import URL
 
     url_object = URL.create(
         "postgresql+pg8000",
@@ -143,7 +143,7 @@ such as those within passwords may be passed without any modification::
 The constructed :class:`.URL` object may then be passed directly to
 :func:`_sa.create_engine` in place of a string argument::
 
-    from sqlalchemy import create_engine
+    from ilikesql import create_engine
 
     engine = create_engine(url_object)
 
@@ -261,17 +261,17 @@ documentation.
 Engine Creation API
 ===================
 
-.. autofunction:: sqlalchemy.create_engine
+.. autofunction:: ilikesql.create_engine
 
-.. autofunction:: sqlalchemy.engine_from_config
+.. autofunction:: ilikesql.engine_from_config
 
-.. autofunction:: sqlalchemy.create_mock_engine
+.. autofunction:: ilikesql.create_mock_engine
 
-.. autofunction:: sqlalchemy.engine.make_url
+.. autofunction:: ilikesql.engine.make_url
 
-.. autofunction:: sqlalchemy.create_pool_from_url
+.. autofunction:: ilikesql.create_pool_from_url
 
-.. autoclass:: sqlalchemy.engine.URL
+.. autoclass:: ilikesql.engine.URL
     :members:
 
 Pooling
@@ -328,7 +328,7 @@ such as most MySQL DBAPIs::
 The advantage of using the query string is that additional DBAPI options may be
 specified in configuration files in a manner that's portable to the DBAPI
 specified in the URL. The specific parameters passed through at this level vary
-by SQLAlchemy dialect. Some dialects pass all arguments through as strings,
+by ilikesql dialect. Some dialects pass all arguments through as strings,
 while others will parse for specific datatypes and move parameters to different
 places, such as into driver-level DSNs and connect strings. As per-dialect
 behavior in this area currently varies, the dialect documentation should be
@@ -341,7 +341,7 @@ supported at this level.
   for a given URL may be performed using the :meth:`.Dialect.create_connect_args`
   method directly as follows::
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> engine = create_engine(
     ...     "mysql+pymysql://some_user:some_pass@some_host/test?charset=utf8mb4"
     ... )
@@ -361,7 +361,7 @@ function that is guaranteed to pass all parameters at all times is the
 used for parameters that are otherwise not handled by the dialect when added to
 the query string, as well as when special sub-structures or objects must be
 passed to the DBAPI. Sometimes it's just that a particular flag must be sent as
-the ``True`` symbol and the SQLAlchemy dialect is not aware of this keyword
+the ``True`` symbol and the ilikesql dialect is not aware of this keyword
 argument to coerce it from its string form as presented in the URL. Below
 illustrates the use of a psycopg2 "connection factory" that replaces the
 underlying implementation the connection::
@@ -393,7 +393,7 @@ customize how the DBAPI ``connect()`` function itself is called using the
 ``*args, **kwargs`` that the dialect would send to ``connect()``. These
 collections can then be modified in place to alter how they are used::
 
-    from sqlalchemy import event
+    from ilikesql import event
 
     engine = create_engine("postgresql+psycopg2://user:pass@hostname/dbname")
 
@@ -413,7 +413,7 @@ insert an authentication token that might change over the lifespan of an
 ``get_authentication_token()`` and passed to the DBAPI in  a ``token``
 parameter, this could be implemented as::
 
-    from sqlalchemy import event
+    from ilikesql import event
 
     engine = create_engine("postgresql+psycopg2://user@hostname/dbname")
 
@@ -430,14 +430,14 @@ parameter, this could be implemented as::
 Modifying the DBAPI connection after connect, or running commands after connect
 -------------------------------------------------------------------------------
 
-For a DBAPI connection that SQLAlchemy creates without issue, but where we
+For a DBAPI connection that ilikesql creates without issue, but where we
 would like to modify the completed connection before it's actually used, such
 as for setting special flags or running certain commands, the
 :meth:`.PoolEvents.connect` event hook is the most appropriate hook.  This
 hook is called for every new connection created, before it is used by
-SQLAlchemy::
+ilikesql::
 
-    from sqlalchemy import event
+    from ilikesql import event
 
     engine = create_engine("postgresql+psycopg2://user:pass@hostname/dbname")
 
@@ -455,7 +455,7 @@ Finally, the :meth:`.DialectEvents.do_connect` event hook can also allow us to t
 over the connection process entirely by establishing the connection
 and returning it::
 
-    from sqlalchemy import event
+    from ilikesql import event
 
     engine = create_engine("postgresql+psycopg2://user:pass@hostname/dbname")
 
@@ -479,8 +479,8 @@ Configuring Logging
 
 Python's standard `logging
 <https://docs.python.org/library/logging.html>`_ module is used to
-implement informational and debug log output with SQLAlchemy. This allows
-SQLAlchemy's logging to integrate in a standard way with other applications
+implement informational and debug log output with ilikesql. This allows
+ilikesql's logging to integrate in a standard way with other applications
 and libraries.   There are also two parameters
 :paramref:`_sa.create_engine.echo` and :paramref:`_sa.create_engine.echo_pool`
 present on :func:`_sa.create_engine` which allow immediate logging to ``sys.stdout``
@@ -488,27 +488,27 @@ for the purposes of local development; these parameters ultimately interact
 with the regular Python loggers described below.
 
 This section assumes familiarity with the above linked logging module. All
-logging performed by SQLAlchemy exists underneath the ``sqlalchemy``
-namespace, as used by ``logging.getLogger('sqlalchemy')``. When logging has
+logging performed by ilikesql exists underneath the ``ilikesql``
+namespace, as used by ``logging.getLogger('ilikesql')``. When logging has
 been configured (i.e. such as via ``logging.basicConfig()``), the general
 namespace of SA loggers that can be turned on is as follows:
 
-* ``sqlalchemy.engine`` - controls SQL echoing.  Set to ``logging.INFO`` for
+* ``ilikesql.engine`` - controls SQL echoing.  Set to ``logging.INFO`` for
   SQL query output, ``logging.DEBUG`` for query + result set output.  These
   settings are equivalent to ``echo=True`` and ``echo="debug"`` on
   :paramref:`_sa.create_engine.echo`, respectively.
 
-* ``sqlalchemy.pool`` - controls connection pool logging.  Set to
+* ``ilikesql.pool`` - controls connection pool logging.  Set to
   ``logging.INFO`` to log connection invalidation and recycle events; set to
   ``logging.DEBUG`` to additionally log all pool checkins and checkouts.
   These settings are equivalent to ``pool_echo=True`` and ``pool_echo="debug"``
   on :paramref:`_sa.create_engine.echo_pool`, respectively.
 
-* ``sqlalchemy.dialects`` - controls custom logging for SQL dialects, to the
+* ``ilikesql.dialects`` - controls custom logging for SQL dialects, to the
   extend that logging is used within specific dialects, which is generally
   minimal.
 
-* ``sqlalchemy.orm`` - controls logging of various ORM functions to the extent
+* ``ilikesql.orm`` - controls logging of various ORM functions to the extent
   that logging is used within the ORM, which is generally minimal.  Set to
   ``logging.INFO`` to log some top-level information on mapper configurations.
 
@@ -518,15 +518,15 @@ For example, to log SQL queries using Python logging instead of the
     import logging
 
     logging.basicConfig()
-    logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+    logging.getLogger("ilikesql.engine").setLevel(logging.INFO)
 
 By default, the log level is set to ``logging.WARN`` within the entire
-``sqlalchemy`` namespace so that no log operations occur, even within an
+``ilikesql`` namespace so that no log operations occur, even within an
 application that has logging enabled otherwise.
 
 .. note::
 
-   The SQLAlchemy :class:`_engine.Engine` conserves Python function call
+   The ilikesql :class:`_engine.Engine` conserves Python function call
    overhead by only emitting log statements when the current logging level is
    detected as ``logging.INFO`` or ``logging.DEBUG``.  It only checks this
    level when a new connection is procured from the connection pool.  Therefore
@@ -545,25 +545,25 @@ As mentioned previously, the :paramref:`_sa.create_engine.echo` and :paramref:`_
 parameters are a shortcut to immediate logging to ``sys.stdout``::
 
 
-    >>> from sqlalchemy import create_engine, text
+    >>> from ilikesql import create_engine, text
     >>> e = create_engine("sqlite://", echo=True, echo_pool="debug")
     >>> with e.connect() as conn:
     ...     print(conn.scalar(text("select 'hi'")))
-    2020-10-24 12:54:57,701 DEBUG sqlalchemy.pool.impl.SingletonThreadPool Created new connection <sqlite3.Connection object at 0x7f287819ac60>
-    2020-10-24 12:54:57,701 DEBUG sqlalchemy.pool.impl.SingletonThreadPool Connection <sqlite3.Connection object at 0x7f287819ac60> checked out from pool
-    2020-10-24 12:54:57,702 INFO sqlalchemy.engine.Engine select 'hi'
-    2020-10-24 12:54:57,702 INFO sqlalchemy.engine.Engine ()
+    2020-10-24 12:54:57,701 DEBUG ilikesql.pool.impl.SingletonThreadPool Created new connection <sqlite3.Connection object at 0x7f287819ac60>
+    2020-10-24 12:54:57,701 DEBUG ilikesql.pool.impl.SingletonThreadPool Connection <sqlite3.Connection object at 0x7f287819ac60> checked out from pool
+    2020-10-24 12:54:57,702 INFO ilikesql.engine.Engine select 'hi'
+    2020-10-24 12:54:57,702 INFO ilikesql.engine.Engine ()
     hi
-    2020-10-24 12:54:57,703 DEBUG sqlalchemy.pool.impl.SingletonThreadPool Connection <sqlite3.Connection object at 0x7f287819ac60> being returned to pool
-    2020-10-24 12:54:57,704 DEBUG sqlalchemy.pool.impl.SingletonThreadPool Connection <sqlite3.Connection object at 0x7f287819ac60> rollback-on-return
+    2020-10-24 12:54:57,703 DEBUG ilikesql.pool.impl.SingletonThreadPool Connection <sqlite3.Connection object at 0x7f287819ac60> being returned to pool
+    2020-10-24 12:54:57,704 DEBUG ilikesql.pool.impl.SingletonThreadPool Connection <sqlite3.Connection object at 0x7f287819ac60> rollback-on-return
 
 Use of these flags is roughly equivalent to::
 
     import logging
 
     logging.basicConfig()
-    logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
-    logging.getLogger("sqlalchemy.pool").setLevel(logging.DEBUG)
+    logging.getLogger("ilikesql.engine").setLevel(logging.INFO)
+    logging.getLogger("ilikesql.pool").setLevel(logging.DEBUG)
 
 It's important to note that these two flags work **independently** of any
 existing logging configuration, and will make use of ``logging.basicConfig()``
@@ -575,20 +575,20 @@ getting duplicate log lines.
 Setting the Logging Name
 -------------------------
 
-The logger name of instance such as an :class:`~sqlalchemy.engine.Engine` or
-:class:`~sqlalchemy.pool.Pool` defaults to using a truncated hex identifier
+The logger name of instance such as an :class:`~ilikesql.engine.Engine` or
+:class:`~ilikesql.pool.Pool` defaults to using a truncated hex identifier
 string. To set this to a specific name, use the
 :paramref:`_sa.create_engine.logging_name` and
 :paramref:`_sa.create_engine.pool_logging_name`  with
-:func:`sqlalchemy.create_engine`::
+:func:`ilikesql.create_engine`::
 
-    >>> from sqlalchemy import create_engine
-    >>> from sqlalchemy import text
+    >>> from ilikesql import create_engine
+    >>> from ilikesql import text
     >>> e = create_engine("sqlite://", echo=True, logging_name="myengine")
     >>> with e.connect() as conn:
     ...     conn.execute(text("select 'hi'"))
-    2020-10-24 12:47:04,291 INFO sqlalchemy.engine.Engine.myengine select 'hi'
-    2020-10-24 12:47:04,292 INFO sqlalchemy.engine.Engine.myengine ()
+    2020-10-24 12:47:04,291 INFO ilikesql.engine.Engine.myengine select 'hi'
+    2020-10-24 12:47:04,292 INFO ilikesql.engine.Engine.myengine ()
 
 .. _dbengine_logging_tokens:
 
@@ -610,14 +610,14 @@ The :paramref:`_engine.Connection.execution_options.logging_token` parameter
 accepts a string argument that may be used to establish per-connection tracking
 tokens::
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> e = create_engine("sqlite://", echo="debug")
     >>> with e.connect().execution_options(logging_token="track1") as conn:
     ...     conn.execute("select 1").all()
-    2021-02-03 11:48:45,754 INFO sqlalchemy.engine.Engine [track1] select 1
-    2021-02-03 11:48:45,754 INFO sqlalchemy.engine.Engine [track1] [raw sql] ()
-    2021-02-03 11:48:45,754 DEBUG sqlalchemy.engine.Engine [track1] Col ('1',)
-    2021-02-03 11:48:45,755 DEBUG sqlalchemy.engine.Engine [track1] Row (1,)
+    2021-02-03 11:48:45,754 INFO ilikesql.engine.Engine [track1] select 1
+    2021-02-03 11:48:45,754 INFO ilikesql.engine.Engine [track1] [raw sql] ()
+    2021-02-03 11:48:45,754 DEBUG ilikesql.engine.Engine [track1] Col ('1',)
+    2021-02-03 11:48:45,755 DEBUG ilikesql.engine.Engine [track1] Row (1,)
 
 The :paramref:`_engine.Connection.execution_options.logging_token` parameter
 may also be established on engines or sub-engines via
@@ -625,23 +625,23 @@ may also be established on engines or sub-engines via
 This may be useful to apply different logging tokens to different components
 of an application without creating new engines::
 
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import create_engine
     >>> e = create_engine("sqlite://", echo="debug")
     >>> e1 = e.execution_options(logging_token="track1")
     >>> e2 = e.execution_options(logging_token="track2")
     >>> with e1.connect() as conn:
     ...     conn.execute("select 1").all()
-    2021-02-03 11:51:08,960 INFO sqlalchemy.engine.Engine [track1] select 1
-    2021-02-03 11:51:08,960 INFO sqlalchemy.engine.Engine [track1] [raw sql] ()
-    2021-02-03 11:51:08,960 DEBUG sqlalchemy.engine.Engine [track1] Col ('1',)
-    2021-02-03 11:51:08,961 DEBUG sqlalchemy.engine.Engine [track1] Row (1,)
+    2021-02-03 11:51:08,960 INFO ilikesql.engine.Engine [track1] select 1
+    2021-02-03 11:51:08,960 INFO ilikesql.engine.Engine [track1] [raw sql] ()
+    2021-02-03 11:51:08,960 DEBUG ilikesql.engine.Engine [track1] Col ('1',)
+    2021-02-03 11:51:08,961 DEBUG ilikesql.engine.Engine [track1] Row (1,)
 
     >>> with e2.connect() as conn:
     ...     conn.execute("select 2").all()
-    2021-02-03 11:52:05,518 INFO sqlalchemy.engine.Engine [track2] Select 1
-    2021-02-03 11:52:05,519 INFO sqlalchemy.engine.Engine [track2] [raw sql] ()
-    2021-02-03 11:52:05,520 DEBUG sqlalchemy.engine.Engine [track2] Col ('1',)
-    2021-02-03 11:52:05,520 DEBUG sqlalchemy.engine.Engine [track2] Row (1,)
+    2021-02-03 11:52:05,518 INFO ilikesql.engine.Engine [track2] Select 1
+    2021-02-03 11:52:05,519 INFO ilikesql.engine.Engine [track2] [raw sql] ()
+    2021-02-03 11:52:05,520 DEBUG ilikesql.engine.Engine [track2] Col ('1',)
+    2021-02-03 11:52:05,520 DEBUG ilikesql.engine.Engine [track2] Row (1,)
 
 
 Hiding Parameters
@@ -655,6 +655,6 @@ these parameters from being logged for privacy purposes, enable the
     >>> e = create_engine("sqlite://", echo=True, hide_parameters=True)
     >>> with e.connect() as conn:
     ...     conn.execute(text("select :some_private_name"), {"some_private_name": "pii"})
-    2020-10-24 12:48:32,808 INFO sqlalchemy.engine.Engine select ?
-    2020-10-24 12:48:32,808 INFO sqlalchemy.engine.Engine [SQL parameters hidden due to hide_parameters=True]
+    2020-10-24 12:48:32,808 INFO ilikesql.engine.Engine select ?
+    2020-10-24 12:48:32,808 INFO ilikesql.engine.Engine [SQL parameters hidden due to hide_parameters=True]
 

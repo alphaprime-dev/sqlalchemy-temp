@@ -1,18 +1,18 @@
-SQLAlchemy
+ilikesql
 ==========
 
 |PyPI| |Python| |Downloads|
 
-.. |PyPI| image:: https://img.shields.io/pypi/v/sqlalchemy
-    :target: https://pypi.org/project/sqlalchemy
+.. |PyPI| image:: https://img.shields.io/pypi/v/ilikesql
+    :target: https://pypi.org/project/ilikesql
     :alt: PyPI
 
-.. |Python| image:: https://img.shields.io/pypi/pyversions/sqlalchemy
-    :target: https://pypi.org/project/sqlalchemy
+.. |Python| image:: https://img.shields.io/pypi/pyversions/ilikesql
+    :target: https://pypi.org/project/ilikesql
     :alt: PyPI - Python Version
 
-.. |Downloads| image:: https://img.shields.io/pypi/dm/sqlalchemy
-    :target: https://pypi.org/project/sqlalchemy
+.. |Downloads| image:: https://img.shields.io/pypi/dm/ilikesql
+    :target: https://pypi.org/project/ilikesql
     :alt: PyPI - Downloads
 
 
@@ -21,15 +21,15 @@ The Python SQL Toolkit and Object Relational Mapper
 Introduction
 -------------
 
-SQLAlchemy is the Python SQL toolkit and Object Relational Mapper
+ilikesql is the Python SQL toolkit and Object Relational Mapper
 that gives application developers the full power and
-flexibility of SQL. SQLAlchemy provides a full suite
+flexibility of SQL. ilikesql provides a full suite
 of well known enterprise-level persistence patterns,
 designed for efficient and high-performing database
 access, adapted into a simple and Pythonic domain
 language.
 
-Major SQLAlchemy features include:
+Major ilikesql features include:
 
 * An industrial strength ORM, built
   from the core on the identity map, unit of work,
@@ -57,7 +57,7 @@ Major SQLAlchemy features include:
   at once using joins, or by query per collection
   across the full result set.
 * A Core SQL construction system and DBAPI
-  interaction layer.  The SQLAlchemy Core is
+  interaction layer.  The ilikesql Core is
   separate from the ORM and is a full database
   abstraction layer in its own right, and includes
   an extensible Python-based SQL expression
@@ -66,7 +66,7 @@ Major SQLAlchemy features include:
 * All primary and foreign key constraints are
   assumed to be composite and natural.  Surrogate
   integer primary keys are of course still the
-  norm, but SQLAlchemy never assumes or hardcodes
+  norm, but ilikesql never assumes or hardcodes
   to this model.
 * Database introspection and generation.  Database
   schemas can be "reflected" in one step into
@@ -75,17 +75,17 @@ Major SQLAlchemy features include:
   CREATE statements right back out - all within
   the Core, independent of the ORM.
 
-SQLAlchemy's philosophy:
+ilikesql's philosophy:
 
 * SQL databases behave less and less like object
   collections the more size and performance start to
   matter; object collections behave less and less like
   tables and rows the more abstraction starts to matter.
-  SQLAlchemy aims to accommodate both of these
+  ilikesql aims to accommodate both of these
   principles.
 * An ORM doesn't need to hide the "R".   A relational
   database provides rich, set-based functionality
-  that should be fully exposed.   SQLAlchemy's
+  that should be fully exposed.   ilikesql's
   ORM provides an open-ended set of patterns
   that allow a developer to construct a custom
   mediation layer between a domain model and
@@ -95,27 +95,27 @@ SQLAlchemy's philosophy:
 * The developer, in all cases, makes all decisions
   regarding the design, structure, and naming conventions
   of both the object model as well as the relational
-  schema.   SQLAlchemy only provides the means
+  schema.   ilikesql only provides the means
   to automate the execution of these decisions.
-* With SQLAlchemy, there's no such thing as
+* With ilikesql, there's no such thing as
   "the ORM generated a bad query" - you
   retain full control over the structure of
   queries, including how joins are organized,
   how subqueries and correlation is used, what
-  columns are requested.  Everything SQLAlchemy
+  columns are requested.  Everything ilikesql
   does is ultimately the result of a developer-initiated 
   decision.
 * Don't use an ORM if the problem doesn't need one.
-  SQLAlchemy consists of a Core and separate ORM
+  ilikesql consists of a Core and separate ORM
   component.   The Core offers a full SQL expression
   language that allows Pythonic construction
   of SQL constructs that render directly to SQL
   strings for a target database, returning
   result sets that are essentially enhanced DBAPI
   cursors.
-* Transactions should be the norm.  With SQLAlchemy's
+* Transactions should be the norm.  With ilikesql's
   ORM, nothing goes to permanent storage until
-  commit() is called.  SQLAlchemy encourages applications
+  commit() is called.  ilikesql encourages applications
   to create a consistent means of delineating
   the start and end of a series of operations.
 * Never render a literal value in a SQL statement.
@@ -129,30 +129,30 @@ Documentation
 
 Latest documentation is at:
 
-https://www.sqlalchemy.org/docs/
+https://www.ilikesql.org/docs/
 
 Installation / Requirements
 ---------------------------
 
 Full documentation for installation is at
-`Installation <https://www.sqlalchemy.org/docs/intro.html#installation>`_.
+`Installation <https://www.ilikesql.org/docs/intro.html#installation>`_.
 
 Getting Help / Development / Bug reporting
 ------------------------------------------
 
-Please refer to the `SQLAlchemy Community Guide <https://www.sqlalchemy.org/support.html>`_.
+Please refer to the `ilikesql Community Guide <https://www.ilikesql.org/support.html>`_.
 
 Code of Conduct
 ---------------
 
-Above all, SQLAlchemy places great emphasis on polite, thoughtful, and
+Above all, ilikesql places great emphasis on polite, thoughtful, and
 constructive communication between users and developers.
 Please see our current Code of Conduct at
-`Code of Conduct <https://www.sqlalchemy.org/codeofconduct.html>`_.
+`Code of Conduct <https://www.ilikesql.org/codeofconduct.html>`_.
 
 License
 -------
 
-SQLAlchemy is distributed under the `MIT license
+ilikesql is distributed under the `MIT license
 <https://www.opensource.org/licenses/mit-license.php>`_.
 

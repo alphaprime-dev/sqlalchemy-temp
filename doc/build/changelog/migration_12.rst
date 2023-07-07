@@ -1,19 +1,19 @@
 =============================
-What's New in SQLAlchemy 1.2?
+What's New in ilikesql 1.2?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 1.1
-    and SQLAlchemy version 1.2.
+    This document describes changes between ilikesql version 1.1
+    and ilikesql version 1.2.
 
 
 Introduction
 ============
 
-This guide introduces what's new in SQLAlchemy version 1.2,
+This guide introduces what's new in ilikesql version 1.2,
 and also documents changes which affect users migrating
-their applications from the 1.1 series of SQLAlchemy to 1.2.
+their applications from the 1.1 series of ilikesql to 1.2.
 
 Please carefully review the sections on behavioral changes for
 potentially backwards-incompatible changes in behavior.
@@ -24,10 +24,10 @@ Platform Support
 Targeting Python 2.7 and Up
 ---------------------------
 
-SQLAlchemy 1.2 now moves the minimum Python version to 2.7, no longer
+ilikesql 1.2 now moves the minimum Python version to 2.7, no longer
 supporting 2.6.   New language features are expected to be merged
 into the 1.2 series that were not supported in Python 2.6.  For Python 3 support,
-SQLAlchemy is currently tested on versions 3.5 and 3.6.
+ilikesql is currently tested on versions 3.5 and 3.6.
 
 
 New Features and Improvements - ORM
@@ -38,7 +38,7 @@ New Features and Improvements - ORM
 "Baked" loading now the default for lazy loads
 ----------------------------------------------
 
-The :mod:`sqlalchemy.ext.baked` extension, first introduced in the 1.0 series,
+The :mod:`ilikesql.ext.baked` extension, first introduced in the 1.0 series,
 allows for the construction of a so-called :class:`.BakedQuery` object,
 which is an object that generates a :class:`_query.Query` object in conjunction
 with a cache key representing the structure of the query; this cache key
@@ -182,7 +182,7 @@ are loaded with additional SELECT statements:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy.orm import selectin_polymorphic
+    >>> from ilikesql.orm import selectin_polymorphic
 
     >>> query = session.query(Employee).options(
     ...     selectin_polymorphic(Employee, [Manager, Engineer])
@@ -230,8 +230,8 @@ is similar to :func:`_orm.deferred`, except its SQL expression
 is determined at query time using a new option :func:`_orm.with_expression`;
 if not specified, the attribute defaults to ``None``::
 
-    from sqlalchemy.orm import query_expression
-    from sqlalchemy.orm import with_expression
+    from ilikesql.orm import query_expression
+    from ilikesql.orm import with_expression
 
 
     class A(Base):
@@ -283,7 +283,7 @@ against ``SomeOtherEntity``::
 Support for bulk updates of hybrids, composites
 -----------------------------------------------
 
-Both hybrid attributes (e.g. :mod:`sqlalchemy.ext.hybrid`) as well as composite
+Both hybrid attributes (e.g. :mod:`ilikesql.ext.hybrid`) as well as composite
 attributes (:ref:`mapper_composite`) now support being used in the
 SET clause of an UPDATE statement when using :meth:`_query.Query.update`.
 
@@ -328,7 +328,7 @@ will be broken out into their individual columns for bulk UPDATE::
 Hybrid attributes support reuse among subclasses, redefinition of @getter
 -------------------------------------------------------------------------
 
-The :class:`sqlalchemy.ext.hybrid.hybrid_property` class now supports
+The :class:`ilikesql.ext.hybrid.hybrid_property` class now supports
 calling mutators like ``@setter``, ``@expression`` etc. multiple times
 across subclasses, and now provides a ``@getter`` mutator, so that
 a particular hybrid can be repurposed across subclasses or other
@@ -432,7 +432,7 @@ already handled by "bulk_replace" if collection assignment is used.
 A new symbol :attr:`~.attributes.OP_BULK_REPLACE` may be used to determine
 if this "append" event is the second part of a bulk replace::
 
-    from sqlalchemy.orm.attributes import OP_BULK_REPLACE
+    from ilikesql.orm.attributes import OP_BULK_REPLACE
 
 
     @event.listens_for(SomeObject.collection, "bulk_replace")
@@ -452,17 +452,17 @@ if this "append" event is the second part of a bulk replace::
 
 .. _change_3303:
 
-New "modified" event handler for sqlalchemy.ext.mutable
+New "modified" event handler for ilikesql.ext.mutable
 -------------------------------------------------------
 
 A new event handler :meth:`.AttributeEvents.modified` is added, which is
 triggered corresponding to calls to the :func:`.attributes.flag_modified`
-method, which is normally called from the :mod:`sqlalchemy.ext.mutable`
+method, which is normally called from the :mod:`ilikesql.ext.mutable`
 extension::
 
-    from sqlalchemy.ext.declarative import declarative_base
-    from sqlalchemy.ext.mutable import MutableDict
-    from sqlalchemy import event
+    from ilikesql.ext.declarative import declarative_base
+    from ilikesql.ext.mutable import MutableDict
+    from ilikesql import event
 
     Base = declarative_base()
 
@@ -679,8 +679,8 @@ of boolean values, the :class:`.TypeDecorator` should be used.   Below
 illustrates a recipe that will allow for the "liberal" behavior of the pre-1.1
 :class:`.Boolean` datatype::
 
-    from sqlalchemy import Boolean
-    from sqlalchemy import TypeDecorator
+    from ilikesql import Boolean
+    from ilikesql import TypeDecorator
 
 
     class LiberalBoolean(TypeDecorator):
@@ -750,7 +750,7 @@ illegal:
 
     mycolumn IN ()
 
-To work around this, SQLAlchemy and other database libraries detect this
+To work around this, ilikesql and other database libraries detect this
 condition and render an alternative expression that evaluates to false, or
 in the case of NOT IN, to true, based on the theory that "col IN ()" is always
 false since nothing is in "the empty set".    Typically, in order to
@@ -759,13 +759,13 @@ in the context of the WHERE clause, a simple tautology such as ``1 != 1`` is
 used to evaluate to false and ``1 = 1`` to evaluate to true (a simple constant
 "0" or "1" often does not work as the target of a WHERE clause).
 
-SQLAlchemy in its early days began with this approach as well, but soon it
+ilikesql in its early days began with this approach as well, but soon it
 was theorized that the SQL expression ``column IN ()`` would not evaluate to
 false if the "column" were NULL; instead, the expression would produce NULL,
 since "NULL" means "unknown", and comparisons to NULL in SQL usually produce
 NULL.
 
-To simulate this result, SQLAlchemy changed from using ``1 != 1`` to
+To simulate this result, ilikesql changed from using ``1 != 1`` to
 instead use th expression ``expr != expr`` for empty "IN" and ``expr = expr``
 for empty "NOT IN"; that is, instead of using a fixed value we use the
 actual left-hand side of the expression.  If the left-hand side of
@@ -774,7 +774,7 @@ also gets the NULL result instead of false or true.
 
 Unfortunately, users eventually complained that this expression had a very
 severe performance impact on some query planners.   At that point, a warning
-was added when an empty IN expression was encountered, favoring that SQLAlchemy
+was added when an empty IN expression was encountered, favoring that ilikesql
 continues to be "correct" and urging users to avoid code that generates empty
 IN predicates in general, since typically they can be safely omitted.  However,
 this is of course burdensome in the case of queries that are built up dynamically
@@ -798,7 +798,7 @@ means nothing is present, including all unknown values.  On the
 other hand, MySQL and MariaDB return NULL for the above expression, defaulting
 to the more common behavior of "all comparisons to NULL return NULL".
 
-SQLAlchemy's SQL architecture is more sophisticated than it was when this
+ilikesql's SQL architecture is more sophisticated than it was when this
 design decision was first made, so we can now allow either behavior to
 be invoked at SQL string compilation time.  Previously, the conversion to a
 comparison expression were done at construction time, that is, the moment
@@ -1029,7 +1029,7 @@ are named in the documentation now:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select, table, column, func, tuple_
+    >>> from ilikesql import select, table, column, func, tuple_
     >>> t = table("t", column("value"), column("x"), column("y"), column("z"), column("q"))
     >>> stmt = select([func.sum(t.c.value)]).group_by(
     ...     func.grouping_sets(
@@ -1303,7 +1303,7 @@ is considered within the flush process for the purpose of custom event handlers
 such as :meth:`.SessionEvents.before_flush`, use the new
 :func:`.attributes.flag_dirty` function::
 
-    from sqlalchemy.orm import attributes
+    from ilikesql.orm import attributes
 
     attributes.flag_dirty(a1)
 
@@ -1316,7 +1316,7 @@ such as :meth:`.SessionEvents.before_flush`, use the new
 
 A very old and undocumented keyword argument ``scope`` has been removed::
 
-    from sqlalchemy.orm import scoped_session
+    from ilikesql.orm import scoped_session
 
     Session = scoped_session(sessionmaker())
 
@@ -1521,7 +1521,7 @@ construct that stated a single percent sign:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import literal_column
+    >>> from ilikesql import literal_column
     >>> print(literal_column("some%symbol"))
     {printsql}some%%symbol
 
@@ -1532,10 +1532,10 @@ as is appropriate:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import literal_column
+    >>> from ilikesql import literal_column
     >>> print(literal_column("some%symbol"))
     {printsql}some%symbol{stop}
-    >>> from sqlalchemy.dialects import mysql
+    >>> from ilikesql.dialects import mysql
     >>> print(literal_column("some%symbol").compile(dialect=mysql.dialect()))
     {printsql}some%%symbol{stop}
 
@@ -1588,7 +1588,7 @@ The psycopg2 ``cursor.executemany()`` method has been identified as performing
 poorly, particularly with INSERT statements.   To alleviate this, psycopg2
 has added `Fast Execution Helpers <https://initd.org/psycopg/docs/extras.html#fast-execution-helpers>`_
 which rework statements into fewer server round trips by sending multiple
-DML statements in batch.   SQLAlchemy 1.2 now includes support for these
+DML statements in batch.   ilikesql 1.2 now includes support for these
 helpers to be used transparently whenever the :class:`_engine.Engine` makes use
 of ``cursor.executemany()`` to invoke a statement against multiple parameter
 sets.   The feature is off by default and can be enabled using the
@@ -1617,7 +1617,7 @@ of which fields of the interval to store, including such values as "YEAR",
 "MONTH", "YEAR TO MONTH", etc.   The :class:`_postgresql.INTERVAL` datatype
 now allows these values to be specified::
 
-    from sqlalchemy.dialects.postgresql import INTERVAL
+    from ilikesql.dialects.postgresql import INTERVAL
 
     Table("my_table", metadata, Column("some_interval", INTERVAL(fields="DAY TO SECOND")))
 
@@ -1643,11 +1643,11 @@ Support for INSERT..ON DUPLICATE KEY UPDATE
 
 The ``ON DUPLICATE KEY UPDATE`` clause of ``INSERT`` supported by MySQL
 is now supported using a MySQL-specific version of the
-:class:`_expression.Insert` object, via :func:`sqlalchemy.dialects.mysql.dml.insert`.
+:class:`_expression.Insert` object, via :func:`ilikesql.dialects.mysql.dml.insert`.
 This :class:`_expression.Insert` subclass adds a new method
 :meth:`~.mysql.dml.Insert.on_duplicate_key_update` that implements MySQL's syntax::
 
-    from sqlalchemy.dialects.mysql import insert
+    from ilikesql.dialects.mysql import insert
 
     insert_stmt = insert(my_table).values(id="some_id", data="some data to insert")
 
@@ -1680,7 +1680,7 @@ Dialect Improvements and Changes - Oracle
 Major Refactor to cx_Oracle Dialect, Typing System
 --------------------------------------------------
 
-With the introduction of the 6.x series of the cx_Oracle DBAPI, SQLAlchemy's
+With the introduction of the 6.x series of the cx_Oracle DBAPI, ilikesql's
 cx_Oracle dialect has been reworked and simplified to take advantage of recent
 improvements in cx_Oracle as well as dropping support for patterns that were
 more relevant before the 5.x series of cx_Oracle.
@@ -1720,7 +1720,7 @@ more relevant before the 5.x series of cx_Oracle.
   these LOB objects were consumed (specifically, more rows than the value of
   cursor.arraysize which causes a new batch of rows to be read), these LOB
   objects would raise the error "LOB variable no longer valid after subsequent
-  fetch". SQLAlchemy worked around this by both automatically calling
+  fetch". ilikesql worked around this by both automatically calling
   ``.read()`` upon these LOBs within its typing system, as well as using a
   special ``BufferedColumnResultSet`` which would ensure this data was buffered
   in case a call like ``cursor.fetchmany()`` or ``cursor.fetchall()`` were
@@ -1736,7 +1736,7 @@ more relevant before the 5.x series of cx_Oracle.
 
   Additionally, cx_Oracle 6.x has removed the conditions under which this error
   occurs in any case, so the error is no longer possible.   The error
-  can occur on SQLAlchemy in the case that the seldom (if ever) used
+  can occur on ilikesql in the case that the seldom (if ever) used
   ``auto_convert_lobs=False`` option is in use, in conjunction with the
   previous 5.x series of cx_Oracle, and more rows are read before the LOB
   objects can be consumed.  Upgrading to cx_Oracle 6.x will resolve that issue.

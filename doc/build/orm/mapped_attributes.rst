@@ -1,6 +1,6 @@
 .. _mapping_attributes_toplevel:
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 Changing Attribute Behavior
 ===========================
@@ -15,13 +15,13 @@ Simple Validators
 -----------------
 
 A quick way to add a "validation" routine to an attribute is to use the
-:func:`~sqlalchemy.orm.validates` decorator. An attribute validator can raise
+:func:`~ilikesql.orm.validates` decorator. An attribute validator can raise
 an exception, halting the process of mutating the attribute's value, or can
 change the given value into something different. Validators, like all
 attribute extensions, are only called by normal userland code; they are not
 issued when the ORM is populating the object::
 
-    from sqlalchemy.orm import validates
+    from ilikesql.orm import validates
 
 
     class EmailAddress(Base):
@@ -39,7 +39,7 @@ issued when the ORM is populating the object::
 Validators also receive collection append events, when items are added to a
 collection::
 
-    from sqlalchemy.orm import validates
+    from ilikesql.orm import validates
 
 
     class User(Base):
@@ -60,7 +60,7 @@ of these events by specifying ``include_removes=True`` to the decorator.  When
 this flag is set, the validation function must receive an additional boolean
 argument which if ``True`` indicates that the operation is a removal::
 
-    from sqlalchemy.orm import validates
+    from ilikesql.orm import validates
 
 
     class User(Base):
@@ -82,7 +82,7 @@ can also be tailored, using the ``include_backrefs=False`` option; this option,
 when set to ``False``, prevents a validation function from emitting if the
 event occurs as a result of a backref::
 
-    from sqlalchemy.orm import validates
+    from ilikesql.orm import validates
 
 
     class User(Base):
@@ -126,7 +126,7 @@ Using Descriptors and Hybrids
 
 A more comprehensive way to produce modified behavior for an attribute is to
 use :term:`descriptors`.  These are commonly used in Python using the ``property()``
-function. The standard SQLAlchemy technique for descriptors is to create a
+function. The standard ilikesql technique for descriptors is to create a
 plain descriptor, and to have it read/write from a mapped attribute with a
 different name. Below we illustrate this using Python 2.6-style properties::
 
@@ -154,9 +154,9 @@ The approach above will work, but there's more we can add. While our
 descriptor and into the ``_email`` mapped attribute, the class level
 ``EmailAddress.email`` attribute does not have the usual expression semantics
 usable with :class:`_sql.Select`. To provide these, we instead use the
-:mod:`~sqlalchemy.ext.hybrid` extension as follows::
+:mod:`~ilikesql.ext.hybrid` extension as follows::
 
-    from sqlalchemy.ext.hybrid import hybrid_property
+    from ilikesql.ext.hybrid import hybrid_property
 
 
     class EmailAddress(Base):
@@ -180,8 +180,8 @@ that is, from the ``EmailAddress`` class directly:
 
 .. sourcecode:: python+sql
 
-    from sqlalchemy.orm import Session
-    from sqlalchemy import select
+    from ilikesql.orm import Session
+    from ilikesql import select
 
     session = Session()
 
@@ -265,7 +265,7 @@ to "mirror" another attribute that is mapped.
 In the most basic sense, the synonym is an easy way to make a certain
 attribute available by an additional name::
 
-    from sqlalchemy.orm import synonym
+    from ilikesql.orm import synonym
 
 
     class MyClass(Base):
@@ -321,7 +321,7 @@ a user-defined :term:`descriptor`.  We can supply our
 When using Declarative, the above pattern can be expressed more succinctly
 using the :func:`.synonym_for` decorator::
 
-    from sqlalchemy.ext.declarative import synonym_for
+    from ilikesql.ext.declarative import synonym_for
 
 
     class MyClass(Base):
@@ -350,10 +350,10 @@ to use in more complex situations.
 Operator Customization
 ----------------------
 
-The "operators" used by the SQLAlchemy ORM and Core expression language
+The "operators" used by the ilikesql ORM and Core expression language
 are fully customizable.  For example, the comparison expression
 ``User.name == 'ed'`` makes usage of an operator built into Python
-itself called ``operator.eq`` - the actual SQL construct which SQLAlchemy
+itself called ``operator.eq`` - the actual SQL construct which ilikesql
 associates with such an operator can be modified.  New
 operations can be associated with column expressions as well.   The operators
 which take place for column expressions are most directly redefined at the

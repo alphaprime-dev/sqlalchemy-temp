@@ -2,37 +2,37 @@
 # https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema
 
 name: Report a typing issue found by type checkers
-description: Typing errors or annoyances while using SQLAlchemy with mypy, pyright, etc.
+description: Typing errors or annoyances while using ilikesql with mypy, pyright, etc.
 labels: [requires triage,typing]
 body:
   - type: markdown
     attributes:
-      value: "SQLAlchemy v2 introduced typing support on most common public apis, but the work to fully type
-all the pubic api is still in progress. Check https://github.com/sqlalchemy/sqlalchemy/issues/6810 for progress
+      value: "ilikesql v2 introduced typing support on most common public apis, but the work to fully type
+all the pubic api is still in progress. Check https://github.com/ilikesql/ilikesql/issues/6810 for progress
 
-Currently the SQLAlchemy team is targeting mypy support, with best effort support for other type checkers.
+Currently the ilikesql team is targeting mypy support, with best effort support for other type checkers.
 "
 
   - type: checkboxes
     id: stubs
     attributes:
       label: Ensure stubs packages are not installed
-      description: SQLAlchemy v2 does not need any stub to work, so ensure they are not installed
+      description: ilikesql v2 does not need any stub to work, so ensure they are not installed
       options:
-        - label: No sqlalchemy stub packages is installed (both `sqlalchemy-stubs` and `sqlalchemy2-stubs` are not compatible with v2)
+        - label: No ilikesql stub packages is installed (both `ilikesql-stubs` and `ilikesql2-stubs` are not compatible with v2)
           required: true
 
   - type: checkboxes
     id: untyped
     attributes:
       label: Verify if the api is typed
-      description: "Some modules in SQLAlchemy v2 are not yet fully typed.
-      Check https://github.com/sqlalchemy/sqlalchemy/issues/6810 for the progress on the missing ones.
+      description: "Some modules in ilikesql v2 are not yet fully typed.
+      Check https://github.com/ilikesql/ilikesql/issues/6810 for the progress on the missing ones.
 
       If the api you are using is part of these module please comment on that issue instead of opening a new issue.
       "
       options:
-        - label: The api is not in a module listed in [#6810](https://github.com/sqlalchemy/sqlalchemy/issues/6810) so it should pass type checking
+        - label: The api is not in a module listed in [#6810](https://github.com/ilikesql/ilikesql/issues/6810) so it should pass type checking
           required: true
 
   - type: textarea
@@ -48,7 +48,7 @@ Currently the SQLAlchemy team is targeting mypy support, with best effort suppor
       description: "
 Provide your [Minimal, Complete, and Verifiable](https://stackoverflow.com/help/mcve) example here.
 If you need help creating one, you can model yours after the MCV code shared in one of our previous
-[well written bug reports](https://github.com/sqlalchemy/sqlalchemy/issues?q=is%3Aissue+label%3A%22great+mcve%22)"
+[well written bug reports](https://github.com/ilikesql/ilikesql/issues?q=is%3Aissue+label%3A%22great+mcve%22)"
       placeholder: "# Insert code here (text area already python formatted)"
       render: python
     validations:
@@ -73,7 +73,7 @@ If you need help creating one, you can model yours after the MCV code shared in 
       value: |
         - OS:
         - Python:
-        - SQLAlchemy:
+        - ilikesql:
         - Type checker (eg: mypy 0.991, pyright 1.1.290, etc):
     validations:
       required: true

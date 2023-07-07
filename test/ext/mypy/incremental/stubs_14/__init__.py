@@ -1,15 +1,15 @@
 from typing import TYPE_CHECKING
 
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy.orm import as_declarative
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import Mapped
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql.orm import as_declarative
+from ilikesql.orm import declared_attr
+from ilikesql.orm import Mapped
 from .address import Address
 from .user import User
 
 if TYPE_CHECKING:
-    from sqlalchemy.orm.decl_api import DeclarativeMeta
+    from ilikesql.orm.decl_api import DeclarativeMeta
 
 
 @as_declarative()

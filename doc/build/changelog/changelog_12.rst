@@ -216,11 +216,11 @@
        :tickets: 4429
 
        Fixed a regression introduced in version 1.2 where a refactor
-       of the :class:`.SQLAlchemyError` base exception class introduced an
+       of the :class:`.ilikesqlError` base exception class introduced an
        inappropriate coercion of a plain string message into Unicode under
        python 2k, which is not handled by the Python interpreter for characters
        outside of the platform's encoding (typically ascii).  The
-       :class:`.SQLAlchemyError` class now passes a bytestring through under
+       :class:`.ilikesqlError` class now passes a bytestring through under
        Py2K for ``__str__()`` as is the behavior of exception objects in general
        under Py2K, does a safe coercion to unicode utf-8 with
        backslash fallback for ``__unicode__()``.  For Py3K the message is
@@ -961,11 +961,11 @@
 
         Altered the Oracle dialect such that when an :class:`.Integer` type is in
         use, the cx_Oracle.NUMERIC type is set up for setinputsizes().  In
-        SQLAlchemy 1.1 and earlier, cx_Oracle.NUMERIC was passed for all numeric
+        ilikesql 1.1 and earlier, cx_Oracle.NUMERIC was passed for all numeric
         types unconditionally, and in 1.2 this was removed to allow for better
         numeric precision.  However, for integers, some database/client setups
         will fail to coerce boolean values True/False into integers which introduces
-        regressive behavior when using SQLAlchemy 1.2.  Overall, the setinputsizes
+        regressive behavior when using ilikesql 1.2.  Overall, the setinputsizes
         logic seems like it will need a lot more flexibility going forward so this
         is a start for that.
 
@@ -1426,7 +1426,7 @@
         :tickets: 4163
 
         The cx_Oracle dialect now calls setinputsizes() with cx_Oracle.NCHAR
-        unconditionally when the NVARCHAR2 datatype, in SQLAlchemy corresponding
+        unconditionally when the NVARCHAR2 datatype, in ilikesql corresponding
         to sqltypes.Unicode(), is in use.  Per cx_Oracle's author this allows
         the correct conversions to occur within the Oracle client regardless
         of the setting for NLS_NCHAR_CHARACTERSET.
@@ -1693,7 +1693,7 @@
         :tags: feature, misc
 
         Added a new errors section to the documentation with background
-        about common error messages.   Selected exceptions within SQLAlchemy
+        about common error messages.   Selected exceptions within ilikesql
         will include a link in their string output to the relevant section
         within this page.
 
@@ -1732,7 +1732,7 @@
         :tags: bug, mssql
         :tickets: 4061
 
-        SQL Server supports what SQLAlchemy calls "native boolean"
+        SQL Server supports what ilikesql calls "native boolean"
         with its BIT type, as this type only accepts 0 or 1 and the
         DBAPIs return its value as True/False.   So the SQL Server
         dialects now enable "native boolean" support, in that a
@@ -1773,7 +1773,7 @@
         two phase support for cx_Oracle has been completely removed for all
         versions of cx_Oracle, whereas in 1.2.0b1 this change only took effect for
         the 6.x series of cx_Oracle.  This feature never worked correctly
-        in any version of cx_Oracle and in cx_Oracle 6.x, the API which SQLAlchemy
+        in any version of cx_Oracle and in cx_Oracle 6.x, the API which ilikesql
         relied upon was removed.
 
         .. seealso::
@@ -2514,7 +2514,7 @@
         may require attention.   The LRU caches can reach their size limits
         primarily if an application is making use of an unbounded number
         of :class:`_engine.Engine` objects, which is an antipattern.  Otherwise,
-        this may suggest an issue that should be brought to the SQLAlchemy
+        this may suggest an issue that should be brought to the ilikesql
         developer's attention.
 
     .. change:: 3964
@@ -2604,7 +2604,7 @@
         the owner and optionally the database name as well.  In addition,
         sending the :class:`.quoted_name` construct for the schema name will
         not split on the dot and will deliver the full string as the "owner".
-        :class:`.quoted_name` is also now available from the ``sqlalchemy.sql``
+        :class:`.quoted_name` is also now available from the ``ilikesql.sql``
         import space.
 
         .. seealso::
@@ -2687,7 +2687,7 @@
         :tags: bug, ext
         :tickets: 3911, 3912
 
-        The :class:`sqlalchemy.ext.hybrid.hybrid_property` class now supports
+        The :class:`ilikesql.ext.hybrid.hybrid_property` class now supports
         calling mutators like ``@setter``, ``@expression`` etc. multiple times
         across subclasses, and now provides a ``@getter`` mutator, so that
         a particular hybrid can be repurposed across subclasses or other
@@ -2807,7 +2807,7 @@
 
         Added new event handler :meth:`.AttributeEvents.modified` which is
         triggered when the func:`.attributes.flag_modified` function is
-        invoked, which is common when using the :mod:`sqlalchemy.ext.mutable`
+        invoked, which is common when using the :mod:`ilikesql.ext.mutable`
         extension module.
 
         .. seealso::
@@ -2818,7 +2818,7 @@
         :tags: bug, ext
         :tickets: 3918
 
-        Fixed a bug in the ``sqlalchemy.ext.serializer`` extension whereby
+        Fixed a bug in the ``ilikesql.ext.serializer`` extension whereby
         an "annotated" SQL element (as produced by the ORM for many types
         of SQL expressions) could not be reliably serialized.  Also bumped
         the default pickle level for the serializer to "HIGHEST_PROTOCOL".

@@ -11,13 +11,13 @@ the :ref:`queryguide_toplevel`.
 ..  sourcecode:: python
 
 
-    >>> from sqlalchemy import create_engine
-    >>> from sqlalchemy import ForeignKey
-    >>> from sqlalchemy.orm import DeclarativeBase
-    >>> from sqlalchemy.orm import Mapped
-    >>> from sqlalchemy.orm import mapped_column
-    >>> from sqlalchemy.orm import relationship
-    >>> from sqlalchemy.orm import Session
+    >>> from ilikesql import create_engine
+    >>> from ilikesql import ForeignKey
+    >>> from ilikesql.orm import DeclarativeBase
+    >>> from ilikesql.orm import Mapped
+    >>> from ilikesql.orm import mapped_column
+    >>> from ilikesql.orm import relationship
+    >>> from ilikesql.orm import Session
     >>>
     >>>
     >>> class Base(DeclarativeBase):
@@ -52,7 +52,7 @@ the :ref:`queryguide_toplevel`.
     BEGIN ...
 
     >>> conn = engine.connect()
-    >>> from sqlalchemy.orm import Session
+    >>> from ilikesql.orm import Session
     >>> session = Session(conn)
     >>> session.add_all(
     ...     [

@@ -1,18 +1,18 @@
 =============================
-What's New in SQLAlchemy 0.6?
+What's New in ilikesql 0.6?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 0.5,
-    last released January 16, 2010, and SQLAlchemy version 0.6,
+    This document describes changes between ilikesql version 0.5,
+    last released January 16, 2010, and ilikesql version 0.6,
     last released May 5, 2012.
 
     Document date:  June 6, 2010
 
 This guide documents API changes which affect users
 migrating their applications from the 0.5 series of
-SQLAlchemy to 0.6.  Note that SQLAlchemy 0.6 removes some
+ilikesql to 0.6.  Note that ilikesql 0.6 removes some
 behaviors which were deprecated throughout the span of the
 0.5 series, and also deprecates more behaviors specific to
 0.5.
@@ -26,7 +26,7 @@ Platform Support
 * Jython 2.5.1 - using the zxJDBC DBAPI included with
   Jython.
 
-* cPython 3.x - see [source:sqlalchemy/trunk/README.py3k]
+* cPython 3.x - see [source:ilikesql/trunk/README.py3k]
   for information on how to build for python3.
 
 New Dialect System
@@ -35,20 +35,20 @@ New Dialect System
 Dialect modules are now broken up into distinct
 subcomponents, within the scope of a single database
 backend.   Dialect implementations are now in the
-``sqlalchemy.dialects`` package.  The
-``sqlalchemy.databases`` package still exists as a
+``ilikesql.dialects`` package.  The
+``ilikesql.databases`` package still exists as a
 placeholder to provide some level of backwards compatibility
 for simple imports.
 
 For each supported database, a sub-package exists within
-``sqlalchemy.dialects`` where several files are contained.
+``ilikesql.dialects`` where several files are contained.
 Each package contains a module called ``base.py`` which
 defines the specific SQL dialect used by that database.   It
 also contains one or more "driver" modules, each one
 corresponding to a specific DBAPI - these files are named
 corresponding to the DBAPI itself, such as ``pysqlite``,
 ``cx_oracle``, or ``pyodbc``.  The classes used by
-SQLAlchemy dialects are first declared in the ``base.py``
+ilikesql dialects are first declared in the ``base.py``
 module, defining all behavioral characteristics defined by
 the database.  These include capability mappings, such as
 "supports sequences", "supports returning", etc., type
@@ -58,7 +58,7 @@ needed which override the default behavior to accommodate
 the additional features, behaviors, and quirks of that
 DBAPI.    For DBAPIs that support multiple backends (pyodbc,
 zxJDBC, mxODBC), the dialect module will use mixins from the
-``sqlalchemy.connectors`` package, which provide
+``ilikesql.connectors`` package, which provide
 functionality common to that DBAPI across all backends, most
 typically dealing with connect arguments.   This means that
 connecting using pyodbc, zxJDBC or mxODBC (when implemented)
@@ -86,11 +86,11 @@ sign "+":
 Important Dialect Links:
 
 * Documentation on connect arguments:
-  https://www.sqlalchemy.org/docs/06/dbengine.html#create-
+  https://www.ilikesql.org/docs/06/dbengine.html#create-
   engine-url-arguments.
 
 * Reference documentation for individual dialects: https://ww
-  w.sqlalchemy.org/docs/06/reference/dialects/index.html
+  w.ilikesql.org/docs/06/reference/dialects/index.html
 
 * The tips and tricks at DatabaseNotes.
 
@@ -98,7 +98,7 @@ Important Dialect Links:
 Other notes regarding dialects:
 
 * the type system has been changed dramatically in
-  SQLAlchemy 0.6.  This has an impact on all dialects
+  ilikesql 0.6.  This has an impact on all dialects
   regarding naming conventions, behaviors, and
   implementations.  See the section on "Types" below.
 
@@ -109,7 +109,7 @@ Other notes regarding dialects:
   now directly pickleable.
 
 * the setuptools entrypoint used to locate external dialects
-  is now called ``sqlalchemy.dialects``.  An external
+  is now called ``ilikesql.dialects``.  An external
   dialect written against 0.4 or 0.5 will need to be
   modified to work with 0.6 in any case so this change does
   not add any additional difficulties.
@@ -133,12 +133,12 @@ Dialect Imports
 The import structure of dialects has changed.  Each dialect
 now exports its base "dialect" class as well as the full set
 of SQL types supported on that dialect via
-``sqlalchemy.dialects.<name>``.  For example, to import a
+``ilikesql.dialects.<name>``.  For example, to import a
 set of PG types:
 
 ::
 
-    from sqlalchemy.dialects.postgresql import (
+    from ilikesql.dialects.postgresql import (
         INTEGER,
         BIGINT,
         SMALLINT,
@@ -149,7 +149,7 @@ set of PG types:
     )
 
 Above, ``INTEGER`` is actually the plain ``INTEGER`` type
-from ``sqlalchemy.types``, but the PG dialect makes it
+from ``ilikesql.types``, but the PG dialect makes it
 available in the same way as those types which are specific
 to PG, such as ``BYTEA`` and ``MACADDR``.
 
@@ -170,9 +170,9 @@ object returns another ``ClauseElement``:
 
 ::
 
-    >>> from sqlalchemy.sql import column
+    >>> from ilikesql.sql import column
     >>> column("foo") == 5
-    <sqlalchemy.sql.expression._BinaryExpression object at 0x1252490>
+    <ilikesql.sql.expression._BinaryExpression object at 0x1252490>
 
 This so that Python expressions produce SQL expressions when
 converted to strings:
@@ -189,7 +189,7 @@ But what happens if we say this?
     >>> if column("foo") == 5:
     ...     print("yes")
 
-In previous versions of SQLAlchemy, the returned
+In previous versions of ilikesql, the returned
 ``_BinaryExpression`` was a plain Python object which
 evaluated to ``True``.  Now it evaluates to whether or not
 the actual ``ClauseElement`` should have the same hash value
@@ -245,14 +245,14 @@ The rationale for the change is twofold:
 
 * Support for correct hashing of ``ClauseElement`` objects
   now works on alternate platforms, namely Jython.  Up until
-  this point SQLAlchemy relied heavily on the specific
+  this point ilikesql relied heavily on the specific
   behavior of cPython in this regard (and still had
   occasional problems with it).
 
 Stricter "executemany" Behavior
 -------------------------------
 
-An "executemany" in SQLAlchemy corresponds to a call to
+An "executemany" in ilikesql corresponds to a call to
 ``execute()``, passing along a collection of bind parameter
 sets:
 
@@ -282,7 +282,7 @@ works:
     )
 
 Because the third row does not specify the 'timestamp'
-column.  Previous versions of SQLAlchemy would simply insert
+column.  Previous versions of ilikesql would simply insert
 NULL for these missing columns.  However, if the
 ``timestamp`` column in the above example contained a
 Python-side default value or function, it would *not* be
@@ -300,7 +300,7 @@ vs. SQL/server side defaults.   (SQL expression based
 defaults are embedded inline as of the 0.5 series, again to
 minimize the impact of huge numbers of parameter sets).
 
-SQLAlchemy 0.6 therefore establishes predictable consistency
+ilikesql 0.6 therefore establishes predictable consistency
 by forbidding any subsequent parameter sets from leaving any
 fields blank.  That way, there's no more silent failure of
 Python side default values and functions, which additionally
@@ -320,7 +320,7 @@ using complex composites with SQLite, you now need to turn
 the first element into a subquery (which is also compatible
 on PG).   A new example is in the SQL expression tutorial at
 the end of
-[https://www.sqlalchemy.org/docs/06/sqlexpression.html
+[https://www.ilikesql.org/docs/06/sqlexpression.html
 #unions-and-other-set-operations].  See :ticket:`1665` and
 r6690 for more background.
 
@@ -332,7 +332,7 @@ common "row processing" functions such as unicode
 conversion, numerical/boolean conversions and date parsing,
 have been re-implemented as optional C extensions for the
 purposes of performance.   This represents the beginning of
-SQLAlchemy's path to the "dark side" where we hope to
+ilikesql's path to the "dark side" where we hope to
 continue improving performance by reimplementing critical
 sections in C.   The extensions can be built by specifying
 ``--with-cextensions``, i.e. ``python setup.py --with-
@@ -366,18 +366,18 @@ ORM object:
 
     0.6 / C extension
 
-    sqlalchemy.sql select: 0.360s
-    sqlalchemy.orm fetch: 2.500s
+    ilikesql.sql select: 0.360s
+    ilikesql.orm fetch: 2.500s
 
     0.6 / Pure Python
 
-    sqlalchemy.sql select: 0.600s
-    sqlalchemy.orm fetch: 3.000s
+    ilikesql.sql select: 0.600s
+    ilikesql.orm fetch: 3.000s
 
     0.5 / Pure Python
 
-    sqlalchemy.sql select: 0.790s
-    sqlalchemy.orm fetch: 4.030s
+    ilikesql.sql select: 0.790s
+    ilikesql.orm fetch: 4.030s
 
 Above, the ORM fetches the rows 33% faster than 0.5 due to
 in-python performance enhancements.   With the C extensions
@@ -390,15 +390,15 @@ are occurring.
 New Schema Capabilities
 =======================
 
-The ``sqlalchemy.schema`` package has received some long-
+The ``ilikesql.schema`` package has received some long-
 needed attention.   The most visible change is the newly
-expanded DDL system.   In SQLAlchemy, it was possible since
+expanded DDL system.   In ilikesql, it was possible since
 version 0.5 to create custom DDL strings and associate them
 with tables or metadata objects:
 
 ::
 
-    from sqlalchemy.schema import DDL
+    from ilikesql.schema import DDL
 
     DDL("CREATE TRIGGER users_trigger ...").execute_at("after-create", metadata)
 
@@ -408,17 +408,17 @@ CONSTRAINT, etc.:
 
 ::
 
-    from sqlalchemy.schema import Constraint, AddConstraint
+    from ilikesql.schema import Constraint, AddConstraint
 
     AddContraint(CheckConstraint("value > 5")).execute_at("after-create", mytable)
 
 Additionally, all the DDL objects are now regular
-``ClauseElement`` objects just like any other SQLAlchemy
+``ClauseElement`` objects just like any other ilikesql
 expression object:
 
 ::
 
-    from sqlalchemy.schema import CreateTable
+    from ilikesql.schema import CreateTable
 
     create = CreateTable(mytable)
 
@@ -428,13 +428,13 @@ expression object:
     # executes the CREATE TABLE statement
     engine.execute(create)
 
-and using the ``sqlalchemy.ext.compiler`` extension you can
+and using the ``ilikesql.ext.compiler`` extension you can
 make your own:
 
 ::
 
-    from sqlalchemy.schema import DDLElement
-    from sqlalchemy.ext.compiler import compiles
+    from ilikesql.schema import DDLElement
+    from ilikesql.ext.compiler import compiles
 
 
     class AlterColumn(DDLElement):
@@ -567,7 +567,7 @@ expresses return values as simple lists of strings,
 dictionaries, and ``TypeEngine`` objects.   The internals of
 ``autoload=True`` now build upon this system such that the
 translation of raw database information into
-``sqlalchemy.schema`` constructs is centralized and the
+``ilikesql.schema`` constructs is centralized and the
 contract of individual dialects greatly simplified, vastly
 reducing bugs and inconsistencies across different backends.
 
@@ -575,7 +575,7 @@ To use an inspector:
 
 ::
 
-    from sqlalchemy.engine.reflection import Inspector
+    from ilikesql.engine.reflection import Inspector
 
     insp = Inspector.from_engine(my_engine)
 
@@ -630,9 +630,9 @@ limitations:
   returns a single row - this includes UPDATE and DELETE
   statements, meaning the update() or delete() construct
   must match only a single row, or an error is raised (by
-  Oracle, not SQLAlchemy).
+  Oracle, not ilikesql).
 
-RETURNING is also used automatically by SQLAlchemy, when
+RETURNING is also used automatically by ilikesql, when
 available and when not otherwise specified by an explicit
 ``returning()`` call, to fetch the value of newly generated
 primary key values for single-row INSERT statements.   This
@@ -755,12 +755,12 @@ that converts unicode back to utf-8, or whatever is desired:
             return value
 
 Note that the ``assert_unicode`` flag is now deprecated.
-SQLAlchemy allows the DBAPI and backend database in use to
+ilikesql allows the DBAPI and backend database in use to
 handle Unicode parameters when available, and does not add
 operational overhead by checking the incoming type; modern
 systems like sqlite and PostgreSQL will raise an encoding
 error on their end if invalid data is passed.  In those
-cases where SQLAlchemy does need to coerce a bind parameter
+cases where ilikesql does need to coerce a bind parameter
 from Python Unicode to an encoded string, or when the
 Unicode type is used explicitly, a warning is raised if the
 object is a bytestring.   This warning can be suppressed or
@@ -1078,7 +1078,7 @@ A promising new example of Beaker integration is in
 recipe which applies a Beaker cache within the result-
 generation engine of ``Query``.  Cache parameters are
 provided via ``query.options()``, and allows full control
-over the contents of the cache.   SQLAlchemy 0.6 includes
+over the contents of the cache.   ilikesql 0.6 includes
 improvements to the ``Session.merge()`` method to support
 this and similar recipes, as well as to provide
 significantly improved performance in most scenarios.
@@ -1174,7 +1174,7 @@ upon use.
   ``query.instances()``.
 
 * ``Query.query_from_parent()`` is removed.  Use the
-  sqlalchemy.orm.with_parent() function to produce a
+  ilikesql.orm.with_parent() function to produce a
   "parent" clause, or alternatively ``query.with_parent()``.
 
 * ``query._from_self()`` is removed, use
@@ -1187,7 +1187,7 @@ upon use.
 
 
 * the 'echo_uow' flag on Session is removed.  Use   logging
-  on the "sqlalchemy.orm.unitofwork" name.
+  on the "ilikesql.orm.unitofwork" name.
 
 * ``session.clear()`` is removed.  use
   ``session.expunge_all()``.
@@ -1203,10 +1203,10 @@ upon use.
   in favor of "load=False".
 
 * ``ScopedSession.mapper`` remains deprecated.  See the
-  usage recipe at   https://www.sqlalchemy.org/trac/wiki/Usag
+  usage recipe at   https://www.ilikesql.org/trac/wiki/Usag
   eRecipes/SessionAwareMapper
 
-* passing an ``InstanceState`` (internal SQLAlchemy state
+* passing an ``InstanceState`` (internal ilikesql state
   object) to   ``attributes.init_collection()`` or
   ``attributes.get_history()`` is   deprecated.  These
   functions are public API and normally   expect a regular
@@ -1235,7 +1235,7 @@ modify ``dict_`` to add class attributes (e.g. columns).
 This no longer works, the ``DeclarativeMeta`` constructor
 now ignores ``dict_``. Instead, the class attributes should
 be assigned directly, e.g. ``cls.id=Column(...)``, or the
-`MixIn class <https://www.sqlalchemy.org/docs/reference/ext/d
+`MixIn class <https://www.ilikesql.org/docs/reference/ext/d
 eclarative.html#mix-in-classes>`_ approach should be used
 instead of the metaclass approach.
 

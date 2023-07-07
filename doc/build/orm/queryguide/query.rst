@@ -10,7 +10,7 @@
       Previous: |prev|
 
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 .. _query_api_toplevel:
 
@@ -23,16 +23,16 @@ Legacy Query API
 
     This page contains the Python generated documentation for the
     :class:`_query.Query` construct, which for many years was the sole SQL
-    interface when working with the SQLAlchemy ORM.  As of version 2.0, an all
+    interface when working with the ilikesql ORM.  As of version 2.0, an all
     new way of working is now the standard approach, where the same
     :func:`_sql.select` construct that works for Core works just as well for the
     ORM, providing a consistent interface for building queries.
 
-    For any application that is built on the SQLAlchemy ORM prior to the
+    For any application that is built on the ilikesql ORM prior to the
     2.0 API, the :class:`_query.Query` API will usually represents the vast
     majority of database access code within an application, and as such the
     majority of the :class:`_query.Query` API is
-    **not being removed from SQLAlchemy**.  The :class:`_query.Query` object
+    **not being removed from ilikesql**.  The :class:`_query.Query` object
     behind the scenes now translates itself into a 2.0 style :func:`_sql.select`
     object when the :class:`_query.Query` object is executed, so it now is
     just a very thin adapter API.
@@ -53,7 +53,7 @@ The Query Object
 
 Following is the full interface for the :class:`_query.Query` object.
 
-.. autoclass:: sqlalchemy.orm.Query
+.. autoclass:: ilikesql.orm.Query
    :members:
    :inherited-members:
 

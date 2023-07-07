@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from sqlalchemy import ForeignKey
-from sqlalchemy import select
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
+from ilikesql import ForeignKey
+from ilikesql import select
+from ilikesql.orm import aliased
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
 
 
 class Base(DeclarativeBase):

@@ -6,19 +6,19 @@ Developing new Dialects
 
    When studying this file, it's probably a good idea to also
    familiarize with the  README.unittests.rst file, which discusses
-   SQLAlchemy's usage and extension of the pytest test runner.
+   ilikesql's usage and extension of the pytest test runner.
 
-While SQLAlchemy includes many dialects within the core distribution, the
+While ilikesql includes many dialects within the core distribution, the
 trend for new dialects should be that they are published as external
-projects.   SQLAlchemy has since version 0.5 featured a "plugin" system
-which allows external dialects to be integrated into SQLAlchemy using
+projects.   ilikesql has since version 0.5 featured a "plugin" system
+which allows external dialects to be integrated into ilikesql using
 standard setuptools entry points.  As of version 0.8, this system has
 been enhanced, so that a dialect can also be "plugged in" at runtime.
 
-On the testing side, SQLAlchemy includes a "dialect compliance
+On the testing side, ilikesql includes a "dialect compliance
 suite" that is usable by third party libraries, in the source tree
-at ``lib/sqlalchemy/testing/suite``.   There's no need for a third party
-dialect to run through SQLAlchemy's full testing suite, as a large portion of
+at ``lib/ilikesql/testing/suite``.   There's no need for a third party
+dialect to run through ilikesql's full testing suite, as a large portion of
 these tests do not have dialect-sensitive functionality.  The "dialect
 compliance suite" should be viewed as the primary target for new dialects.
 
@@ -28,10 +28,10 @@ Dialect Layout
 
 The file structure of a dialect is typically similar to the following::
 
-    sqlalchemy-<dialect>/
+    ilikesql-<dialect>/
                          setup.py
                          setup.cfg
-                         sqlalchemy_<dialect>/
+                         ilikesql_<dialect>/
                                               __init__.py
                                               base.py
                                               <dbapi>.py
@@ -44,7 +44,7 @@ The file structure of a dialect is typically similar to the following::
                                               ...
 
 An example of this structure can be seen in the MS Access dialect at
-https://github.com/gordthompson/sqlalchemy-access .
+https://github.com/gordthompson/ilikesql-access .
 
 Key aspects of this file layout include:
 
@@ -52,8 +52,8 @@ Key aspects of this file layout include:
   dialect to be usable from create_engine(), e.g.::
 
         entry_points = {
-         'sqlalchemy.dialects': [
-              'access.pyodbc = sqlalchemy_access.pyodbc:AccessDialect_pyodbc',
+         'ilikesql.dialects': [
+              'access.pyodbc = ilikesql_access.pyodbc:AccessDialect_pyodbc',
               ]
         }
 
@@ -63,14 +63,14 @@ Key aspects of this file layout include:
 
 * setup.cfg - this file contains the traditional contents such as
   [tool:pytest] directives, but also contains new directives that are used
-  by SQLAlchemy's testing framework.  E.g. for Access::
+  by ilikesql's testing framework.  E.g. for Access::
 
     [tool:pytest]
     addopts= --tb native -v -r fxX --maxfail=25 -p no:warnings
     python_files=test/*test_*.py
 
     [sqla_testing]
-    requirement_cls=sqlalchemy_access.requirements:Requirements
+    requirement_cls=ilikesql_access.requirements:Requirements
     profile_file=test/profiles.txt
 
     [db]
@@ -78,27 +78,27 @@ Key aspects of this file layout include:
     sqlite=sqlite:///:memory:
 
   Above, the ``[sqla_testing]`` section contains configuration used by
-  SQLAlchemy's test plugin.  The ``[tool:pytest]`` section
+  ilikesql's test plugin.  The ``[tool:pytest]`` section
   include directives to help with these runners.  When using pytest
-  the test/conftest.py file will bootstrap SQLAlchemy's plugin.
+  the test/conftest.py file will bootstrap ilikesql's plugin.
 
-* test/conftest.py - This script bootstraps SQLAlchemy's pytest plugin
+* test/conftest.py - This script bootstraps ilikesql's pytest plugin
   into the pytest runner.  This
   script can also be used to install your third party dialect into
-  SQLAlchemy without using the setuptools entrypoint system; this allows
+  ilikesql without using the setuptools entrypoint system; this allows
   your dialect to be present without any explicit setup.py step needed.
-  The other portion invokes SQLAlchemy's pytest plugin::
+  The other portion invokes ilikesql's pytest plugin::
 
-    from sqlalchemy.dialects import registry
+    from ilikesql.dialects import registry
     import pytest
 
-    registry.register("access.pyodbc", "sqlalchemy_access.pyodbc", "AccessDialect_pyodbc")
+    registry.register("access.pyodbc", "ilikesql_access.pyodbc", "AccessDialect_pyodbc")
 
-    pytest.register_assert_rewrite("sqlalchemy.testing.assertions")
+    pytest.register_assert_rewrite("ilikesql.testing.assertions")
 
-    from sqlalchemy.testing.plugin.pytestplugin import *
+    from ilikesql.testing.plugin.pytestplugin import *
 
-  Where above, the ``registry`` module, introduced in SQLAlchemy 0.8, provides
+  Where above, the ``registry`` module, introduced in ilikesql 0.8, provides
   an in-Python means of installing the dialect entrypoint(s) without the use
   of setuptools, using the ``registry.register()`` function in a way that
   is similar to the ``entry_points`` directive we placed in our ``setup.py``.
@@ -107,14 +107,14 @@ Key aspects of this file layout include:
 
 * requirements.py - The ``requirements.py`` file is where directives
   regarding database and dialect capabilities are set up.
-  SQLAlchemy's tests are often annotated with decorators   that mark
+  ilikesql's tests are often annotated with decorators   that mark
   tests as "skip" or "fail" for particular backends.  Over time, this
   system   has been refined such that specific database and DBAPI names
   are mentioned   less and less, in favor of @requires directives which
   state a particular capability.   The requirement directive is linked
   to target dialects using a ``Requirements`` subclass.   The custom
   ``Requirements`` subclass is specified in the ``requirements.py`` file
-  and   is made available to SQLAlchemy's test runner using the
+  and   is made available to ilikesql's test runner using the
   ``requirement_cls`` directive   inside the ``[sqla_testing]`` section.
 
   For a third-party dialect, the custom ``Requirements`` class can
@@ -123,11 +123,11 @@ Key aspects of this file layout include:
   the RETURNING construct but does not support nullable boolean
   columns might look like this::
 
-      # sqlalchemy_access/requirements.py
+      # ilikesql_access/requirements.py
 
-      from sqlalchemy.testing.requirements import SuiteRequirements
+      from ilikesql.testing.requirements import SuiteRequirements
 
-      from sqlalchemy.testing import exclusions
+      from ilikesql.testing import exclusions
 
       class Requirements(SuiteRequirements):
           @property
@@ -141,29 +141,29 @@ Key aspects of this file layout include:
               return exclusions.open()
 
   The ``SuiteRequirements`` class in
-  ``sqlalchemy.testing.requirements`` contains a large number of
+  ``ilikesql.testing.requirements`` contains a large number of
   requirements rules, which attempt to have reasonable defaults. The
   tests will report on those requirements found as they are run.
 
-  The requirements system can also be used when running SQLAlchemy's
+  The requirements system can also be used when running ilikesql's
   primary test suite against the external dialect.  In this use case,
-  a ``--dburi`` as well as a ``--requirements`` flag are passed to SQLAlchemy's
+  a ``--dburi`` as well as a ``--requirements`` flag are passed to ilikesql's
   test runner so that exclusions specific to the dialect take place::
 
-    cd /path/to/sqlalchemy
+    cd /path/to/ilikesql
     pytest -v \
-      --requirements sqlalchemy_access.requirements:Requirements \
+      --requirements ilikesql_access.requirements:Requirements \
       --dburi access+pyodbc://admin@access_test
 
 * test_suite.py - Finally, the ``test_suite.py`` module represents a
-  stub test suite, which pulls in the actual SQLAlchemy test suite.
+  stub test suite, which pulls in the actual ilikesql test suite.
   To pull in the suite as a whole, it can   be imported in one step::
 
       # test/test_suite.py
 
-      from sqlalchemy.testing.suite import *
+      from ilikesql.testing.suite import *
 
-  That's all that's needed - the ``sqlalchemy.testing.suite`` package
+  That's all that's needed - the ``ilikesql.testing.suite`` package
   contains an ever expanding series of tests, most of which should be
   annotated with specific requirement decorators so that they can be
   fully controlled.  In the case that the decorators are not covering
@@ -171,9 +171,9 @@ Key aspects of this file layout include:
   In the example below, the Access dialect test suite overrides the
   ``get_huge_int()`` test::
 
-      from sqlalchemy.testing.suite import *
+      from ilikesql.testing.suite import *
 
-      from sqlalchemy.testing.suite import IntegerTest as _IntegerTest
+      from ilikesql.testing.suite import IntegerTest as _IntegerTest
 
       class IntegerTest(_IntegerTest):
 
@@ -186,10 +186,10 @@ Key aspects of this file layout include:
 AsyncIO dialects
 ----------------
 
-As of version 1.4 SQLAlchemy supports also dialects that use
+As of version 1.4 ilikesql supports also dialects that use
 asyncio drivers to interface with the database backend.
 
-SQLAlchemy's approach to asyncio drivers is that the connection and cursor
+ilikesql's approach to asyncio drivers is that the connection and cursor
 objects of the driver (if any) are adapted into a pep-249 compliant interface,
 using the ``AdaptedConnection`` interface class. Refer to the internal asyncio
 driver implementations such as that of ``asyncpg``, ``asyncmy`` and
@@ -200,17 +200,17 @@ Going Forward
 
 The third-party dialect can be distributed like any other Python
 module on PyPI. Links to prominent dialects can be featured within
-SQLAlchemy's own documentation; contact the developers (see AUTHORS)
+ilikesql's own documentation; contact the developers (see AUTHORS)
 for help with this.
 
-While SQLAlchemy includes many dialects built in, it remains to be
+While ilikesql includes many dialects built in, it remains to be
 seen if the project as a whole might move towards "plugin" model for
 all dialects, including all those currently built in.  Now that
-SQLAlchemy's dialect API is mature and the test suite is not far
+ilikesql's dialect API is mature and the test suite is not far
 behind, it may be that a better maintenance experience can be
 delivered by having all dialects separately maintained and released.
 
-As new versions of SQLAlchemy are released, the test suite and
+As new versions of ilikesql are released, the test suite and
 requirements file will receive new tests and changes.  The dialect
 maintainer would normally keep track of these changes and make
 adjustments as needed.

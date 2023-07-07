@@ -27,7 +27,7 @@ the scope of the :class:`_orm.SessionTransaction`.
 
 Below, assume we start with a :class:`_orm.Session`::
 
-    from sqlalchemy.orm import Session
+    from ilikesql.orm import Session
 
     session = Session(engine)
 
@@ -181,7 +181,7 @@ a list of data is persisted into the database, with the occasional
 "duplicate primary key" record skipped, without rolling back the entire
 operation::
 
-    from sqlalchemy import exc
+    from ilikesql import exc
 
     with session.begin():
         for record in records:
@@ -204,7 +204,7 @@ ensuring that when those expired objects are refreshed, the state of the
 object graph prior to the beginning of the SAVEPOINT will be available
 to re-load from the database.
 
-In modern versions of SQLAlchemy, when a SAVEPOINT initiated by
+In modern versions of ilikesql, when a SAVEPOINT initiated by
 :meth:`_orm.Session.begin_nested` is rolled back, in-memory object state that
 was modified since the SAVEPOINT was created
 is expired, however other object state that was not altered since the SAVEPOINT
@@ -245,7 +245,7 @@ Commit as you go
 
 Both :class:`_orm.Session` and :class:`_engine.Connection` feature
 :meth:`_engine.Connection.commit` and :meth:`_engine.Connection.rollback`
-methods.   Using SQLAlchemy 2.0-style operation, these methods affect the
+methods.   Using ilikesql 2.0-style operation, these methods affect the
 **outermost** transaction in all cases.   For the :class:`_orm.Session`, it is
 assumed that :paramref:`_orm.Session.autobegin` is left at its default
 value of ``True``.
@@ -326,7 +326,7 @@ When using a SAVEPOINT via the :meth:`_orm.Session.begin_nested` or
 :meth:`_engine.Connection.begin_nested` methods, the transaction object
 returned must be used to commit or rollback the SAVEPOINT.  Calling
 the :meth:`_orm.Session.commit` or :meth:`_engine.Connection.commit` methods
-will always commit the **outermost** transaction; this is a SQLAlchemy 2.0
+will always commit the **outermost** transaction; this is a ilikesql 2.0
 specific behavior that is reversed from the 1.x series.
 
 Engine::
@@ -420,7 +420,7 @@ PostgreSQL), the session can be instructed to use two-phase commit semantics.
 This will coordinate the committing of transactions across databases so that
 the transaction is either committed or rolled back in all databases. You can
 also :meth:`_orm.Session.prepare` the session for
-interacting with transactions not managed by SQLAlchemy. To use two phase
+interacting with transactions not managed by ilikesql. To use two phase
 transactions set the flag ``twophase=True`` on the session::
 
     engine1 = create_engine("postgresql+psycopg2://db1")
@@ -456,10 +456,10 @@ DBAPIs that support isolation levels also usually support the concept of true
 a non-transactional autocommit mode.   This usually means that the typical
 DBAPI behavior of emitting "BEGIN" to the database automatically no longer
 occurs, but it may also include other directives.   When using this mode,
-**the DBAPI does not use a transaction under any circumstances**.  SQLAlchemy
+**the DBAPI does not use a transaction under any circumstances**.  ilikesql
 methods like ``.begin()``, ``.commit()`` and ``.rollback()`` pass silently.
 
-SQLAlchemy's dialects support settable isolation modes on a per-:class:`_engine.Engine`
+ilikesql's dialects support settable isolation modes on a per-:class:`_engine.Engine`
 or per-:class:`_engine.Connection` basis, using flags at both the
 :func:`_sa.create_engine` level as well as at the :meth:`_engine.Connection.execution_options`
 level.
@@ -472,7 +472,7 @@ order to affect transaction isolation level, we need to act upon the
 .. seealso::
 
     :ref:`dbapi_autocommit` - be sure to review how isolation levels work at
-    the level of the SQLAlchemy :class:`_engine.Connection` object as well.
+    the level of the ilikesql :class:`_engine.Connection` object as well.
 
 Setting Isolation For A Sessionmaker / Engine Wide
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -483,8 +483,8 @@ isolation level globally, the first technique is that an
 in all cases, which is then used as the source of connectivity for a
 :class:`_orm.Session` and/or :class:`_orm.sessionmaker`::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql import create_engine
+    from ilikesql.orm import sessionmaker
 
     eng = create_engine(
         "postgresql+psycopg2://scott:tiger@localhost/test",
@@ -500,8 +500,8 @@ shares the same connection pool as the parent engine.  This is often preferable
 when operations will be separated into "transactional" and "autocommit"
 operations::
 
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql import create_engine
+    from ilikesql.orm import sessionmaker
 
     eng = create_engine("postgresql+psycopg2://scott:tiger@localhost/test")
 
@@ -568,7 +568,7 @@ Setting Isolation for Individual Transactions
 A key caveat regarding isolation level is that the setting cannot be
 safely modified on a :class:`_engine.Connection` where a transaction has already
 started.  Databases cannot change the isolation level of a transaction
-in progress, and some DBAPIs and SQLAlchemy dialects
+in progress, and some DBAPIs and ilikesql dialects
 have inconsistent behaviors in this area.
 
 Therefore it is preferable to use a :class:`_orm.Session` that is up front
@@ -576,7 +576,7 @@ bound to an engine with the desired isolation level.  However, the isolation
 level on a per-connection basis can be affected by using the
 :meth:`_orm.Session.connection` method at the start of a transaction::
 
-    from sqlalchemy.orm import Session
+    from ilikesql.orm import Session
 
     # assume session just constructed
     sess = Session(bind=engine)
@@ -658,8 +658,8 @@ state in which it was passed.
 When the test tears down, the external transaction is rolled back so that any
 data changes throughout the test are reverted::
 
-    from sqlalchemy.orm import sessionmaker
-    from sqlalchemy import create_engine
+    from ilikesql.orm import sessionmaker
+    from ilikesql import create_engine
     from unittest import TestCase
 
     # global application scope.  create Session class, engine
@@ -707,6 +707,6 @@ data changes throughout the test are reverted::
             # return connection to the Engine
             self.connection.close()
 
-The above recipe is part of SQLAlchemy's own CI to ensure that it remains
+The above recipe is part of ilikesql's own CI to ensure that it remains
 working as expected.
 

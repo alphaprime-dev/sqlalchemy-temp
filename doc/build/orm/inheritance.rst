@@ -3,7 +3,7 @@
 Mapping Class Inheritance Hierarchies
 =====================================
 
-SQLAlchemy supports three forms of inheritance: **single table inheritance**,
+ilikesql supports three forms of inheritance: **single table inheritance**,
 where several types of classes are represented by a single table, **concrete
 table inheritance**, where each type of class is represented by independent
 tables, and **joined table inheritance**, where the class hierarchy is broken
@@ -13,7 +13,7 @@ includes those attributes local to that class.
 The most common forms of inheritance are single and joined table, while
 concrete inheritance presents more configurational challenges.
 
-When mappers are configured in an inheritance relationship, SQLAlchemy has the
+When mappers are configured in an inheritance relationship, ilikesql has the
 ability to load elements :term:`polymorphically`, meaning that a single query can
 return objects of multiple types.
 
@@ -45,10 +45,10 @@ The base class in a joined inheritance hierarchy is configured with
 additional arguments that will indicate to the polymorphic discriminator
 column, and optionally a polymorphic identifier for the base class itself::
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
+    from ilikesql import ForeignKey
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
 
 
     class Base(DeclarativeBase):
@@ -151,7 +151,7 @@ is rarely necessary.
 
     One natural effect of the joined table inheritance configuration is that
     the identity of any mapped object can be determined entirely from rows  in
-    the base table alone. This has obvious advantages, so SQLAlchemy always
+    the base table alone. This has obvious advantages, so ilikesql always
     considers the primary key columns of a joined inheritance class to be those
     of the base table only. In other words, the ``id`` columns of both the
     ``engineer`` and ``manager`` tables are not used to locate ``Engineer`` or
@@ -179,7 +179,7 @@ and ``Employee``::
 
     from __future__ import annotations
 
-    from sqlalchemy.orm import relationship
+    from ilikesql.orm import relationship
 
 
     class Company(Base):
@@ -371,7 +371,7 @@ will result in an error:
 .. sourcecode:: text
 
 
-    sqlalchemy.exc.ArgumentError: Column 'start_date' on class Manager conflicts
+    ilikesql.exc.ArgumentError: Column 'start_date' on class Manager conflicts
     with existing column 'employee.start_date'.  If using Declarative,
     consider using the use_existing_column parameter of mapped_column() to
     resolve conflicts.
@@ -383,7 +383,7 @@ to look on the inheriting superclass present and use the column that's already
 mapped, if already present, else to map a new column::
 
 
-    from sqlalchemy import DateTime
+    from ilikesql import DateTime
 
 
     class Employee(Base):
@@ -827,7 +827,7 @@ Polymorphic loading with concrete inheritance requires that a specialized
 SELECT is configured against each base class that should have polymorphic
 loading.  This SELECT needs to be capable of accessing all the
 mapped tables individually, and is typically a UNION statement that is
-constructed using a SQLAlchemy helper :func:`.polymorphic_union`.
+constructed using a ilikesql helper :func:`.polymorphic_union`.
 
 As discussed in :ref:`inheritance_loading_toplevel`, mapper inheritance
 configurations of any type can be configured to load from a special selectable
@@ -848,8 +848,8 @@ Declarative provides helper classes :class:`.ConcreteBase` and
 Using :class:`.ConcreteBase`, we can set up our concrete mapping in
 almost the same way as we do other forms of inheritance mappings::
 
-    from sqlalchemy.ext.declarative import ConcreteBase
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.ext.declarative import ConcreteBase
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -960,7 +960,7 @@ tables, and leave the base class unmapped, this can be achieved very easily.
 When using Declarative, just declare the
 base class with the ``__abstract__`` indicator::
 
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -984,7 +984,7 @@ base class with the ``__abstract__`` indicator::
         name = mapped_column(String(50))
         engineer_info = mapped_column(String(40))
 
-Above, we are not actually making use of SQLAlchemy's inheritance mapping
+Above, we are not actually making use of ilikesql's inheritance mapping
 facilities; we can load and persist instances of ``Manager`` and ``Engineer``
 normally.   The situation changes however when we need to **query polymorphically**,
 that is, we'd like to emit ``select(Employee)`` and get back a collection
@@ -1002,8 +1002,8 @@ table, however the ``Employee`` mapper will be mapped directly to the
 To help with this, Declarative offers a variant of the :class:`.ConcreteBase`
 class called :class:`.AbstractConcreteBase` which achieves this automatically::
 
-    from sqlalchemy.ext.declarative import AbstractConcreteBase
-    from sqlalchemy.orm import DeclarativeBase
+    from ilikesql.ext.declarative import AbstractConcreteBase
+    from ilikesql.orm import DeclarativeBase
 
 
     class Base(DeclarativeBase):
@@ -1140,7 +1140,7 @@ establishes the :class:`_schema.Table` objects separately::
 
 Next, the UNION is produced using :func:`.polymorphic_union`::
 
-    from sqlalchemy.orm import polymorphic_union
+    from ilikesql.orm import polymorphic_union
 
     pjoin = polymorphic_union(
         {
@@ -1226,7 +1226,7 @@ to the :paramref:`_orm.Mapper.with_polymorphic` parameter, we apply it directly
 as the mapped selectable on our basemost mapper.  The semi-classical
 mapping is illustrated below::
 
-    from sqlalchemy.orm import polymorphic_union
+    from ilikesql.orm import polymorphic_union
 
     pjoin = polymorphic_union(
         {
@@ -1287,7 +1287,7 @@ have polymorphic loading capabilities and also that each table to be related
 must have a foreign key back to the ``company`` table.  An example of
 such a configuration is as follows::
 
-    from sqlalchemy.ext.declarative import ConcreteBase
+    from ilikesql.ext.declarative import ConcreteBase
 
 
     class Company(Base):
@@ -1336,7 +1336,7 @@ such a configuration is as follows::
 
 The next complexity with concrete inheritance and relationships involves
 when we'd like one or all of ``Employee``, ``Manager`` and ``Engineer`` to
-themselves refer back to ``Company``.   For this case, SQLAlchemy has
+themselves refer back to ``Company``.   For this case, ilikesql has
 special behavior in that a :func:`_orm.relationship` placed on ``Employee``
 which links to ``Company`` **does not work**
 against the ``Manager`` and ``Engineer`` classes, when exercised at the
@@ -1347,7 +1347,7 @@ serve as the opposite of ``Company.employees``, the
 :paramref:`_orm.relationship.back_populates` parameter is used between
 each of the relationships::
 
-    from sqlalchemy.ext.declarative import ConcreteBase
+    from ilikesql.ext.declarative import ConcreteBase
 
 
     class Company(Base):
@@ -1407,7 +1407,7 @@ Loading Concrete Inheritance Mappings
 The options for loading with concrete inheritance are limited; generally,
 if polymorphic loading is configured on the mapper using one of the
 declarative concrete mixins, it can't be modified at query time
-in current SQLAlchemy versions.   Normally, the :func:`_orm.with_polymorphic`
+in current ilikesql versions.   Normally, the :func:`_orm.with_polymorphic`
 function would be able to override the style of loading used by concrete,
 however due to current limitations this is not yet supported.
 

@@ -13,10 +13,10 @@ Glossary
     2.0 style
     1.x-style
     2.0-style
-        These terms are new in SQLAlchemy 1.4 and refer to the SQLAlchemy 1.4->
+        These terms are new in ilikesql 1.4 and refer to the ilikesql 1.4->
         2.0 transition plan, described at :ref:`migration_20_toplevel`.  The
         term "1.x style" refers to an API used in the way it's been documented
-        throughout the 1.x series of SQLAlchemy and earlier (e.g. 1.3, 1.2, etc)
+        throughout the 1.x series of ilikesql and earlier (e.g. 1.3, 1.2, etc)
         and the term "2.0 style" refers to the way an API will look in version
         2.0.   Version 1.4 implements nearly all of 2.0's API in so-called
         "transition mode", while version 2.0 still maintains the legacy
@@ -29,7 +29,7 @@ Glossary
 
     sentinel
     insert sentinel
-        This is a SQLAlchemy-specific term that refers to a
+        This is a ilikesql-specific term that refers to a
         :class:`_schema.Column` which can be used for a bulk
         :term:`insertmanyvalues` operation to track INSERTed data records
         against rows passed back using RETURNING or similar.   Such a
@@ -38,7 +38,7 @@ Glossary
         statement for many rows at once while still being able to guarantee the
         order of returned rows matches the input data.
 
-        For typical use cases, the SQLAlchemy SQL compiler can automatically
+        For typical use cases, the ilikesql SQL compiler can automatically
         make use of surrogate integer primary key columns as "insert
         sentinels", and no user-configuration is required.  For less common
         cases with other varieties of server-generated primary key values,
@@ -52,7 +52,7 @@ Glossary
             :ref:`engine_insertmanyvalues`
 
     insertmanyvalues
-        This refers to a SQLAlchemy-specific feature which allows INSERT
+        This refers to a ilikesql-specific feature which allows INSERT
         statements to emit thousands of new rows within a single statement
         while at the same time allowing server generated values to be returned
         inline from the statement using RETURNING or similar, for performance
@@ -79,9 +79,9 @@ Glossary
 
     reflection
     reflected
-        In SQLAlchemy, this term refers to the feature of querying a database's
+        In ilikesql, this term refers to the feature of querying a database's
         schema catalogs in order to load information about existing tables,
-        columns, constraints, and other constructs.   SQLAlchemy includes
+        columns, constraints, and other constructs.   ilikesql includes
         features that can both provide raw data for this information, as well
         as that it can construct Core/ORM usable :class:`.Table` objects
         from database schema catalogs automatically.
@@ -98,7 +98,7 @@ Glossary
     imperative
     declarative
 
-        In the SQLAlchemy ORM, these terms refer to two different styles of
+        In the ilikesql ORM, these terms refer to two different styles of
         mapping Python classes to database tables.
 
         .. seealso::
@@ -182,28 +182,28 @@ Glossary
             :ref:`tutorial_sending_parameters` - in the :ref:`unified_tutorial`
 
     selectable
-        A term used in SQLAlchemy to describe a SQL construct that represents
+        A term used in ilikesql to describe a SQL construct that represents
         a collection of rows.   It's largely similar to the concept of a
-        "relation" in :term:`relational algebra`.  In SQLAlchemy, objects
+        "relation" in :term:`relational algebra`.  In ilikesql, objects
         that subclass the :class:`_expression.Selectable` class are considered to be
-        usable as "selectables" when using SQLAlchemy Core.  The two most
+        usable as "selectables" when using ilikesql Core.  The two most
         common constructs are that of the :class:`_schema.Table` and that of the
         :class:`_expression.Select` statement.
 
     ORM-annotated
     annotations
 
-        The phrase "ORM-annotated" refers to an internal aspect of SQLAlchemy,
+        The phrase "ORM-annotated" refers to an internal aspect of ilikesql,
         where a Core object such as a :class:`_schema.Column` object can carry along
         additional runtime information that marks it as belonging to a particular
         ORM mapping.   The term should not be confused with the common phrase
         "type annotation", which refers to Python source code "type hints" used
         for static typing as introduced at :pep:`484`.
 
-        Most of SQLAlchemy's documented code examples are formatted with a
+        Most of ilikesql's documented code examples are formatted with a
         small note regarding "Annotated Example" or "Non-annotated Example".
         This refers to whether or not the example is :pep:`484` annotated,
-        and is not related to the SQLAlchemy concept of "ORM-annotated".
+        and is not related to the ilikesql concept of "ORM-annotated".
 
         When the phrase "ORM-annotated" appears in documentation, it is
         referring to Core SQL expression objects such as :class:`.Table`,
@@ -250,15 +250,15 @@ Glossary
     plugin-enabled
     plugin-specific
         "plugin-enabled" or "plugin-specific" generally indicates a function or method in
-        SQLAlchemy Core which will behave differently when used in an ORM
+        ilikesql Core which will behave differently when used in an ORM
         context.
 
-        SQLAlchemy allows Core constructs such as :class:`_sql.Select` objects
+        ilikesql allows Core constructs such as :class:`_sql.Select` objects
         to participate in a "plugin" system, which can inject additional
         behaviors and features into the object that are not present by default.
 
         Specifically, the primary "plugin" is the "orm" plugin, which is
-        at the base of the system that the SQLAlchemy ORM makes use of
+        at the base of the system that the ilikesql ORM makes use of
         Core constructs in order to compose and execute SQL queries that
         return ORM results.
 
@@ -288,10 +288,10 @@ Glossary
         use techniques such as preparing the statement just once beforehand,
         or otherwise optimizing for invoking the same statement many times.
 
-        SQLAlchemy typically makes use of the ``cursor.executemany()`` method
+        ilikesql typically makes use of the ``cursor.executemany()`` method
         automatically when the :meth:`_engine.Connection.execute` method is
         used where a list of parameter dictionaries were passed; this indicates
-        to SQLAlchemy Core that the SQL statement and processed parameter sets
+        to ilikesql Core that the SQL statement and processed parameter sets
         should be passed to ``cursor.executemany()``, where the statement will
         be invoked by the driver for each parameter dictionary individually.
 
@@ -303,7 +303,7 @@ Glossary
         ``cursor.executemany()`` directly, since DBAPIs typically do not
         aggregate the single row from each INSERT execution together.
 
-        To overcome this limitation, SQLAlchemy as of the 2.0 series implements
+        To overcome this limitation, ilikesql as of the 2.0 series implements
         an alternative form of "executemany" which is referred towards as
         :ref:`engine_insertmanyvalues`. This feature makes use of
         ``cursor.execute()`` to invoke an INSERT statement that will proceed
@@ -316,7 +316,7 @@ Glossary
             :ref:`tutorial_multiple_parameters` - tutorial introduction to
             "executemany"
 
-            :ref:`engine_insertmanyvalues` - SQLAlchemy feature which allows
+            :ref:`engine_insertmanyvalues` - ilikesql feature which allows
             RETURNING to be used with "executemany"
 
     marshalling
@@ -325,14 +325,14 @@ Glossary
          a data format suitable for storage or transmission to another part of
          a system, when data must be moved between different parts of a
          computer program or from one program to another.   In terms of
-         SQLAlchemy, we often need to "marshal" data into a format appropriate
+         ilikesql, we often need to "marshal" data into a format appropriate
          for passing into the relational database.
 
          .. seealso::
 
             `Marshalling (via Wikipedia) <https://en.wikipedia.org/wiki/Marshalling_(computer_science)>`_
 
-            :ref:`types_typedecorator` - SQLAlchemy's :class:`.TypeDecorator`
+            :ref:`types_typedecorator` - ilikesql's :class:`.TypeDecorator`
             is commonly used for data marshalling as data is sent into the
             database for INSERT and UPDATE statements, and "unmarshalling"
             data as it is retrieved using SELECT statements.
@@ -347,7 +347,7 @@ Glossary
         If any of those methods are defined for an object, it is said to be a
         descriptor.
 
-        In SQLAlchemy, descriptors are used heavily in order to provide attribute behavior
+        In ilikesql, descriptors are used heavily in order to provide attribute behavior
         on mapped classes.   When a class is mapped as such::
 
             class MyClass(Base):
@@ -378,14 +378,14 @@ Glossary
             >>> m1.id = 5
             >>> m1.data = "some data"
 
-            >>> from sqlalchemy import inspect
+            >>> from ilikesql import inspect
             >>> inspect(m1).attrs.data.history.added
             "some data"
 
     DDL
         An acronym for **Data Definition Language**.  DDL is the subset
         of SQL that relational databases use to configure tables, constraints,
-        and other permanent objects within a database schema.  SQLAlchemy
+        and other permanent objects within a database schema.  ilikesql
         provides a rich API for constructing and emitting DDL expressions.
 
         .. seealso::
@@ -432,7 +432,7 @@ Glossary
     table metadata
         The term "metadata" generally refers to "data that describes data";
         data that itself represents the format and/or structure of some other
-        kind of data.  In SQLAlchemy, the term "metadata" typically refers  to
+        kind of data.  In ilikesql, the term "metadata" typically refers  to
         the :class:`_schema.MetaData` construct, which is a collection of information
         about the tables, columns, constraints, and other :term:`DDL` objects
         that may exist in a particular database.
@@ -444,10 +444,10 @@ Glossary
             :ref:`tutorial_working_with_metadata`  - in the :ref:`unified_tutorial`
 
     version id column
-        In SQLAlchemy, this refers to the use of a particular table column that
+        In ilikesql, this refers to the use of a particular table column that
         tracks the "version" of a particular row, as the row changes values.   While
         there are different kinds of relational patterns that make use of a
-        "version id column" in different ways, SQLAlchemy's ORM includes a particular
+        "version id column" in different ways, ilikesql's ORM includes a particular
         feature that allows for such a column to be configured as a means of
         testing for stale data when a row is being UPDATEd with new information.
         If the last known "version" of this column does not match that of the
@@ -455,13 +455,13 @@ Glossary
         acting on stale information.
 
         There are also other ways of storing "versioned" rows in a database,
-        often referred to as "temporal" data.  In addition to SQLAlchemy's
+        often referred to as "temporal" data.  In addition to ilikesql's
         versioning feature, a few more examples are also present in the
         documentation, see the links below.
 
         .. seealso::
 
-            :ref:`mapper_version_counter` - SQLAlchemy's built-in version id feature.
+            :ref:`mapper_version_counter` - ilikesql's built-in version id feature.
 
             :ref:`examples_versioning` - other examples of mappings that version rows
             temporally.
@@ -476,16 +476,16 @@ Glossary
             `Registry (via Martin Fowler) <https://martinfowler.com/eaaCatalog/registry.html>`_
 
     cascade
-        A term used in SQLAlchemy to describe how an ORM persistence action that
+        A term used in ilikesql to describe how an ORM persistence action that
         takes place on a particular object would extend into other objects
-        which are directly associated with that object.  In SQLAlchemy, these
+        which are directly associated with that object.  In ilikesql, these
         object associations are configured using the :func:`_orm.relationship`
         construct.   :func:`_orm.relationship` contains a parameter called
         :paramref:`_orm.relationship.cascade` which provides options on how certain
         persistence operations may cascade.
 
         The term "cascades" as well as the general architecture of this system
-        in SQLAlchemy was borrowed, for better or worse, from the Hibernate
+        in ilikesql was borrowed, for better or worse, from the Hibernate
         ORM.
 
         .. seealso::
@@ -493,10 +493,10 @@ Glossary
             :ref:`unitofwork_cascades`
 
     dialect
-        In SQLAlchemy, the "dialect" is a Python object that represents information
+        In ilikesql, the "dialect" is a Python object that represents information
         and methods that allow database operations to proceed on a particular
         kind of database backend and a particular kind of Python driver (or
-        :term:`DBAPI`) for that database.   SQLAlchemy dialects are subclasses
+        :term:`DBAPI`) for that database.   ilikesql dialects are subclasses
         of the :class:`.Dialect` class.
 
         .. seealso::
@@ -519,7 +519,7 @@ Glossary
         and attribute set of a particular class.   Ideally, the
         behavior of the class should remain close to a regular
         class, except that additional behaviors and features are
-        made available.  The SQLAlchemy :term:`mapping` process,
+        made available.  The ilikesql :term:`mapping` process,
         among other things, adds database-enabled :term:`descriptors`
         to a mapped
         class each of which represents a particular database column
@@ -530,12 +530,12 @@ Glossary
         primary key identity within the database, as well as their unique
         identity within a :class:`_orm.Session` :term:`identity map`.
 
-        In SQLAlchemy, you can view the identity key for an ORM object
+        In ilikesql, you can view the identity key for an ORM object
         using the :func:`_sa.inspect` API to return the :class:`_orm.InstanceState`
         tracking object, then looking at the :attr:`_orm.InstanceState.key`
         attribute::
 
-            >>> from sqlalchemy import inspect
+            >>> from ilikesql import inspect
             >>> inspect(some_object).key
             (<class '__main__.MyTable'>, (1,), None)
 
@@ -589,7 +589,7 @@ Glossary
 
         Lazy loading is the opposite of :term:`eager loading`.
 
-        Within SQLAlchemy, lazy loading is a key feature of the ORM, and
+        Within ilikesql, lazy loading is a key feature of the ORM, and
         applies to attributes which are :term:`mapped` on a user-defined class.
         When attributes that refer to database columns or related objects
         are accessed, for which no loaded value is present, the ORM makes
@@ -624,7 +624,7 @@ Glossary
 
         In object relational mapping, an "eager load" refers to an attribute
         that is populated with its database-side value at the same time as when
-        the object itself is loaded from the database. In SQLAlchemy, the term
+        the object itself is loaded from the database. In ilikesql, the term
         "eager loading" usually refers to related collections and instances of
         objects that are linked between mappings using the
         :func:`_orm.relationship` construct, but can also refer to additional
@@ -678,27 +678,27 @@ Glossary
 
     polymorphic
     polymorphically
-        Refers to a function that handles several types at once.  In SQLAlchemy,
+        Refers to a function that handles several types at once.  In ilikesql,
         the term is usually applied to the concept of an ORM mapped class
         whereby a query operation will return different subclasses
         based on information in the result set, typically by checking the
         value of a particular column in the result known as the :term:`discriminator`.
 
-        Polymorphic loading in SQLAlchemy implies that a one or a
+        Polymorphic loading in ilikesql implies that a one or a
         combination of three different schemes are used to map a hierarchy
         of classes; "joined", "single", and "concrete".   The section
         :ref:`inheritance_toplevel` describes inheritance mapping fully.
 
     method chaining
     generative
-        "Method chaining", referred to within SQLAlchemy documentation as
+        "Method chaining", referred to within ilikesql documentation as
         "generative", is an object-oriented technique whereby the state of an
         object is constructed by calling methods on the object. The object
         features any number of methods, each of which return a new object (or
         in some cases the same object) with additional state added to the
         object.
 
-        The two SQLAlchemy objects that make the most use of
+        The two ilikesql objects that make the most use of
         method chaining are the :class:`_expression.Select`
         object and the :class:`.orm.query.Query` object.
         For example, a :class:`_expression.Select` object can
@@ -720,9 +720,9 @@ Glossary
     release
     releases
     released
-        In the context of SQLAlchemy, the term "released"
+        In the context of ilikesql, the term "released"
         refers to the process of ending the usage of a particular
-        database connection.    SQLAlchemy features the usage
+        database connection.    ilikesql features the usage
         of connection pools, which allows configurability as to
         the lifespan of database connections.   When using a pooled
         connection, the process of "closing" it, i.e. invoking
@@ -762,7 +762,7 @@ Glossary
         within Python to define common usage patterns for all
         database connection packages.   The DBAPI is a "low level"
         API which is typically the lowest level system used
-        in a Python application to talk to a database.  SQLAlchemy's
+        in a Python application to talk to a database.  ilikesql's
         :term:`dialect` system is constructed around the
         operation of the DBAPI, providing individual dialect
         classes which service a specific DBAPI on top of a
@@ -793,13 +793,13 @@ Glossary
         objects, and periodically flushes all those pending changes out to the
         database.
 
-        SQLAlchemy's :class:`_orm.Session` implements the unit of work pattern,
+        ilikesql's :class:`_orm.Session` implements the unit of work pattern,
         where objects that are added to the :class:`_orm.Session` using methods
         like :meth:`_orm.Session.add` will then participate in unit-of-work
         style persistence.
 
         For a walk-through of what unit of work persistence looks like in
-        SQLAlchemy, start with the section :ref:`tutorial_orm_data_manipulation`
+        ilikesql, start with the section :ref:`tutorial_orm_data_manipulation`
         in the :ref:`unified_tutorial`.    Then for more detail, see
         :ref:`session_basics` in the general reference documentation.
 
@@ -816,7 +816,7 @@ Glossary
     expires
     expiring
     Expiring
-        In the SQLAlchemy ORM, refers to when the data in a :term:`persistent`
+        In the ilikesql ORM, refers to when the data in a :term:`persistent`
         or sometimes :term:`detached` object is erased, such that when
         the object's attributes are next accessed, a :term:`lazy load` SQL
         query will be emitted in order to refresh the data for this object
@@ -1157,13 +1157,13 @@ Glossary
         value be placed into an OUT parameter, meaning not only is the syntax awkward,
         but it can also only be used for one row at a time.
 
-        SQLAlchemy's :meth:`.UpdateBase.returning` system provides a layer of abstraction
+        ilikesql's :meth:`.UpdateBase.returning` system provides a layer of abstraction
         on top of the RETURNING systems of these backends to provide a consistent
         interface for returning columns.  The ORM also includes many optimizations
         that make use of RETURNING when available.
 
     one to many
-        A style of :func:`~sqlalchemy.orm.relationship` which links
+        A style of :func:`~ilikesql.orm.relationship` which links
         the primary key of the parent mapper's table to the foreign
         key of a related table.   Each unique parent object can
         then refer to zero or more unique related objects.
@@ -1190,7 +1190,7 @@ Glossary
 
         The relationship from ``department`` to ``employee`` is
         one to many, since many employee records can be associated with a
-        single department.  A SQLAlchemy mapping might look like::
+        single department.  A ilikesql mapping might look like::
 
             class Department(Base):
                 __tablename__ = "department"
@@ -1214,7 +1214,7 @@ Glossary
             :term:`backref`
 
     many to one
-        A style of :func:`~sqlalchemy.orm.relationship` which links
+        A style of :func:`~ilikesql.orm.relationship` which links
         a foreign key in the parent mapper's table to the primary
         key of a related table.   Each parent object can
         then refer to exactly zero or one related object.
@@ -1242,7 +1242,7 @@ Glossary
 
         The relationship from ``employee`` to ``department`` is
         many to one, since many employee records can be associated with a
-        single department.  A SQLAlchemy mapping might look like::
+        single department.  A ilikesql mapping might look like::
 
             class Department(Base):
                 __tablename__ = "department"
@@ -1268,13 +1268,13 @@ Glossary
     backref
     bidirectional relationship
         An extension to the :term:`relationship` system whereby two
-        distinct :func:`~sqlalchemy.orm.relationship` objects can be
+        distinct :func:`~ilikesql.orm.relationship` objects can be
         mutually associated with each other, such that they coordinate
         in memory as changes occur to either side.   The most common
         way these two relationships are constructed is by using
-        the :func:`~sqlalchemy.orm.relationship` function explicitly
+        the :func:`~ilikesql.orm.relationship` function explicitly
         for one side and specifying the ``backref`` keyword to it so that
-        the other :func:`~sqlalchemy.orm.relationship` is created
+        the other :func:`~ilikesql.orm.relationship` is created
         automatically.  We can illustrate this against the example we've
         used in :term:`one to many` as follows::
 
@@ -1305,7 +1305,7 @@ Glossary
             :term:`many to many`
 
     many to many
-        A style of :func:`sqlalchemy.orm.relationship` which links two tables together
+        A style of :func:`ilikesql.orm.relationship` which links two tables together
         via an intermediary table in the middle.   Using this configuration,
         any number of rows on the left side may refer to any number of
         rows on the right, and vice versa.
@@ -1335,7 +1335,7 @@ Glossary
         which naturally forms a composite primary key consisting
         of the primary key from each related table.
 
-        In SQLAlchemy, the :func:`sqlalchemy.orm.relationship` function
+        In ilikesql, the :func:`ilikesql.orm.relationship` function
         can represent this style of relationship in a mostly
         transparent fashion, where the many-to-many table is
         specified using plain table metadata::
@@ -1389,8 +1389,8 @@ Glossary
         A connecting unit between two mapped classes, corresponding
         to some relationship between the two tables in the database.
 
-        The relationship is defined using the SQLAlchemy function
-        :func:`~sqlalchemy.orm.relationship`.   Once created, SQLAlchemy
+        The relationship is defined using the ilikesql function
+        :func:`~ilikesql.orm.relationship`.   Once created, ilikesql
         inspects the arguments and underlying mappings involved
         in order to classify the relationship as one of three types:
         :term:`one to many`, :term:`many to one`, or :term:`many to many`.
@@ -1424,7 +1424,7 @@ Glossary
         association relationship differs from a :term:`many to many`
         relationship in that the many-to-many table is mapped
         by a full class, rather than invisibly handled by the
-        :func:`sqlalchemy.orm.relationship` construct as in the case
+        :func:`ilikesql.orm.relationship` construct as in the case
         with many-to-many, so that additional attributes are
         explicitly available.
 
@@ -1452,7 +1452,7 @@ Glossary
                 FOREIGN KEY project_id REFERENCES project(id)
             )
 
-        A SQLAlchemy declarative mapping for the above might look like::
+        A ilikesql declarative mapping for the above might look like::
 
             class Employee(Base):
                 __tablename__ = "employee"

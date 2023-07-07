@@ -1,6 +1,6 @@
 .. note *_include.rst is a naming convention in conf.py
 
-.. |tutorial_title| replace:: SQLAlchemy 1.4 / 2.0 Tutorial
+.. |tutorial_title| replace:: ilikesql 1.4 / 2.0 Tutorial
 
 .. topic:: |tutorial_title|
 

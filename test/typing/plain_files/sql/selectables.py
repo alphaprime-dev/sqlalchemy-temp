@@ -1,5 +1,5 @@
-from sqlalchemy import column
-from sqlalchemy import table
+from ilikesql import column
+from ilikesql import table
 
 
 def test_col_accessors() -> None:

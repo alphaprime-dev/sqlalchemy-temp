@@ -3,16 +3,16 @@
 SQLite
 ======
 
-.. automodule:: sqlalchemy.dialects.sqlite.base
+.. automodule:: ilikesql.dialects.sqlite.base
 
 SQLite Data Types
 -----------------
 
-As with all SQLAlchemy dialects, all UPPERCASE types that are known to be
+As with all ilikesql dialects, all UPPERCASE types that are known to be
 valid with SQLite are importable from the top level dialect, whether
-they originate from :mod:`sqlalchemy.types` or from the local dialect::
+they originate from :mod:`ilikesql.types` or from the local dialect::
 
-    from sqlalchemy.dialects.sqlite import (
+    from ilikesql.dialects.sqlite import (
         BLOB,
         BOOLEAN,
         CHAR,
@@ -30,7 +30,7 @@ they originate from :mod:`sqlalchemy.types` or from the local dialect::
         VARCHAR,
     )
 
-.. module:: sqlalchemy.dialects.sqlite
+.. module:: ilikesql.dialects.sqlite
 
 .. autoclass:: DATETIME
 
@@ -43,9 +43,9 @@ they originate from :mod:`sqlalchemy.types` or from the local dialect::
 SQLite DML Constructs
 -------------------------
 
-.. autofunction:: sqlalchemy.dialects.sqlite.insert
+.. autofunction:: ilikesql.dialects.sqlite.insert
 
-.. autoclass:: sqlalchemy.dialects.sqlite.Insert
+.. autoclass:: ilikesql.dialects.sqlite.Insert
   :members:
 
 .. _pysqlite:
@@ -53,14 +53,14 @@ SQLite DML Constructs
 Pysqlite
 --------
 
-.. automodule:: sqlalchemy.dialects.sqlite.pysqlite
+.. automodule:: ilikesql.dialects.sqlite.pysqlite
 
 .. _aiosqlite:
 
 Aiosqlite
 ---------
 
-.. automodule:: sqlalchemy.dialects.sqlite.aiosqlite
+.. automodule:: ilikesql.dialects.sqlite.aiosqlite
 
 
 .. _pysqlcipher:
@@ -68,4 +68,4 @@ Aiosqlite
 Pysqlcipher
 -----------
 
-.. automodule:: sqlalchemy.dialects.sqlite.pysqlcipher
+.. automodule:: ilikesql.dialects.sqlite.pysqlcipher

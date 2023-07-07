@@ -9,34 +9,34 @@ from typing import List
 from typing import MutableMapping
 from typing import MutableSet
 
-from sqlalchemy import event
-from sqlalchemy import exc as sa_exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import util
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import instrumentation
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import synonym
-import sqlalchemy.orm.collections as collections
-from sqlalchemy.orm.collections import collection
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_false
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+from ilikesql import event
+from ilikesql import exc as sa_exc
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import util
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.orm import attributes
+from ilikesql.orm import declarative_base
+from ilikesql.orm import instrumentation
+from ilikesql.orm import relationship
+from ilikesql.orm import synonym
+import ilikesql.orm.collections as collections
+from ilikesql.orm.collections import collection
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_false
+from ilikesql.testing import is_true
+from ilikesql.testing import ne_
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 def _register_attribute(class_, key, **kw):
@@ -2309,7 +2309,7 @@ class ColumnMappedWSerialize(fixtures.MappedTest):
         )
 
     def test_selectable_column_mapped(self):
-        from sqlalchemy import select
+        from ilikesql import select
 
         s = select(self.tables.foo).alias()
         Foo = self.classes.Foo
@@ -2317,7 +2317,7 @@ class ColumnMappedWSerialize(fixtures.MappedTest):
         self._run_test([(Foo.b, Foo(b=5), 5), (s.c.b, Foo(b=5), 5)])
 
     def _run_test(self, specs):
-        from sqlalchemy.testing.util import picklers
+        from ilikesql.testing.util import picklers
 
         for spec, obj, expected in specs:
             coll = collections.column_keyed_dict(spec)()

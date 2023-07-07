@@ -8,7 +8,7 @@
 Describing Databases with MetaData
 ==================================
 
-.. module:: sqlalchemy.schema
+.. module:: ilikesql.schema
 
 This section discusses the fundamental :class:`_schema.Table`, :class:`_schema.Column`
 and :class:`_schema.MetaData` objects.
@@ -16,25 +16,25 @@ and :class:`_schema.MetaData` objects.
 .. seealso::
 
     :ref:`tutorial_working_with_metadata` - tutorial introduction to
-    SQLAlchemy's database metadata concept in the :ref:`unified_tutorial`
+    ilikesql's database metadata concept in the :ref:`unified_tutorial`
 
 A collection of metadata entities is stored in an object aptly named
-:class:`~sqlalchemy.schema.MetaData`::
+:class:`~ilikesql.schema.MetaData`::
 
-    from sqlalchemy import MetaData
+    from ilikesql import MetaData
 
     metadata_obj = MetaData()
 
-:class:`~sqlalchemy.schema.MetaData` is a container object that keeps together
+:class:`~ilikesql.schema.MetaData` is a container object that keeps together
 many different features of a database (or multiple databases) being described.
 
-To represent a table, use the :class:`~sqlalchemy.schema.Table` class. Its two
+To represent a table, use the :class:`~ilikesql.schema.Table` class. Its two
 primary arguments are the table name, then the
-:class:`~sqlalchemy.schema.MetaData` object which it will be associated with.
+:class:`~ilikesql.schema.MetaData` object which it will be associated with.
 The remaining positional arguments are mostly
-:class:`~sqlalchemy.schema.Column` objects describing each column::
+:class:`~ilikesql.schema.Column` objects describing each column::
 
-    from sqlalchemy import Table, Column, Integer, String
+    from ilikesql import Table, Column, Integer, String
 
     user = Table(
         "user",
@@ -51,8 +51,8 @@ may be assigned the ``primary_key=True`` flag which denotes a multi-column
 primary key, known as a *composite* primary key.
 
 Note also that each column describes its datatype using objects corresponding
-to genericized types, such as :class:`~sqlalchemy.types.Integer` and
-:class:`~sqlalchemy.types.String`. SQLAlchemy features dozens of types of
+to genericized types, such as :class:`~ilikesql.types.Integer` and
+:class:`~ilikesql.types.String`. ilikesql features dozens of types of
 varying levels of specificity as well as the ability to create custom types.
 Documentation on the type system can be found at :ref:`types_toplevel`.
 
@@ -61,10 +61,10 @@ Documentation on the type system can be found at :ref:`types_toplevel`.
 Accessing Tables and Columns
 ----------------------------
 
-The :class:`~sqlalchemy.schema.MetaData` object contains all of the schema
+The :class:`~ilikesql.schema.MetaData` object contains all of the schema
 constructs we've associated with it. It supports a few methods of accessing
 these table objects, such as the ``sorted_tables`` accessor which returns a
-list of each :class:`~sqlalchemy.schema.Table` object in order of foreign key
+list of each :class:`~ilikesql.schema.Table` object in order of foreign key
 dependency (that is, each table is preceded by all tables which it
 references)::
 
@@ -75,12 +75,12 @@ references)::
     invoice
     invoice_item
 
-In most cases, individual :class:`~sqlalchemy.schema.Table` objects have been
+In most cases, individual :class:`~ilikesql.schema.Table` objects have been
 explicitly declared, and these objects are typically accessed directly as
 module-level variables in an application. Once a
-:class:`~sqlalchemy.schema.Table` has been defined, it has a full set of
+:class:`~ilikesql.schema.Table` has been defined, it has a full set of
 accessors which allow inspection of its properties. Given the following
-:class:`~sqlalchemy.schema.Table` definition::
+:class:`~ilikesql.schema.Table` definition::
 
     employees = Table(
         "employees",
@@ -90,7 +90,7 @@ accessors which allow inspection of its properties. Given the following
         Column("employee_dept", Integer, ForeignKey("departments.department_id")),
     )
 
-Note the :class:`~sqlalchemy.schema.ForeignKey` object used in this table -
+Note the :class:`~ilikesql.schema.ForeignKey` object used in this table -
 this construct defines a reference to a remote table, and is fully described
 in :ref:`metadata_foreignkeys`. Methods of accessing information about this
 table include::
@@ -157,18 +157,18 @@ table include::
 Creating and Dropping Database Tables
 -------------------------------------
 
-Once you've defined some :class:`~sqlalchemy.schema.Table` objects, assuming
+Once you've defined some :class:`~ilikesql.schema.Table` objects, assuming
 you're working with a brand new database one thing you might want to do is
 issue CREATE statements for those tables and their related constructs (as an
 aside, it's also quite possible that you *don't* want to do this, if you
 already have some preferred methodology such as tools included with your
 database or an existing scripting system - if that's the case, feel free to
-skip this section - SQLAlchemy has no requirement that it be used to create
+skip this section - ilikesql has no requirement that it be used to create
 your tables).
 
 The usual way to issue CREATE is to use
-:func:`~sqlalchemy.schema.MetaData.create_all` on the
-:class:`~sqlalchemy.schema.MetaData` object. This method will issue queries
+:func:`~ilikesql.schema.MetaData.create_all` on the
+:class:`~ilikesql.schema.MetaData` object. This method will issue queries
 that first check for the existence of each individual table, and if not found
 will issue the CREATE statements:
 
@@ -212,19 +212,19 @@ will issue the CREATE statements:
             pref_value VARCHAR(100)
     )
 
-:func:`~sqlalchemy.schema.MetaData.create_all` creates foreign key constraints
+:func:`~ilikesql.schema.MetaData.create_all` creates foreign key constraints
 between tables usually inline with the table definition itself, and for this
 reason it also generates the tables in order of their dependency. There are
 options to change this behavior such that ``ALTER TABLE`` is used instead.
 
 Dropping all tables is similarly achieved using the
-:func:`~sqlalchemy.schema.MetaData.drop_all` method. This method does the
-exact opposite of :func:`~sqlalchemy.schema.MetaData.create_all` - the
+:func:`~ilikesql.schema.MetaData.drop_all` method. This method does the
+exact opposite of :func:`~ilikesql.schema.MetaData.create_all` - the
 presence of each table is checked first, and tables are dropped in reverse
 order of dependency.
 
 Creating and dropping individual tables can be done via the ``create()`` and
-``drop()`` methods of :class:`~sqlalchemy.schema.Table`. These methods by
+``drop()`` methods of :class:`~ilikesql.schema.Table`. These methods by
 default issue the CREATE or DROP regardless of the table being present:
 
 .. sourcecode:: python+sql
@@ -267,24 +267,24 @@ To enable the "check first for the table existing" logic, add the
 Altering Database Objects through Migrations
 ---------------------------------------------
 
-While SQLAlchemy directly supports emitting CREATE and DROP statements for
+While ilikesql directly supports emitting CREATE and DROP statements for
 schema constructs, the ability to alter those constructs, usually via the ALTER
 statement as well as other database-specific constructs, is outside of the
-scope of SQLAlchemy itself.  While it's easy enough to emit ALTER statements
+scope of ilikesql itself.  While it's easy enough to emit ALTER statements
 and similar by hand, such as by passing a :func:`_expression.text` construct to
 :meth:`_engine.Connection.execute` or by using the :class:`.DDL` construct, it's a
 common practice to automate the maintenance of database schemas in relation to
 application code using schema migration tools.
 
-The SQLAlchemy project offers the  `Alembic <https://alembic.sqlalchemy.org>`_
+The ilikesql project offers the  `Alembic <https://alembic.ilikesql.org>`_
 migration tool for this purpose.   Alembic features a highly customizable
 environment and a minimalistic usage pattern, supporting such features as
 transactional DDL, automatic generation of "candidate" migrations, an "offline"
 mode which generates SQL scripts, and support for branch resolution.
 
-Alembic supersedes the `SQLAlchemy-Migrate
-<https://github.com/openstack/sqlalchemy-migrate>`_   project, which is the
-original migration tool for SQLAlchemy and is now  considered legacy.
+Alembic supersedes the `ilikesql-Migrate
+<https://github.com/openstack/ilikesql-migrate>`_   project, which is the
+original migration tool for ilikesql and is now  considered legacy.
 
 .. _schema_table_schema_name:
 
@@ -301,8 +301,8 @@ Server) or even names that refer to alternate database files (SQLite ATTACH) or
 remote servers (Oracle DBLINK with synonyms).
 
 What all of the above approaches have (mostly) in common is that there's a way
-of referring to this alternate set of tables using a string name.  SQLAlchemy
-refers to this name as the **schema name**.  Within SQLAlchemy, this is nothing
+of referring to this alternate set of tables using a string name.  ilikesql
+refers to this name as the **schema name**.  Within ilikesql, this is nothing
 more than a string name which is associated with a :class:`_schema.Table`
 object, and is then rendered into SQL statements in a manner appropriate to the
 target database such that the table is referred towards in its remote "schema",
@@ -316,14 +316,14 @@ the parameter is passed using the ``__table_args__`` parameter dictionary.
 The "schema" name may also be associated with the :class:`_schema.MetaData`
 object where it will take effect automatically for all :class:`_schema.Table`
 objects associated with that :class:`_schema.MetaData` that don't otherwise
-specify their own name.  Finally, SQLAlchemy also supports a "dynamic" schema name
+specify their own name.  Finally, ilikesql also supports a "dynamic" schema name
 system that is often used for multi-tenant applications such that a single set
 of :class:`_schema.Table` metadata may refer to a dynamically configured set of
 schema names on a per-connection or per-statement basis.
 
 .. topic::  What's "schema" ?
 
-    SQLAlchemy's support for database "schema" was designed with first party
+    ilikesql's support for database "schema" was designed with first party
     support for PostgreSQL-style schemas.  In this style, there is first a
     "database" that typically has a single "owner".  Within this database there
     can be any number of "schemas" which then contain the actual table objects.
@@ -334,7 +334,7 @@ schema names on a per-connection or per-statement basis.
     can refer to multiple databases at once, using the same syntax except it
     is "<database>.<tablename>".  On Oracle, this syntax refers to yet another
     concept, the "owner" of a table.  Regardless of which kind of database is
-    in use, SQLAlchemy uses the phrase "schema" to refer to the qualifying
+    in use, ilikesql uses the phrase "schema" to refer to the qualifying
     identifier within the general syntax of "<qualifier>.<tablename>".
 
 .. seealso::
@@ -464,7 +464,7 @@ When using a :class:`_schema.MetaData` object that sets
 to specify that it should not be schema qualified may use the special symbol
 :data:`_schema.BLANK_SCHEMA`::
 
-    from sqlalchemy import BLANK_SCHEMA
+    from ilikesql import BLANK_SCHEMA
 
     metadata_obj = MetaData(schema="remote_banks")
 
@@ -517,8 +517,8 @@ the :meth:`_pool.PoolEvents.connect` event, which allows access to the
 DBAPI connection when it is first created.    For example, to set the
 Oracle CURRENT_SCHEMA variable to an alternate name::
 
-    from sqlalchemy import event
-    from sqlalchemy import create_engine
+    from ilikesql import event
+    from ilikesql import create_engine
 
     engine = create_engine("oracle+cx_oracle://scott:tiger@tsn_name")
 
@@ -551,7 +551,7 @@ for specific information regarding how default schemas are configured.
 Schemas and Reflection
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The schema feature of SQLAlchemy interacts with the table reflection
+The schema feature of ilikesql interacts with the table reflection
 feature introduced at :ref:`metadata_reflection_toplevel`.  See the section
 :ref:`metadata_reflection_schemas` for additional details on how this works.
 
@@ -559,9 +559,9 @@ feature introduced at :ref:`metadata_reflection_toplevel`.  See the section
 Backend-Specific Options
 ------------------------
 
-:class:`~sqlalchemy.schema.Table` supports database-specific options. For
+:class:`~ilikesql.schema.Table` supports database-specific options. For
 example, MySQL has different table backend types, including "MyISAM" and
-"InnoDB". This can be expressed with :class:`~sqlalchemy.schema.Table` using
+"InnoDB". This can be expressed with :class:`~ilikesql.schema.Table` using
 ``mysql_engine``::
 
     addresses = Table(
@@ -579,12 +579,12 @@ described in the individual documentation sections for each dialect.
 Column, Table, MetaData API
 ---------------------------
 
-.. attribute:: sqlalchemy.schema.BLANK_SCHEMA
+.. attribute:: ilikesql.schema.BLANK_SCHEMA
     :noindex:
 
     Refers to :attr:`.SchemaConst.BLANK_SCHEMA`.
 
-.. attribute:: sqlalchemy.schema.RETAIN_SCHEMA
+.. attribute:: ilikesql.schema.RETAIN_SCHEMA
     :noindex:
 
     Refers to :attr:`.SchemaConst.RETAIN_SCHEMA`

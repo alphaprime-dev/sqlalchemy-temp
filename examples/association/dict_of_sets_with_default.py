@@ -14,16 +14,16 @@ upon access of a non-existent key, in the same manner as Python's
 
 import operator
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
-from sqlalchemy.orm.collections import KeyFuncDict
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.associationproxy import association_proxy
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
+from ilikesql.orm.collections import KeyFuncDict
 
 
 class Base:

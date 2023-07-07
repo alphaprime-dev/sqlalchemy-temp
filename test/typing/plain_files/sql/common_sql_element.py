@@ -9,19 +9,19 @@ unions.
 
 from __future__ import annotations
 
-from sqlalchemy import asc
-from sqlalchemy import Column
-from sqlalchemy import desc
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import SQLColumnExpression
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.orm import Session
+from ilikesql import asc
+from ilikesql import Column
+from ilikesql import desc
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import SQLColumnExpression
+from ilikesql import String
+from ilikesql import Table
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapped
+from ilikesql.orm import mapped_column
+from ilikesql.orm import Session
 
 
 class Base(DeclarativeBase):

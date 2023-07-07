@@ -1,14 +1,14 @@
-from sqlalchemy import testing
-from sqlalchemy.engine.base import Connection
-from sqlalchemy.engine.base import Engine
-from sqlalchemy.engine.interfaces import CoreExecuteOptionsParameter
-from sqlalchemy.ext.asyncio.engine import AsyncConnection
-from sqlalchemy.ext.asyncio.engine import AsyncEngine
-from sqlalchemy.orm._typing import OrmExecuteOptionsParameter
-from sqlalchemy.orm.query import Query
-from sqlalchemy.sql.base import Executable
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertions import eq_
+from ilikesql import testing
+from ilikesql.engine.base import Connection
+from ilikesql.engine.base import Engine
+from ilikesql.engine.interfaces import CoreExecuteOptionsParameter
+from ilikesql.ext.asyncio.engine import AsyncConnection
+from ilikesql.ext.asyncio.engine import AsyncEngine
+from ilikesql.orm._typing import OrmExecuteOptionsParameter
+from ilikesql.orm.query import Query
+from ilikesql.sql.base import Executable
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertions import eq_
 
 engine_execution_options = {
     "compiled_cache": "Optional[CompiledCacheType]",

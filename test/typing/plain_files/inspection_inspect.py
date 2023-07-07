@@ -7,14 +7,14 @@ however this is not really working
 from typing import Any
 from typing import Optional
 
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.engine.reflection import Inspector
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapper
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.engine.reflection import Inspector
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import Mapper
 
 
 class Base(DeclarativeBase):

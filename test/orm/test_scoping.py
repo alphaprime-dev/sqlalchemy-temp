@@ -1,25 +1,25 @@
 from unittest.mock import Mock
 
-import sqlalchemy as sa
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy import util
-from sqlalchemy.orm import query
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import Table
+import ilikesql as sa
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql import testing
+from ilikesql import util
+from ilikesql.orm import query
+from ilikesql.orm import relationship
+from ilikesql.orm import scoped_session
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import Table
 
 
 class ScopedSessionTest(fixtures.MappedTest):
@@ -167,7 +167,7 @@ class ScopedSessionTest(fixtures.MappedTest):
         )
 
         with mock.patch(
-            "sqlalchemy.orm.session.object_session"
+            "ilikesql.orm.session.object_session"
         ) as mock_object_session:
             sess.object_session("foo")
 

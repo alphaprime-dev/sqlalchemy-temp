@@ -2,46 +2,46 @@ from operator import is_not
 
 from typing_extensions import Annotated
 
-import sqlalchemy as sa
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import testing
-from sqlalchemy.orm import base as orm_base
-from sqlalchemy.orm import class_mapper
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import close_all_sessions
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import configure_mappers
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import declarative_mixin
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import declared_attr
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import events as orm_events
-from sqlalchemy.orm import has_inherited_table
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import synonym
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_true
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.schema import Column
-from sqlalchemy.testing.schema import mapped_column
-from sqlalchemy.testing.schema import Table
-from sqlalchemy.testing.util import gc_collect
-from sqlalchemy.util import classproperty
+import ilikesql as sa
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import testing
+from ilikesql.orm import base as orm_base
+from ilikesql.orm import class_mapper
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import close_all_sessions
+from ilikesql.orm import column_property
+from ilikesql.orm import configure_mappers
+from ilikesql.orm import declarative_base
+from ilikesql.orm import declarative_mixin
+from ilikesql.orm import DeclarativeBase
+from ilikesql.orm import declared_attr
+from ilikesql.orm import deferred
+from ilikesql.orm import events as orm_events
+from ilikesql.orm import has_inherited_table
+from ilikesql.orm import Mapped
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
+from ilikesql.orm import synonym
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_true
+from ilikesql.testing import mock
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.schema import Column
+from ilikesql.testing.schema import mapped_column
+from ilikesql.testing.schema import Table
+from ilikesql.testing.util import gc_collect
+from ilikesql.util import classproperty
 
 Base = None
 mapper_registry = None
@@ -1439,7 +1439,7 @@ class DeclarativeMixinTest(DeclarativeTestBase):
         eq_(Mapped.__dict__["some_attr"], "MappedSOME ATTR")
 
     def test_arbitrary_attrs_two(self):
-        from sqlalchemy.ext.associationproxy import association_proxy
+        from ilikesql.ext.associationproxy import association_proxy
 
         class FilterA(Base):
             __tablename__ = "filter_a"
@@ -1707,8 +1707,8 @@ class DeclarativeMixinPropertyTest(
         eq_(MyModel.t2.__doc__, """this is another document.""")
 
     def test_correct_for_proxies(self):
-        from sqlalchemy.ext.hybrid import hybrid_property
-        from sqlalchemy import inspect
+        from ilikesql.ext.hybrid import hybrid_property
+        from ilikesql import inspect
 
         class Mixin:
             @hybrid_property
@@ -1746,7 +1746,7 @@ class DeclarativeMixinPropertyTest(
         is_(b1.all_orm_descriptors["hp2"], d1.all_orm_descriptors["hp2"])
 
     def test_correct_for_proxies_doesnt_impact_synonyms(self):
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         class Mixin:
             @declared_attr
@@ -1978,7 +1978,7 @@ class DeclaredAttrTest(DeclarativeTestBase, testing.AssertsCompiledSQL):
         del A
         gc_collect()
 
-        from sqlalchemy.orm.clsregistry import _key_is_empty
+        from ilikesql.orm.clsregistry import _key_is_empty
 
         assert _key_is_empty(
             "A",
@@ -2149,7 +2149,7 @@ class DeclaredAttrTest(DeclarativeTestBase, testing.AssertsCompiledSQL):
         eq_(A.__table__.name, "foo")
 
     def test_col_prop_attrs_associated_w_class_for_mapper_args(self):
-        from sqlalchemy import Column
+        from ilikesql import Column
         import collections
 
         asserted = collections.defaultdict(set)

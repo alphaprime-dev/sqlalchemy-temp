@@ -1,19 +1,19 @@
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import testing
-from sqlalchemy.orm import clsregistry
-from sqlalchemy.orm import registry
-from sqlalchemy.orm import relationship
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_raises_message
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertions import expect_warnings
-from sqlalchemy.testing.util import gc_collect
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import testing
+from ilikesql.orm import clsregistry
+from ilikesql.orm import registry
+from ilikesql.orm import relationship
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_raises_message
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.assertions import expect_warnings
+from ilikesql.testing.util import gc_collect
 
 
 class MockClass:
@@ -151,19 +151,19 @@ class ClsRegistryTest(fixtures.TestBase):
 
         gc_collect()
 
-        import sqlalchemy
+        import ilikesql
 
         is_(
-            resolver("__import__('sqlalchemy.util').util.EMPTY_SET")(),
-            sqlalchemy.util.EMPTY_SET,
+            resolver("__import__('ilikesql.util').util.EMPTY_SET")(),
+            ilikesql.util.EMPTY_SET,
         )
 
         assert_raises_message(
             exc.InvalidRequestError,
             r"When initializing mapper some_parent, expression "
-            r"\"__import__\('sqlalchemy.util'\).util.EMPTY_SET\" "
+            r"\"__import__\('ilikesql.util'\).util.EMPTY_SET\" "
             "failed to locate a name",
-            name_resolver("__import__('sqlalchemy.util').util.EMPTY_SET"),
+            name_resolver("__import__('ilikesql.util').util.EMPTY_SET"),
         )
 
     def test_resolve_dupe_by_name(self):

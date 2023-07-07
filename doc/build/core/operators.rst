@@ -5,10 +5,10 @@ Operator Reference
 
 ..  Setup code, not for display
 
-    >>> from sqlalchemy import column, select
-    >>> from sqlalchemy import create_engine
+    >>> from ilikesql import column, select
+    >>> from ilikesql import create_engine
     >>> engine = create_engine("sqlite+pysqlite:///:memory:", echo=True)
-    >>> from sqlalchemy import MetaData, Table, Column, Integer, String, Numeric
+    >>> from ilikesql import MetaData, Table, Column, Integer, String, Numeric
     >>> metadata_obj = MetaData()
     >>> user_table = Table(
     ...     "user_account",
@@ -17,7 +17,7 @@ Operator Reference
     ...     Column("name", String(30)),
     ...     Column("fullname", String),
     ... )
-    >>> from sqlalchemy import ForeignKey
+    >>> from ilikesql import ForeignKey
     >>> address_table = Table(
     ...     "address",
     ...     metadata_obj,
@@ -28,9 +28,9 @@ Operator Reference
     >>> metadata_obj.create_all(engine)
     BEGIN (implicit)
     ...
-    >>> from sqlalchemy.orm import declarative_base
+    >>> from ilikesql.orm import declarative_base
     >>> Base = declarative_base()
-    >>> from sqlalchemy.orm import relationship
+    >>> from ilikesql.orm import relationship
     >>> class User(Base):
     ...     __tablename__ = "user_account"
     ...
@@ -55,20 +55,20 @@ Operator Reference
     ...     def __repr__(self):
     ...         return f"Address(id={self.id!r}, email_address={self.email_address!r})"
     >>> conn = engine.connect()
-    >>> from sqlalchemy.orm import Session
+    >>> from ilikesql.orm import Session
     >>> session = Session(conn)
     >>> session.add_all(
     ...     [
     ...         User(
     ...             name="spongebob",
     ...             fullname="Spongebob Squarepants",
-    ...             addresses=[Address(email_address="spongebob@sqlalchemy.org")],
+    ...             addresses=[Address(email_address="spongebob@ilikesql.org")],
     ...         ),
     ...         User(
     ...             name="sandy",
     ...             fullname="Sandy Cheeks",
     ...             addresses=[
-    ...                 Address(email_address="sandy@sqlalchemy.org"),
+    ...                 Address(email_address="sandy@ilikesql.org"),
     ...                 Address(email_address="squirrel@squirrelpower.org"),
     ...             ],
     ...         ),
@@ -80,7 +80,7 @@ Operator Reference
     ...         User(
     ...             name="squidward",
     ...             fullname="Squidward Tentacles",
-    ...             addresses=[Address(email_address="stentcl@sqlalchemy.org")],
+    ...             addresses=[Address(email_address="stentcl@ilikesql.org")],
     ...         ),
     ...         User(name="ehkrabs", fullname="Eugene H. Krabs"),
     ...     ]
@@ -171,8 +171,8 @@ strings, dates, and many others:
 
 IN Comparisons
 ^^^^^^^^^^^^^^
-The SQL IN operator is a subject all its own in SQLAlchemy.   As the IN
-operator is usually used against a list of fixed values, SQLAlchemy's
+The SQL IN operator is a subject all its own in ilikesql.   As the IN
+operator is usually used against a list of fixed values, ilikesql's
 feature of bound parameter coercion makes use of a special form of SQL
 compilation that renders an interim SQL string for compilation that's formed
 into the final list of bound parameters in a second step.   In other words,
@@ -200,7 +200,7 @@ at execution time, illustrated below::
 Empty IN Expressions
 ~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy produces a mathematically valid result for an empty IN expression
+ilikesql produces a mathematically valid result for an empty IN expression
 by rendering a backend-specific subquery that returns no rows.   Again
 in other words, "it just works"::
 
@@ -237,7 +237,7 @@ primary key values.  The :func:`_sql.tuple_` construct provides the basic
 building block for tuple comparisons.  The :meth:`_sql.Tuple.in_` operator
 then receives a list of tuples::
 
-    >>> from sqlalchemy import tuple_
+    >>> from ilikesql import tuple_
     >>> tup = tuple_(column("x", Integer), column("y", Integer))
     >>> expr = tup.in_([(1, 2), (3, 4)])
     >>> print(expr)
@@ -295,7 +295,7 @@ databases support:
   SQL NULL is also explicitly available, if needed, using the
   :func:`_sql.null` construct::
 
-    >>> from sqlalchemy import null
+    >>> from ilikesql import null
     >>> print(column("x").is_(null()))
     {printsql}x IS NULL
 
@@ -423,13 +423,13 @@ behaviors and results on different databases:
   This operator is dialect specific.  We can illustrate it in terms of
   for example the PostgreSQL dialect::
 
-    >>> from sqlalchemy.dialects import postgresql
+    >>> from ilikesql.dialects import postgresql
     >>> print(column("x").regexp_match("word").compile(dialect=postgresql.dialect()))
     {printsql}x ~ %(x_1)s
 
   Or MySQL::
 
-    >>> from sqlalchemy.dialects import mysql
+    >>> from ilikesql.dialects import mysql
     >>> print(column("x").regexp_match("word").compile(dialect=mysql.dialect()))
     {printsql}x REGEXP %s
 
@@ -489,7 +489,7 @@ String Alteration
   To use COLLATE against a literal value, use the :func:`_sql.literal` construct::
 
 
-    >>> from sqlalchemy import literal
+    >>> from ilikesql import literal
     >>> print(
     ...     (literal("Müller").collate("latin1_german2_ci") == column("x")).compile(
     ...         dialect=mysql.dialect()
@@ -606,7 +606,7 @@ boolean operators.
   This operator is also available as a column-expression-level method, applying
   bitwise NOT to an individual column expression::
 
-    >>> from sqlalchemy import bitwise_not
+    >>> from ilikesql import bitwise_not
     >>> print(bitwise_not(column("x")))
     ~x
 
@@ -634,7 +634,7 @@ boolean operators.
   For PostgreSQL dialects, "#" is used to represent bitwise XOR; this emits
   automatically when using one of these backends::
 
-    >>> from sqlalchemy.dialects import postgresql
+    >>> from ilikesql.dialects import postgresql
     >>> print(column("x").bitwise_xor(5).compile(dialect=postgresql.dialect()))
     x # %(x_1)s
 
@@ -681,7 +681,7 @@ The most common conjunction, "AND", is automatically applied if we make repeated
 The "AND" conjunction, as well as its partner "OR", are both available directly using the :func:`_sql.and_` and :func:`_sql.or_` functions::
 
 
-    >>> from sqlalchemy import and_, or_
+    >>> from ilikesql import and_, or_
     >>> print(
     ...     select(address_table.c.email_address).where(
     ...         and_(
@@ -698,13 +698,13 @@ The "AND" conjunction, as well as its partner "OR", are both available directly 
 A negation is available using the :func:`_sql.not_` function.  This will
 typically invert the operator in a boolean expression::
 
-    >>> from sqlalchemy import not_
+    >>> from ilikesql import not_
     >>> print(not_(column("x") == 5))
     {printsql}x != :x_1
 
 It also may apply a keyword such as ``NOT`` when appropriate::
 
-    >>> from sqlalchemy import Boolean
+    >>> from ilikesql import Boolean
     >>> print(not_(column("x", Boolean)))
     {printsql}NOT x
 
@@ -751,7 +751,7 @@ The above conjunction functions :func:`_sql.and_`, :func:`_sql.or_`,
     >>> print(~(column("x") == 5))
     {printsql}x != :x_1{stop}
 
-    >>> from sqlalchemy import Boolean
+    >>> from ilikesql import Boolean
     >>> print(~column("x", Boolean))
     {printsql}NOT x{stop}
 

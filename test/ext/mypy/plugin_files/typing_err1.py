@@ -1,7 +1,7 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy.orm import registry
-from sqlalchemy.types import TypeEngine
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql.orm import registry
+from ilikesql.types import TypeEngine
 
 
 # EXPECTED_MYPY: Missing type parameters for generic type "TypeEngine"

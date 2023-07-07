@@ -3,23 +3,23 @@
 Microsoft SQL Server
 ====================
 
-.. automodule:: sqlalchemy.dialects.mssql.base
+.. automodule:: ilikesql.dialects.mssql.base
 
 SQL Server SQL Constructs
 -------------------------
 
-.. currentmodule:: sqlalchemy.dialects.mssql
+.. currentmodule:: ilikesql.dialects.mssql
 
 .. autofunction:: try_cast
 
 SQL Server Data Types
 ---------------------
 
-As with all SQLAlchemy dialects, all UPPERCASE types that are known to be
+As with all ilikesql dialects, all UPPERCASE types that are known to be
 valid with SQL server are importable from the top level dialect, whether
-they originate from :mod:`sqlalchemy.types` or from the local dialect::
+they originate from :mod:`ilikesql.types` or from the local dialect::
 
-    from sqlalchemy.dialects.mssql import (
+    from ilikesql.dialects.mssql import (
         BIGINT,
         BINARY,
         BIT,
@@ -60,7 +60,7 @@ construction arguments, are as follows:
    in the dialect module, just imported from sqltypes.  this avoids warnings
    in the sphinx build
 
-.. currentmodule:: sqlalchemy.dialects.mssql
+.. currentmodule:: ilikesql.dialects.mssql
 
 .. autoclass:: BIT
    :members: __init__
@@ -158,9 +158,9 @@ construction arguments, are as follows:
 
 PyODBC
 ------
-.. automodule:: sqlalchemy.dialects.mssql.pyodbc
+.. automodule:: ilikesql.dialects.mssql.pyodbc
 
 pymssql
 -------
-.. automodule:: sqlalchemy.dialects.mssql.pymssql
+.. automodule:: ilikesql.dialects.mssql.pymssql
 

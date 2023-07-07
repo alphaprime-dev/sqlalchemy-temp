@@ -1,42 +1,42 @@
 import pickle
 
-import sqlalchemy as sa
-from sqlalchemy import Column
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy.orm import aliased
-from sqlalchemy.orm import attributes
-from sqlalchemy.orm import column_property
-from sqlalchemy.orm import contains_eager
-from sqlalchemy.orm import defaultload
-from sqlalchemy.orm import defer
-from sqlalchemy.orm import exc as orm_exc
-from sqlalchemy.orm import joinedload
-from sqlalchemy.orm import Load
-from sqlalchemy.orm import load_only
-from sqlalchemy.orm import loading
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import strategy_options
-from sqlalchemy.orm import subqueryload
-from sqlalchemy.orm import synonym
-from sqlalchemy.orm import undefer
-from sqlalchemy.orm import util as orm_util
-from sqlalchemy.orm import with_polymorphic
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_not
-from sqlalchemy.testing.assertions import assert_raises_message
-from sqlalchemy.testing.assertions import AssertsCompiledSQL
-from sqlalchemy.testing.assertions import emits_warning
-from sqlalchemy.testing.assertions import eq_
-from sqlalchemy.testing.assertions import expect_raises_message
-from sqlalchemy.testing.fixtures import fixture_session
-from sqlalchemy.testing.pickleable import Address
-from sqlalchemy.testing.pickleable import User
+import ilikesql as sa
+from ilikesql import Column
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql.orm import aliased
+from ilikesql.orm import attributes
+from ilikesql.orm import column_property
+from ilikesql.orm import contains_eager
+from ilikesql.orm import defaultload
+from ilikesql.orm import defer
+from ilikesql.orm import exc as orm_exc
+from ilikesql.orm import joinedload
+from ilikesql.orm import Load
+from ilikesql.orm import load_only
+from ilikesql.orm import loading
+from ilikesql.orm import relationship
+from ilikesql.orm import strategy_options
+from ilikesql.orm import subqueryload
+from ilikesql.orm import synonym
+from ilikesql.orm import undefer
+from ilikesql.orm import util as orm_util
+from ilikesql.orm import with_polymorphic
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_not
+from ilikesql.testing.assertions import assert_raises_message
+from ilikesql.testing.assertions import AssertsCompiledSQL
+from ilikesql.testing.assertions import emits_warning
+from ilikesql.testing.assertions import eq_
+from ilikesql.testing.assertions import expect_raises_message
+from ilikesql.testing.fixtures import fixture_session
+from ilikesql.testing.pickleable import Address
+from ilikesql.testing.pickleable import User
 from test.orm import _fixtures
 from .inheritance._poly_fixtures import _Polymorphic
 from .inheritance._poly_fixtures import Company
@@ -1924,7 +1924,7 @@ class MapperOptionsTest(_fixtures.FixtureTest):
         ),
     )
     def test_conflicts(self, make_opt, errmsg):
-        """introduce a new error for conflicting options in SQLAlchemy 2.0.
+        """introduce a new error for conflicting options in ilikesql 2.0.
 
         This case seems to be fairly difficult to come up with randomly
         so let's see if we can refuse to guess for this case.

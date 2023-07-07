@@ -3,62 +3,62 @@ import datetime
 import json
 import os
 
-from sqlalchemy import and_
-from sqlalchemy import bindparam
-from sqlalchemy import CheckConstraint
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import Computed
-from sqlalchemy import create_engine
-from sqlalchemy import DDL
-from sqlalchemy import DefaultClause
-from sqlalchemy import event
-from sqlalchemy import exc
-from sqlalchemy import extract
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Index
-from sqlalchemy import inspect
-from sqlalchemy import literal
-from sqlalchemy import MetaData
-from sqlalchemy import pool
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import schema
-from sqlalchemy import select
-from sqlalchemy import sql
-from sqlalchemy import Table
-from sqlalchemy import table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import tuple_
-from sqlalchemy import types as sqltypes
-from sqlalchemy import UniqueConstraint
-from sqlalchemy.dialects.sqlite import base as sqlite
-from sqlalchemy.dialects.sqlite import insert
-from sqlalchemy.dialects.sqlite import pysqlite as pysqlite_dialect
-from sqlalchemy.engine.url import make_url
-from sqlalchemy.schema import CreateTable
-from sqlalchemy.schema import FetchedValue
-from sqlalchemy.sql.elements import quoted_name
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import combinations
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import eq_ignore_whitespace
-from sqlalchemy.testing import expect_raises
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.types import Boolean
-from sqlalchemy.types import Date
-from sqlalchemy.types import DateTime
-from sqlalchemy.types import Integer
-from sqlalchemy.types import String
-from sqlalchemy.types import Time
+from ilikesql import and_
+from ilikesql import bindparam
+from ilikesql import CheckConstraint
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import Computed
+from ilikesql import create_engine
+from ilikesql import DDL
+from ilikesql import DefaultClause
+from ilikesql import event
+from ilikesql import exc
+from ilikesql import extract
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Index
+from ilikesql import inspect
+from ilikesql import literal
+from ilikesql import MetaData
+from ilikesql import pool
+from ilikesql import PrimaryKeyConstraint
+from ilikesql import schema
+from ilikesql import select
+from ilikesql import sql
+from ilikesql import Table
+from ilikesql import table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import tuple_
+from ilikesql import types as sqltypes
+from ilikesql import UniqueConstraint
+from ilikesql.dialects.sqlite import base as sqlite
+from ilikesql.dialects.sqlite import insert
+from ilikesql.dialects.sqlite import pysqlite as pysqlite_dialect
+from ilikesql.engine.url import make_url
+from ilikesql.schema import CreateTable
+from ilikesql.schema import FetchedValue
+from ilikesql.sql.elements import quoted_name
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import combinations
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import eq_ignore_whitespace
+from ilikesql.testing import expect_raises
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.types import Boolean
+from ilikesql.types import Date
+from ilikesql.types import DateTime
+from ilikesql.types import Integer
+from ilikesql.types import String
+from ilikesql.types import Time
 
 
 def exec_sql(engine, sql, *args, **kwargs):
@@ -2680,7 +2680,7 @@ class TypeReflectionTest(fixtures.TestBase):
             is_(type(final_type), expected_type)
 
     def _test_round_trip(self, fixture, warnings=False):
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         for from_, to_ in self._fixture_as_string(fixture):
             with testing.db.begin() as conn:

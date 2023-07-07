@@ -1,12 +1,12 @@
 =============================
-What's New in SQLAlchemy 0.8?
+What's New in ilikesql 0.8?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 0.7,
+    This document describes changes between ilikesql version 0.7,
     undergoing maintenance releases as of October, 2012,
-    and SQLAlchemy version 0.8, which is expected for release
+    and ilikesql version 0.8, which is expected for release
     in early 2013.
 
     Document date: October 25, 2012
@@ -15,11 +15,11 @@ What's New in SQLAlchemy 0.8?
 Introduction
 ============
 
-This guide introduces what's new in SQLAlchemy version 0.8,
+This guide introduces what's new in ilikesql version 0.8,
 and also documents changes which affect users migrating
-their applications from the 0.7 series of SQLAlchemy to 0.8.
+their applications from the 0.7 series of ilikesql to 0.8.
 
-SQLAlchemy releases are closing in on 1.0, and each new
+ilikesql releases are closing in on 1.0, and each new
 version since 0.5 features fewer major usage changes.   Most
 applications that are settled into modern 0.7 patterns
 should be movable to 0.8 with no changes. Applications that
@@ -33,7 +33,7 @@ Platform Support
 Targeting Python 2.5 and Up Now
 -------------------------------
 
-SQLAlchemy 0.8 will target Python 2.5 and forward;
+ilikesql 0.8 will target Python 2.5 and forward;
 compatibility for Python 2.4 is being dropped.
 
 The internals will be able to make usage of Python ternaries
@@ -44,8 +44,8 @@ been the source of some bugs, as well as context managers
 ``try:/except:/else:`` blocks which will help with code
 readability.
 
-SQLAlchemy will eventually drop 2.5 support as well - when
-2.6 is reached as the baseline, SQLAlchemy will move to use
+ilikesql will eventually drop 2.5 support as well - when
+2.6 is reached as the baseline, ilikesql will move to use
 2.6/3.3 in-place compatibility, removing the usage of the
 ``2to3`` tool and maintaining a source base that works with
 Python 2 and 3 at the same time.
@@ -109,7 +109,7 @@ entities.  The new system includes these features:
 
   Above, the ``Folder`` refers to its parent ``Folder``
   joining from ``account_id`` to itself, and ``parent_id``
-  to ``folder_id``.  When SQLAlchemy constructs an auto-
+  to ``folder_id``.  When ilikesql constructs an auto-
   join, no longer can it assume all columns on the "remote"
   side are aliased, and all columns on the "local" side are
   not - the ``account_id`` column is **on both sides**.   So
@@ -159,14 +159,14 @@ entities.  The new system includes these features:
         )
 
   The new :func:`_orm.relationship` mechanics make use of a
-  SQLAlchemy concept known as :term:`annotations`.  These annotations
+  ilikesql concept known as :term:`annotations`.  These annotations
   are also available to application code explicitly via
   the :func:`.foreign` and :func:`.remote` functions, either
   as a means to improve readability for advanced configurations
   or to directly inject an exact configuration, bypassing
   the usual join-inspection heuristics::
 
-    from sqlalchemy.orm import foreign, remote
+    from ilikesql.orm import foreign, remote
 
 
     class HostEntry(Base):
@@ -196,7 +196,7 @@ entities.  The new system includes these features:
 New Class/Object Inspection System
 ----------------------------------
 
-Lots of SQLAlchemy users are writing systems that require
+Lots of ilikesql users are writing systems that require
 the ability to inspect the attributes of a mapped class,
 including being able to get at the primary key columns,
 object relationships, plain attributes, and so forth,
@@ -206,7 +206,7 @@ libraries galore.
 
 Originally, the :class:`_schema.Table` and :class:`_schema.Column` model were the
 original inspection points, which have a well-documented
-system.  While SQLAlchemy ORM models are also fully
+system.  While ilikesql ORM models are also fully
 introspectable, this has never been a fully stable and
 supported feature, and users tended to not have a clear idea
 how to get at this information.
@@ -217,7 +217,7 @@ system which works on mapped classes, instances, attributes,
 and other Core and ORM constructs.  The entrypoint to this
 system is the core-level :func:`_sa.inspect` function.
 In most cases, the object being inspected
-is one already part of SQLAlchemy's system,
+is one already part of ilikesql's system,
 such as :class:`_orm.Mapper`, :class:`.InstanceState`,
 :class:`_reflection.Inspector`.  In some cases, new objects have been
 added with the job of providing the inspection API in
@@ -259,20 +259,20 @@ A walkthrough of some key capabilities follows:
     ['id', 'name']
 
     >>> list(b.relationships)
-    [<sqlalchemy.orm.properties.RelationshipProperty object at 0x1015212d0>]
+    [<ilikesql.orm.properties.RelationshipProperty object at 0x1015212d0>]
 
     >>> # they are also namespaces
     >>> b.column_attrs.id
-    <sqlalchemy.orm.properties.ColumnProperty object at 0x101525090>
+    <ilikesql.orm.properties.ColumnProperty object at 0x101525090>
 
     >>> b.relationships.addresses
-    <sqlalchemy.orm.properties.RelationshipProperty object at 0x1015212d0>
+    <ilikesql.orm.properties.RelationshipProperty object at 0x1015212d0>
 
     >>> # point inspect() at a mapped, class level attribute,
     >>> # returns the attribute itself
     >>> b = inspect(User.addresses)
     >>> b
-    <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x101521fd0>
+    <ilikesql.orm.attributes.InstrumentedAttribute object at 0x101521fd0>
 
     >>> # From here we can get the mapper:
     >>> b.mapper
@@ -292,7 +292,7 @@ A walkthrough of some key capabilities follows:
 
     >>> # it returns the InstanceState
     >>> b
-    <sqlalchemy.orm.state.InstanceState object at 0x10152bed0>
+    <ilikesql.orm.state.InstanceState object at 0x10152bed0>
 
     >>> # similar attrs accessor refers to the
     >>> b.attrs.keys()
@@ -300,7 +300,7 @@ A walkthrough of some key capabilities follows:
 
     >>> # attribute interface - from attrs, you get a state object
     >>> b.attrs.id
-    <sqlalchemy.orm.state.AttributeState object at 0x10152bf90>
+    <ilikesql.orm.state.AttributeState object at 0x10152bf90>
 
     >>> # this object can give you, current value...
     >>> b.attrs.id.value
@@ -331,7 +331,7 @@ A walkthrough of some key capabilities follows:
 
     >>> # owning session
     >>> b.session
-    <sqlalchemy.orm.session.Session object at 0x101701150>
+    <ilikesql.orm.session.Session object at 0x101701150>
 
 .. seealso::
 
@@ -355,7 +355,7 @@ usable anywhere:
 
 ::
 
-    from sqlalchemy.orm import with_polymorphic
+    from ilikesql.orm import with_polymorphic
 
     palias = with_polymorphic(Person, [Engineer, Manager])
     session.query(Company).join(palias, Company.employees).filter(
@@ -432,7 +432,7 @@ as those subclasses are mapped.   The ``propagate=True`` flag
 should be used.  This feature allows events to be associated
 with a declarative base class::
 
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -531,7 +531,7 @@ class itself would not be recognized when passed to :func:`_expression.select`,
 A new SQL registration system allows a mapped class to be
 accepted as a FROM clause within the core::
 
-    from sqlalchemy import select
+    from ilikesql import select
 
     stmt = select([User]).where(User.id == 5)
 
@@ -597,7 +597,7 @@ Dogpile.cache is a rewrite of the caching portion
 of Beaker, featuring vastly simpler and faster operation,
 as well as support for distributed locking.
 
-Note that the SQLAlchemy APIs used by the Dogpile example as well
+Note that the ilikesql APIs used by the Dogpile example as well
 as the previous Beaker example have changed slightly, in particular
 this change is needed as illustrated in the Beaker example:
 
@@ -661,8 +661,8 @@ For example, to add logarithm support to :class:`.Numeric` types:
 ::
 
 
-    from sqlalchemy.types import Numeric
-    from sqlalchemy.sql import func
+    from ilikesql.types import Numeric
+    from ilikesql.sql import func
 
 
     class CustomNumeric(Numeric):
@@ -737,8 +737,8 @@ them through a Python side conversion function on the way to/back from
 the database.   The new feature allows similar
 functionality, except on the database side::
 
-    from sqlalchemy.types import String
-    from sqlalchemy import func, Table, Column, MetaData
+    from ilikesql.types import String
+    from ilikesql import func, Table, Column, MetaData
 
 
     class LowerString(String):
@@ -779,8 +779,8 @@ The :func:`_sa.inspect` function introduced in :ref:`feature_orminspection_08`
 also applies to the core.  Applied to an :class:`_engine.Engine` it produces
 an :class:`_reflection.Inspector` object::
 
-    from sqlalchemy import inspect
-    from sqlalchemy import create_engine
+    from ilikesql import inspect
+    from ilikesql import create_engine
 
     engine = create_engine("postgresql://scott:tiger@localhost/test")
     insp = inspect(engine)
@@ -836,7 +836,7 @@ and containment methods such as
 :meth:`~.HSTORE.comparator_factory.has_any`, and
 :meth:`~.HSTORE.comparator_factory.matrix`::
 
-    from sqlalchemy.dialects.postgresql import HSTORE
+    from ilikesql.dialects.postgresql import HSTORE
 
     data = Table(
         "data_table",
@@ -890,7 +890,7 @@ slice updates in UPDATE::
 
 freestanding array literals::
 
-    >>> from sqlalchemy.dialects import postgresql
+    >>> from ilikesql.dialects import postgresql
     >>> conn.scalar(select([postgresql.array([1, 2]) + postgresql.array([3, 4, 5])]))
     [1, 2, 3, 4, 5]
 
@@ -1054,9 +1054,9 @@ option.
 
 The new behavior allows the following test case to work::
 
-    from sqlalchemy import Column, Integer, String, ForeignKey
-    from sqlalchemy.orm import relationship, backref
-    from sqlalchemy.ext.declarative import declarative_base
+    from ilikesql import Column, Integer, String, ForeignKey
+    from ilikesql.orm import relationship, backref
+    from ilikesql.ext.declarative import declarative_base
 
     Base = declarative_base()
 
@@ -1090,8 +1090,8 @@ The new behavior allows the following test case to work::
         keyword = Column("keyword", String(64))
 
 
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm import Session
+    from ilikesql import create_engine
+    from ilikesql.orm import Session
 
     # note we're using PostgreSQL to ensure that referential integrity
     # is enforced, for demonstration purposes.
@@ -1199,7 +1199,7 @@ This change only makes things better as far as rendering SQL, in that it's no
 longer possible to render illegal SQL where there are insufficient FROM
 objects relative to what's being selected::
 
-    from sqlalchemy.sql import table, column, select
+    from ilikesql.sql import table, column, select
 
     t1 = table("t1", column("x"))
     t2 = table("t2", column("y"))
@@ -1291,7 +1291,7 @@ SQL Server doesn't allow an equality comparison to a scalar
 SELECT, that is, "x = (SELECT something)". The MSSQL dialect
 would convert this to an IN.   The same thing would happen
 however upon a comparison like "(SELECT something) = x", and
-overall this level of guessing is outside of SQLAlchemy's
+overall this level of guessing is outside of ilikesql's
 usual scope so the behavior is removed.
 
 :ticket:`2277`
@@ -1406,7 +1406,7 @@ The MySQL dialect does two calls, one very expensive, to
 load all possible collations from the database as well as
 information on casing, the first time an ``Engine``
 connects.   Neither of these collections are used for any
-SQLAlchemy functions, so these calls will be changed to no
+ilikesql functions, so these calls will be changed to no
 longer be emitted automatically. Applications that might
 have relied on these collections being present on
 ``engine.dialect`` will need to call upon
@@ -1472,9 +1472,9 @@ requested from the row must match as far as casing.
 ``InstrumentationManager`` and alternate class instrumentation is now an extension
 ----------------------------------------------------------------------------------
 
-The ``sqlalchemy.orm.interfaces.InstrumentationManager``
+The ``ilikesql.orm.interfaces.InstrumentationManager``
 class is moved to
-``sqlalchemy.ext.instrumentation.InstrumentationManager``.
+``ilikesql.ext.instrumentation.InstrumentationManager``.
 The "alternate instrumentation" system was built for the
 benefit of a very small number of installations that needed
 to work with existing or unusual class instrumentation
@@ -1482,7 +1482,7 @@ systems, and generally is very seldom used.   The complexity
 of this system has been exported to an ``ext.`` module.  It
 remains unused until once imported, typically when a third
 party library imports ``InstrumentationManager``, at which
-point it is injected back into ``sqlalchemy.orm`` by
+point it is injected back into ``ilikesql.orm`` by
 replacing the default ``InstrumentationFactory`` with
 ``ExtendedInstrumentationRegistry``.
 
@@ -1493,7 +1493,7 @@ SQLSoup
 -------
 
 SQLSoup is a handy package that presents an alternative
-interface on top of the SQLAlchemy ORM.   SQLSoup is now
+interface on top of the ilikesql ORM.   SQLSoup is now
 moved into its own project and documented/released
 separately; see https://bitbucket.org/zzzeek/sqlsoup.
 
@@ -1505,17 +1505,17 @@ contributors who are interested in its style of usage.
 MutableType
 -----------
 
-The older "mutable" system within the SQLAlchemy ORM has
+The older "mutable" system within the ilikesql ORM has
 been removed.   This refers to the ``MutableType`` interface
 which was applied to types such as ``PickleType`` and
 conditionally to ``TypeDecorator``, and since very early
-SQLAlchemy versions has provided a way for the ORM to detect
+ilikesql versions has provided a way for the ORM to detect
 changes in so-called "mutable" data structures such as JSON
 structures and pickled objects.   However, the
 implementation was never reasonable and forced a very
 inefficient mode of usage on the unit-of-work which caused
 an expensive scan of all objects to take place during flush.
-In 0.7, the `sqlalchemy.ext.mutable <https://docs.sqlalchemy.
+In 0.7, the `ilikesql.ext.mutable <https://docs.ilikesql.
 org/en/latest/orm/extensions/mutable.html>`_ extension was
 introduced so that user-defined datatypes can appropriately
 send events to the unit of work as changes occur.
@@ -1526,12 +1526,12 @@ inefficiency.
 
 :ticket:`2442`
 
-sqlalchemy.exceptions (has been sqlalchemy.exc for years)
+ilikesql.exceptions (has been ilikesql.exc for years)
 ---------------------------------------------------------
 
-We had left in an alias ``sqlalchemy.exceptions`` to attempt
+We had left in an alias ``ilikesql.exceptions`` to attempt
 to make it slightly easier for some very old libraries that
-hadn't yet been upgraded to use ``sqlalchemy.exc``.  Some
+hadn't yet been upgraded to use ``ilikesql.exc``.  Some
 users are still being confused by it however so in 0.8 we're
 taking it out entirely to eliminate any of that confusion.
 

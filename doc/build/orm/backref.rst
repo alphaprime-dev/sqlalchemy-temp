@@ -10,7 +10,7 @@ Using the legacy 'backref' relationship parameter
    including that both ORM mapped classes will include their attributes
    up front as the class is constructed, rather than as a deferred step,
    and configuration is more straightforward as all arguments are explicit.
-   New :pep:`484` features in SQLAlchemy 2.0 also take advantage of
+   New :pep:`484` features in ilikesql 2.0 also take advantage of
    attributes being explicitly present in source code rather than
    using dynamic attribute generation.
 
@@ -39,8 +39,8 @@ against the current :func:`_orm.relationship` being configured, with both
 
 Starting with the following example::
 
-    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.orm import DeclarativeBase, relationship
+    from ilikesql import Column, ForeignKey, Integer, String
+    from ilikesql.orm import DeclarativeBase, relationship
 
 
     class Base(DeclarativeBase):
@@ -66,8 +66,8 @@ The above configuration establishes a collection of ``Address`` objects on ``Use
 refer to the parent ``User`` object.   Using :paramref:`_orm.relationship.back_populates`
 it's equivalent to the following::
 
-    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.orm import DeclarativeBase, relationship
+    from ilikesql import Column, ForeignKey, Integer, String
+    from ilikesql.orm import DeclarativeBase, relationship
 
 
     class Base(DeclarativeBase):
@@ -108,8 +108,8 @@ As an example, below is a :func:`_orm.relationship` that includes a
 :ref:`custom join condition <relationship_configure_joins>`
 which also includes the :paramref:`_orm.relationship.backref` keyword::
 
-    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.orm import DeclarativeBase, relationship
+    from ilikesql import Column, ForeignKey, Integer, String
+    from ilikesql.orm import DeclarativeBase, relationship
 
 
     class Base(DeclarativeBase):
@@ -168,7 +168,7 @@ a specific set of arguments that will be transferred to the new
 :func:`_orm.relationship` when generated::
 
     # <other imports>
-    from sqlalchemy.orm import backref
+    from ilikesql.orm import backref
 
 
     class User(Base):

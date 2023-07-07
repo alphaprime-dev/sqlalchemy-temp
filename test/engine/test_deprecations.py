@@ -1,30 +1,30 @@
 import re
 from unittest.mock import Mock
 
-import sqlalchemy as tsa
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import pool
-from sqlalchemy import select
-from sqlalchemy import testing
-from sqlalchemy.engine import BindTyping
-from sqlalchemy.engine import reflection
-from sqlalchemy.engine.base import Connection
-from sqlalchemy.engine.base import Engine
-from sqlalchemy.engine.default import DefaultDialect
-from sqlalchemy.engine.mock import MockConnection
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assertions
-from sqlalchemy.testing import config
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import is_instance_of
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertions import expect_deprecated
-from sqlalchemy.testing.engines import testing_engine
+import ilikesql as tsa
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import pool
+from ilikesql import select
+from ilikesql import testing
+from ilikesql.engine import BindTyping
+from ilikesql.engine import reflection
+from ilikesql.engine.base import Connection
+from ilikesql.engine.base import Engine
+from ilikesql.engine.default import DefaultDialect
+from ilikesql.engine.mock import MockConnection
+from ilikesql.testing import assert_raises
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assertions
+from ilikesql.testing import config
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import is_instance_of
+from ilikesql.testing import mock
+from ilikesql.testing.assertions import expect_deprecated
+from ilikesql.testing.engines import testing_engine
 
 
 def _string_deprecation_expect():
@@ -87,8 +87,8 @@ class CreateEngineTest(fixtures.TestBase):
 
         """
 
-        from sqlalchemy.dialects.sqlite import pysqlite
-        from sqlalchemy.dialects import registry
+        from ilikesql.dialects.sqlite import pysqlite
+        from ilikesql.dialects import registry
 
         canary = mock.Mock()
 
@@ -134,8 +134,8 @@ class CreateEngineTest(fixtures.TestBase):
 
         """
 
-        from sqlalchemy.dialects.sqlite import pysqlite
-        from sqlalchemy.dialects import registry
+        from ilikesql.dialects.sqlite import pysqlite
+        from ilikesql.dialects import registry
 
         canary = mock.Mock()
 

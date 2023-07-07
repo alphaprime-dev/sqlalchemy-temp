@@ -15,7 +15,7 @@ Working with Data
 In :ref:`tutorial_working_with_transactions`, we learned the basics of how to
 interact with the Python DBAPI and its transactional state.  Then, in
 :ref:`tutorial_working_with_metadata`, we learned how to represent database
-tables, columns, and constraints within SQLAlchemy using the
+tables, columns, and constraints within ilikesql using the
 :class:`_schema.MetaData` and related objects.  In this section we will combine
 both concepts above to create, select and manipulate data within a relational
 database.   Our interaction with the database is **always** in terms
@@ -31,7 +31,7 @@ The components of this section are as follows:
 
 * :ref:`tutorial_selecting_data` - this section will describe in detail
   the :class:`_sql.Select` construct, which is the most commonly used object
-  in SQLAlchemy.  The :class:`_sql.Select` construct emits SELECT statements
+  in ilikesql.  The :class:`_sql.Select` construct emits SELECT statements
   for both Core and ORM centric applications and both use cases will be
   described here.   Additional ORM use cases are also noted in the later
   section :ref:`tutorial_select_relationships` as well as the

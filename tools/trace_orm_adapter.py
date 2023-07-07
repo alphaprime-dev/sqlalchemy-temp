@@ -34,7 +34,7 @@ import contextvars
 import sys
 from typing import TYPE_CHECKING
 
-from sqlalchemy.orm import util
+from ilikesql.orm import util
 
 
 if TYPE_CHECKING:
@@ -42,7 +42,7 @@ if TYPE_CHECKING:
     from typing import List
     from typing import Optional
 
-    from sqlalchemy.sql.elements import ColumnElement
+    from ilikesql.sql.elements import ColumnElement
 
 
 class _ORMAdapterTrace:

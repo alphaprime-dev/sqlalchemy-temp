@@ -3,5 +3,5 @@
 Core Exceptions
 ===============
 
-.. automodule:: sqlalchemy.exc
+.. automodule:: ilikesql.exc
     :members:

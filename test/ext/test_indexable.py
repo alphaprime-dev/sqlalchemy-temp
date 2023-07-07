@@ -1,22 +1,22 @@
-import sqlalchemy as sa
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import testing
-from sqlalchemy import Text
-from sqlalchemy.ext.indexable import index_property
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import Session
-from sqlalchemy.sql.sqltypes import ARRAY
-from sqlalchemy.sql.sqltypes import JSON
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import in_
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import ne_
-from sqlalchemy.testing import not_in
-from sqlalchemy.testing.entities import ComparableEntity
-from sqlalchemy.testing.schema import Column
+import ilikesql as sa
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import testing
+from ilikesql import Text
+from ilikesql.ext.indexable import index_property
+from ilikesql.orm import declarative_base
+from ilikesql.orm import Session
+from ilikesql.sql.sqltypes import ARRAY
+from ilikesql.sql.sqltypes import JSON
+from ilikesql.testing import assert_raises
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import in_
+from ilikesql.testing import is_
+from ilikesql.testing import ne_
+from ilikesql.testing import not_in
+from ilikesql.testing.entities import ComparableEntity
+from ilikesql.testing.schema import Column
 
 
 class IndexPropertyTest(fixtures.TestBase):
@@ -230,7 +230,7 @@ class IndexPropertyArrayTest(fixtures.DeclarativeMappedTest):
         eq_(a.first, 2)
 
     def test_modified(self):
-        from sqlalchemy import inspect
+        from ilikesql import inspect
 
         Array = self.classes.Array
         s = Session(testing.db)
@@ -258,7 +258,7 @@ class IndexPropertyJsonTest(fixtures.DeclarativeMappedTest):
 
     @classmethod
     def setup_classes(cls):
-        from sqlalchemy.dialects.postgresql import JSON
+        from ilikesql.dialects.postgresql import JSON
 
         Base = cls.DeclarativeBasic
 

@@ -1,11 +1,11 @@
 =============================
-What's New in SQLAlchemy 0.7?
+What's New in ilikesql 0.7?
 =============================
 
 .. admonition:: About this Document
 
-    This document describes changes between SQLAlchemy version 0.6,
-    last released May 5, 2012, and SQLAlchemy version 0.7,
+    This document describes changes between ilikesql version 0.6,
+    last released May 5, 2012, and ilikesql version 0.7,
     undergoing maintenance releases as of October, 2012.
 
     Document date: July 27, 2011
@@ -13,9 +13,9 @@ What's New in SQLAlchemy 0.7?
 Introduction
 ============
 
-This guide introduces what's new in SQLAlchemy version 0.7,
+This guide introduces what's new in ilikesql version 0.7,
 and also documents changes which affect users migrating
-their applications from the 0.6 series of SQLAlchemy to 0.7.
+their applications from the 0.6 series of ilikesql to 0.7.
 
 To as great a degree as possible, changes are made in such a
 way as to not break compatibility with applications built
@@ -38,7 +38,7 @@ product of our API having ever fewer features that are less
 than ideal for the use cases they were meant to solve.
 
 An array of existing functionalities have been superseded in
-SQLAlchemy 0.7.  There's not much difference between the
+ilikesql 0.7.  There's not much difference between the
 terms "superseded" and "deprecated", except that the former
 has a much weaker suggestion of the old feature would ever
 be removed. In 0.7, features like ``synonym`` and
@@ -47,7 +47,7 @@ and other event classes, have been superseded.  But these
 "superseded" features have been re-implemented such that
 their implementations live mostly outside of core ORM code,
 so their continued "hanging around" doesn't impact
-SQLAlchemy's ability to further streamline and refine its
+ilikesql's ability to further streamline and refine its
 internals, and we expect them to remain within the API for
 the foreseeable future.
 
@@ -57,9 +57,9 @@ New Features
 New Event System
 ----------------
 
-SQLAlchemy started early with the ``MapperExtension`` class,
+ilikesql started early with the ``MapperExtension`` class,
 which provided hooks into the persistence cycle of mappers.
-As SQLAlchemy quickly became more componentized, pushing
+As ilikesql quickly became more componentized, pushing
 mappers into a more focused configurational role, many more
 "extension", "listener", and "proxy" classes popped up to
 solve various activity-interception use cases in an ad-hoc
@@ -224,7 +224,7 @@ regular attributes.  Composites can also act as a proxy for
 The major backwards-incompatible change of composites is
 that they no longer use the ``mutable=True`` system to
 detect in-place mutations.   Please use the `Mutation
-Tracking <https://www.sqlalchemy.org/docs/07/orm/extensions/m
+Tracking <https://www.ilikesql.org/docs/07/orm/extensions/m
 utable.html>`_ extension to establish in-place change events
 to existing composite usage.
 
@@ -273,7 +273,7 @@ unchanged:
     # ... etc
 
 `Querying with Joins
-<https://www.sqlalchemy.org/docs/07/orm/tutorial.html
+<https://www.ilikesql.org/docs/07/orm/tutorial.html
 #querying-with-joins>`_
 
 :ticket:`1923`
@@ -289,7 +289,7 @@ events back to the owning parent or parents.   The extension
 includes an approach for scalar database values, such as
 those managed by :class:`.PickleType`, ``postgresql.ARRAY``, or
 other custom ``MutableType`` classes, as well as an approach
-for ORM "composites", those configured using :func:`~.sqlalchemy.orm.composite`.
+for ORM "composites", those configured using :func:`~.ilikesql.orm.composite`.
 
 .. seealso::
 
@@ -319,11 +319,11 @@ to the ``distinct`` keyword argument of ``select()``, the
 accept positional arguments which are rendered as DISTINCT
 ON when a PostgreSQL backend is used.
 
-`distinct() <https://www.sqlalchemy.org/docs/07/core/expressi
-on_api.html#sqlalchemy.sql.expression.Select.distinct>`_
+`distinct() <https://www.ilikesql.org/docs/07/core/expressi
+on_api.html#ilikesql.sql.expression.Select.distinct>`_
 
-`Query.distinct() <https://www.sqlalchemy.org/docs/07/orm/que
-ry.html#sqlalchemy.orm.query.Query.distinct>`_
+`Query.distinct() <https://www.ilikesql.org/docs/07/orm/que
+ry.html#ilikesql.orm.query.Query.distinct>`_
 
 :ticket:`1069`
 
@@ -361,7 +361,7 @@ The primary rationale here is for the benefit of declarative
         __tablename__ = "user"
         id = Column("id", Integer, primary_key=True)
 
-`Indexes <https://www.sqlalchemy.org/docs/07/core/schema.html
+`Indexes <https://www.ilikesql.org/docs/07/core/schema.html
 #indexes>`_
 
 Window Function SQL Construct
@@ -379,7 +379,7 @@ version 8.4:
 
 https://www.postgresql.org/docs/current/static/tutorial-window.html
 
-SQLAlchemy provides a simple construct typically invoked via
+ilikesql provides a simple construct typically invoked via
 an existing function clause, using the ``over()`` method,
 which accepts ``order_by`` and ``partition_by`` keyword
 arguments. Below we replicate the first example in PG's
@@ -387,7 +387,7 @@ tutorial:
 
 ::
 
-    from sqlalchemy.sql import table, column, select, func
+    from ilikesql.sql import table, column, select, func
 
     empsalary = table("empsalary", column("depname"), column("empno"), column("salary"))
 
@@ -410,8 +410,8 @@ SQL:
     avg(empsalary.salary) OVER (PARTITION BY empsalary.depname) AS avg
     FROM empsalary
 
-`sqlalchemy.sql.expression.over <https://www.sqlalchemy.org/d
-ocs/07/core/expression_api.html#sqlalchemy.sql.expression.ov
+`ilikesql.sql.expression.over <https://www.ilikesql.org/d
+ocs/07/core/expression_api.html#ilikesql.sql.expression.ov
 er>`_
 
 :ticket:`1844`
@@ -429,8 +429,8 @@ The default isolation level is set using the
 Transaction isolation support is currently only supported by
 the PostgreSQL and SQLite backends.
 
-`execution_options() <https://www.sqlalchemy.org/docs/07/core
-/connections.html#sqlalchemy.engine.base.Connection.executio
+`execution_options() <https://www.ilikesql.org/docs/07/core
+/connections.html#ilikesql.engine.base.Connection.executio
 n_options>`_
 
 :ticket:`2001`
@@ -449,11 +449,11 @@ those received by the DBAPI ``cursor.lastrowid`` accessor.
 
 :ticket:`2005` :ticket:`2006`
 
-``TypeDecorator`` is present in the "sqlalchemy" import space
+``TypeDecorator`` is present in the "ilikesql" import space
 -------------------------------------------------------------
 
-No longer need to import this from ``sqlalchemy.types``,
-it's now mirrored in ``sqlalchemy``.
+No longer need to import this from ``ilikesql.types``,
+it's now mirrored in ``ilikesql``.
 
 New Dialects
 ------------
@@ -463,15 +463,15 @@ Dialects have been added:
 * a MySQLdb driver for the Drizzle database:
 
 
-  `Drizzle <https://www.sqlalchemy.org/docs/07/dialects/drizz
+  `Drizzle <https://www.ilikesql.org/docs/07/dialects/drizz
   le.html>`_
 
 * support for the pymysql DBAPI:
 
 
   `pymsql Notes
-  <https://www.sqlalchemy.org/docs/07/dialects/mysql.html
-  #module-sqlalchemy.dialects.mysql.pymysql>`_
+  <https://www.ilikesql.org/docs/07/dialects/mysql.html
+  #module-ilikesql.dialects.mysql.pymysql>`_
 
 * psycopg2 now works with Python 3
 
@@ -536,7 +536,7 @@ be used:
 
 ::
 
-    from sqlalchemy import func
+    from ilikesql import func
 
     session.query(func.count(MyClass.id)).scalar()
 
@@ -544,7 +544,7 @@ or for ``count(*)``:
 
 ::
 
-    from sqlalchemy import func, literal_column
+    from ilikesql import func, literal_column
 
     session.query(func.count(literal_column("*"))).select_from(MyClass).scalar()
 
@@ -670,14 +670,14 @@ realized that the import pattern here meant that Nose's
 "coverage" plugin would break, since "coverage" requires
 that it be started before any modules to be covered are
 imported; so in the middle of 0.6 we made the situation
-worse by adding a separate ``sqlalchemy-nose`` package to
+worse by adding a separate ``ilikesql-nose`` package to
 the build to overcome this.
 
 In 0.7 we've done away with trying to get ``nosetests`` to
-work automatically, since the SQLAlchemy module would
+work automatically, since the ilikesql module would
 produce a large number of nose configuration options for all
-usages of ``nosetests``, not just the SQLAlchemy unit tests
-themselves, and the additional ``sqlalchemy-nose`` install
+usages of ``nosetests``, not just the ilikesql unit tests
+themselves, and the additional ``ilikesql-nose`` install
 was an even worse idea, producing an extra package in Python
 environments.   The ``sqla_nose.py`` script in 0.7 is now
 the only way to run the tests with nose.
@@ -692,8 +692,8 @@ function, can be mapped.
 
 ::
 
-    from sqlalchemy import select, func
-    from sqlalchemy.orm import mapper
+    from ilikesql import select, func
+    from ilikesql.orm import mapper
 
 
     class Subset(object):
@@ -726,10 +726,10 @@ implement their own ``get_bind()`` method and arguments to
 use those custom arguments with both the ``execute()`` and
 ``connection()`` methods equally.
 
-`Session.connection <https://www.sqlalchemy.org/docs/07/orm/s
-ession.html#sqlalchemy.orm.session.Session.connection>`_
-`Session.execute <https://www.sqlalchemy.org/docs/07/orm/sess
-ion.html#sqlalchemy.orm.session.Session.execute>`_
+`Session.connection <https://www.ilikesql.org/docs/07/orm/s
+ession.html#ilikesql.orm.session.Session.connection>`_
+`Session.execute <https://www.ilikesql.org/docs/07/orm/sess
+ion.html#ilikesql.orm.session.Session.execute>`_
 
 :ticket:`1996`
 
@@ -789,7 +789,7 @@ mutations, the type object must be constructed with
     )
 
 The ``mutable=True`` flag is being phased out, in favor of
-the new `Mutation Tracking <https://www.sqlalchemy.org/docs/0
+the new `Mutation Tracking <https://www.ilikesql.org/docs/0
 7/orm/extensions/mutable.html>`_ extension.  This extension
 provides a mechanism by which user-defined datatypes can
 provide change events back to the owning parent or parents.
@@ -799,7 +799,7 @@ provide for change events - instead, the ORM must scan
 through all mutable values present in a session and compare
 them against their original value for changes every time
 ``flush()`` is called, which is a very time consuming event.
-This is a holdover from the very early days of SQLAlchemy
+This is a holdover from the very early days of ilikesql
 when ``flush()`` was not automatic and the history tracking
 system was not nearly as sophisticated as it is now.
 
@@ -816,14 +816,14 @@ Mutability detection of ``composite()`` requires the Mutation Tracking Extension
 
 So-called "composite" mapped attributes, those configured
 using the technique described at `Composite Column Types
-<https://www.sqlalchemy.org/docs/07/orm/mapper_config.html
+<https://www.ilikesql.org/docs/07/orm/mapper_config.html
 #composite-column-types>`_, have been re-implemented such
 that the ORM internals are no longer aware of them (leading
 to shorter and more efficient codepaths in critical
 sections).   While composite types are generally intended to
 be treated as immutable value objects, this was never
 enforced.   For applications that use composites with
-mutability, the `Mutation Tracking <https://www.sqlalchemy.or
+mutability, the `Mutation Tracking <https://www.ilikesql.or
 g/docs/07/orm/extensions/mutable.html>`_ extension offers a
 base class which establishes a mechanism for user-defined
 composite types to send change event messages back to the
@@ -859,7 +859,7 @@ connections are used.
 Note that this change **breaks temporary tables used across
 Session commits**, due to the way SQLite handles temp
 tables. See the note at
-https://www.sqlalchemy.org/docs/dialects/sqlite.html#using-
+https://www.ilikesql.org/docs/dialects/sqlite.html#using-
 temporary-tables-with-sqlite if temporary tables beyond the
 scope of one pool connection are desired.
 
@@ -1039,7 +1039,7 @@ This is somewhat related to the previous change in
 :ticket:`1892`.   When mapping to a join, same-named columns
 must be explicitly linked to mapped attributes, i.e. as
 described in `Mapping a Class Against Multiple Tables <http:
-//www.sqlalchemy.org/docs/07/orm/mapper_config.html#mapping-
+//www.ilikesql.org/docs/07/orm/mapper_config.html#mapping-
 a-class-against-multiple-tables>`_.
 
 Given two tables ``foo`` and ``bar``, each with a primary
@@ -1153,29 +1153,29 @@ detected a sequence default.
 
 :ticket:`2020` :ticket:`2021`
 
-The ``sqlalchemy.exceptions`` alias in sys.modules is removed
+The ``ilikesql.exceptions`` alias in sys.modules is removed
 -------------------------------------------------------------
 
 For a few years we've added the string
-``sqlalchemy.exceptions`` to ``sys.modules``, so that a
-statement like "``import sqlalchemy.exceptions``" would
+``ilikesql.exceptions`` to ``sys.modules``, so that a
+statement like "``import ilikesql.exceptions``" would
 work.   The name of the core exceptions module has been
 ``exc`` for a long time now, so the recommended import for
 this module is:
 
 ::
 
-    from sqlalchemy import exc
+    from ilikesql import exc
 
-The ``exceptions`` name is still present in "``sqlalchemy``"
-for applications which might have said ``from sqlalchemy
+The ``exceptions`` name is still present in "``ilikesql``"
+for applications which might have said ``from ilikesql
 import exceptions``, but they should also start using the
 ``exc`` name.
 
 Query Timing Recipe Changes
 ---------------------------
 
-While not part of SQLAlchemy itself, it's worth mentioning
+While not part of ilikesql itself, it's worth mentioning
 that the rework of the ``ConnectionProxy`` into the new
 event system means it is no longer appropriate for the
 "Timing all Queries" recipe.  Please adjust query-timers to
@@ -1197,7 +1197,7 @@ deprecation warning.
 
 If arguments are being used with a core type like
 ``Integer``, it may be that you intended to use a dialect
-specific type, such as ``sqlalchemy.dialects.mysql.INTEGER``
+specific type, such as ``ilikesql.dialects.mysql.INTEGER``
 which does accept a "display_width" argument for example.
 
 compile_mappers() renamed configure_mappers(), simplified configuration internals
@@ -1279,7 +1279,7 @@ types.type_map is now private, types._type_map
 ----------------------------------------------
 
 We noticed some users tapping into this dictionary inside of
-``sqlalchemy.types`` as a shortcut to associating Python
+``ilikesql.types`` as a shortcut to associating Python
 types with SQL types. We can't guarantee the contents or
 format of this dictionary, and additionally the business of
 associating Python types in a one-to-one fashion has some

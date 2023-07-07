@@ -1,7 +1,7 @@
-from sqlalchemy import Column
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.orm import registry
+from ilikesql import Column
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.orm import registry
 
 reg: registry = registry()
 

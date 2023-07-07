@@ -5,7 +5,7 @@ practices, in that the "foreign key" column is not actually
 constrained to refer to any particular table; instead,
 in-application logic is used to determine which table is referenced.
 
-This approach is not in line with SQLAlchemy's usual style, as foregoing
+This approach is not in line with ilikesql's usual style, as foregoing
 foreign key integrity means that the tables can easily contain invalid
 references and also have no ability to use in-database cascade functionality.
 
@@ -17,19 +17,19 @@ queued up, here it is.   The author recommends "table_per_related"
 or "table_per_association" instead of this approach.
 
 """
-from sqlalchemy import and_
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import event
-from sqlalchemy import Integer
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import as_declarative
-from sqlalchemy.ext.declarative import declared_attr
-from sqlalchemy.orm import backref
-from sqlalchemy.orm import foreign
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import remote
-from sqlalchemy.orm import Session
+from ilikesql import and_
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import event
+from ilikesql import Integer
+from ilikesql import String
+from ilikesql.ext.declarative import as_declarative
+from ilikesql.ext.declarative import declared_attr
+from ilikesql.orm import backref
+from ilikesql.orm import foreign
+from ilikesql.orm import relationship
+from ilikesql.orm import remote
+from ilikesql.orm import Session
 
 
 @as_declarative()

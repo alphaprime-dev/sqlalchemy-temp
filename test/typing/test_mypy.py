@@ -1,7 +1,7 @@
 import os
 
-from sqlalchemy import testing
-from sqlalchemy.testing import fixtures
+from ilikesql import testing
+from ilikesql.testing import fixtures
 
 
 class MypyPlainTest(fixtures.MypyTest):

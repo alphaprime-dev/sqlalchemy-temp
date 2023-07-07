@@ -4,14 +4,14 @@ within a distinct transaction, and afterwards returns to essentially a
 a database connection, inserts the row, commits and closes.
 
 """
-from sqlalchemy import bindparam
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import Integer
-from sqlalchemy import pool
-from sqlalchemy import String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import Session
+from ilikesql import bindparam
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import Integer
+from ilikesql import pool
+from ilikesql import String
+from ilikesql.ext.declarative import declarative_base
+from ilikesql.orm import Session
 from . import Profiler
 
 

@@ -1,29 +1,29 @@
-from sqlalchemy import and_
-from sqlalchemy import Boolean
-from sqlalchemy import Column
-from sqlalchemy import exc
-from sqlalchemy import ForeignKey
-from sqlalchemy import ForeignKeyConstraint
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import MetaData
-from sqlalchemy import select
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy.orm import foreign
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import relationships
-from sqlalchemy.orm import remote
-from sqlalchemy.orm.interfaces import MANYTOONE
-from sqlalchemy.orm.interfaces import ONETOMANY
-from sqlalchemy.testing import assert_raises_message
-from sqlalchemy.testing import assert_warns_message
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import mock
-from sqlalchemy.testing.assertions import expect_raises_message
+from ilikesql import and_
+from ilikesql import Boolean
+from ilikesql import Column
+from ilikesql import exc
+from ilikesql import ForeignKey
+from ilikesql import ForeignKeyConstraint
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import MetaData
+from ilikesql import select
+from ilikesql import String
+from ilikesql import Table
+from ilikesql.orm import foreign
+from ilikesql.orm import relationship
+from ilikesql.orm import relationships
+from ilikesql.orm import remote
+from ilikesql.orm.interfaces import MANYTOONE
+from ilikesql.orm.interfaces import ONETOMANY
+from ilikesql.testing import assert_raises_message
+from ilikesql.testing import assert_warns_message
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import mock
+from ilikesql.testing.assertions import expect_raises_message
 
 
 class _JoinFixtures:
@@ -47,7 +47,7 @@ class _JoinFixtures:
             Column("y", Integer),
         )
 
-        from sqlalchemy.orm import registry
+        from ilikesql.orm import registry
 
         reg = registry()
 
@@ -1310,7 +1310,7 @@ class LazyClauseTest(_JoinFixtures, fixtures.TestBase, AssertsCompiledSQL):
 
 class DeannotateCorrectlyTest(fixtures.TestBase):
     def test_pj_deannotates(self):
-        from sqlalchemy.orm import declarative_base
+        from ilikesql.orm import declarative_base
 
         Base = declarative_base()
 

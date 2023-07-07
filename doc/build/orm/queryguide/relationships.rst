@@ -7,7 +7,7 @@
 
 .. _loading_toplevel:
 
-.. currentmodule:: sqlalchemy.orm
+.. currentmodule:: ilikesql.orm
 
 Relationship Loading Techniques
 ===============================
@@ -21,7 +21,7 @@ Relationship Loading Techniques
     Most examples here assume the "User/Address" mapping setup similar
     to the one illustrated at :doc:`setup for selects <_plain_setup>`.
 
-A big part of SQLAlchemy is providing a wide range of control over how related
+A big part of ilikesql is providing a wide range of control over how related
 objects get loaded when querying.   By "related objects" we refer to collections
 or scalar associations configured on a mapper using :func:`_orm.relationship`.
 This behavior can be configured at mapper construction time using the
@@ -126,11 +126,11 @@ statement for ``Parent`` objects is emitted::
 
     from typing import List
 
-    from sqlalchemy import ForeignKey
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy.orm import Mapped
-    from sqlalchemy.orm import mapped_column
-    from sqlalchemy.orm import relationship
+    from ilikesql import ForeignKey
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql.orm import Mapped
+    from ilikesql.orm import mapped_column
+    from ilikesql.orm import relationship
 
 
     class Base(DeclarativeBase):
@@ -171,13 +171,13 @@ the most common are
 and :func:`_orm.lazyload`.   The option accepts a class-bound attribute
 referring to the specific class/attribute that should be targeted::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import lazyload
+    from ilikesql import select
+    from ilikesql.orm import lazyload
 
     # set children to load lazily
     stmt = select(Parent).options(lazyload(Parent.children))
 
-    from sqlalchemy.orm import joinedload
+    from ilikesql.orm import joinedload
 
     # set children to load eagerly with a join
     stmt = select(Parent).options(joinedload(Parent.children))
@@ -185,8 +185,8 @@ referring to the specific class/attribute that should be targeted::
 The loader options can also be "chained" using **method chaining**
 to specify how loading should occur further levels deep::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import joinedload
+    from ilikesql import select
+    from ilikesql.orm import joinedload
 
     stmt = select(Parent).options(
         joinedload(Parent.children).subqueryload(Child.subelements)
@@ -196,8 +196,8 @@ Chained loader options can be applied against a "lazy" loaded collection.
 This means that when a collection or association is lazily loaded upon
 access, the specified option will then take effect::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import lazyload
+    from ilikesql import select
+    from ilikesql.orm import lazyload
 
     stmt = select(Parent).options(lazyload(Parent.children).subqueryload(Child.subelements))
 
@@ -220,8 +220,8 @@ strategy.  This can be achieved using the :meth:`.PropComparator.and_`
 method which will pass through an option such that loaded results are limited
 to the given filter criteria::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import lazyload
+    from ilikesql import select
+    from ilikesql.orm import lazyload
 
     stmt = select(A).options(lazyload(A.bs.and_(B.id > 5)))
 
@@ -229,8 +229,8 @@ When using limiting criteria, if a particular collection is already loaded
 it won't be refreshed; to ensure the new criteria takes place, apply
 the :ref:`orm_queryguide_populate_existing` execution option::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import lazyload
+    from ilikesql import select
+    from ilikesql.orm import lazyload
 
     stmt = (
         select(A)
@@ -252,17 +252,17 @@ Using method chaining, the loader style of each link in the path is explicitly
 stated.  To navigate along a path without changing the existing loader style
 of a particular attribute, the :func:`.defaultload` method/function may be used::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import defaultload
+    from ilikesql import select
+    from ilikesql.orm import defaultload
 
     stmt = select(A).options(defaultload(A.atob).joinedload(B.btoc))
 
 A similar approach can be used to specify multiple sub-options at once, using
 the :meth:`_orm.Load.options` method::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import defaultload
-    from sqlalchemy.orm import joinedload
+    from ilikesql import select
+    from ilikesql.orm import defaultload
+    from ilikesql.orm import joinedload
 
     stmt = select(A).options(
         defaultload(A.atob).options(joinedload(B.btoc), joinedload(B.btod))
@@ -305,7 +305,7 @@ the :meth:`_orm.Load.options` method::
    were used, the "sticky" options will also be gone and the newly created
    objects will make use of new options if loaded again.
 
-   A future SQLAlchemy release may add more alternatives to manipulating
+   A future ilikesql release may add more alternatives to manipulating
    the loader options on already-loaded objects.
 
 
@@ -347,8 +347,8 @@ when the attribute is first accessed.
 Lazy loading can be enabled for a given attribute that is normally
 configured in some other way using the :func:`.lazyload` loader option::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import lazyload
+    from ilikesql import select
+    from ilikesql.orm import lazyload
 
     # force lazy loading for an attribute that is set to
     # load some other way normally
@@ -363,7 +363,7 @@ The :func:`.lazyload` strategy produces an effect that is one of the most
 common issues referred to in object relational mapping; the
 :term:`N plus one problem`, which states that for any N objects loaded,
 accessing their lazy-loaded attributes means there will be N+1 SELECT
-statements emitted.  In SQLAlchemy, the usual mitigation for the N+1 problem
+statements emitted.  In ilikesql, the usual mitigation for the N+1 problem
 is to make use of its very capable eager load system.  However, eager loading
 requires that the attributes which are to be loaded be specified with the
 :class:`_sql.Select` up front.  The problem of code that may access other attributes
@@ -372,8 +372,8 @@ addressed using the :func:`.raiseload` strategy; this loader strategy
 replaces the behavior of lazy loading with an informative error being
 raised::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import raiseload
+    from ilikesql import select
+    from ilikesql.orm import raiseload
 
     stmt = select(User).options(raiseload(User.addresses))
 
@@ -385,9 +385,9 @@ access this attribute, an ORM exception is raised.
 indicate that all relationships should use this strategy.  For example,
 to set up only one attribute as eager loading, and all the rest as raise::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import joinedload
-    from sqlalchemy.orm import raiseload
+    from ilikesql import select
+    from ilikesql.orm import joinedload
+    from ilikesql.orm import raiseload
 
     stmt = select(Order).options(joinedload(Order.items), raiseload("*"))
 
@@ -396,9 +396,9 @@ besides ``items``, but all those on the ``Item`` objects as well.  To set up
 :func:`.raiseload` for only the ``Order`` objects, specify a full
 path with :class:`_orm.Load`::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import joinedload
-    from sqlalchemy.orm import Load
+    from ilikesql import select
+    from ilikesql.orm import joinedload
+    from ilikesql.orm import Load
 
     stmt = select(Order).options(joinedload(Order.items), Load(Order).raiseload("*"))
 
@@ -428,7 +428,7 @@ Joined Eager Loading
 --------------------
 
 Joined eager loading is the oldest style of eager loading included with
-the SQLAlchemy ORM.  It works by connecting a JOIN (by default
+the ilikesql ORM.  It works by connecting a JOIN (by default
 a LEFT OUTER join) to the SELECT statement emitted,
 and populates the target scalar/collection from the
 same result set as that of the parent.
@@ -447,8 +447,8 @@ using the :func:`_orm.joinedload` loader option:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
-    >>> from sqlalchemy.orm import joinedload
+    >>> from ilikesql import select
+    >>> from ilikesql.orm import joinedload
     >>> stmt = select(User).options(joinedload(User.addresses)).filter_by(name="spongebob")
     >>> spongebob = session.scalars(stmt).unique().all()
     {execsql}SELECT
@@ -473,9 +473,9 @@ using the :func:`_orm.joinedload` loader option:
     primary key that otherwise are multiplied out by the join. The ORM will
     raise an error if this is not present.
 
-    This is not automatic in modern SQLAlchemy, as it changes the behavior
+    This is not automatic in modern ilikesql, as it changes the behavior
     of the result set to return fewer ORM objects than the statement would
-    normally return in terms of number of rows.  Therefore SQLAlchemy keeps
+    normally return in terms of number of rows.  Therefore ilikesql keeps
     the use of :meth:`_result.Result.unique` explicit, so there's no ambiguity
     that the returned objects are being uniqified on primary key.
 
@@ -494,8 +494,8 @@ at the mapping level via the :paramref:`_orm.relationship.innerjoin` flag::
 
 At the query option level, via the :paramref:`_orm.joinedload.innerjoin` flag::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import joinedload
+    from ilikesql import select
+    from ilikesql.orm import joinedload
 
     stmt = select(Address).options(joinedload(Address.user, innerjoin=True))
 
@@ -504,8 +504,8 @@ an OUTER JOIN:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
-    >>> from sqlalchemy.orm import joinedload
+    >>> from ilikesql import select
+    >>> from ilikesql.orm import joinedload
     >>> stmt = select(User).options(
     ...     joinedload(User.addresses).joinedload(Address.widgets, innerjoin=True)
     ... )
@@ -573,8 +573,8 @@ named in the query:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
-    >>> from sqlalchemy.orm import joinedload
+    >>> from ilikesql import select
+    >>> from ilikesql.orm import joinedload
     >>> stmt = (
     ...     select(User)
     ...     .options(joinedload(User.addresses))
@@ -603,7 +603,7 @@ address is to use :meth:`_sql.Select.join`:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
+    >>> from ilikesql import select
     >>> stmt = (
     ...     select(User)
     ...     .join(User.addresses)
@@ -730,7 +730,7 @@ When using joined eager loading, if the query contains a modifier that impacts
 the rows returned externally to the joins, such as when using DISTINCT, LIMIT,
 OFFSET or equivalent, the completed statement is first wrapped inside a
 subquery, and the joins used specifically for joined eager loading are applied
-to the subquery.   SQLAlchemy's joined eager loading goes the extra mile, and
+to the subquery.   ilikesql's joined eager loading goes the extra mile, and
 then ten miles further, to absolutely ensure that it does not affect the end
 result of the query, only the way collections and related objects are loaded,
 no matter what the format of the query is.
@@ -759,8 +759,8 @@ order to load related associations:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
-    >>> from sqlalchemy.orm import selectinload
+    >>> from ilikesql import select
+    >>> from ilikesql.orm import selectinload
     >>> stmt = (
     ...     select(User)
     ...     .options(selectinload(User.addresses))
@@ -797,8 +797,8 @@ value from the parent object is used:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
-    >>> from sqlalchemy.orm import selectinload
+    >>> from ilikesql import select
+    >>> from ilikesql.orm import selectinload
     >>> stmt = select(Address).options(selectinload(Address.user))
     >>> result = session.scalars(stmt).all()
     {execsql}SELECT
@@ -837,12 +837,12 @@ Things to know about this kind of loading include:
   keys, it must use the "tuple" form of IN, which looks like ``WHERE
   (table.column_a, table.column_b) IN ((?, ?), (?, ?), (?, ?))``. This syntax
   is not currently supported on SQL Server and for SQLite requires at least
-  version 3.15.  There is no special logic in SQLAlchemy to check
+  version 3.15.  There is no special logic in ilikesql to check
   ahead of time which platforms support this syntax or not; if run against a
   non-supporting platform, the database will return an error immediately.   An
-  advantage to SQLAlchemy just running the SQL out for it to fail is that if a
+  advantage to ilikesql just running the SQL out for it to fail is that if a
   particular database does start supporting this syntax, it will work without
-  any changes to SQLAlchemy (as was the case with SQLite).
+  any changes to ilikesql (as was the case with SQLite).
 
 
 .. _subquery_eager_loading:
@@ -880,8 +880,8 @@ the collection members to load them at once:
 
 .. sourcecode:: pycon+sql
 
-    >>> from sqlalchemy import select
-    >>> from sqlalchemy.orm import subqueryload
+    >>> from ilikesql import select
+    >>> from ilikesql.orm import subqueryload
     >>> stmt = select(User).options(subqueryload(User.addresses)).filter_by(name="spongebob")
     >>> results = session.scalars(stmt).all()
     {execsql}SELECT
@@ -1009,8 +1009,8 @@ attributes not otherwise
 specified in the statement.   This feature is available by passing
 the string ``'*'`` as the argument to any of these options::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import lazyload
+    from ilikesql import select
+    from ilikesql.orm import lazyload
 
     stmt = select(MyClass).options(lazyload("*"))
 
@@ -1030,9 +1030,9 @@ query, such as :func:`.joinedload`,
 :func:`.selectinload`, etc.  The query below will still use joined loading
 for the ``widget`` relationship::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import lazyload
-    from sqlalchemy.orm import joinedload
+    from ilikesql import select
+    from ilikesql.orm import lazyload
+    from ilikesql.orm import joinedload
 
     stmt = select(MyClass).options(lazyload("*"), joinedload(MyClass.widget))
 
@@ -1053,8 +1053,8 @@ while leaving the loader strategies for ``User`` unaffected,
 by first applying the :class:`_orm.Load` object, then specifying the ``*`` as a
 chained option::
 
-    from sqlalchemy import select
-    from sqlalchemy.orm import Load
+    from ilikesql import select
+    from ilikesql.orm import Load
 
     stmt = select(User, Address).options(Load(Address).lazyload("*"))
 
@@ -1075,7 +1075,7 @@ includes the necessary joins which represent a particular collection or scalar
 reference, and the joins added by the joinedload feature are redundant - yet
 you'd still like the collections/references to be populated.
 
-For this SQLAlchemy supplies the :func:`_orm.contains_eager`
+For this ilikesql supplies the :func:`_orm.contains_eager`
 option. This option is used in the same manner as the
 :func:`_orm.joinedload()` option except it is assumed that the
 :class:`_sql.Select` object will explicitly include the appropriate joins,
@@ -1083,7 +1083,7 @@ typically using methods like :meth:`_sql.Select.join`.
 Below, we specify a join between ``User`` and ``Address``
 and additionally establish this as the basis for eager loading of ``User.addresses``::
 
-    from sqlalchemy.orm import contains_eager
+    from ilikesql.orm import contains_eager
 
     stmt = select(User).join(User.addresses).options(contains_eager(User.addresses))
 
@@ -1152,7 +1152,7 @@ least ``Address`` object that contains the substring ``'aol.com'`` in its
 these ``Address`` entries, and *not* any other ``Address`` entries that are
 in fact associated with the collection.
 
-.. tip::  In all cases, the SQLAlchemy ORM does **not overwrite already loaded
+.. tip::  In all cases, the ilikesql ORM does **not overwrite already loaded
    attributes and collections** unless told to do so.   As there is an
    :term:`identity map` in use, it is often the case that an ORM query is
    returning objects that were in fact already present and loaded in memory.
@@ -1187,7 +1187,7 @@ Relationship Loader API
 
 .. autofunction:: lazyload
 
-.. autoclass:: sqlalchemy.orm.Load
+.. autoclass:: ilikesql.orm.Load
     :members:
     :inherited-members: Generative
 

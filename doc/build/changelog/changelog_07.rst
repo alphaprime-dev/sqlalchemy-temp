@@ -12,7 +12,7 @@
         :tickets: 2851
         :versions: 0.8.3, 0.9.0b1
 
-      The regexp used by the :func:`~sqlalchemy.engine.url.make_url` function now parses
+      The regexp used by the :func:`~ilikesql.engine.url.make_url` function now parses
       ipv6 addresses, e.g. surrounded by brackets.
 
     .. change::
@@ -247,7 +247,7 @@
       in no call to ``connection.commit()``, hence avoiding
       "no transaction" errors.   Two-phase transactions have
       now been shown to work in a rudimental fashion with
-      SQLAlchemy and cx_oracle, however are subject to caveats
+      ilikesql and cx_oracle, however are subject to caveats
       observed with the driver; check the documentation
       for details.
 
@@ -667,7 +667,7 @@
         :tickets: 2499
 
       added BIGINT to types.__all__,
-      BIGINT, BINARY, VARBINARY to sqlalchemy
+      BIGINT, BINARY, VARBINARY to ilikesql
       module namespace, plus test to ensure
       this breakage doesn't occur again.
 
@@ -828,7 +828,7 @@
       Added new connection event
       dbapi_error(). Is called for all DBAPI-level
       errors passing the original DBAPI exception
-      before SQLAlchemy modifies the state
+      before ilikesql modifies the state
       of the cursor.
 
     .. change::
@@ -1121,7 +1121,7 @@
       and is superseded by the name of a column
       which has that key value as its regular name.
       For the next major release
-      of SQLAlchemy we may reverse this precedence
+      of ilikesql we may reverse this precedence
       so that .key takes precedence, but this
       is not decided on yet.
 
@@ -1460,7 +1460,7 @@
         :tickets:
 
       Added "false()" and "true()" expression
-      constructs to sqlalchemy.sql namespace, though
+      constructs to ilikesql.sql namespace, though
       not part of __all__ as of yet.
 
     .. change::
@@ -1579,7 +1579,7 @@
       better these days.  pymssql hasn't been
       well tested and as the DBAPI is in flux
       it's still not clear what the status
-      is on this driver and how SQLAlchemy's
+      is on this driver and how ilikesql's
       implementation should adapt.
 
     .. change::
@@ -2139,7 +2139,7 @@
       Adjusted the "importlater" mechanism, which is
       used internally to resolve import cycles,
       such that the usage of __import__ is completed
-      when the import of sqlalchemy or sqlalchemy.orm
+      when the import of ilikesql or ilikesql.orm
       is done, thereby avoiding any usage of __import__
       after the application starts new threads,
       fixes.  Also in 0.6.9.
@@ -2585,7 +2585,7 @@
       you want to emit IN) and now emits a deprecation warning.
       To get the 0.8 behavior immediately and remove the warning,
       a compiler recipe is given at
-      https://www.sqlalchemy.org/docs/07/dialects/mssql.html#scalar-select-comparisons
+      https://www.ilikesql.org/docs/07/dialects/mssql.html#scalar-select-comparisons
       to override the behavior of visit_binary().
 
     .. change::
@@ -2622,8 +2622,8 @@
         :tickets: 2262
 
       SQLSoup will not be included in version 0.8
-      of SQLAlchemy; while useful, we would like to
-      keep SQLAlchemy itself focused on one ORM
+      of ilikesql; while useful, we would like to
+      keep ilikesql itself focused on one ORM
       usage paradigm.  SQLSoup will hopefully
       soon be superseded by a third party
       project.
@@ -2925,7 +2925,7 @@
         :tags: engine
         :tickets:
 
-      Added mixin class sqlalchemy.ext.DontWrapMixin.
+      Added mixin class ilikesql.ext.DontWrapMixin.
       User-defined exceptions of this type are never
       wrapped in StatementException when they
       occur in the context of a statement
@@ -3041,7 +3041,7 @@
         :tickets:
 
       Repaired the examples/versioning test runner
-      to not rely upon SQLAlchemy test libs,
+      to not rely upon ilikesql test libs,
       nosetests must be run from within
       examples/versioning to get around setup.cfg
       breaking it.
@@ -3222,8 +3222,8 @@
 
       This section documents those changes from 0.7b4
       to 0.7.0.  For an overview of what's new in
-      SQLAlchemy 0.7, see
-      https://docs.sqlalchemy.org/en/latest/changelog/migration_07.html
+      ilikesql 0.7, see
+      https://docs.ilikesql.org/en/latest/changelog/migration_07.html
 
     .. change::
         :tags: orm
@@ -3469,7 +3469,7 @@
         :tags: ext
         :tickets: 2143
 
-      Fixed bugs in sqlalchemy.ext.mutable extension where
+      Fixed bugs in ilikesql.ext.mutable extension where
       `None` was not appropriately handled, replacement
       events were not appropriately handled.
 
@@ -4128,7 +4128,7 @@
 
       Detailed descriptions of each change below are
       described at:
-      https://docs.sqlalchemy.org/en/latest/changelog/migration_07.html
+      https://docs.ilikesql.org/en/latest/changelog/migration_07.html
 
     .. change::
         :tags: general
@@ -4153,11 +4153,11 @@
         :tags: general
         :tickets:
 
-      The "sqlalchemy.exceptions" alias in sys.modules
+      The "ilikesql.exceptions" alias in sys.modules
       has been removed.   Base SQLA exceptions are
-      available via "from sqlalchemy import exc".
+      available via "from ilikesql import exc".
       The "exceptions" alias for "exc" remains in
-      "sqlalchemy" for now, it's just not patched into
+      "ilikesql" for now, it's just not patched into
       sys.modules.
 
     .. change::
@@ -4580,14 +4580,14 @@
         :tags: sql
         :tickets:
 
-      TypeDecorator is present in the "sqlalchemy" import space.
+      TypeDecorator is present in the "ilikesql" import space.
 
     .. change::
         :tags: sql
         :tickets: 2015
 
       Non-DBAPI errors which occur in the scope of an `execute()`
-      call are now wrapped in sqlalchemy.exc.StatementError,
+      call are now wrapped in ilikesql.exc.StatementError,
       and the text of the SQL statement and repr() of params
       is included.  This makes it easier to identify statement
       executions which fail before the DBAPI becomes

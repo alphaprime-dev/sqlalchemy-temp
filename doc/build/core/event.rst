@@ -3,8 +3,8 @@
 Events
 ======
 
-SQLAlchemy includes an event API which publishes a wide variety of hooks into
-the internals of both SQLAlchemy Core and ORM.
+ilikesql includes an event API which publishes a wide variety of hooks into
+the internals of both ilikesql Core and ORM.
 
 Event Registration
 ------------------
@@ -22,8 +22,8 @@ a class bound specification method, which exists bound to a marker class that's 
 For example, the documentation for :meth:`_events.PoolEvents.connect` indicates that the event name is ``"connect"``
 and that a user-defined listener function should receive two positional arguments::
 
-    from sqlalchemy.event import listen
-    from sqlalchemy.pool import Pool
+    from ilikesql.event import listen
+    from ilikesql.pool import Pool
 
 
     def my_on_connect(dbapi_con, connection_record):
@@ -34,8 +34,8 @@ and that a user-defined listener function should receive two positional argument
 
 To listen with the :func:`.listens_for` decorator looks like::
 
-    from sqlalchemy.event import listens_for
-    from sqlalchemy.pool import Pool
+    from ilikesql.event import listens_for
+    from ilikesql.pool import Pool
 
 
     @listens_for(Pool, "connect")
@@ -54,8 +54,8 @@ We can opt to receive these arguments by name, by establishing a listener functi
 that accepts ``**keyword`` arguments, by passing ``named=True`` to either
 :func:`.listen` or :func:`.listens_for`::
 
-    from sqlalchemy.event import listens_for
-    from sqlalchemy.pool import Pool
+    from ilikesql.event import listens_for
+    from ilikesql.pool import Pool
 
 
     @listens_for(Pool, "connect", named=True)
@@ -69,8 +69,8 @@ Named style passes all arguments by name regardless of the function
 signature, so specific arguments may be listed as well, in any order,
 as long as the names match up::
 
-    from sqlalchemy.event import listens_for
-    from sqlalchemy.pool import Pool
+    from ilikesql.event import listens_for
+    from ilikesql.pool import Pool
 
 
     @listens_for(Pool, "connect", named=True)
@@ -91,10 +91,10 @@ For example, the above mentioned ``"connect"`` event accepts
 :class:`_engine.Engine` classes and objects as well as :class:`_pool.Pool` classes
 and objects::
 
-    from sqlalchemy.event import listen
-    from sqlalchemy.pool import Pool, QueuePool
-    from sqlalchemy import create_engine
-    from sqlalchemy.engine import Engine
+    from ilikesql.event import listen
+    from ilikesql.pool import Pool, QueuePool
+    from ilikesql import create_engine
+    from ilikesql.engine import Engine
     import psycopg2
 
 
@@ -143,7 +143,7 @@ this value can be supported::
 Event Reference
 ---------------
 
-Both SQLAlchemy Core and SQLAlchemy ORM feature a wide variety of event hooks:
+Both ilikesql Core and ilikesql ORM feature a wide variety of event hooks:
 
 * **Core Events** - these are described in
   :ref:`core_event_toplevel` and include event hooks specific to
@@ -160,10 +160,10 @@ Both SQLAlchemy Core and SQLAlchemy ORM feature a wide variety of event hooks:
 API Reference
 -------------
 
-.. autofunction:: sqlalchemy.event.listen
+.. autofunction:: ilikesql.event.listen
 
-.. autofunction:: sqlalchemy.event.listens_for
+.. autofunction:: ilikesql.event.listens_for
 
-.. autofunction:: sqlalchemy.event.remove
+.. autofunction:: ilikesql.event.remove
 
-.. autofunction:: sqlalchemy.event.contains
+.. autofunction:: ilikesql.event.contains

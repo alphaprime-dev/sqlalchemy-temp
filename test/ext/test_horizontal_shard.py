@@ -1,42 +1,42 @@
 import datetime
 import os
 
-from sqlalchemy import Column
-from sqlalchemy import DateTime
-from sqlalchemy import delete
-from sqlalchemy import event
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import inspect
-from sqlalchemy import Integer
-from sqlalchemy import select
-from sqlalchemy import sql
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import update
-from sqlalchemy import util
-from sqlalchemy.ext.horizontal_shard import set_shard_id
-from sqlalchemy.ext.horizontal_shard import ShardedSession
-from sqlalchemy.orm import clear_mappers
-from sqlalchemy.orm import defer
-from sqlalchemy.orm import deferred
-from sqlalchemy.orm import lazyload
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import selectinload
-from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import SingletonThreadPool
-from sqlalchemy.sql import operators
-from sqlalchemy.sql import Select
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_deprecated
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing import is_
-from sqlalchemy.testing import provision
-from sqlalchemy.testing.engines import testing_engine
-from sqlalchemy.testing.engines import testing_reaper
+from ilikesql import Column
+from ilikesql import DateTime
+from ilikesql import delete
+from ilikesql import event
+from ilikesql import Float
+from ilikesql import ForeignKey
+from ilikesql import inspect
+from ilikesql import Integer
+from ilikesql import select
+from ilikesql import sql
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import update
+from ilikesql import util
+from ilikesql.ext.horizontal_shard import set_shard_id
+from ilikesql.ext.horizontal_shard import ShardedSession
+from ilikesql.orm import clear_mappers
+from ilikesql.orm import defer
+from ilikesql.orm import deferred
+from ilikesql.orm import lazyload
+from ilikesql.orm import relationship
+from ilikesql.orm import selectinload
+from ilikesql.orm import Session
+from ilikesql.orm import sessionmaker
+from ilikesql.pool import SingletonThreadPool
+from ilikesql.sql import operators
+from ilikesql.sql import Select
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_deprecated
+from ilikesql.testing import fixtures
+from ilikesql.testing import is_
+from ilikesql.testing import provision
+from ilikesql.testing.engines import testing_engine
+from ilikesql.testing.engines import testing_reaper
 
 
 class ShardTest:
@@ -462,7 +462,7 @@ class ShardTest:
         tokyo.city
         sess.expunge_all()
 
-        from sqlalchemy.ext.baked import BakedQuery
+        from ilikesql.ext.baked import BakedQuery
 
         bakery = BakedQuery.bakery()
 
@@ -479,7 +479,7 @@ class ShardTest:
         tokyo.city
         sess.expunge_all()
 
-        from sqlalchemy.ext.baked import BakedQuery
+        from ilikesql.ext.baked import BakedQuery
 
         bakery = BakedQuery.bakery()
 
@@ -500,7 +500,7 @@ class ShardTest:
         tokyo.city
         sess.expunge_all()
 
-        from sqlalchemy.ext.baked import BakedQuery
+        from ilikesql.ext.baked import BakedQuery
 
         bakery = BakedQuery.bakery()
 
@@ -556,7 +556,7 @@ class ShardTest:
         tokyo.city
         sess.expunge_all()
 
-        from sqlalchemy.ext.baked import BakedQuery
+        from ilikesql.ext.baked import BakedQuery
 
         bakery = BakedQuery.bakery()
 

@@ -3,7 +3,7 @@
 Tracking queries, object and Session Changes with Events
 =========================================================
 
-SQLAlchemy features an extensive :ref:`Event Listening <event_toplevel>`
+ilikesql features an extensive :ref:`Event Listening <event_toplevel>`
 system used throughout the Core and ORM.   Within the ORM, there are a
 wide variety of event listener hooks, which are documented at an API
 level at :ref:`orm_event_toplevel`.   This collection of events has
@@ -82,7 +82,7 @@ by making use of the :func:`_orm.with_loader_criteria` query option, which
 may be used on its own, or is ideally suited to be used within the
 :meth:`_orm.SessionEvents.do_orm_execute` event::
 
-    from sqlalchemy.orm import with_loader_criteria
+    from ilikesql.orm import with_loader_criteria
 
     Session = sessionmaker(engine)
 
@@ -180,7 +180,7 @@ statement at all, allowing a pre-constructed result set retrieved from a cache t
 be returned instead, as well as the ability to invoke the same statement
 repeatedly with different state, such as invoking it against multiple database
 connections and then merging the results together in memory.   Both of these
-advanced patterns are demonstrated in SQLAlchemy's example suite as detailed
+advanced patterns are demonstrated in ilikesql's example suite as detailed
 below.
 
 When inside the :meth:`_orm.SessionEvents.do_orm_execute` event hook, the
@@ -200,7 +200,7 @@ that of other :class:`_engine.Result` objects.
 
 E.g., using :meth:`_orm.SessionEvents.do_orm_execute` to implement a cache::
 
-    from sqlalchemy.orm import loading
+    from ilikesql.orm import loading
 
     cache = {}
 
@@ -416,8 +416,8 @@ exception of the initial transient event, all the events are in terms of
 the :class:`.Session` object or class, meaning they can be associated either
 with a specific :class:`.Session` object::
 
-    from sqlalchemy import event
-    from sqlalchemy.orm import Session
+    from ilikesql import event
+    from ilikesql.orm import Session
 
     session = Session()
 
@@ -429,8 +429,8 @@ with a specific :class:`.Session` object::
 Or with the :class:`.Session` class itself, as well as with a specific
 :class:`.sessionmaker`, which is likely the most useful form::
 
-    from sqlalchemy import event
-    from sqlalchemy.orm import sessionmaker
+    from ilikesql import event
+    from ilikesql.orm import sessionmaker
 
     maker = sessionmaker()
 
@@ -462,8 +462,8 @@ wanted to intercept when any transient object is created, the
 event is applied to a specific class or superclass.  For example, to
 intercept all new objects for a particular declarative base::
 
-    from sqlalchemy.orm import DeclarativeBase
-    from sqlalchemy import event
+    from ilikesql.orm import DeclarativeBase
+    from ilikesql import event
 
 
     class Base(DeclarativeBase):
@@ -654,7 +654,7 @@ objects.
   logical transaction scopes of the :class:`.Session` in a way that is
   not specific to individual database connections.  These events are
   intended to help with integration of transaction-tracking systems such as
-  ``zope.sqlalchemy``.  Use these
+  ``zope.ilikesql``.  Use these
   events when the application needs to align some external scope with the
   transactional scope of the :class:`.Session`.  These hooks mirror
   the "nested" transactional behavior of the :class:`.Session`, in that they

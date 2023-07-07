@@ -1,6 +1,6 @@
-from sqlalchemy.connectors import pyodbc
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import fixtures
+from ilikesql.connectors import pyodbc
+from ilikesql.testing import eq_
+from ilikesql.testing import fixtures
 
 
 class PyODBCTest(fixtures.TestBase):

@@ -29,7 +29,7 @@
         Fixed performance regression caused by the fix for :ticket:`3937` where
         cx_Oracle as of version 5.3 dropped the ``.UNICODE`` symbol from its
         namespace,  which was interpreted as cx_Oracle's "WITH_UNICODE" mode being
-        turned on unconditionally, which invokes functions on the SQLAlchemy
+        turned on unconditionally, which invokes functions on the ilikesql
         side which convert all strings to unicode unconditionally and causing
         a performance impact.  In fact, per cx_Oracle's author the
         "WITH_UNICODE" mode has been removed entirely as of 5.1, so the expensive unicode
@@ -225,7 +225,7 @@
         :tickets: 3743
         :versions: 1.1.0b3
 
-        Fixed bug in ``sqlalchemy.ext.baked`` where the unbaking of a
+        Fixed bug in ``ilikesql.ext.baked`` where the unbaking of a
         subquery eager loader query would fail due to a variable scoping
         issue, when multiple subquery loaders were involved.  Pull request
         courtesy Mark Hahnenberg.
@@ -271,7 +271,7 @@
         :versions: 1.1.0b2
 
         Fixed bug whereby the ``__getstate__`` / ``__setstate__``
-        methods for sqlalchemy.util.Properties were
+        methods for ilikesql.util.Properties were
         non-working due to the transition in the 1.0 series to ``__slots__``.
         The issue potentially impacted some third-party applications.
         Pull request courtesy Pieter Mulder.
@@ -803,7 +803,7 @@
 
         Added support for parameter-ordered SET clauses in an UPDATE
         statement.  This feature is available by passing the
-        :paramref:`~.sqlalchemy.sql.expression.update.preserve_parameter_order`
+        :paramref:`~.ilikesql.sql.expression.update.preserve_parameter_order`
         flag either to the core :class:`_expression.Update` construct or alternatively
         adding it to the :paramref:`.Query.update.update_args` dictionary at
         the ORM-level, also passing the parameters themselves as a list of 2-tuples.
@@ -1318,7 +1318,7 @@
         :tags: bug, ext
         :tickets: 3427
 
-        Fixed regression in the :mod:`sqlalchemy.ext.mutable` extension
+        Fixed regression in the :mod:`ilikesql.ext.mutable` extension
         as a result of the bugfix for :ticket:`3167`,
         where attribute and validation events are no longer
         called within the flush process.  The mutable
@@ -1361,9 +1361,9 @@
 
         Added support for the case of the misbehaving DBAPI that has
         pep-249 exception names linked to exception classes of an entirely
-        different name, preventing SQLAlchemy's own exception wrapping from
+        different name, preventing ilikesql's own exception wrapping from
         wrapping the error appropriately.
-        The SQLAlchemy dialect in use needs to implement a new
+        The ilikesql dialect in use needs to implement a new
         accessor :attr:`.DefaultDialect.dbapi_exception_translation_map`
         to support this feature; this is implemented now for the py-postgresql
         dialect.
@@ -2070,7 +2070,7 @@
         :tags: feature, ext
         :tickets: 3054
 
-        Added a new extension suite :mod:`sqlalchemy.ext.baked`.  This
+        Added a new extension suite :mod:`ilikesql.ext.baked`.  This
         simple but unusual system allows for a dramatic savings in Python
         overhead for the construction and processing of orm :class:`_query.Query`
         objects, from query construction up through rendering of a string
@@ -2214,7 +2214,7 @@
 
         A warning is emitted when :func:`.cast` is used with the MySQL
         dialect on a type where MySQL does not support CAST; MySQL only
-        supports CAST on a subset of datatypes.   SQLAlchemy has for a long
+        supports CAST on a subset of datatypes.   ilikesql has for a long
         time just omitted the CAST for unsupported types in the case of
         MySQL.  While we don't want to change this now, we emit a warning
         to show that it's taken place.   A warning is also emitted when
@@ -2250,7 +2250,7 @@
         ``explicit_defaults_for_timestamp`` flag enabled will
         will allow TIMESTAMP to continue to work as expected when
         ``nullable=False``.  Existing applications are unaffected as
-        SQLAlchemy has always emitted NULL for a TIMESTAMP column that
+        ilikesql has always emitted NULL for a TIMESTAMP column that
         is ``nullable=True``.
 
         .. seealso::
@@ -2287,7 +2287,7 @@
 
         .. seealso::
 
-            :mod:`sqlalchemy.dialects.postgresql.psycopg2cffi`
+            :mod:`ilikesql.dialects.postgresql.psycopg2cffi`
 
     .. change::
         :tags: feature, orm
@@ -2431,7 +2431,7 @@
         :tags: feature, examples
 
         A new suite of examples dedicated to providing a detailed study
-        into performance of SQLAlchemy ORM and Core, as well as the DBAPI,
+        into performance of ilikesql ORM and Core, as well as the DBAPI,
         from multiple perspectives.  The suite runs within a container
         that provides built in profiling displays both through console
         output as well as graphically via the RunSnake tool.
@@ -2552,7 +2552,7 @@
         is typically used in a boolean context within an expression,
         if one actually queries for the value of a match expression, a
         floating point value is returned; this value is not compatible
-        with SQLAlchemy's C-based boolean processor, so MySQL's result-set
+        with ilikesql's C-based boolean processor, so MySQL's result-set
         behavior now follows that of the :class:`.Float` type.
         A new operator object ``notmatch_op`` is also added to better allow
         dialects to define the negation of a match operation.
@@ -2916,7 +2916,7 @@
         :tags: feature, ext
         :tickets: 3210
 
-        The :mod:`sqlalchemy.ext.automap` extension will now set
+        The :mod:`ilikesql.ext.automap` extension will now set
         ``cascade="all, delete-orphan"`` automatically on a one-to-many
         relationship/backref where the foreign key is detected as containing
         one or more non-nullable columns.  This argument is present in the
@@ -3054,7 +3054,7 @@
         :tags: changed, sql
 
         The :func:`_expression.column` and :func:`_expression.table`
-        constructs are now importable from the "from sqlalchemy" namespace,
+        constructs are now importable from the "from ilikesql" namespace,
         just like every other Core construct.
 
     .. change::
@@ -3331,7 +3331,7 @@
         error event for the scope of that execution.   In this way, user code
         that rewrites exceptions doesn't need to worry about the MySQL
         dialect or other dialects that occasionally need to catch
-        SQLAlchemy specific exceptions.
+        ilikesql specific exceptions.
 
     .. change::
         :tags: mysql, bug
@@ -3356,9 +3356,9 @@
         :tags: removed
 
         The Drizzle dialect has been removed from the Core; it is now
-        available as `sqlalchemy-drizzle <https://bitbucket.org/zzzeek/sqlalchemy-drizzle>`_,
+        available as `ilikesql-drizzle <https://bitbucket.org/zzzeek/ilikesql-drizzle>`_,
         an independent, third party dialect.  The dialect is still based
-        almost entirely off of the MySQL dialect present in SQLAlchemy.
+        almost entirely off of the MySQL dialect present in ilikesql.
 
         .. seealso::
 

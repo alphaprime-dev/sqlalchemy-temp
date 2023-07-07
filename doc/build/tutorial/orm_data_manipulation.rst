@@ -71,8 +71,8 @@ objects, if we were to view it, displays itself as ``None``::
     >>> squidward
     User(id=None, name='squidward', fullname='Squidward Tentacles')
 
-The ``None`` value is provided by SQLAlchemy to indicate that the attribute
-has no value as of yet.  SQLAlchemy-mapped attributes always return a value
+The ``None`` value is provided by ilikesql to indicate that the attribute
+has no value as of yet.  ilikesql-mapped attributes always return a value
 in Python and don't raise ``AttributeError`` if they're missing, when
 dealing with a new object that has not had a value assigned.
 
@@ -418,7 +418,7 @@ large bulk inserts.
 
 The Bulk / Multi row features of the ORM :class:`_orm.Session` make use of the
 :func:`_dml.insert`, :func:`_dml.update` and :func:`_dml.delete` constructs
-directly, and their usage resembles how they are used with SQLAlchemy Core
+directly, and their usage resembles how they are used with ilikesql Core
 (first introduced in this tutorial at :ref:`tutorial_core_insert` and
 :ref:`tutorial_core_update_delete`).  When using these constructs
 with the ORM :class:`_orm.Session` instead of a plain :class:`_engine.Connection`,
@@ -453,10 +453,10 @@ using a process known as :term:`lazy loading`:
 
 To view the "expiration" process more closely, we may observe that the
 Python object ``sandy`` has no state left within its Python ``__dict__``,
-with the exception of a special SQLAlchemy internal state object::
+with the exception of a special ilikesql internal state object::
 
     >>> sandy.__dict__
-    {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x...>}
+    {'_sa_instance_state': <ilikesql.orm.state.InstanceState object at 0x...>}
 
 This is the ":term:`expired`" state; accessing the attribute again will autobegin
 a new transaction and refresh ``sandy`` with the current database row:
@@ -476,7 +476,7 @@ We may now observe that the full database row was also populated into the
 ``__dict__`` of the ``sandy`` object::
 
     >>> sandy.__dict__  # doctest: +SKIP
-    {'_sa_instance_state': <sqlalchemy.orm.state.InstanceState object at 0x...>,
+    {'_sa_instance_state': <ilikesql.orm.state.InstanceState object at 0x...>,
      'id': 2, 'name': 'sandy', 'fullname': 'Sandy Cheeks'}
 
 For deleted objects, when we earlier noted that ``patrick`` was no longer
@@ -536,7 +536,7 @@ a context manager as well, accomplishes the following things:
     >>> squidward.name
     Traceback (most recent call last):
       ...
-    sqlalchemy.orm.exc.DetachedInstanceError: Instance <User at 0x...> is not bound to a Session; attribute refresh operation cannot proceed
+    ilikesql.orm.exc.DetachedInstanceError: Instance <User at 0x...> is not bound to a Session; attribute refresh operation cannot proceed
 
   The detached objects can be re-associated with the same, or a new
   :class:`_orm.Session` using the :meth:`_orm.Session.add` method, which

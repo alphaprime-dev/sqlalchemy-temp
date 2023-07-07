@@ -1,44 +1,44 @@
 import datetime
 
-from sqlalchemy import and_
-from sqlalchemy import cast
-from sqlalchemy import Column
-from sqlalchemy import column
-from sqlalchemy import Date
-from sqlalchemy import DateTime
-from sqlalchemy import exc
-from sqlalchemy import extract
-from sqlalchemy import Float
-from sqlalchemy import ForeignKey
-from sqlalchemy import func
-from sqlalchemy import Integer
-from sqlalchemy import JSON
-from sqlalchemy import literal
-from sqlalchemy import literal_column
-from sqlalchemy import MetaData
-from sqlalchemy import or_
-from sqlalchemy import select
-from sqlalchemy import Sequence
-from sqlalchemy import String
-from sqlalchemy import Table
-from sqlalchemy import testing
-from sqlalchemy import text
-from sqlalchemy import Time
-from sqlalchemy import true
-from sqlalchemy import tuple_
-from sqlalchemy.dialects import postgresql
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.dialects.postgresql import REGCONFIG
-from sqlalchemy.sql.expression import type_coerce
-from sqlalchemy.testing import assert_raises
-from sqlalchemy.testing import AssertsCompiledSQL
-from sqlalchemy.testing import AssertsExecutionResults
-from sqlalchemy.testing import engines
-from sqlalchemy.testing import eq_
-from sqlalchemy.testing import expect_warnings
-from sqlalchemy.testing import fixtures
-from sqlalchemy.testing.assertsql import CursorSQL
-from sqlalchemy.testing.assertsql import DialectSQL
+from ilikesql import and_
+from ilikesql import cast
+from ilikesql import Column
+from ilikesql import column
+from ilikesql import Date
+from ilikesql import DateTime
+from ilikesql import exc
+from ilikesql import extract
+from ilikesql import Float
+from ilikesql import ForeignKey
+from ilikesql import func
+from ilikesql import Integer
+from ilikesql import JSON
+from ilikesql import literal
+from ilikesql import literal_column
+from ilikesql import MetaData
+from ilikesql import or_
+from ilikesql import select
+from ilikesql import Sequence
+from ilikesql import String
+from ilikesql import Table
+from ilikesql import testing
+from ilikesql import text
+from ilikesql import Time
+from ilikesql import true
+from ilikesql import tuple_
+from ilikesql.dialects import postgresql
+from ilikesql.dialects.postgresql import JSONB
+from ilikesql.dialects.postgresql import REGCONFIG
+from ilikesql.sql.expression import type_coerce
+from ilikesql.testing import assert_raises
+from ilikesql.testing import AssertsCompiledSQL
+from ilikesql.testing import AssertsExecutionResults
+from ilikesql.testing import engines
+from ilikesql.testing import eq_
+from ilikesql.testing import expect_warnings
+from ilikesql.testing import fixtures
+from ilikesql.testing.assertsql import CursorSQL
+from ilikesql.testing.assertsql import DialectSQL
 
 
 class FunctionTypingTest(fixtures.TestBase, AssertsExecutionResults):
@@ -1259,7 +1259,7 @@ class ExtractTest(fixtures.TablesTest):
 
     @classmethod
     def setup_bind(cls):
-        from sqlalchemy import event
+        from ilikesql import event
 
         eng = engines.testing_engine(options={"scope": "class"})
 

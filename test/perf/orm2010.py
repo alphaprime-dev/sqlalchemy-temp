@@ -2,16 +2,16 @@ from decimal import Decimal
 import os
 import random
 
-from sqlalchemy import __version__
-from sqlalchemy import Column
-from sqlalchemy import create_engine
-from sqlalchemy import ForeignKey
-from sqlalchemy import Integer
-from sqlalchemy import Numeric
-from sqlalchemy import String
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy.orm import Session
+from ilikesql import __version__
+from ilikesql import Column
+from ilikesql import create_engine
+from ilikesql import ForeignKey
+from ilikesql import Integer
+from ilikesql import Numeric
+from ilikesql import String
+from ilikesql.orm import declarative_base
+from ilikesql.orm import relationship
+from ilikesql.orm import Session
 
 
 Base = declarative_base()
